@@ -130,11 +130,6 @@
     <Compile Include="Utils\Helper\StringHelper.cs" />
     <Compile Include="Utils\Helper\UrlHelper.cs" />
     <Compile Include="Utils\Collection\Permutations.cs" />
-    <Compile Include="Utils\VerifyCode\GifDecoder.cs" />
-    <Compile Include="Utils\VerifyCode\GifEncoder.cs" />
-    <Compile Include="Utils\VerifyCode\GifVerifyCode.cs" />
-    <Compile Include="Utils\VerifyCode\JpegVerifyCode.cs" />
-    <Compile Include="Utils\VerifyCode\VerifyImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Exceptions\" />
