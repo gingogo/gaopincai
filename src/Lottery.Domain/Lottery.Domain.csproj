@@ -70,12 +70,14 @@
     <Compile Include="Services\ServiceManager.cs" />
     <Compile Include="Statistics\BaseStatistics.cs" />
     <Compile Include="Statistics\D11X5\Base11X5Statistics.cs" />
+    <Compile Include="Statistics\D11X5\BaseSpan.cs" />
     <Compile Include="Statistics\D11X5\DayNumber.cs" />
     <Compile Include="Statistics\D11X5\NextNumber.cs" />
     <Compile Include="Statistics\D11X5\NPeroidNumberCount.cs" />
     <Compile Include="Statistics\D11X5\PeroidSpan.cs" />
     <Compile Include="Statistics\D11X5\PeroidSpanLimit.cs" />
     <Compile Include="Statistics\IStatistics.cs" />
+    <Compile Include="Statistics\SSC\BaseSpan.cs" />
     <Compile Include="Statistics\SSC\BaseSSCStatistics.cs" />
     <Compile Include="Statistics\SSC\PeroidSpan.cs" />
   </ItemGroup>

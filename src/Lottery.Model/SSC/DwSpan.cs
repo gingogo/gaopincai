@@ -139,5 +139,11 @@ namespace Lottery.Model.SSC
             set { this._c3Spans = value; }
         }
         #endregion
+
+        public override string ToString()
+        {
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", this._p, this._d1Spans,
+                this._p2Spans, this._p3Spans, this._p4Spans, this._p5Spans, this._c2Spans, this._c3Spans);
+        }
     }
 }

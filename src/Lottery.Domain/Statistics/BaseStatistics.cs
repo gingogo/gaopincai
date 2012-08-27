@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Lottery.Statistics
 {
@@ -43,6 +44,13 @@ namespace Lottery.Statistics
         protected virtual void SyncStatAll(DmCategory category, OutputType outputType)
         {
             this.Stat(category.DbName, outputType);
+        }
+
+        protected virtual string GetOutputFileName(string fileName)
+        {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "stat");
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            return string.Format("{0}{1}", path, fileName);
         }
 
         protected virtual void Stat(string dbName,OutputType outputType)

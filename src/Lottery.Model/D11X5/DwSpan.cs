@@ -126,5 +126,11 @@ namespace Lottery.Model.D11X5
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return string.Format("{0},{1},{2},{3},{4},{5},{6}", this._p, this._d1Spans,
+                this._f2Spans, this._f3Spans, this._c2Spans, this._c3Spans, this._a5Spans);
+        }
     }
 }
