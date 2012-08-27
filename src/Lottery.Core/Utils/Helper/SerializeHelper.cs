@@ -128,7 +128,7 @@ namespace Lottery.Utils
 
     public class DynamicJsonObject : DynamicObject
     {
-        private IDictionary<string, object> Dictionary { get; set; }
+        public IDictionary<string, object> Dictionary { get; set; }
 
         public DynamicJsonObject(IDictionary<string, object> dictionary)
         {
