@@ -5,7 +5,6 @@ using System.Text;
 
 namespace Lottery.WinForms.DataObjects
 {
-
     public class MentionData
     {
         /// <summary>

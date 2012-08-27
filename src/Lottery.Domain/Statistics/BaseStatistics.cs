@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using System.Threading;
 
 namespace Lottery.Statistics
 {
@@ -12,8 +10,12 @@ namespace Lottery.Statistics
 
     public abstract class BaseStatistics : IStatistics
     {
+        private delegate void AsyncStatDelegate(string dbName, OutputType outputType);
+        private AsyncStatDelegate asyncStatDlgt;
+
         protected BaseStatistics()
         {
+            this.asyncStatDlgt = new AsyncStatDelegate(this.Stat);
         }
 
         public virtual void Stat()
@@ -27,24 +29,23 @@ namespace Lottery.Statistics
             foreach (var category in categories)
             {
                 if (isAsync)
-                    this.AsyncStatAll(category);
+                    this.AsyncStatAll(category, outputType);
                 else
-                    this.SyncStatAll(category);
+                    this.SyncStatAll(category, outputType);
             }
         }
 
-        protected virtual void AsyncStatAll(DmCategory category)
+        protected virtual void AsyncStatAll(DmCategory category, OutputType outputType)
         {
-            Thread thread = new Thread(new ParameterizedThreadStart(this.Stat));
-            thread.Start(category.DbName);
+            this.asyncStatDlgt.BeginInvoke(category.Name, outputType, null, null);
         }
 
-        protected virtual void SyncStatAll(DmCategory category)
+        protected virtual void SyncStatAll(DmCategory category, OutputType outputType)
         {
-            this.Stat(category.DbName);
+            this.Stat(category.DbName, outputType);
         }
 
-        protected virtual void Stat(object dbName)
+        protected virtual void Stat(string dbName,OutputType outputType)
         {
             throw new NotImplementedException();
         }

@@ -17,7 +17,7 @@ namespace Lottery.Statistics.SSC
     /// </summary>
     public class PeroidSpan : BaseSSCStatistics
     {
-        protected override void Stat(object dbName)
+        protected override void Stat(string dbName,OutputType outputType)
         {
             DwNumberBiz biz = new DwNumberBiz(dbName.ToString());
             List<DwNumber> allNumbers = biz.DataAccessor.SelectWithCondition(string.Empty, "P", SortTypeEnum.ASC, null);
