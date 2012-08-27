@@ -86,6 +86,11 @@ namespace Lottery.Utils
             return obj;
         }
 
+        /// <summary>
+        ///  将JSON数据转化为C#dynamic对象
+        /// </summary>
+        /// <param name="json">符合JSON格式的字符串</param>
+        /// <returns>dynamic对象</returns>
         public static dynamic JsonDeserialize(string json)
         {
             JavaScriptSerializer jss = new JavaScriptSerializer();
