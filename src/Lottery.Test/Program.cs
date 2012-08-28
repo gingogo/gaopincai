@@ -15,9 +15,10 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
-            DownServiceTest();
+            //DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
+            //DmFCAnTest();
             Console.WriteLine("Finished");
             Console.Read();
         }
@@ -54,7 +55,7 @@ namespace Lottery.Test
 
         static void DmFCAnTest()
         {
-            ETL.SCC.ImportDmFCAn.Start();
+            ETL.D11X5.ImportDmFCAn.Update();
         }
 
         static void StatTest()

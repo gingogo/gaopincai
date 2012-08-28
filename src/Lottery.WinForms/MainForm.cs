@@ -342,7 +342,6 @@ namespace Lottery.WinForms
 
         private void BackgroundWorkerDoWork(object sender, DoWorkEventArgs e)
         {
-
             switch (CaiData.TaskType)
             {
                 case "所有周期":

@@ -81,6 +81,10 @@ CREATE TABLE [dbo].[DmD1](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmD1] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -107,6 +111,10 @@ CREATE TABLE [dbo].[DmF2](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmF2] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -133,6 +141,10 @@ CREATE TABLE [dbo].[DmC2](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmC2] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -159,6 +171,10 @@ CREATE TABLE [dbo].[DmF3](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmF3] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -185,6 +201,10 @@ CREATE TABLE [dbo].[DmC3](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmC3] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -211,6 +231,10 @@ CREATE TABLE [dbo].[DmA4](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmA4] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -237,6 +261,10 @@ CREATE TABLE [dbo].[DmA5](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmA5] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -263,6 +291,10 @@ CREATE TABLE [dbo].[DmA6](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmA6] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -289,6 +321,10 @@ CREATE TABLE [dbo].[DmA7](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmA7] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -315,6 +351,10 @@ CREATE TABLE [dbo].[DmA8](
 	[Lu0Cnt] [int] NOT NULL,
 	[Lu1Cnt] [int] NOT NULL,
 	[Lu2Cnt] [int] NOT NULL,
+	[Ji] [int] NOT NULL,
+	[JiWei] [int] NOT NULL,
+	[KuaDu] [int] NOT NULL,
+	[AC] [int] NOT NULL default 0
  CONSTRAINT [PK_DmA8] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

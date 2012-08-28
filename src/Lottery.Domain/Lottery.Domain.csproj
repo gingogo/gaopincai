@@ -53,6 +53,7 @@
     <Compile Include="ETL\DataDownload.cs" />
     <Compile Include="ETL\ExtractData.cs" />
     <Compile Include="ETL\ImportDate.cs" />
+    <Compile Include="ETL\NumberHelper.cs" />
     <Compile Include="ETL\SCC\ImportDmFCAn.cs" />
     <Compile Include="ETL\SCC\ImportDwNumber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

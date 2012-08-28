@@ -13,6 +13,48 @@ namespace Lottery.ETL.D11X5
 
     public class ImportDmFCAn
     {
+        public static void Update()
+        {
+            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("11X5");
+            foreach (var category in categories)
+            {
+                Modify(category.DbName, "D1");
+                Modify(category.DbName, "F2");
+                Modify(category.DbName, "F3");
+                Modify(category.DbName, "C2");
+                Modify(category.DbName, "C3");
+                Modify(category.DbName, "A4");
+                Modify(category.DbName, "A5");
+                Modify(category.DbName, "A6");
+                Modify(category.DbName, "A7");
+                Modify(category.DbName, "A8");
+            }
+        }
+
+        private static void Modify(string name, string type)
+        {
+            DmFCAnBiz biz = new DmFCAnBiz(name, type);
+            var numbers = biz.GetAll("Id", "Number");
+            foreach (var number in numbers)
+            {
+                string[] arr = number.Number.Split(' ');
+                List<int> digits = new List<int>();
+                foreach (string str in arr)
+                    digits.Add(int.Parse(str));
+
+                //string[] ziHe = NumberHelper.GetZiHe(digits).Split(',');
+                //number.ZiHe = ziHe[0];
+                //number.ZiCnt = int.Parse(ziHe[1]);
+                //number.HeCnt = int.Parse(ziHe[2]);
+                number.Ji = NumberHelper.GetJi(digits);
+                number.JiWei = NumberHelper.GetWei(number.Ji.ToString());
+                number.KuaDu = NumberHelper.GetKuaDu(digits);
+                number.AC = type.Equals("D1") ? 0 : NumberHelper.GetAC(digits);
+
+                biz.Modify(number, number.Id, DmFCAn.C_Ji, DmFCAn.C_JiWei, DmFCAn.C_KuaDu, DmFCAn.C_AC);
+            }
+        }
+
         public static void Start()
         {
             List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("11X5");
@@ -63,7 +105,7 @@ namespace Lottery.ETL.D11X5
         {
             string fileName = string.Format(@"d:\{0}_{1}.txt", name, type);
             StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8);
-            List<string> results = GetComputeResult(list);
+            List<string> results = NumberHelper.GetComputeResult(list, 5);
             results.ForEach(writer.WriteLine);
             writer.Close();
         }
@@ -71,7 +113,7 @@ namespace Lottery.ETL.D11X5
         private static void SaveToDB(string name, string type, List<string> list)
         {
             DmFCAnBiz biz = new DmFCAnBiz(name, type);
-            List<string> results = GetComputeResult(list);
+            List<string> results = NumberHelper.GetComputeResult(list, 5);
             foreach (string result in results)
             {
                 string[] arr = result.Split(',');
@@ -93,109 +135,14 @@ namespace Lottery.ETL.D11X5
                 dto.Lu0Cnt = int.Parse(arr[14]);
                 dto.Lu1Cnt = int.Parse(arr[15]);
                 dto.Lu2Cnt = int.Parse(arr[16]);
-               
+                dto.Ji = int.Parse(arr[17]);
+                dto.JiWei = int.Parse(arr[18]);
+                dto.KuaDu = int.Parse(arr[19]);
+                dto.AC = int.Parse(arr[20]);
+
                 biz.Add(dto);
             }
         }
 
-        private static List<string> GetComputeResult(List<string> list)
-        {
-            List<string> results = new List<string>();
-            foreach (string e in list)
-            {
-                string[] arr = e.Split(',');
-                List<int> el = new List<int>();
-
-                foreach (string str in arr) 
-                    el.Add(int.Parse(str));
-
-                string id = e.Replace(",", "");
-                string num = e.Replace(",", " ");
-                int s = el.Sum();
-                string hw = s.ToString().Substring(s.ToString().Length - 1);
-                string dx = GetDaXiao(el);
-                string ds = GetDanShuang(el);
-                string zh = GetZiHe(el);
-                string m3 = Get012(el);
-
-                string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", id, num, s, hw, dx, ds, zh, m3);
-                results.Add(line);
-            }
-
-            return results;
-        }
-
-        private static string GetDaXiao(List<int> list)
-        {
-            List<string> result = new List<string>(list.Count);
-            foreach (int e in list)
-            {
-                result.Add(e > 5 ? "1" : "0");
-            }
-
-            List<string> cntList = new List<string>();
-            cntList.Add(result.Count(x => x.Equals("1")).ToString());
-            cntList.Add(result.Count(x => x.Equals("0")).ToString());
-
-            return string.Format("{0},{1}",
-                string.Join("|", result.ToArray()),
-                string.Join(",", cntList.ToArray()));
-        }
-
-        private static string GetDanShuang(List<int> list)
-        {
-            List<string> result = new List<string>(list.Count);
-            foreach (int e in list)
-            {
-                result.Add(e % 2 == 0 ? "0" : "1");
-            }
-
-            List<string> cntList = new List<string>();
-            cntList.Add(result.Count(x => x.Equals("1")).ToString());
-            cntList.Add(result.Count(x => x.Equals("0")).ToString());
-
-            return string.Format("{0},{1}",
-                string.Join("|", result.ToArray()),
-                string.Join(",", cntList.ToArray()));
-        }
-
-        private static string GetZiHe(List<int> list)
-        {
-            List<string> result = new List<string>(list.Count);
-            foreach (int e in list)
-            {
-                result.Add((e == 4 ||
-                    e == 6 ||
-                    e == 8 ||
-                    e == 9 ||
-                    e == 10) ? "0" : "1");
-            }
-
-            List<string> cntList = new List<string>();
-            cntList.Add(result.Count(x => x.Equals("1")).ToString());
-            cntList.Add(result.Count(x => x.Equals("0")).ToString());
-
-            return string.Format("{0},{1}",
-                string.Join("|", result.ToArray()),
-                string.Join(",", cntList.ToArray()));
-        }
-
-        private static string Get012(List<int> list)
-        {
-            List<string> result = new List<string>(list.Count);
-            foreach (int e in list)
-            {
-                result.Add((e % 3).ToString());
-            }
-
-            List<string> cntList = new List<string>();
-            cntList.Add(result.Count(x => x.Equals("0")).ToString());
-            cntList.Add(result.Count(x => x.Equals("1")).ToString());
-            cntList.Add(result.Count(x => x.Equals("2")).ToString());
-
-            return string.Format("{0},{1}",
-                string.Join("|", result.ToArray()),
-                string.Join(",", cntList.ToArray()));
-        }
     }
 }

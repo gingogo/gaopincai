@@ -105,10 +105,5 @@ namespace Lottery.Utils
         {
             return (IEnumerator<IList<T>>)GetEnumerator();
         }
-
-        public List<string> GetRepeat(string separator, string format)
-        {
-            return null;
-        }
     }
 }

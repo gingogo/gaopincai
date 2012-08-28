@@ -10,6 +10,7 @@ namespace Lottery.Model.SSC
     [Serializable]
     public class DmFCAn : BaseModel
     {
+
         #region Const Members
 
         /// <summary>
@@ -80,7 +81,22 @@ namespace Lottery.Model.SSC
         /// 列名Lu2Cnt  
         /// </summary>
         public static readonly String C_Lu2Cnt = "Lu2Cnt";
-
+        /// <summary>
+        /// 列名Ji  
+        /// </summary>
+        public static readonly String C_Ji = "Ji";
+        /// <summary>
+        /// 列名JiWei  
+        /// </summary>
+        public static readonly String C_JiWei = "JiWei";
+        /// <summary>
+        /// 列名KuaDu  
+        /// </summary>
+        public static readonly String C_KuaDu = "KuaDu";
+        /// <summary>
+        /// 列名AC  
+        /// </summary>
+        public static readonly String C_AC = "AC";
         #endregion
 
         #region Field Members
@@ -119,6 +135,14 @@ namespace Lottery.Model.SSC
         private int _lu1Cnt;
 
         private int _lu2Cnt;
+
+        private int _ji;
+
+        private int _jiWei;
+
+        private int _kuaDu;
+
+        private int _aC;
 
         #endregion
 
@@ -276,6 +300,42 @@ namespace Lottery.Model.SSC
         {
             get { return this._lu2Cnt; }
             set { this._lu2Cnt = value; }
+        }
+
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "Ji")]
+        public virtual int Ji
+        {
+            get { return this._ji; }
+            set { this._ji = value; }
+        }
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "JiWei")]
+        public virtual int JiWei
+        {
+            get { return this._jiWei; }
+            set { this._jiWei = value; }
+        }
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "KuaDu")]
+        public virtual int KuaDu
+        {
+            get { return this._kuaDu; }
+            set { this._kuaDu = value; }
+        }
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "AC")]
+        public virtual int AC
+        {
+            get { return this._aC; }
+            set { this._aC = value; }
         }
 
         #endregion

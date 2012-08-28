@@ -43,13 +43,14 @@
     <Compile Include="BaseModel.cs" />
     <Compile Include="Common\DmCategory.cs" />
     <Compile Include="D11X5\DmFCAn.cs" />
+    <Compile Include="D11X5\DwDmFCANumber.cs" />
     <Compile Include="D11X5\DwNumber.cs" />
-    <Compile Include="D11X5\DwNumberSpanView.cs" />
+    <Compile Include="D11X5\DwNumberSpan.cs" />
     <Compile Include="D11X5\DwSpan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSC\DmFCAn.cs" />
     <Compile Include="SSC\DwNumber.cs" />
-    <Compile Include="SSC\DwNumberSpanView.cs" />
+    <Compile Include="SSC\DwNumberSpan.cs" />
     <Compile Include="SSC\DwSpan.cs" />
   </ItemGroup>
   <ItemGroup>

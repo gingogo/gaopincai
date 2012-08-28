@@ -133,10 +133,5 @@ namespace Lottery.Utils
             }
             return elements;
         }
-
-        public List<string> GetRepeat(string separator, string format)
-        {
-            return null;
-        }
     }
 }
