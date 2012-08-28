@@ -44,7 +44,6 @@ namespace Lottery.WinService
             }
             catch (Exception ex)
             {
-                this.OnStop();
                 Logger.Instance.Write(ex.ToString());
             }
         }
