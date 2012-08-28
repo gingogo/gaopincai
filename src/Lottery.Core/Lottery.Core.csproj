@@ -45,6 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\AsyncEventWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\DoWorkEventArgs.cs" />
+    <Compile Include="Components\DoWorkEventHandler.cs" />
+    <Compile Include="Components\ProgressChangedEventArgs.cs" />
+    <Compile Include="Components\ProgressChangedEventHandler.cs" />
+    <Compile Include="Components\WorkerCompletedEventArgs.cs" />
+    <Compile Include="Components\WorkerCompletedEventHandler.cs" />
     <Compile Include="Configuration\ConfigHelper.cs" />
     <Compile Include="Data.SQLServer\DataAccess\BaseDataAccess.cs" />
     <Compile Include="Data.SQLServer\DataAccess\BaseSelect.cs" />

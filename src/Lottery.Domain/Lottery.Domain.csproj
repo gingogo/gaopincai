@@ -41,15 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis\Formula\FFG.cs" />
-    <Compile Include="Components\AsyncEventWorker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Components\DoWorkEventArgs.cs" />
-    <Compile Include="Components\DoWorkEventHandler.cs" />
-    <Compile Include="Components\ProgressChangedEventArgs.cs" />
-    <Compile Include="Components\ProgressChangedEventHandler.cs" />
-    <Compile Include="Components\WorkerCompletedEventArgs.cs" />
-    <Compile Include="Components\WorkerCompletedEventHandler.cs" />
     <Compile Include="Downloader\BaseDownloader.cs" />
     <Compile Include="Downloader\EventParameter.cs" />
     <Compile Include="Downloader\D11X5Downloader.cs" />
