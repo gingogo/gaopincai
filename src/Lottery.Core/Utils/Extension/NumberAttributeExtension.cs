@@ -8,17 +8,93 @@ namespace Lottery.Utils
     public static class NumberAttributeExtension
     {
         /// <summary>
-        /// 把以英文逗号分隔的数字字符串转换成List集合
+        /// 把以英文逗号分隔的数字字符串转换成整型List集合
         /// </summary>
         /// <param name="str">英文逗号分隔的数字字符串</param>
         /// <returns>List集合</returns>
         public static List<int> ToList(this string str)
         {
-            string[] arr = str.Split(',');
+            return str.ToList(',');
+        }
+
+        /// <summary>
+        /// 把以某字符分隔的数字字符串转换成整型List集合
+        /// </summary>
+        /// <param name="str">英文逗号分隔的数字字符串</param>
+        /// <param name="separator">分隔字符</param>
+        /// <returns>List集合</returns>
+        public static List<int> ToList(this string str, char separator)
+        {
+            string[] arr = str.Split(separator);
             List<int> digits = new List<int>();
             foreach (string e in arr)
                 digits.Add(int.Parse(e));
             return digits;
+        }
+
+        /// <summary>
+        /// 把数字集合转换成指定分隔符连接的字符串。
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <returns></returns>
+        public static string ToString(this IEnumerable<int> digits)
+        {
+            return string.Join(string.Empty, digits.ToArray());
+        }
+
+        /// <summary>
+        /// 把数字集合转换成指定分隔符连接的字符串。
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <param name="sepertor">分隔字符</param>
+        /// <returns></returns>
+        public static string ToString(this IEnumerable<int> digits,string separator)
+        {
+            return string.Join(separator, digits.ToArray());
+        }
+
+        /// <summary>
+        /// 把数字集合格式化成D2格式的字符串。
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <returns></returns>
+        public static string Format(this IEnumerable<int> digits)
+        {
+            return digits.Format("D2", string.Empty);
+        }
+
+        /// <summary>
+        /// 把数字集合格式化成指定格式的字符串
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <param name="format">格式化分格</param>
+        /// <param name="separator">分隔符</param>
+        /// <returns></returns>
+        public static string Format(this IEnumerable<int> digits, string format, string separator)
+        {
+            return string.Join(separator, digits.Select(x => x.ToString(format)).ToArray());
+        }
+
+        /// <summary>
+        /// 把数字指定分格的字符串。
+        /// </summary>
+        /// <param name="num">数字</param>
+        /// <param name="format">格式化分格</param>
+        /// <param name="separator">分隔符</param>
+        /// <returns></returns>
+        public static string Format(this int num, string format, string separator)
+        {
+            return string.Join(separator, num.ToString(format).ToArray());
+        }
+
+        /// <summary>
+        /// 获取号码的尾数。
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <returns>最后一个字符</returns>
+        public static int GetWei(this int number)
+        {
+            return number.ToString().GetWei();
         }
 
         /// <summary>
@@ -58,7 +134,7 @@ namespace Lottery.Utils
         /// </summary>
         /// <param name="digits">号码的各位数字集合</param>
         /// <returns>0|1|2</returns>
-        public static string Get012(this IEnumerable<int> digits)
+        public static string GetLu012(this IEnumerable<int> digits)
         {
             List<string> result = new List<string>(digits.Count());
             foreach (int e in digits)
@@ -131,7 +207,9 @@ namespace Lottery.Utils
         /// <returns>AC值</returns>
         public static int GetAC(this IList<int> digits)
         {
-            int r = digits.Count();
+            if (digits.Count <= 1) return 0;
+
+            int r = digits.Count;
             var comb = new Combinations<int>(digits, 2);
             var substracts = new List<int>(comb.Count);
             foreach (var number in comb)
@@ -154,9 +232,22 @@ namespace Lottery.Utils
         /// <summary>
         /// 获取号码某一属性(大小，单双，质合，012路)，的比例
         /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <returns>属性与统计个数字典</returns>
+        public static Dictionary<int, int> ToDictionary(this IEnumerable<int> digits, Func<int, int> func)
+        {
+            return digits.Select(func)
+                .GroupBy(x => x)
+                .OrderByDescending(x => x.Key)
+                .ToDictionary(k => k.Key, v => v.Count());
+        }
+
+        /// <summary>
+        /// 获取号码某一属性(大小，单双，质合，012路)，的比例
+        /// </summary>
         /// <param name="str">以英文|号分隔的字符串</param>
         /// <returns>属性与统计个数字典</returns>
-        public static Dictionary<char, int> GetAttributeCountDict(this string str)
+        public static Dictionary<char, int> ToDictionary(this string str)
         {
             return str.GroupBy(x => x)
                 .OrderByDescending(x => x.Key)
@@ -168,11 +259,21 @@ namespace Lottery.Utils
         /// </summary>
         /// <param name="str">以英文|号分隔的字符串</param>
         /// <returns>属性与统计个数降序字符串，用英文逗号分隔(如：1,0)</returns>
-        public static string GetAttributeCountStr(this string str)
+        public static string ToCountString(this string str)
         {
             return string.Join(",", str.GroupBy(x => x)
                 .OrderByDescending(x => x.Key)
                 .ToDictionary(k => k.Key, v => v.Count()).Values.ToArray());
+        }
+
+        /// <summary>
+        /// 获取号码某一属性(大小，单双，质合，012路)，的比例
+        /// </summary>
+        /// <param name="str">以英文|号分隔的字符串</param>
+        /// <returns>属性与统计个数降序字符串，用英文逗号分隔(如：1,0)</returns>
+        public static int Count(this string str,string ch)
+        {
+            return str.Split('|').Where(x => x.Equals(ch)).Count();
         }
     }
 }

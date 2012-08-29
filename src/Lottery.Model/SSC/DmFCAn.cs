@@ -340,5 +340,13 @@ namespace Lottery.Model.SSC
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20}",
+                this._id, this._number, this._daXiao, this._danShuang, this._ziHe, this._lu012, this._he, this._heWei, this._daCnt,
+                this._xiaoCnt, this._danCnt, this._shuangCnt, this._ziCnt, this._heCnt, this._lu0Cnt, this._lu1Cnt, this._lu2Cnt,
+                this._ji, this._jiWei, this._kuaDu, this._aC);
+        }
     }
 }

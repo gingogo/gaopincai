@@ -55,7 +55,8 @@ namespace Lottery.Test
 
         static void DmFCAnTest()
         {
-            ETL.D11X5.ImportDmFCAn.Update();
+            //ETL.D11X5.ImportDmFCAn.Add("txt");
+            //ETL.SCC.ImportDmFCAn.Add("txt");
         }
 
         static void StatTest()

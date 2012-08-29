@@ -79,22 +79,22 @@ namespace Lottery.Data.SQLServer.D11X5
                 string[] arr = code.Split(',');
                 DwNumber number = new DwNumber();
                 number.Code = code;
+                number.Date = date;
+                number.P = p;
+                number.N = n;
+                number.Seq = this.Count + 1;
                 number.D1 = ConvertHelper.GetInt32(arr[0]);
                 number.D2 = ConvertHelper.GetInt32(arr[1]);
                 number.D3 = ConvertHelper.GetInt32(arr[2]);
                 number.D4 = ConvertHelper.GetInt32(arr[3]);
                 number.D5 = ConvertHelper.GetInt32(arr[4]);
                 number.Created = ConvertHelper.GetDateTime(datetime);
-                number.Date = date;
-                number.P = p;
-                number.N = n;
                 number.F5 = code.Replace(",", "");
                 number.F2 = number.F5.Substring(0, 4);
                 number.F3 = number.F5.Substring(0, 6);
                 number.C2 = NumberBiz.Instance.GetC2Id(string.Format("{0},{1}", arr[0], arr[1]));
                 number.C3 = NumberBiz.Instance.GetC3Id(string.Format("{0},{1},{2}", arr[0], arr[1], arr[2]));
                 number.A5 = NumberBiz.Instance.GetA5Id(code);
-                number.Seq = this.Count + 1;
 
                 this.SaveToDB(number);
             }

@@ -19,11 +19,10 @@ namespace Lottery.ETL.SCC
             List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("SSC");
             foreach (var category in categories)
             {
-                if (category.DbName.IndexOf("JiangX") == -1) continue;
-                //Modify(category.DbName, "D1");
-                //Modify(category.DbName, "P2");
-                //Modify(category.DbName, "P3");
-                //Modify(category.DbName, "P4");
+                Modify(category.DbName, "D1");
+                Modify(category.DbName, "P2");
+                Modify(category.DbName, "P3");
+                Modify(category.DbName, "P4");
                 //Modify(category.DbName, "P5");
                 Modify(category.DbName, "C2");
                 Modify(category.DbName, "C3");
@@ -38,39 +37,38 @@ namespace Lottery.ETL.SCC
             var numbers = biz.GetAll("Id", "Number");
             foreach (var number in numbers)
             {
-                string[] arr = number.Number.Split(' ');
-                List<int> digits = new List<int>();
-                foreach (string str in arr)
-                    digits.Add(int.Parse(str));
+                List<int> digits = number.Number.ToList(' ');
+                number.ZiHe = digits.GetZiHe();
+                number.ZiCnt = number.ZiHe.Count("1");
+                number.HeCnt = number.ZiHe.Count("0");
+                number.Ji = digits.GetJi();
+                number.JiWei = number.Ji.GetWei();
+                number.KuaDu = digits.GetKuaDu();
+                number.AC = digits.GetAC();
 
-                string[] ziHe = NumberHelper.GetZiHe(digits).Split(',');
-                number.ZiHe = ziHe[0];
-                number.ZiCnt = int.Parse(ziHe[1]);
-                number.HeCnt = int.Parse(ziHe[2]);
-                number.Ji = NumberHelper.GetJi(digits);
-                number.JiWei = NumberHelper.GetWei(number.Ji.ToString());
-                number.KuaDu = NumberHelper.GetKuaDu(digits);
-                number.AC = type.Equals("D1") ? 0 : NumberHelper.GetAC(digits);
-
-                biz.Modify(number, number.Id, DmFCAn.C_ZiHe, DmFCAn.C_ZiCnt, DmFCAn.C_HeCnt,
-                    DmFCAn.C_Ji, DmFCAn.C_JiWei, DmFCAn.C_KuaDu, DmFCAn.C_AC);
+                //biz.Modify(number, number.Id, DmFCAn.C_ZiHe, DmFCAn.C_ZiCnt, DmFCAn.C_HeCnt,
+                //    DmFCAn.C_Ji, DmFCAn.C_JiWei, DmFCAn.C_KuaDu, DmFCAn.C_AC);
             }
         }
 
-        public static void Start()
+        /// <summary>
+        /// 导入时时彩所有玩法的号码及相关属性到指定输出设备
+        /// </summary>
+        /// <param name="output">db|txt</param>
+        public static void Add(string output)
         {
             List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("SSC");
             foreach (var category in categories)
             {
-                P(category.DbName, "D1", 1, "db");
-                P(category.DbName, "P2", 2, "db");
-                P(category.DbName, "P3", 3, "db");
-                P(category.DbName, "P4", 4, "db");
-                P(category.DbName, "P5", 5, "db");
-                C(category.DbName, "C2", 2, "db");
-                C(category.DbName, "C3", 3, "db");
-                C(category.DbName, "C33", 3, "db");
-                C(category.DbName, "C36", 3, "db");
+                P(category.DbName, "D1", 1, output);
+                P(category.DbName, "P2", 2, output);
+                P(category.DbName, "P3", 3, output);
+                //P(category.DbName, "P4", 4, output);
+               //P(category.DbName, "P5", 5, output);
+                C(category.DbName, "C2", 2, output);
+                C(category.DbName, "C3", 3, output);
+                C(category.DbName, "C33", 3, output);
+                C(category.DbName, "C36", 3, output);
             }
         }
 
@@ -81,8 +79,7 @@ namespace Lottery.ETL.SCC
             string format = "D" + length;
             for (int i = 0; i < count; i++)
             {
-                string number = string.Join(",",i.ToString(format).ToArray());
-                list.Add(number);
+                list.Add(i.Format(format, ","));
             }
 
             if (output.Equals("txt"))
@@ -110,8 +107,8 @@ namespace Lottery.ETL.SCC
                 Permutations<char> p = new Permutations<char>(digits, length);
                 List<string> pn = p.Get(",");
                 if (pn.Exists(x => list.Contains(x))) continue;
-                string number = string.Join(",", i.ToString(format).ToArray());
-                list.Add(number);
+
+                list.Add(i.Format(format, ","));
             }
 
             if (output.Equals("txt"))
@@ -127,43 +124,49 @@ namespace Lottery.ETL.SCC
         {
             string fileName = string.Format(@"d:\{0}_{1}.txt", name, type);
             StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8);
-            List<string> results = NumberHelper.GetComputeResult(list, 4);
-            results.ForEach(writer.WriteLine);
+            foreach (var str in list)
+            {
+                var dto = GetDmFCAn(str.ToList());
+                writer.WriteLine(dto.ToString());
+            }
             writer.Close();
         }
 
         private static void SaveToDB(string name, string type, List<string> list)
         {
             DmFCAnBiz biz = new DmFCAnBiz(name, type);
-            List<string> results = NumberHelper.GetComputeResult(list, 4);
-            foreach (string result in results)
+            foreach (string str in list)
             {
-                string[] arr = result.Split(',');
-                DmFCAn dto = new DmFCAn();
-                dto.Id = arr[0];
-                dto.Number = arr[1];
-                dto.He = int.Parse(arr[2]);
-                dto.HeWei = int.Parse(arr[3]);
-                dto.DaXiao = arr[4];
-                dto.DaCnt = int.Parse(arr[5]);
-                dto.XiaoCnt = int.Parse(arr[6]);
-                dto.DanShuang = arr[7];
-                dto.DanCnt = int.Parse(arr[8]);
-                dto.ShuangCnt = int.Parse(arr[9]);
-                dto.ZiHe = arr[10];
-                dto.ZiCnt = int.Parse(arr[11]);
-                dto.HeCnt = int.Parse(arr[12]);
-                dto.Lu012 = arr[13];
-                dto.Lu0Cnt = int.Parse(arr[14]);
-                dto.Lu1Cnt = int.Parse(arr[15]);
-                dto.Lu2Cnt = int.Parse(arr[16]);
-                dto.Ji = int.Parse(arr[17]);
-                dto.JiWei = int.Parse(arr[18]);
-                dto.KuaDu = int.Parse(arr[19]);
-                dto.AC = int.Parse(arr[20]);
-
-                biz.Add(dto);
+                //biz.Add(GetDmFCAn(str.ToList()));
             }
+        }
+
+        private static DmFCAn GetDmFCAn(IList<int> list)
+        {
+            DmFCAn dto = new DmFCAn();
+            dto.Id = list.ToString("");
+            dto.Number = list.ToString(" ");
+            dto.DaXiao = list.GetDaXiao(4);
+            dto.DanShuang = list.GetDanShuang();
+            dto.ZiHe = list.GetZiHe();
+            dto.Lu012 = list.GetLu012();
+            dto.He = list.GetHe();
+            dto.HeWei = dto.He.GetWei();
+            dto.DaCnt = dto.DaXiao.Count("1");
+            dto.XiaoCnt = dto.DaXiao.Count("0");
+            dto.DanCnt = dto.DanShuang.Count("1");
+            dto.ShuangCnt = dto.DanShuang.Count("0");
+            dto.ZiCnt = dto.ZiHe.Count("1");
+            dto.HeCnt = dto.ZiHe.Count("0");
+            dto.Lu0Cnt = dto.Lu012.Count("0");
+            dto.Lu1Cnt = dto.Lu012.Count("1");
+            dto.Lu2Cnt = dto.Lu012.Count("2");
+            dto.Ji = list.GetJi();
+            dto.JiWei = dto.Ji.GetWei();
+            dto.KuaDu = list.GetKuaDu();
+            dto.AC = list.GetAC();
+
+            return dto;
         }
     }
 }
