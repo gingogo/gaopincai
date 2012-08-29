@@ -302,6 +302,7 @@ namespace Lottery.Model.SSC
             set { this._lu2Cnt = value; }
         }
 
+        /// <summary>
         /// 获取或设置
         /// </summary>
         [Column(Name = "Ji")]

@@ -9,6 +9,7 @@ namespace Lottery.Model.SSC
     {
         public static string EntityName = "DwNumber";
 
+        private string _code;
         private long _p;
         private int _d1;
         private int _d2;
@@ -44,6 +45,49 @@ namespace Lottery.Model.SSC
         public static readonly string C_C3 = "C3";
         public static readonly string C_Date = "Date";
         public static readonly string C_Created = "Created";
+
+        #region 非表字段属性
+
+        public string C33
+        {
+            get
+            {
+                return this._c33 ?? string.Empty;
+            }
+            set
+            {
+                this._c33 = value;
+            }
+        }
+
+        public string C36
+        {
+            get
+            {
+                return this._c36 ?? string.Empty;
+            }
+            set
+            {
+                this._c36 = value;
+            }
+        }
+
+        /// <summary>
+        /// 以英文逗号分隔的开奖号码(如：1,2,3,4,5)
+        /// </summary>
+        public string Code
+        {
+            get
+            {
+                return this._code;
+            }
+            set
+            {
+                this._code = value;
+            }
+        }
+
+        #endregion
 
         [Column(Name = "P")]
         public long P
@@ -198,30 +242,6 @@ namespace Lottery.Model.SSC
             set
             {
                 this._c3 = value;
-            }
-        }
-
-        public string C33
-        {
-            get
-            {
-                return this._c33 ?? string.Empty;
-            }
-            set
-            {
-                this._c33 = value;
-            }
-        }
-
-        public string C36
-        {
-            get
-            {
-                return this._c36 ?? string.Empty;
-            }
-            set
-            {
-                this._c36 = value;
             }
         }
 

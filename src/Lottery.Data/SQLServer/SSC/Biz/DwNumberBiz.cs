@@ -79,6 +79,7 @@ namespace Lottery.Data.SQLServer.SSC
 
                 string[] arr = code.Split(',');
                 DwNumber number = new DwNumber();
+                number.Code = code;
                 number.Date = date;
                 number.P = p;
                 number.N = n;
@@ -95,8 +96,6 @@ namespace Lottery.Data.SQLServer.SSC
                 number.P2 = number.P5.Substring(3);
                 number.C2 = NumberBiz.Instance.GetC2Id(number.P2);
                 number.C3 = NumberBiz.Instance.GetC3Id(number.P3);
-                //number.C33 = NumberBiz.Instance.GetC33Id(number.P3);
-                //number.C36 = NumberBiz.Instance.GetC36Id(number.P3);
 
                 this.SaveToDB(number);
             }

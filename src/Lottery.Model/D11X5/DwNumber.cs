@@ -9,6 +9,7 @@ namespace Lottery.Model.D11X5
     {
         public static string EntityName = "DwNumber";
 
+        private string _code;
         private long _p;
         private int _d1;
         private int _d2;
@@ -42,6 +43,25 @@ namespace Lottery.Model.D11X5
         public static readonly string C_A5 = "A5";
         public static readonly string C_Date = "Date";
         public static readonly string C_Created = "Created";
+
+        #region 非表字段属性
+
+        /// <summary>
+        /// 以英文逗号分隔的开奖号码(如：01,02,03,04,05)
+        /// </summary>
+        public string Code
+        {
+            get
+            {
+                return this._code;
+            }
+            set
+            {
+                this._code = value;
+            }
+        }
+
+        #endregion
 
         [Column(Name = "P")]
         public long P

@@ -78,6 +78,7 @@ namespace Lottery.Data.SQLServer.D11X5
 
                 string[] arr = code.Split(',');
                 DwNumber number = new DwNumber();
+                number.Code = code;
                 number.D1 = ConvertHelper.GetInt32(arr[0]);
                 number.D2 = ConvertHelper.GetInt32(arr[1]);
                 number.D3 = ConvertHelper.GetInt32(arr[2]);

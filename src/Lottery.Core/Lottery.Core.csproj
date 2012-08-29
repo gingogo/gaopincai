@@ -127,6 +127,7 @@
     <Compile Include="Utils\Extension\EnumerableExtension.cs" />
     <Compile Include="Utils\Extension\EnumExtension.cs" />
     <Compile Include="Utils\Extension\GuidExtension.cs" />
+    <Compile Include="Utils\Extension\NumberAttributeExtension.cs" />
     <Compile Include="Utils\Extension\StringExtension.cs" />
     <Compile Include="Utils\Helper\CheckArgument.cs" />
     <Compile Include="Utils\Helper\Constants.cs" />
