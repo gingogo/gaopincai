@@ -63,13 +63,6 @@ namespace Lottery.Data.SQLServer.SSC
             //}
         }
 
-        public string GetNumberIdByProperty(DwNumber dto, string name)
-        {
-            if (dto[name] == null)
-                throw new ArgumentOutOfRangeException("name");
-            return dto[name].ToString().Trim();
-        }
-
         public void Add(long p, int n, string code, int date, string datetime)
         {
             lock (lockObj)

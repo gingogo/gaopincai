@@ -281,3 +281,14 @@ JiWei = t2.JiWei,
 KuaDu = t2.KuaDu,
 AC = t2.AC
 from LotteryChongQSSC.dbo.DmP5 t2 where DmP5.Id = t2.Id;
+
+drop table dbo.DwACSpan;
+drop table dbo.DwDanShuangSpan ;
+drop table  dbo.DwDaXiaoSpan;
+drop table  dbo.DwHeSpan;
+drop table  dbo.DwHeWeiSpan;
+drop table  dbo.DwJiSpan;
+drop table   dbo.DwJiWeiSpan;
+drop table    dbo.DwKuaDuSpan;
+drop table   dbo.DwLu012Span;
+drop table   dbo.DwZiHeSpan;

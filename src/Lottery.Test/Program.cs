@@ -16,7 +16,7 @@ namespace Lottery.Test
         static void Main(string[] args)
         {
             //DownServiceTest();
-            //StatTest();
+            StatTest();
             //ExtractLotteryData();
             //DmFCAnTest();
             Console.WriteLine("Finished");
@@ -89,12 +89,13 @@ namespace Lottery.Test
                 //new Statistics.D11X5.A5.A5PeroidSpanLimit(),
                 //new Statistics.D11X5.F2.F2PeroidSpanLimit()
                 //new Statistics.D11X5.Peroid1008Count()
-                new Statistics.SSC.PeroidSpan()
+                //new Statistics.SSC.PeroidSpan()
+                new Statistics.D11X5.DmSpan()
             };
 
             foreach (var stat in stats)
             {
-                stat.Stat();
+                stat.Stat(Statistics.OutputType.Database, true);
             }
         }
 

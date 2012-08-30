@@ -38,7 +38,7 @@ namespace Lottery.Statistics
 
         protected virtual void AsyncStatAll(DmCategory category, OutputType outputType)
         {
-            this.asyncStatDlgt.BeginInvoke(category.Name, outputType, null, null);
+            this.asyncStatDlgt.BeginInvoke(category.DbName, outputType, null, null);
         }
 
         protected virtual void SyncStatAll(DmCategory category, OutputType outputType)
@@ -50,12 +50,11 @@ namespace Lottery.Statistics
         {
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "stat");
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            return string.Format("{0}{1}", path, fileName);
+            return string.Format("{0}\\{1}", path, fileName);
         }
 
         protected virtual void Stat(string dbName,OutputType outputType)
         {
-            throw new NotImplementedException();
         }
 
         protected abstract List<DmCategory> GetCatgories();

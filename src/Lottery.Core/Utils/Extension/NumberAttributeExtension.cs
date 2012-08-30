@@ -54,6 +54,41 @@ namespace Lottery.Utils
         }
 
         /// <summary>
+        /// 把数字字符串按指定长度进行英文逗号分隔。
+        /// </summary>
+        /// <param name="obj">字符串对象</param>
+        /// <param name="len">分隔后每个组的长度</param>
+        /// <returns></returns>
+        public static string ToString(this object obj, int len)
+        {
+            return obj.ToString(len, ",");
+        }
+
+        /// <summary>
+        /// 把数字字符串按指定长度进行分隔。
+        /// </summary>
+        /// <param name="obj">字符串对象</param>
+        /// <param name="length">分隔后每个组的长度</param>
+        /// <param name="separator">分隔字符</param>
+        /// <returns></returns>
+        public static string ToString(this object obj,int length, string separator)
+        {
+            string str = obj.ToString();
+            if (length == 1)
+                return string.Join(separator, str.ToArray());
+
+            if (str.Length <= length) return str;
+
+            List<string> list = new List<string>(5);
+            for (int i = 0; i < str.Length; i += length)
+            {
+                list.Add(str.Substring(i, length));
+            }
+
+            return string.Join(separator, list.ToArray());
+        }
+
+        /// <summary>
         /// 把数字集合格式化成D2格式的字符串。
         /// </summary>
         /// <param name="digits">号码的各位数字集合</param>
@@ -195,6 +230,7 @@ namespace Lottery.Utils
         /// <returns>跨度</returns>
         public static int GetKuaDu(this IEnumerable<int> digits)
         {
+            if (digits.Count() <= 1) return digits.Max();
             return (digits.Max() - digits.Min());
         }
 
@@ -276,11 +312,25 @@ namespace Lottery.Utils
             return str.Split('|').Where(x => x.Equals(ch)).Count();
         }
 
+         /// <summary>
+        /// 获取号码的各维度值。
+        /// </summary>
+        /// <param name="obj">某一种类型的号码字符串对象</param>
+        /// <param name="length">每几个数字为一组以英文逗号分隔</param>
+        /// <param name="dmName">维度名称,区分大小写,取值为:(Peroid,DaXiao,DanShuang,ZiHe,Lu012,He,HeWei,Ji,JiWei,KuaDu,AC)</param>
+        /// <param name="daXiaoMiddle">大小分隔值</param>
+        /// <returns></returns>
+        public static string GetDmValue(this object obj, int length, string dmName, int daXiaoMiddle)
+        {
+            return obj.ToString(length).GetDmValue(dmName, daXiaoMiddle);
+        }
+
         /// <summary>
         /// 获取号码的各维度值。
         /// </summary>
         /// <param name="str">某一种类型的号码字符串,每个数字以英文逗号分隔</param>
         /// <param name="dmName">维度名称,区分大小写,取值为:(Peroid,DaXiao,DanShuang,ZiHe,Lu012,He,HeWei,Ji,JiWei,KuaDu,AC)</param>
+        /// <param name="daXiaoMiddle">大小分隔值</param>
         /// <returns></returns>
         public static string GetDmValue(this string str, string dmName, int daXiaoMiddle)
         {
@@ -290,6 +340,7 @@ namespace Lottery.Utils
             if (dmName.Equals("DaXiao")) return digits.GetDaXiao(daXiaoMiddle);
             if (dmName.Equals("DanShuang")) return digits.GetDanShuang();
             if (dmName.Equals("ZiHe")) return digits.GetZiHe();
+            if (dmName.Equals("Lu012")) return digits.GetLu012();
             if (dmName.Equals("He")) return digits.GetHe().ToString();
             if (dmName.Equals("HeWei")) return digits.GetHe().GetWei().ToString();
             if (dmName.Equals("Ji")) return digits.GetJi().ToString();

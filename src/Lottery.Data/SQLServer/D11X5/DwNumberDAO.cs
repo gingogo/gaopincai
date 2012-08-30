@@ -135,6 +135,13 @@ namespace Lottery.Data.SQLServer.D11X5
             return (result != null) ? result.ToString() : null;
         }
 
+        public List<DwDmFCANumber> SelectDmNumbersOrderBySeq(string numberType, SortTypeEnum sortType)
+        {
+            string sqlFormat = "select t1.*,t2.{0},t2.Seq from Dm{0} t1,{1} t2 where t1.Id = t2.{0} order by t2.Seq {2};";
+            string sqlCmd = string.Format(sqlFormat, numberType, this._tableName, sortType.ToString());
+            return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToDwDmFCANumber);
+        }
+
         #region 私有方法
 
         private Dictionary<string, int> SelectPeroidSpansByNumberTypes(DwNumber number, string filter, params string[] numberTypes)
@@ -180,8 +187,7 @@ namespace Lottery.Data.SQLServer.D11X5
             sqlFormat = "select top 1 t2.{0},t2.{1} from Dm{0} t1,{2} t2 where t1.Id = t2.{0} and t2.{3} = '{4}' {5} order by t2.{1} desc;";
             foreach (string numberType in numberTypes)
             {
-                string typeValue = number[numberType].ToString();
-                string dmValue = typeValue.GetDmValue(dmName, 5);
+                string dmValue = number[numberType].GetDmValue(2, dmName, 5);
                 batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, dmName, dmValue, filter);
             }
 

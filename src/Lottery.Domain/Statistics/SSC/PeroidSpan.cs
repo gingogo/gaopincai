@@ -18,7 +18,7 @@ namespace Lottery.Statistics.SSC
         protected override void Stat(string dbName,OutputType outputType)
         {
             DwNumberBiz biz = new DwNumberBiz(dbName);
-            List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "P", SortTypeEnum.ASC, null);
+            List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
             //List<DwNumber> allNumbers = biz.DataAccessor.SelectTopN(10, string.Empty, "P", SortTypeEnum.ASC, null);
             string[] numberTypes = new string[] { "D1", "P2", "P3", "P4", "P5", "C2", "C3" };
 
@@ -26,7 +26,8 @@ namespace Lottery.Statistics.SSC
                 this.Stat(numbers, dbName, numberTypes, null);
             else
             {
-                StreamWriter writer = new StreamWriter(this.GetOutputFileName("PeroidSpan.txt"), false, Encoding.UTF8);
+                string fileName = string.Format("{0}_{1}.txt", dbName, "PeroidSpan");
+                StreamWriter writer = new StreamWriter(this.GetOutputFileName(fileName), false, Encoding.UTF8);
                 this.Stat(numbers, dbName, numberTypes, writer);
                 writer.Close();
             }

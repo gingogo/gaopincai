@@ -120,6 +120,12 @@ namespace Lottery.Data.SQLServer.SSC
                 return null;
         }
 
+        public List<DwDmFCANumber> SelectDmNumbersOrderBySeq(string numberType, SortTypeEnum sortType)
+        {
+           string sqlFormat = "select t1.*,t2.{0},t2.Seq from Dm{0} t1,{1} t2 where t1.Id = t2.{0} order by t2.Seq {2};";
+           string sqlCmd = string.Format(sqlFormat, numberType, this._tableName, sortType.ToString());
+           return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToDwDmFCANumber);
+        }
 
         #region 私有方法
 
@@ -166,8 +172,7 @@ namespace Lottery.Data.SQLServer.SSC
             sqlFormat = "select top 1 t2.{0},t2.{1} from Dm{0} t1,{2} t2 where t1.Id = t2.{0} and t2.{3} = '{4}' {5} order by t2.{1} desc;";
             foreach (string numberType in numberTypes)
             {
-                string typeValue = number[numberType].ToString();
-                string dmValue = typeValue.GetDmValue(dmName, 4);
+                string dmValue = number[numberType].GetDmValue(1, dmName, 4);
                 batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, dmName, dmValue, filter);
             }
 
