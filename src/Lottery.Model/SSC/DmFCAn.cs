@@ -301,7 +301,6 @@ namespace Lottery.Model.SSC
             get { return this._lu2Cnt; }
             set { this._lu2Cnt = value; }
         }
-
         /// <summary>
         /// 获取或设置
         /// </summary>

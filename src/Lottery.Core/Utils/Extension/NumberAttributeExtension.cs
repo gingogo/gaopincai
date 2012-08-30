@@ -275,5 +275,29 @@ namespace Lottery.Utils
         {
             return str.Split('|').Where(x => x.Equals(ch)).Count();
         }
+
+        /// <summary>
+        /// 获取号码的各维度值。
+        /// </summary>
+        /// <param name="str">某一种类型的号码字符串,每个数字以英文逗号分隔</param>
+        /// <param name="dmName">维度名称,区分大小写,取值为:(Peroid,DaXiao,DanShuang,ZiHe,Lu012,He,HeWei,Ji,JiWei,KuaDu,AC)</param>
+        /// <returns></returns>
+        public static string GetDmValue(this string str, string dmName, int daXiaoMiddle)
+        {
+            if (dmName.Equals("Peroid")) return string.Empty;
+
+            List<int> digits = str.ToList();
+            if (dmName.Equals("DaXiao")) return digits.GetDaXiao(daXiaoMiddle);
+            if (dmName.Equals("DanShuang")) return digits.GetDanShuang();
+            if (dmName.Equals("ZiHe")) return digits.GetZiHe();
+            if (dmName.Equals("He")) return digits.GetHe().ToString();
+            if (dmName.Equals("HeWei")) return digits.GetHe().GetWei().ToString();
+            if (dmName.Equals("Ji")) return digits.GetJi().ToString();
+            if (dmName.Equals("JiWei")) return digits.GetJi().GetWei().ToString();
+            if (dmName.Equals("KuaDu")) return digits.GetKuaDu().ToString();
+            if (dmName.Equals("AC")) return digits.GetAC().ToString();
+
+            return string.Empty;
+        }
     }
 }

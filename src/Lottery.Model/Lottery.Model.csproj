@@ -49,6 +49,7 @@
     <Compile Include="D11X5\DwSpan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSC\DmFCAn.cs" />
+    <Compile Include="SSC\DwDmFCANumber.cs" />
     <Compile Include="SSC\DwNumber.cs" />
     <Compile Include="SSC\DwNumberSpan.cs" />
     <Compile Include="SSC\DwSpan.cs" />

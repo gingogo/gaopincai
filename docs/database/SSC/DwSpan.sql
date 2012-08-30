@@ -111,3 +111,70 @@ CREATE TABLE [dbo].[DwLu012Span](
 ) ON [PRIMARY]
 GO
 
+CREATE TABLE [dbo].[DwJiSpan](
+	[P] [bigint]  NOT NULL,
+	[D1Spans] [int] NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[P4Spans] [int] NOT NULL,
+	[P5Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwJiSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[DwJiWeiSpan](
+	[P] [bigint]  NOT NULL,
+	[D1Spans] [int] NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[P4Spans] [int] NOT NULL,
+	[P5Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwJiWeiSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+CREATE TABLE [dbo].[DwKuaDuSpan](
+	[P] [bigint]  NOT NULL,
+	[D1Spans] [int] NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[P4Spans] [int] NOT NULL,
+	[P5Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwKuaDuSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+CREATE TABLE [dbo].[DwACSpan](
+	[P] [bigint]  NOT NULL,
+	[D1Spans] [int] NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[P4Spans] [int] NOT NULL,
+	[P5Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwACSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+

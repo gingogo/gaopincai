@@ -100,18 +100,26 @@ namespace Lottery.Data.SQLServer.D11X5
             }
         }
 
-        private void AddPeroidSpan(DwNumber number, string filter)
+        private void AddSpan(DwNumber number, string filter)
         {
-            Dictionary<string, int> spanDict = this.DataAccessor.SelectPeroidSpansByNumberTypes(number, filter);
-            DwSpan span = new DwSpan() { P = number.P };
-            foreach (string key in spanDict.Keys)
-            {
-                string propertyName = string.Format("{0}Spans", key);
-                span[propertyName] = spanDict[key];
-            }
+            string[] dmNames = new string[] {
+                "Peroid", "DaXiao", "DanShuang", "ZiHe", "Lu012", 
+                "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" 
+            };
 
-            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName("Peroid"), this.DataAccessor.ConnectionString);
-            spanDao.Insert(span);
+            foreach (string dmName in dmNames)
+            {
+                Dictionary<string, int> spanDict = this.DataAccessor.SelectSpansByNumberTypes(number, dmName, filter);
+                DwSpan span = new DwSpan() { P = number.P };
+                foreach (string key in spanDict.Keys)
+                {
+                    string propertyName = string.Format("{0}Spans", key);
+                    span[propertyName] = spanDict[key];
+                }
+
+                //DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), this.DataAccessor.ConnectionString);
+                //spanDao.Insert(span);
+            }
         }
 
         private void SaveToDB(DwNumber number)
@@ -120,7 +128,7 @@ namespace Lottery.Data.SQLServer.D11X5
             option.IsolationLevel = IsolationLevel.ReadUncommitted;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
             {
-                this.AddPeroidSpan(number, string.Empty);
+                this.AddSpan(number, string.Empty);
                 this.Add(number);
                 scope.Complete();
             }
