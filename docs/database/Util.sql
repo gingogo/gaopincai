@@ -292,3 +292,14 @@ drop table   dbo.DwJiWeiSpan;
 drop table    dbo.DwKuaDuSpan;
 drop table   dbo.DwLu012Span;
 drop table   dbo.DwZiHeSpan;
+
+truncate table dbo.DwACSpan;
+truncate table dbo.DwDanShuangSpan ;
+truncate table  dbo.DwDaXiaoSpan;
+truncate table  dbo.DwHeSpan;
+truncate table  dbo.DwHeWeiSpan;
+truncate table  dbo.DwJiSpan;
+truncate table  dbo.DwJiWeiSpan;
+truncate table  dbo.DwKuaDuSpan;
+truncate table  dbo.DwLu012Span;
+truncate table  dbo.DwZiHeSpan;
