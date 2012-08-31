@@ -115,8 +115,8 @@ namespace Lottery.Data.SQLServer.D11X5
                     span[propertyName] = spanDict[key];
                 }
 
-                //DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), this.DataAccessor.ConnectionString);
-                //spanDao.Insert(span);
+                DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), this.DataAccessor.ConnectionString);
+                spanDao.Insert(span);
             }
         }
 

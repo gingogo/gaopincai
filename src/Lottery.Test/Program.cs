@@ -15,7 +15,7 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
-            DownServiceTest();
+            //DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
             //DmFCAnTest();

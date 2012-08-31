@@ -109,8 +109,8 @@ namespace Lottery.Data.SQLServer.SSC
                     span[propertyName] = spanDict[key];
                 }
 
-                //DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), this.DataAccessor.ConnectionString);
-                //spanDao.Insert(span);
+                DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), this.DataAccessor.ConnectionString);
+                spanDao.Insert(span);
             }
         }
 
