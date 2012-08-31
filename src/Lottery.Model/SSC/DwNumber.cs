@@ -15,7 +15,7 @@ namespace Lottery.Model.SSC
         private int _d2;
         private int _d3;
         private int _d4;
-        private int _d5; 
+        private int _d5;
         private int _n;
         private int _seq;
         private int _date;
@@ -102,8 +102,8 @@ namespace Lottery.Model.SSC
             }
         }
 
-        [Column(Name="D1")]
-        public  int D1
+        [Column(Name = "D1")]
+        public int D1
         {
             get
             {
@@ -115,8 +115,8 @@ namespace Lottery.Model.SSC
             }
         }
 
-        [Column(Name="D2")]
-        public  int D2
+        [Column(Name = "D2")]
+        public int D2
         {
             get
             {
@@ -128,8 +128,8 @@ namespace Lottery.Model.SSC
             }
         }
 
-        [Column(Name="D3")]
-        public  int D3
+        [Column(Name = "D3")]
+        public int D3
         {
             get
             {
@@ -141,8 +141,8 @@ namespace Lottery.Model.SSC
             }
         }
 
-        [Column(Name="D4")]
-        public  int D4
+        [Column(Name = "D4")]
+        public int D4
         {
             get
             {
@@ -154,8 +154,8 @@ namespace Lottery.Model.SSC
             }
         }
 
-        [Column(Name="D5")]
-        public  int D5
+        [Column(Name = "D5")]
+        public int D5
         {
             get
             {
@@ -168,7 +168,7 @@ namespace Lottery.Model.SSC
         }
 
         [Column(Name = "P2")]
-        public  string P2
+        public string P2
         {
             get
             {
@@ -301,7 +301,7 @@ namespace Lottery.Model.SSC
         {
             string str = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16}",
                 this._p, this._d5, this._d4, this._d3, this._d2, this._d1, this._p2, this._c2, this._p3, this._c3, this._c36, this._p4, this._p5,
-                this._n, this._seq,this._date, this._created);
+                this._n, this._seq, this._date, this._created);
             return str;
         }
     }

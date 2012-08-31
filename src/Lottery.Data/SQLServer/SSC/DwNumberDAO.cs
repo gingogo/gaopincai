@@ -90,8 +90,7 @@ namespace Lottery.Data.SQLServer.SSC
 
             foreach (string numberType in numberTypes)
             {
-                string value = number[numberType].ToString();
-                DwDmFCANumber dwNumber = list.FirstOrDefault(x => x[numberType] != null && x[numberType].ToString().Equals(value));
+                DwDmFCANumber dwNumber = list.FirstOrDefault(x => x.Id != null && x.Id.Equals(numberType));
                 if (dwNumber == null)
                 {
                     spanDict.Add(numberType, -1);
@@ -168,8 +167,8 @@ namespace Lottery.Data.SQLServer.SSC
                 return batchSqlBuilder.ToString();
             }
 
-            //select top 1 t2.A5,t2.Seq from DmA5 t1,DwNumber t2 where t1.Id = t2.A5 and t1.DaXiao = 'x|x|x|x|x' order by t2.Seq desc;
-            sqlFormat = "select top 1 t2.{0},t2.{1} from Dm{0} t1,{2} t2 where t1.Id = t2.{0} and t2.{3} = '{4}' {5} order by t2.{1} desc;";
+            //select top 1 'D1|P2|xx' Id,t2.Seq from DmA5 t1,DwNumber t2 where t1.Id = t2.A5 and t1.DaXiao = 'x|x|x|x|x' order by t2.Seq desc;
+            sqlFormat = "select top 1 '{0}' Id,t2.{1} from Dm{0} t1,{2} t2 where t1.Id = t2.{0} and t1.{3} = '{4}' {5} order by t2.{1} desc;";
             foreach (string numberType in numberTypes)
             {
                 string dmValue = number[numberType].GetDmValue(1, dmName, 4);
