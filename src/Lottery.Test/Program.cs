@@ -16,9 +16,10 @@ namespace Lottery.Test
         static void Main(string[] args)
         {
             //DownServiceTest();
-            StatTest();
+            //StatTest();
             //ExtractLotteryData();
             //DmFCAnTest();
+            TransactionTest();
             Console.WriteLine("Finished");
             Console.Read();
         }
@@ -90,11 +91,13 @@ namespace Lottery.Test
                 //new Statistics.D11X5.F2.F2PeroidSpanLimit()
                 //new Statistics.D11X5.Peroid1008Count()
                 //new Statistics.SSC.PeroidSpan()
-                new Statistics.D11X5.DmSpan()
+                //new Statistics.D11X5.DmSpan()
+                new Statistics.SSC.DmSpan()
             };
 
             foreach (var stat in stats)
             {
+                //stat.Stat(Statistics.OutputType.Database, true);
                 stat.Stat(Statistics.OutputType.Database, true);
             }
         }
@@ -104,6 +107,11 @@ namespace Lottery.Test
             Combinations<int> c3 = new Combinations<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 3);
             List<string> c3s = c3.Get(",");
 
+        }
+
+        static void TransactionTest()
+        {
+            TransactionScopeTest.Commit_Should_Success();
         }
     }
 }

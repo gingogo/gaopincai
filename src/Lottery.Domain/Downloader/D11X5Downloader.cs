@@ -40,13 +40,15 @@ namespace Lottery.Downloader
                     string peroid = Regex.Match(match.Value, "<td width=\"25%\">(\\d+)期</td>", RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
                     string datetime = Regex.Match(match.Value, "<td width=\"25%\">(\\d{4}-\\d{2}-\\d{2}.*?)</td>", RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
                     string code = Regex.Match(match.Value, @"[<spans >|<span >](\d{2},\d{2},\d{2},\d{2},\d{2})[</spans>|<spans>]", RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
+                    if (string.IsNullOrEmpty(code) || code.Trim().Length == 0) continue;
+
                     int p = int.Parse(peroid);
-                    int n = int.Parse(peroid.Substring(peroid.Length - 2));
                     //把期号统一成{yyyymmddnn}
                     if (p < 2000000000) p += 2000000000;
+                    if (pSet.Contains(p)) continue;
 
-                    if (!pSet.Contains(p))
-                        biz.Add(p, n, code, intDate, datetime);
+                    int n = int.Parse(peroid.Substring(peroid.Length - 2));
+                    if (!biz.Add(p, n, code, intDate, datetime)) return false;
                 }
                 return true;
             }

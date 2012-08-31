@@ -103,7 +103,7 @@ namespace Lottery.Model.Common
 
         private String _downUrl;
 
-        private DateTime _created;
+        private DateTime _created = DateTime.Now;
 
         private String _dbName;
 
@@ -135,7 +135,7 @@ namespace Lottery.Model.Common
         [Column(Name = "Name")]
         public String Name
         {
-            get { return this._name; }
+            get { return this._name ?? string.Empty; }
             set { this._name = value; }
         }
         /// <summary>
@@ -144,7 +144,7 @@ namespace Lottery.Model.Common
         [Column(Name = "Code")]
         public String Code
         {
-            get { return this._code; }
+            get { return this._code ?? string.Empty; }
             set { this._code = value; }
         }
         /// <summary>
@@ -153,7 +153,7 @@ namespace Lottery.Model.Common
         [Column(Name = "Type")]
         public String Type
         {
-            get { return this._type; }
+            get { return this._type ?? string.Empty; }
             set { this._type = value; }
         }
         /// <summary>
@@ -162,7 +162,7 @@ namespace Lottery.Model.Common
         [Column(Name = "Peroid")]
         public String Peroid
         {
-            get { return this._peroid; }
+            get { return this._peroid ?? string.Empty; }
             set { this._peroid = value; }
         }
         /// <summary>
@@ -207,7 +207,7 @@ namespace Lottery.Model.Common
         [Column(Name = "DownIntervals")]
         public String DownIntervals
         {
-            get { return this._downIntervals; }
+            get { return this._downIntervals ?? string.Empty; }
             set { this._downIntervals = value; }
         }
         /// <summary>
@@ -216,7 +216,7 @@ namespace Lottery.Model.Common
         [Column(Name = "DownPeroid")]
         public String DownPeroid
         {
-            get { return this._downPeroid; }
+            get { return this._downPeroid ?? string.Empty; }
             set { this._downPeroid = value; }
         }
         /// <summary>
@@ -225,7 +225,7 @@ namespace Lottery.Model.Common
         [Column(Name = "DownUrl")]
         public String DownUrl
         {
-            get { return this._downUrl; }
+            get { return this._downUrl ?? string.Empty; }
             set { this._downUrl = value; }
         }
         /// <summary>
@@ -243,7 +243,7 @@ namespace Lottery.Model.Common
         [Column(Name = "DbName")]
         public String DbName
         {
-            get { return this._dbName; }
+            get { return this._dbName ?? string.Empty; }
             set { this._dbName = value; }
         }
 

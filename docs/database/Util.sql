@@ -303,3 +303,31 @@ truncate table  dbo.DwJiWeiSpan;
 truncate table  dbo.DwKuaDuSpan;
 truncate table  dbo.DwLu012Span;
 truncate table  dbo.DwZiHeSpan;
+
+select count(*) from dbo.DwNumber;
+select count(*) from dbo.DwPeroidSpan;
+select count(*) from dbo.DwACSpan;
+select count(*) from dbo.DwDanShuangSpan ;
+select count(*) from dbo.DwDaXiaoSpan;
+select count(*) from dbo.DwHeSpan;
+select count(*) from dbo.DwHeWeiSpan;
+select count(*) from dbo.DwJiSpan;
+select count(*) from dbo.DwJiWeiSpan;
+select count(*) from dbo.DwKuaDuSpan;
+select count(*) from dbo.DwLu012Span;
+select count(*) from dbo.DwZiHeSpan;
+
+select max(p) P from dbo.DwNumber;
+select max(p) P from dbo.DwPeroidSpan;
+select max(p) P from dbo.DwACSpan;
+select max(p) P from dbo.DwDanShuangSpan ;
+select max(p) P from dbo.DwDaXiaoSpan;
+select max(p) P from dbo.DwHeSpan;
+select max(p) P  from dbo.DwHeWeiSpan;
+select max(p) P from dbo.DwJiSpan;
+select max(p) P  from dbo.DwJiWeiSpan;
+select max(p) P from dbo.DwKuaDuSpan;
+select max(p) P from dbo.DwLu012Span;
+select max(p) P  from dbo.DwZiHeSpan;
+
+update DmCategory  set DownIntervals = 6 where Id in(145,147,162,164,165);

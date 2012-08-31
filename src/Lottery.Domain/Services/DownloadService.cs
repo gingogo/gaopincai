@@ -92,7 +92,7 @@ namespace Lottery.Services
                 try
                 {
                     DownParameter param = new DownParameter(date, parameter.Name, parameter.DownUrl, parameter.DbName);
-                    downloader.Down(param);
+                    if (!downloader.Down(param)) break;
                 }
                 catch (Exception exception)
                 {

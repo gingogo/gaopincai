@@ -44,13 +44,14 @@ namespace Lottery.Downloader
                     code = Regex.Replace(code, "<.*?>|[\\s]", "").Trim();
                     if (string.IsNullOrEmpty(code) || code.Length == 0) continue;
 
-                    code = string.Join(",", code.ToArray());
                     long p = long.Parse(peroid);
-                    int n = int.Parse(peroid.Substring(peroid.Length - 3));
                     //把期号统一成{yyyymmddnnn}
                     if (p < 20000000000) p += 20000000000;
-                    if (!pSet.Contains(p))
-                        biz.Add(p, n, code, intDate, datetime);
+                    if (pSet.Contains(p)) continue;
+
+                    code = string.Join(",", code.ToArray());
+                    int n = int.Parse(peroid.Substring(peroid.Length - 3));
+                    if (!biz.Add(p, n, code, intDate, datetime)) return false;
                 }
                 return true;
             }

@@ -8,6 +8,7 @@ namespace Lottery.Data.SQLServer.SSC
     using Model.SSC;
     using Utils;
     using Configuration;
+    using Logging;
 
     public class DwNumberBiz : SinglePKDataAccessBiz<DwNumberDAO, DwNumber>
     {
@@ -63,13 +64,10 @@ namespace Lottery.Data.SQLServer.SSC
             //}
         }
 
-        public void Add(long p, int n, string code, int date, string datetime)
+        public bool Add(long p, int n, string code, int date, string datetime)
         {
             lock (lockObj)
             {
-                if (string.IsNullOrEmpty(code) ||
-                    code.Trim().Length == 0) return;
-
                 string[] arr = code.Split(',');
                 DwNumber number = new DwNumber();
                 number.Code = code;
@@ -90,7 +88,7 @@ namespace Lottery.Data.SQLServer.SSC
                 number.C2 = NumberBiz.Instance.GetC2Id(number.P2);
                 number.C3 = NumberBiz.Instance.GetC3Id(number.P3);
 
-                this.SaveToDB(number);
+                return this.SaveToDB(number);
             }
         }
 
@@ -116,17 +114,27 @@ namespace Lottery.Data.SQLServer.SSC
             }
         }
 
-        private void SaveToDB(DwNumber number)
+        private bool SaveToDB(DwNumber number)
         {
-            TransactionOptions option = new TransactionOptions();
-            option.IsolationLevel = IsolationLevel.ReadUncommitted;
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
+            try
             {
-                this.AddSpan(number, string.Empty);
-                this.Add(number);
-                scope.Complete();
+                TransactionOptions option = new TransactionOptions();
+                option.IsolationLevel = IsolationLevel.ReadUncommitted;
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
+                {
+                    this.AddSpan(number, string.Empty);
+                    this.Add(number);
+                    scope.Complete();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Write(ex.ToString());
+                return false;
             }
         }
+
     }
 }
 
