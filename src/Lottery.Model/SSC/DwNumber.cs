@@ -300,7 +300,7 @@ namespace Lottery.Model.SSC
         public override string ToString()
         {
             string str = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16}",
-                this._p, this._d1, this._d2, this._d3, this._d4, this._d5, this._p2, this._c2, this._p3, this._c3, this._c36, this._p4, this._p5,
+                this._p, this._d5, this._d4, this._d3, this._d2, this._d1, this._p2, this._c2, this._p3, this._c3, this._c36, this._p4, this._p5,
                 this._n, this._seq,this._date, this._created);
             return str;
         }

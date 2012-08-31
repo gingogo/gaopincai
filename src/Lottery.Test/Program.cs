@@ -15,11 +15,11 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
-            //DownServiceTest();
+            DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
             //DmFCAnTest();
-            TransactionTest();
+            //TransactionTest();
             Console.WriteLine("Finished");
             Console.Read();
         }
@@ -111,7 +111,7 @@ namespace Lottery.Test
 
         static void TransactionTest()
         {
-            TransactionScopeTest.Commit_Should_Success();
+            TransactionScopeTest.Test();
         }
     }
 }

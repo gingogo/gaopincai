@@ -14,20 +14,21 @@ namespace Lottery.Test
     
     public class TransactionScopeTest
     {
-        public static void Commit_Should_Success()
+        public static void Test()
         {
-            Console.WriteLine(Operation());
+            Console.WriteLine(Operation2());
         }
 
-        public static void Commit_Should_Failure()
+        private static int Operation2()
         {
+            for (int i = 0; i < 10; i++)
+            {
+                if (i % 10 == 0) return i;
+            }
+            return 0;
         }
 
-        public static void Rollback_Should_Success()
-        {
-        }
-
-        private static bool Operation()
+        private static bool Operation1()
         {
             var biz = new DmCategoryDAO(ConfigHelper.GetConnString("test")); 
             try
