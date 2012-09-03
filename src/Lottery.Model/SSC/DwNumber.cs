@@ -7,7 +7,7 @@ namespace Lottery.Model.SSC
     [Serializable]
     public class DwNumber : BaseModel
     {
-        public static string EntityName = "DwNumber";
+        public static string ENTITYNAME = "DwNumber";
 
         private string _code;
         private long _p;

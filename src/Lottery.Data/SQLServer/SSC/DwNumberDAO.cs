@@ -17,7 +17,7 @@ namespace Lottery.Data.SQLServer.SSC
         /// </summary>
         /// <param name="connectionString">当前表的数据库连接字符串</param>
         public DwNumberDAO(string connectionString)
-            : base(DwNumber.EntityName, DwNumber.C_P, connectionString)
+            : base(DwNumber.ENTITYNAME, DwNumber.C_P, connectionString)
         { }
 
         public DwNumberDAO(string tableName, string connectionString)

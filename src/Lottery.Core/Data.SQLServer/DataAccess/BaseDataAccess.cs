@@ -11,7 +11,7 @@ namespace Lottery.Data.SQLServer
     /// BaseDataAccess类提供对SQLServer数据库公共数据访问的抽象基类。
     /// </summary>
     /// <typeparam name="T">通用类型</typeparam>
-    public abstract class BaseDataAccess<T> : BaseSelect<T>, IBaseDataAccess<T>
+    public abstract class BaseDataAccess<T> : BaseSelect<T>, IBaseDataAccess<T> where T : BaseEntity
     {
         #region 构造函数
 
@@ -144,7 +144,7 @@ namespace Lottery.Data.SQLServer
 
             foreach (string key in mapTable.Keys)
             {
-                setValues.AppendFormat(string.Format("[{0}] = '{1}',", 
+                setValues.AppendFormat(string.Format("[{0}] = '{1}',",
                     key, mapTable[key].ToString().Replace("'", "''")));
             }
 
@@ -200,6 +200,30 @@ namespace Lottery.Data.SQLServer
             SqlExpression sqlExpr = this.GenerateInsertSqlExpression(this.GetDataFieldMapTable(entity), this._tableName);
             string sqlCmd = sqlExpr.CommandText + ";SELECT SCOPE_IDEntity() AS ID";
             return Convert.ToInt32(SqlHelper.ExecuteScalar(this._connectionString, CommandType.Text, sqlCmd, sqlExpr.Parameters));
+        }
+
+        public virtual int Insert(List<T> entities, SqlInsertMethod method)
+        {
+            if (method == SqlInsertMethod.MultiSqlText)
+                return this.InsertByMutiSqlText(entities);
+
+            if (method == SqlInsertMethod.SqlBulkCopy)
+                return this.InsertBySqlBulkCopy(entities);
+
+            return -1;
+        }
+
+        public virtual int Insert(string fromTableName,params string[] columnNames)
+        {
+            if (string.IsNullOrEmpty(fromTableName))
+                throw new ArgumentNullException("fromTableName");
+
+            string columns = this.GetColumns(columnNames);
+            string insertColumns = columnNames.Equals("*") ? string.Empty : string.Format("({0})",columns);
+            string sqlCmd = string.Format("insert into {0} {1} select {1} from {2}",
+                this._tableName, insertColumns, columns, fromTableName);
+
+            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, sqlCmd);
         }
 
         #endregion
@@ -262,17 +286,104 @@ namespace Lottery.Data.SQLServer
         /// <returns>返回影响记录的行数,-1表示操作失败,大于-1表示成功</returns>
         public virtual int UpdateWithCondition(T entity, string condition, object[] parameterValues, params string[] columnNames)
         {
-            if (entity == null) 
+            if (entity == null)
                 throw new ArgumentNullException("dto", "未将对象引用到实例");
 
             if (this.ContainWhere(condition))
                 throw new ArgumentException("指定的条件,不要求带SQL语句Where关键字的条件", "condition");
 
-             SqlExpression sqlExpr = this.GenerateUpdateSqlExpression(condition, 
-                 this.GetDataFieldMapTable(entity, columnNames), this._tableName, parameterValues);
-             return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, sqlExpr.CommandText, sqlExpr.Parameters);
+            SqlExpression sqlExpr = this.GenerateUpdateSqlExpression(condition,
+                this.GetDataFieldMapTable(entity, columnNames), this._tableName, parameterValues);
+            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, sqlExpr.CommandText, sqlExpr.Parameters);
         }
 
         #endregion
+
+        #region protected 成员
+
+        protected virtual int InsertByMutiSqlText(List<T> entities)
+        {
+            if (entities == null || entities.Count == 0)
+                throw new ArgumentNullException("entites");
+
+            StringBuilder batchSqlText = new StringBuilder();
+            foreach (T entity in entities)
+            {
+                var dataFieldMapTable = this.GetDataFieldMapTable(entity);
+                string sqlCmd = string.Format("{0};", this.GenerateInsertSql(dataFieldMapTable, entity.EntityName));
+                batchSqlText.Append(sqlCmd);
+            }
+
+            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, batchSqlText.ToString());
+        }
+
+        protected virtual int InsertBySqlBulkCopy(List<T> entities)
+        {
+            if (entities == null || entities.Count == 0)
+                throw new ArgumentNullException("entites");
+
+            MetaDataTable metaDataTable = new MetaDataTable(typeof(T), this._tableName);
+            DataTable dataTable = new DataTable();
+            foreach (var kp in metaDataTable.Columns)
+            {
+                var dataColumn = new DataColumn(kp.Key, kp.Value.DataType);
+                dataTable.Columns.Add(dataColumn);
+            }
+
+            foreach (T entity in entities)
+            {
+                DataRow dr = dataTable.NewRow();
+                foreach (var kp in metaDataTable.Columns)
+                {
+                    dr[kp.Key] = kp.Value.Member.GetValue(entity, null);
+                }
+                dataTable.Rows.Add(dr);
+            }
+
+            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(this._connectionString))
+            {
+                bulkCopy.DestinationTableName = this._tableName;
+                bulkCopy.BatchSize = dataTable.Rows.Count;
+                try
+                {
+                    bulkCopy.WriteToServer(dataTable);
+                }
+                catch (Exception ex)
+                {
+                    string message = string.Format("[SQL]:{0},[Exception]:{1}", "BulkCopy", ex.ToString());
+                    System.Diagnostics.EventLog.WriteEntry("LightFramework.Data.SQLServer", message);
+                }
+            }
+
+            return 0;
+        }
+
+        protected virtual int InsertByTableValue(List<T> entities)
+        {
+            if (entities == null || entities.Count == 0)
+                throw new ArgumentNullException("entites");
+
+            StringBuilder batchSqlText = new StringBuilder();
+            foreach (T entity in entities)
+            {
+                var dataFieldMapTable = this.GetDataFieldMapTable(entity);
+                string sqlCmd = string.Format("{0};", this.GenerateInsertSql(dataFieldMapTable, entity.EntityName));
+                batchSqlText.Append(sqlCmd);
+            }
+
+            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, batchSqlText.ToString());
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Sql数据插入方法。
+    /// </summary>
+    public enum SqlInsertMethod
+    {
+        MultiSqlText,
+        SqlBulkCopy,
+        TableValue
     }
 }
