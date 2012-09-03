@@ -105,19 +105,22 @@ namespace Lottery.Data.SQLServer.D11X5
                 "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" 
             };
 
+            List<DwSpan> dwSpans = new List<DwSpan>(dmNames.Length);
             foreach (string dmName in dmNames)
             {
                 Dictionary<string, int> spanDict = this.DataAccessor.SelectSpansByNumberTypes(number, dmName, filter);
-                DwSpan span = new DwSpan() { P = number.P };
+                DwSpan dwSpan = new DwSpan() { P = number.P };
+                dwSpan.EntityName = ConfigHelper.GetDwSpanTableName(dmName);
                 foreach (string key in spanDict.Keys)
                 {
                     string propertyName = string.Format("{0}Spans", key);
-                    span[propertyName] = spanDict[key];
+                    dwSpan[propertyName] = spanDict[key];
                 }
-
-                DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), this.DataAccessor.ConnectionString);
-                spanDao.Insert(span);
+                dwSpans.Add(dwSpan);
             }
+
+            DwSpanDAO spanDao = new DwSpanDAO(string.Empty, this.DataAccessor.ConnectionString);
+            spanDao.Insert(dwSpans, SqlInsertMethod.MultiSqlText);
         }
 
         private bool SaveToDB(DwNumber number)

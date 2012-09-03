@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -77,11 +78,11 @@ namespace Lottery.Data.SQLServer
             foreach (string key in mapTable.Keys)
             {
                 fields.AppendFormat("[{0}],", key);
-                values.AppendFormat("‘{0}’,", mapTable[key].ToString().Replace("'", "''"));
+                values.AppendFormat("'{0}',", mapTable[key]);
             }
 
             string commandText = string.Format("INSERT INTO [{0}] ({1}) VALUES ({2})",
-                targetTable, fields.ToString().Trim(','), values.ToString().Trim(','));
+                targetTable, fields.ToString().TrimEnd(','), values.ToString().TrimEnd(','));
             return commandText;
         }
 
