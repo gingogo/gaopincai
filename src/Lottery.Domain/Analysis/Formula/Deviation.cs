@@ -5,28 +5,31 @@ using System.Text;
 
 namespace Lottery.Analysis.Formula
 {
-    public class FFG
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Deviation
     {
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dc"></param>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        public static double GetN(double dc, double p)
-        {
-            return Math.Log(1 - dc, Math.E) / Math.Log(1 - p, Math.E);
-        }
-
-        /// <summary>
-        /// 
+        /// 冷偏差
         /// </summary>
         /// <param name="n"></param>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static double GetDC(int n, double p)
+        public static double GetCold(int n, double p)
         {
-            return (1 - Math.Exp(n * Math.Log(1 - p, Math.E)));
+            return n * p * 100;
+        }
+
+        /// <summary>
+        /// 热偏差
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static double GetThermal(int n, double p)
+        {
+            return 100 / (n * p);
         }
     }
 }

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\Formula\Deviation.cs" />
     <Compile Include="Analysis\Formula\FFG.cs" />
     <Compile Include="Downloader\BaseDownloader.cs" />
     <Compile Include="Downloader\EventParameter.cs" />
