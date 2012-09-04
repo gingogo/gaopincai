@@ -409,8 +409,9 @@ namespace Lottery.Data.SQLServer
 
         private DataTable GetDataTable(List<T> entities)
         {
-            MetaDataTable metaDataTable = new MetaDataTable(typeof(T), this._tableName);
             DataTable dataTable = new DataTable();
+            MetaDataTable metaDataTable = new MetaDataTable(typeof(T), this._tableName);
+            
             foreach (var kp in metaDataTable.Columns)
             {
                 var dataColumn = new DataColumn(kp.Key, kp.Value.DataType);
@@ -421,11 +422,10 @@ namespace Lottery.Data.SQLServer
             {
                 DataRow dr = dataTable.NewRow();
                 foreach (var kp in metaDataTable.Columns)
-                {
                     dr[kp.Key] = kp.Value.Member.GetValue(entity, null);
-                }
                 dataTable.Rows.Add(dr);
             }
+
             return dataTable;
         }
 
