@@ -407,6 +407,11 @@ namespace Lottery.Data.SQLServer
 
         #region private 成员
 
+        /// <summary>
+        /// 创建实体集合对应的DataTable对象
+        /// </summary>
+        /// <param name="entities">实体记录集合</param>
+        /// <returns>DataTable对象</returns>
         private DataTable GetDataTable(List<T> entities)
         {
             DataTable dataTable = new DataTable();
