@@ -48,6 +48,8 @@ namespace Lottery.Data.SQLServer.D11X5
             return EntityMapper.GetMapTable<DwNumber>(dto, columnNames);
         }
 
+        #region 公有方法
+
         public int SelectLatestDate(string condition)
         {
             string sqlCmd = string.Format("SELECT Max(date) as date FROM {0} {1} ", this._tableName, condition);
@@ -85,18 +87,18 @@ namespace Lottery.Data.SQLServer.D11X5
                 return this.SelectPeroidSpansByNumberTypes(number, filter, numberTypes);
 
             string sqlCmd = this.GetBatchSql(number, dmName, filter, numberTypes);
-            List<DwDmFCANumber> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToDwDmFCANumber);
+            List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
             Dictionary<string, int> spanDict = new Dictionary<string, int>(6);
 
             foreach (string numberType in numberTypes)
             {
-                DwDmFCANumber dwNumber = list.FirstOrDefault(x => x.Id != null && x.Id.Equals(numberType));
-                if (dwNumber == null || dwNumber.Seq == 0)
+                NumberIdSeq numberIdSeq = list.FirstOrDefault(x => x.Id != null && x.Id.Equals(numberType));
+                if (numberIdSeq == null || numberIdSeq.Seq == 0)
                 {
                     spanDict.Add(numberType, -1);
                     continue;
                 }
-                spanDict.Add(numberType, number.Seq - dwNumber.Seq - 1);
+                spanDict.Add(numberType, number.Seq - numberIdSeq.Seq - 1);
             }
 
             return spanDict;
@@ -141,23 +143,25 @@ namespace Lottery.Data.SQLServer.D11X5
             return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToDwDmFCANumber);
         }
 
+        #endregion
+
         #region 私有方法
 
         private Dictionary<string, int> SelectPeroidSpansByNumberTypes(DwNumber number, string filter, params string[] numberTypes)
         {
             string sqlCmd = this.GetBatchSql(number, "Peroid", filter, numberTypes);
-            List<DwNumber> list = this.GetEntities(sqlCmd);
+            List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
             Dictionary<string, int> spanDict = new Dictionary<string, int>(6);
 
             foreach (string numberType in numberTypes)
             {
-                DwNumber dwNumber = list.FirstOrDefault(x => x.C2 != null && x.C2.Equals(numberType));
-                if (dwNumber == null || dwNumber.Seq == 0)
+                NumberIdSeq numberIdSeq = list.FirstOrDefault(x => x.Id != null && x.Id.Equals(numberType));
+                if (numberIdSeq == null || numberIdSeq.Seq == 0)
                 {
                     spanDict.Add(numberType, -1);
                     continue;
                 }
-                spanDict.Add(numberType, number.Seq - dwNumber.Seq - 1);
+                spanDict.Add(numberType, number.Seq - numberIdSeq.Seq - 1);
             }
 
             return spanDict;
@@ -170,8 +174,8 @@ namespace Lottery.Data.SQLServer.D11X5
 
             if (dmName.Equals("Peroid"))
             {
-                //select "D1|F2|xx" C2,Max(Seq) Seq from DwNumber where A5 = 'xxxxx';
-                sqlFormat = "select '{0}' C2,Max({1}) {1} from {2} where {0} = '{3}' {4};";
+                //select "D1|F2|xx" Id,Max(Seq) Seq from DwNumber where A5 = 'xxxxx';
+                sqlFormat = "select '{0}' Id,Max({1}) {1} from {2} where {0} = '{3}' {4};";
                 foreach (string numberType in numberTypes)
                 {
                     string typeValue = number[numberType].ToString();
@@ -182,7 +186,7 @@ namespace Lottery.Data.SQLServer.D11X5
             }
 
             //select top 1 'D1|F2|A5|xxx' Id,Max(t2.Seq) Seq from DmA5 t1,DwNumber t2 where t1.Id = t2.A5 and t1.DaXiao = 'x|x|x|x|x';
-            sqlFormat = "select '{0}' Id,Max(t2.{1}) Seq from Dm{0} t1,{2} t2 where t1.Id = t2.{0} and t1.{3} = '{4}' {5};";
+            sqlFormat = "select '{0}' Id,Max(t2.{1}) {1} from Dm{0} t1,{2} t2 where t1.Id = t2.{0} and t1.{3} = '{4}' {5};";
             foreach (string numberType in numberTypes)
             {
                 string dmValue = number[numberType].GetDmValue(2, dmName, 5);
@@ -199,6 +203,39 @@ namespace Lottery.Data.SQLServer.D11X5
                 throw new ArgumentNullException("dr", "未将对象引用到实例");
             }
             return EntityMapper.GetEntity<DwDmFCANumber>(dr, new DwDmFCANumber(), this._tableName);
+        }
+
+        private NumberIdSeq DataReaderToNumberIdSeq(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
+        {
+            if (dr == null)
+            {
+                throw new ArgumentNullException("dr", "未将对象引用到实例");
+            }
+            return EntityMapper.GetEntity<NumberIdSeq>(dr, new NumberIdSeq(), this._tableName);
+        }
+
+        #endregion
+
+        #region 内部类
+
+        /// <summary>
+        /// 号码Id与Seq对。
+        /// </summary>
+        private class NumberIdSeq
+        {
+            public NumberIdSeq() { }
+
+            /// <summary>
+            /// 获取或设置号码的ID
+            /// </summary>
+            [Column("Id")]
+            public string Id { get; set; }
+
+            /// <summary>
+            /// 获取或设置号码出现的顺序
+            /// </summary>
+            [Column("Seq")]
+            public int Seq { get; set; }
         }
 
         #endregion
