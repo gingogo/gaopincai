@@ -39,6 +39,8 @@ namespace Lottery.Data
             }
         }
 
+        #endregion
+
         /// <summary>
         /// 排除实体对象指定一系列常量值后的集合。
         /// </summary>
@@ -78,8 +80,6 @@ namespace Lottery.Data
         /// 获取与设置当前实体名称(对应数据库中的表名)。
         /// </summary>
         public string EntityName { get; set; }
-
-        #endregion
     }
 }
 

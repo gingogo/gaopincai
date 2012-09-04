@@ -30,7 +30,7 @@ namespace Lottery.Data
             this._columns = new Dictionary<string, MetaDataColumn>(properties.Length);
             foreach (PropertyInfo property in properties)
             {
-                var attr = (ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute));
+                var attr = Attribute.GetCustomAttribute(property, typeof(ColumnAttribute)) as ColumnAttribute;
                 if (attr == null) continue;
                 var metacolumn = new MetaDataColumn(property, attr);
                 this._columns.Add(metacolumn.Name.ToLower(), metacolumn);
