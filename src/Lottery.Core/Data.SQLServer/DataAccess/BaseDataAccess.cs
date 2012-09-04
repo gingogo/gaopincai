@@ -203,6 +203,12 @@ namespace Lottery.Data.SQLServer
             return Convert.ToInt32(SqlHelper.ExecuteScalar(this._connectionString, CommandType.Text, sqlCmd, sqlExpr.Parameters));
         }
 
+        /// <summary>
+        /// 向数据库中批量添加记录
+        /// </summary>
+        /// <param name="entities">记录集合</param>
+        /// <param name="method">批量添加方式</param>
+        /// <returns>影响的行数</returns>
         public virtual int Insert(List<T> entities, SqlInsertMethod method)
         {
             if (method == SqlInsertMethod.MultiSqlText)
@@ -214,6 +220,12 @@ namespace Lottery.Data.SQLServer
             return -1;
         }
 
+        /// <summary>
+        /// 使用insert into ... select ... from 语句从指定表中批量向当前表中添加数据。
+        /// </summary>
+        /// <param name="fromTableName">源数据表名</param>
+        /// <param name="columnNames">筛选的列表集合</param>
+        /// <returns>影响的行数</returns>
         public virtual int Insert(string fromTableName,params string[] columnNames)
         {
             if (string.IsNullOrEmpty(fromTableName))
@@ -302,6 +314,11 @@ namespace Lottery.Data.SQLServer
 
         #region protected 成员
 
+        /// <summary>
+        /// 使用多条sql语句用分号连接的方式向数据库中批量添加数据。
+        /// </summary>
+        /// <param name="entities">记录集合</param>
+        /// <returns>影响的行数</returns>
         protected virtual int InsertByMutiSqlText(List<T> entities)
         {
             if (entities == null || entities.Count == 0)
@@ -311,13 +328,17 @@ namespace Lottery.Data.SQLServer
             foreach (T entity in entities)
             {
                 var dataFieldMapTable = this.GetDataFieldMapTable(entity);
-                string sqlCmd = string.Format("{0};", this.GenerateInsertSql(dataFieldMapTable, entity.EntityName));
-                batchSqlText.Append(sqlCmd);
+                batchSqlText.AppendFormat("{0};", this.GenerateInsertSql(dataFieldMapTable, entity.EntityName));
             }
 
             return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, batchSqlText.ToString());
         }
 
+        /// <summary>
+        /// 使用SqlBulkCopy方式向表中批量添加数据。
+        /// </summary>
+        /// <param name="entities">记录集合</param>
+        /// <returns>0表示成功，其他失败</returns>
         protected virtual int InsertBySqlBulkCopy(List<T> entities)
         {
             if (entities == null || entities.Count == 0)
@@ -352,27 +373,61 @@ namespace Lottery.Data.SQLServer
                 catch (Exception ex)
                 {
                     string message = string.Format("[SQL]:{0},[Exception]:{1}", "BulkCopy", ex.ToString());
-                    System.Diagnostics.EventLog.WriteEntry("LightFramework.Data.SQLServer", message);
+                    throw new ApplicationException(message);
                 }
             }
 
             return 0;
         }
 
+        /// <summary>
+        /// 使用SQLServer2008及以上版本表值参数方式向表中批量添加数据,需要先在数据库创建与目标表结构相同的表。
+        /// 且表名必须为tvps。
+        /// </summary>
+        /// <param name="entities">记录集合</param>
+        /// <returns>影响行数</returns>
         protected virtual int InsertByTableValue(List<T> entities)
         {
             if (entities == null || entities.Count == 0)
                 throw new ArgumentNullException("entites");
 
-            StringBuilder batchSqlText = new StringBuilder();
-            foreach (T entity in entities)
+            MetaDataTable metaDataTable = new MetaDataTable(typeof(T), this._tableName);
+            DataTable dataTable = new DataTable();
+            foreach (var kp in metaDataTable.Columns)
             {
-                var dataFieldMapTable = this.GetDataFieldMapTable(entity);
-                string sqlCmd = string.Format("{0};", this.GenerateInsertSql(dataFieldMapTable, entity.EntityName));
-                batchSqlText.Append(sqlCmd);
+                var dataColumn = new DataColumn(kp.Key, kp.Value.DataType);
+                dataTable.Columns.Add(dataColumn);
             }
 
-            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, batchSqlText.ToString());
+            foreach (T entity in entities)
+            {
+                DataRow dr = dataTable.NewRow();
+                foreach (var kp in metaDataTable.Columns)
+                {
+                    dr[kp.Key] = kp.Value.Member.GetValue(entity, null);
+                }
+                dataTable.Rows.Add(dr);
+            }
+
+            using (SqlConnection conn = new SqlConnection(this._connectionString))
+            {
+                string sql = string.Format("insert into {0} select * from @tableName;", this._tableName);
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlParameter param = cmd.Parameters.AddWithValue("@tableName", dataTable);
+                param.SqlDbType = SqlDbType.Structured;
+                param.TypeName = "dbo.tvps";
+
+                try
+                {
+                    conn.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    string message = string.Format("[SQL]:{0},[Exception]:{1}", "TableValueParameter", ex.ToString());
+                    throw new ApplicationException(message);
+                }
+            }
         }
 
         #endregion
@@ -383,8 +438,19 @@ namespace Lottery.Data.SQLServer
     /// </summary>
     public enum SqlInsertMethod
     {
+        /// <summary>
+        /// 多条sql用分号连接
+        /// </summary>
         MultiSqlText,
+
+        /// <summary>
+        /// 使用SqlBulkCopy
+        /// </summary>
         SqlBulkCopy,
+
+        /// <summary>
+        /// 使用SQLServer2008及以上版本表值参数
+        /// </summary>
         TableValue
     }
 }
