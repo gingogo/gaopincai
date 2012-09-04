@@ -203,42 +203,6 @@ namespace Lottery.Data.SQLServer
             return Convert.ToInt32(SqlHelper.ExecuteScalar(this._connectionString, CommandType.Text, sqlCmd, sqlExpr.Parameters));
         }
 
-        /// <summary>
-        /// 向数据库中批量添加记录
-        /// </summary>
-        /// <param name="entities">记录集合</param>
-        /// <param name="method">批量添加方式</param>
-        /// <returns>影响的行数</returns>
-        public virtual int Insert(List<T> entities, SqlInsertMethod method)
-        {
-            if (method == SqlInsertMethod.MultiSqlText)
-                return this.InsertByMutiSqlText(entities);
-
-            if (method == SqlInsertMethod.SqlBulkCopy)
-                return this.InsertBySqlBulkCopy(entities);
-
-            return -1;
-        }
-
-        /// <summary>
-        /// 使用insert into ... select ... from 语句从指定表中批量向当前表中添加数据。
-        /// </summary>
-        /// <param name="fromTableName">源数据表名</param>
-        /// <param name="columnNames">筛选的列表集合</param>
-        /// <returns>影响的行数</returns>
-        public virtual int Insert(string fromTableName,params string[] columnNames)
-        {
-            if (string.IsNullOrEmpty(fromTableName))
-                throw new ArgumentNullException("fromTableName");
-
-            string columns = this.GetColumns(columnNames);
-            string insertColumns = columnNames.Equals("*") ? string.Empty : string.Format("({0})",columns);
-            string sqlCmd = string.Format("insert into {0} {1} select {1} from {2}",
-                this._tableName, insertColumns, columns, fromTableName);
-
-            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, sqlCmd);
-        }
-
         #endregion
 
         #region IBaseDelete<T> 成员
@@ -312,6 +276,49 @@ namespace Lottery.Data.SQLServer
 
         #endregion
 
+        #region 针对SqlServer数据库的特定方法
+
+        /// <summary>
+        /// 向数据库中批量添加记录
+        /// </summary>
+        /// <param name="entities">记录集合</param>
+        /// <param name="method">批量添加方式</param>
+        /// <returns>影响的行数</returns>
+        public virtual int Insert(List<T> entities, SqlInsertMethod method)
+        {
+            if (method == SqlInsertMethod.MultiSqlText)
+                return this.InsertByMutiSqlText(entities);
+
+            if (method == SqlInsertMethod.SqlBulkCopy)
+                return this.InsertBySqlBulkCopy(entities);
+
+            if (method == SqlInsertMethod.TableValue)
+                return this.InsertByTableValue(entities);
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 使用insert into ... select ... from 语句从指定表中批量向当前表中添加数据。
+        /// </summary>
+        /// <param name="fromTableName">源数据表名</param>
+        /// <param name="columnNames">筛选的列表集合</param>
+        /// <returns>影响的行数</returns>
+        public virtual int Insert(string fromTableName, params string[] columnNames)
+        {
+            if (string.IsNullOrEmpty(fromTableName))
+                throw new ArgumentNullException("fromTableName");
+
+            string columns = this.GetColumns(columnNames);
+            string insertColumns = columnNames.Equals("*") ? string.Empty : string.Format("({0})", columns);
+            string sqlCmd = string.Format("insert into {0} {1} select {1} from {2}",
+                this._tableName, insertColumns, columns, fromTableName);
+
+            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, sqlCmd);
+        }
+
+        #endregion
+
         #region protected 成员
 
         /// <summary>
@@ -344,28 +351,12 @@ namespace Lottery.Data.SQLServer
             if (entities == null || entities.Count == 0)
                 throw new ArgumentNullException("entites");
 
-            MetaDataTable metaDataTable = new MetaDataTable(typeof(T), this._tableName);
-            DataTable dataTable = new DataTable();
-            foreach (var kp in metaDataTable.Columns)
-            {
-                var dataColumn = new DataColumn(kp.Key, kp.Value.DataType);
-                dataTable.Columns.Add(dataColumn);
-            }
-
-            foreach (T entity in entities)
-            {
-                DataRow dr = dataTable.NewRow();
-                foreach (var kp in metaDataTable.Columns)
-                {
-                    dr[kp.Key] = kp.Value.Member.GetValue(entity, null);
-                }
-                dataTable.Rows.Add(dr);
-            }
-
+            DataTable dataTable = this.GetDataTable(entities);
             using (SqlBulkCopy bulkCopy = new SqlBulkCopy(this._connectionString))
             {
                 bulkCopy.DestinationTableName = this._tableName;
                 bulkCopy.BatchSize = dataTable.Rows.Count;
+
                 try
                 {
                     bulkCopy.WriteToServer(dataTable);
@@ -391,6 +382,33 @@ namespace Lottery.Data.SQLServer
             if (entities == null || entities.Count == 0)
                 throw new ArgumentNullException("entites");
 
+            using (SqlConnection conn = new SqlConnection(this._connectionString))
+            {
+                string sql = string.Format("insert into {0} select * from @tableName;", this._tableName);
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlParameter param = cmd.Parameters.AddWithValue("@tableName", this.GetDataTable(entities));
+                param.SqlDbType = SqlDbType.Structured;
+                param.TypeName = "dbo.tvps";
+
+                try
+                {
+                    conn.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    string message = string.Format("[SQL]:{0},[Exception]:{1}", "TableValueParameter", ex.ToString());
+                    throw new ApplicationException(message);
+                }
+            }
+        }
+
+        #endregion
+
+        #region private 成员
+
+        private DataTable GetDataTable(List<T> entities)
+        {
             MetaDataTable metaDataTable = new MetaDataTable(typeof(T), this._tableName);
             DataTable dataTable = new DataTable();
             foreach (var kp in metaDataTable.Columns)
@@ -408,26 +426,7 @@ namespace Lottery.Data.SQLServer
                 }
                 dataTable.Rows.Add(dr);
             }
-
-            using (SqlConnection conn = new SqlConnection(this._connectionString))
-            {
-                string sql = string.Format("insert into {0} select * from @tableName;", this._tableName);
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                SqlParameter param = cmd.Parameters.AddWithValue("@tableName", dataTable);
-                param.SqlDbType = SqlDbType.Structured;
-                param.TypeName = "dbo.tvps";
-
-                try
-                {
-                    conn.Open();
-                    return cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    string message = string.Format("[SQL]:{0},[Exception]:{1}", "TableValueParameter", ex.ToString());
-                    throw new ApplicationException(message);
-                }
-            }
+            return dataTable;
         }
 
         #endregion
