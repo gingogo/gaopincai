@@ -83,22 +83,20 @@ namespace Lottery.Data.SQLServer.SSC
             if (numberTypes == null || numberTypes.Length == 0)
                 numberTypes = new string[] { "D1", "P2", "P3", "P4", "P5", "C2", "C3" };
 
-            if (dmName.Equals("Peroid"))
-                return this.SelectPeroidSpansByNumberTypes(number, filter, numberTypes);
-
             string sqlCmd = this.GetBatchSql(number, dmName, filter, numberTypes);
             List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
-            Dictionary<string, int> spanDict = new Dictionary<string, int>(6);
+            Dictionary<string, int> numberIdSeqDict = list.ToDictionary(x => x.Id, y => y.Seq);
+            Dictionary<string, int> spanDict = new Dictionary<string, int>(7);
 
             foreach (string numberType in numberTypes)
             {
-                NumberIdSeq numberIdSeq = list.FirstOrDefault(x => x.Id != null && x.Id.Equals(numberType));
-                if (numberIdSeq == null || numberIdSeq.Seq == 0)
+                int seq = numberIdSeqDict.ContainsKey(numberType) ? numberIdSeqDict[numberType] : 0;
+                if (seq == 0)
                 {
                     spanDict.Add(numberType, -1);
                     continue;
                 }
-                spanDict.Add(numberType, number.Seq - numberIdSeq.Seq - 1);
+                spanDict.Add(numberType, number.Seq - seq - 1);
             }
 
             return spanDict;
@@ -131,26 +129,6 @@ namespace Lottery.Data.SQLServer.SSC
         #endregion
 
         #region 私有方法
-
-        private Dictionary<string, int> SelectPeroidSpansByNumberTypes(DwNumber number, string filter, params string[] numberTypes)
-        {
-            string sqlCmd = this.GetBatchSql(number, "Peroid", filter, numberTypes);
-            List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
-            Dictionary<string, int> spanDict = new Dictionary<string, int>(6);
-
-            foreach (string numberType in numberTypes)
-            {
-                NumberIdSeq numberIdSeq = list.FirstOrDefault(x => x.Id != null && x.Id.Equals(numberType));
-                if (numberIdSeq == null || numberIdSeq.Seq == 0)
-                {
-                    spanDict.Add(numberType, -1);
-                    continue;
-                }
-                spanDict.Add(numberType, number.Seq - numberIdSeq.Seq - 1);
-            }
-
-            return spanDict;
-        }
 
         private string GetBatchSql(DwNumber number, string dmName, string filter, string[] numberTypes)
         {
@@ -208,19 +186,30 @@ namespace Lottery.Data.SQLServer.SSC
         /// </summary>
         private class NumberIdSeq
         {
+            private string _id;
+            private int _seq;
+
             public NumberIdSeq() { }
 
             /// <summary>
             /// 获取或设置号码的ID
             /// </summary>
             [Column("Id")]
-            public string Id { get; set; }
+            public string Id
+            {
+                get { return this._id; }
+                set { this._id = value; }
+            }
 
             /// <summary>
             /// 获取或设置号码出现的顺序
             /// </summary>
             [Column("Seq")]
-            public int Seq { get; set; }
+            public int Seq
+            {
+                get { return this._seq; }
+                set { this._seq = value; }
+            }
         }
 
         #endregion

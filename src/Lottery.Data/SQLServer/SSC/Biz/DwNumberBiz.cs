@@ -114,7 +114,7 @@ namespace Lottery.Data.SQLServer.SSC
             }
 
             DwSpanDAO spanDao = new DwSpanDAO(string.Empty, this.DataAccessor.ConnectionString);
-            //spanDao.Insert(dwSpans, SqlInsertMethod.MultiSqlText);
+            spanDao.Insert(dwSpans, SqlInsertMethod.MultiSqlText);
         }
 
         private bool SaveToDB(DwNumber number)
@@ -125,9 +125,9 @@ namespace Lottery.Data.SQLServer.SSC
                 option.IsolationLevel = IsolationLevel.ReadUncommitted;
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
                 {
-                    //this.AddSpan(number, string.Empty);
-                   // this.Add(number);
-                    //scope.Complete();
+                    this.AddSpan(number, string.Empty);
+                    this.Add(number);
+                    scope.Complete();
                 }
                 return true;
             }
@@ -137,7 +137,6 @@ namespace Lottery.Data.SQLServer.SSC
                 return false;
             }
         }
-
     }
 }
 

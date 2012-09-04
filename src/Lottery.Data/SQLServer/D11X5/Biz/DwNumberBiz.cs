@@ -143,7 +143,6 @@ namespace Lottery.Data.SQLServer.D11X5
                 return false;
             }
         }
-
     }
 }
 
