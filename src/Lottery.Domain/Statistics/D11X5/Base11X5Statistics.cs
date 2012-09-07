@@ -10,9 +10,9 @@ namespace Lottery.Statistics.D11X5
 
     public abstract class Base11X5Statistics : BaseStatistics
     {
-        protected override List<DmCategory> GetCatgories()
+        protected override List<Category> GetCatgories()
         {
-            return DmCategoryBiz.Instance.GetEnabledCategories("11X5");
+            return CategoryBiz.Instance.GetEnabledCategories("11X5");
         }
     }
 }

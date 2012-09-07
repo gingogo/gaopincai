@@ -16,7 +16,7 @@ namespace Lottery.ETL.SCC
     {
         public static void Update()
         {
-            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("SSC");
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
             foreach (var category in categories)
             {
                 Modify(category.DbName, "D1");
@@ -57,7 +57,7 @@ namespace Lottery.ETL.SCC
         /// <param name="output">db|txt</param>
         public static void Add(string output)
         {
-            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("SSC");
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
             foreach (var category in categories)
             {
                 P(category.DbName, "D1", 1, output);

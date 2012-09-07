@@ -19,8 +19,8 @@ namespace Lottery.ETL.SCC
     {
         public static void Start()
         {
-            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("ssc");
-            foreach (DmCategory category in categories)
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("ssc");
+            foreach (Category category in categories)
             {
                 string dataFileName = string.Format(@"{0}\{1}.txt", @"G:\LotteryData", category.Name);
                 if (!File.Exists(dataFileName)) continue;

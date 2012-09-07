@@ -16,8 +16,8 @@ namespace Lottery.ETL.D11X5
     {
         public static void Start()
         {
-            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("11X5");
-            foreach (DmCategory category in categories)
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
+            foreach (Category category in categories)
             {
                 //StreamWriter writer = new StreamWriter(string.Format(@"G:\LotteryData\{0}_1.txt", category.Name));
                 string dataFileName = string.Format(@"{0}\{1}.txt", @"G:\LotteryData", category.Name);

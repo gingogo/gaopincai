@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseModel.cs" />
-    <Compile Include="Common\DmCategory.cs" />
+    <Compile Include="Common\Category.cs" />
     <Compile Include="D11X5\DmFCAn.cs" />
     <Compile Include="D11X5\DwDmFCANumber.cs" />
     <Compile Include="D11X5\DwNumber.cs" />

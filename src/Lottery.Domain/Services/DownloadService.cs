@@ -17,14 +17,14 @@ namespace Lottery.Services
     public class DownloadService : IService
     {
         private AsyncEventWorker asyncEventWorker = new AsyncEventWorker();
-        private List<DmCategory> categories;
+        private List<Category> categories;
 
         public DownloadService()
         {
             this.asyncEventWorker.DoWork += new DoWorkEventHandler(asyncEventWorker_DoWork);
             //this.asyncEventWorker.ProgressChanged += new ProgressChangedEventHandler(asyncEventWorker_ProgressChanged);
             //this.asyncEventWorker.Completed += new WorkerCompletedEventHandler(asyncEventWorker_Completed);
-            this.categories = DmCategoryBiz.Instance.GetEnabledCategories();
+            this.categories = CategoryBiz.Instance.GetEnabledCategories();
         }
 
         public void asyncEventWorker_DoWork(object sender, DoWorkEventArgs args)

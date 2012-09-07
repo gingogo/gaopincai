@@ -5,9 +5,9 @@ namespace Lottery.Model.Common
     using Data;
 
     [Serializable]
-    public class DmCategory : BaseModel
+    public class Category : BaseModel
     {
-        public static string EntityName = "DmCategory";
+        public static string ENTITYNAME = "Category";
 
         #region Const Members
 

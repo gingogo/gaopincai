@@ -30,7 +30,7 @@ namespace Lottery.Test
 
         private static bool Operation1()
         {
-            var biz = new DmCategoryDAO(ConfigHelper.GetConnString("test")); 
+            var biz = new CategoryDAO(ConfigHelper.GetConnString("test")); 
             try
             {
                 TransactionOptions option = new TransactionOptions();
@@ -38,7 +38,7 @@ namespace Lottery.Test
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
                 {
 
-                    DmCategory cate = new DmCategory();
+                    Category cate = new Category();
                     cate.Code = "test3";
                     cate.DbName = "test3";
 

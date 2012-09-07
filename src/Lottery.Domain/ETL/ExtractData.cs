@@ -22,8 +22,8 @@ namespace Lottery.ETL
             if(!Directory.Exists(dataFilePath))
                 Directory.CreateDirectory(dataFilePath);
 
-            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("ssc");
-            foreach (DmCategory category in categories)
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("ssc");
+            foreach (Category category in categories)
             {
                 pset.Clear();
                 string filePath = Path.Combine(@"G:\Lottery", category.Name);

@@ -33,7 +33,7 @@ namespace Lottery.Test
 
         static void RepairPeroidSpan()
         {
-            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("11X5");
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
             foreach (var category in categories)
             {
                 DwNumberBiz biz = new DwNumberBiz(category.DbName);

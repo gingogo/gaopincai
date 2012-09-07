@@ -8,30 +8,30 @@ namespace Lottery.Data.SQLServer.Common
     using Configuration;
 
     /// <summary>
-    /// DmCategoryBiz提供业务逻辑类。
+    /// CategoryBiz提供业务逻辑类。
     /// </summary>
-    public partial class DmCategoryBiz :
-        SinglePKDataAccessBiz<DmCategoryDAO, DmCategory>
+    public partial class CategoryBiz :
+        SinglePKDataAccessBiz<CategoryDAO, Category>
     {
         /// <summary>
         /// DmCategoryBiz类的一个单件。
         /// </summary>
-        public static readonly DmCategoryBiz Instance = new DmCategoryBiz();
+        public static readonly CategoryBiz Instance = new CategoryBiz();
 
-        protected DmCategoryBiz()
-            : base(new DmCategoryDAO(ConfigHelper.CommonTableConnString))
+        protected CategoryBiz()
+            : base(new CategoryDAO(ConfigHelper.CommonTableConnString))
         {
         }
 
         #region 公共业务逻辑成员
 
-        public List<DmCategory> GetEnabledCategories()
+        public List<Category> GetEnabledCategories()
         {
             string condition = "where enabled = 1";
             return this.DataAccessor.SelectWithCondition(condition);
         }
 
-        public List<DmCategory> GetEnabledCategories(string type)
+        public List<Category> GetEnabledCategories(string type)
         {
             string condition = string.Format("where enabled = 1 and type = '{0}' ", type);
             return this.DataAccessor.SelectWithCondition(condition);

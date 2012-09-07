@@ -9,17 +9,17 @@ namespace Lottery.Data.SQLServer.Common
     using Model.Common;
 
     /// <summary>
-    /// DmCategoryDAO提供表(DmCategoryDAO)的相关数据访问操作的类。
+    /// CategoryDAO提供表(CategoryDAO)的相关数据访问操作的类。
     /// </summary>
-    public class DmCategoryDAO
-        : SinglePKDataAccess<DmCategory>
+    public class CategoryDAO
+        : SinglePKDataAccess<Category>
     {
         /// <summary>
         /// 构造函数。
         /// </summary>
         /// <param name="connectionString">当前表的数据库连接字符串</param>
-        public DmCategoryDAO(string connectionString)
-            : base(DmCategory.EntityName, DmCategory.C_Id, connectionString)
+        public CategoryDAO(string connectionString)
+            : base(Category.ENTITYNAME, Category.C_Id, connectionString)
         { }
 
         /// <summary>
@@ -27,8 +27,8 @@ namespace Lottery.Data.SQLServer.Common
         /// </summary>
         /// <param name="name">表名</param>  
         /// <param name="connectionString">当前表的数据库连接字符串</param>
-        public DmCategoryDAO(string tableName, string connectionString)
-            : base(tableName, DmCategory.C_Id, connectionString)
+        public CategoryDAO(string tableName, string connectionString)
+            : base(tableName, Category.C_Id, connectionString)
         { }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Lottery.Data.SQLServer.Common
         /// <param name="name">表名</param>  
         /// <param name="primaryKey">表的单主键名称</param>
         /// <param name="connectionString">当前表的数据库连接字符串</param>
-        public DmCategoryDAO(string tableName, string primaryKey, string connectionString)
+        public CategoryDAO(string tableName, string primaryKey, string connectionString)
             : base(tableName, primaryKey, connectionString)
         { }
 
@@ -49,12 +49,12 @@ namespace Lottery.Data.SQLServer.Common
         /// <param name="dr">有效的DataReader对象</param>
         /// <param name="columnNames">该数据传输对象中对应的数据库表的字段（列）名</param>
         /// <returns>数据传输对象实例</returns>
-        protected override DmCategory DataReaderToEntity(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
+        protected override Category DataReaderToEntity(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
         {
             if (dr == null)
                 throw new ArgumentNullException("dr", "未将对象引用到实例");
 
-            return EntityMapper.GetEntity(dr, new DmCategory(), DmCategory.EntityName);
+            return EntityMapper.GetEntity(dr, new Category(), Category.ENTITYNAME);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Lottery.Data.SQLServer.Common
         /// <param name="dto">有效的数据传输对象</param>
         /// <param name="columnNames">该数据传输对象中对应的数据库表的列名</param>
         /// <returns>包含键值映射的DataFieldMap</returns>
-        protected override DataFieldMapTable GetDataFieldMapTable(DmCategory dto, params string[] columnNames)
+        protected override DataFieldMapTable GetDataFieldMapTable(Category dto, params string[] columnNames)
         {
             if (dto == null)
                 throw new ArgumentNullException("dto", "未将对象引用到实例");

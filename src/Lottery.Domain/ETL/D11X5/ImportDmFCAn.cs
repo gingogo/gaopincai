@@ -16,7 +16,7 @@ namespace Lottery.ETL.D11X5
     {
         public static void Update()
         {
-            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("11X5");
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
             foreach (var category in categories)
             {
                 Modify(category.DbName, "D1");
@@ -54,7 +54,7 @@ namespace Lottery.ETL.D11X5
         /// <param name="output">db|txt</param>
         public static void Add(string output)
         {
-            List<DmCategory> categories = DmCategoryBiz.Instance.GetEnabledCategories("11X5");
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
             foreach (var category in categories)
             {
                 P(category.DbName, "D1", 1, output);

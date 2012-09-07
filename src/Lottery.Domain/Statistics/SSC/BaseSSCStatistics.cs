@@ -10,9 +10,9 @@ namespace Lottery.Statistics.SSC
 
     public abstract class BaseSSCStatistics : BaseStatistics
     {
-        protected override List<DmCategory> GetCatgories()
+        protected override List<Category> GetCatgories()
         {
-            return DmCategoryBiz.Instance.GetEnabledCategories("SSC");
+            return CategoryBiz.Instance.GetEnabledCategories("SSC");
         }
     }
 }

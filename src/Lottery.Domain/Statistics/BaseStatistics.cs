@@ -26,7 +26,7 @@ namespace Lottery.Statistics
 
         public virtual void Stat(OutputType outputType, bool isAsync)
         {
-            List<DmCategory> categories = this.GetCatgories();
+            List<Category> categories = this.GetCatgories();
             foreach (var category in categories)
             {
                 if (isAsync)
@@ -36,12 +36,12 @@ namespace Lottery.Statistics
             }
         }
 
-        protected virtual void AsyncStatAll(DmCategory category, OutputType outputType)
+        protected virtual void AsyncStatAll(Category category, OutputType outputType)
         {
             this.asyncStatDlgt.BeginInvoke(category.DbName, outputType, null, null);
         }
 
-        protected virtual void SyncStatAll(DmCategory category, OutputType outputType)
+        protected virtual void SyncStatAll(Category category, OutputType outputType)
         {
             this.Stat(category.DbName, outputType);
         }
@@ -57,7 +57,7 @@ namespace Lottery.Statistics
         {
         }
 
-        protected abstract List<DmCategory> GetCatgories();
+        protected abstract List<Category> GetCatgories();
     }
 
     public enum OutputType

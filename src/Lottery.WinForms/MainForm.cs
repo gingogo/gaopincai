@@ -369,7 +369,7 @@ namespace Lottery.WinForms
         /// <param name="e"></param>
         private void ButtonFindClick(object sender, EventArgs e)
         {
-            findNumber();
+            FindeNumber();
         }
 
         /// <summary>
@@ -379,13 +379,13 @@ namespace Lottery.WinForms
         /// <param name="e"></param>
         private void TextBoxFindTextChanged(object sender, EventArgs e)
         {
-            findNumber();
+            FindeNumber();
         }
 
         /// <summary>
         /// 查找指定number
         /// </summary>
-        private void findNumber()
+        private void FindeNumber()
         {
             ListView lv = this.getCurrentListView();
             var text = textBoxFind.Text;
