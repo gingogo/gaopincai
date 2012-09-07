@@ -15,7 +15,7 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
-            DownServiceTest();
+            //DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
             //DmFCAnTest();
@@ -28,17 +28,9 @@ namespace Lottery.Test
         {
             //DataDownload.DownPage();
             //ExtractData.Extract();
-            ETL.SCC.ImportDwNumber.Start();
-        }
-
-        static void RepairPeroidSpan()
-        {
-            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
-            foreach (var category in categories)
-            {
-                DwNumberBiz biz = new DwNumberBiz(category.DbName);
-                biz.RepairPeroidSpan("D1");
-            }
+            //ETL.SCC.ImportDwNumber.Start();
+            ETL.Common.ImportDimension.Import();
+            ETL.Common.ImportNumberType.Import();
         }
 
         static void DownServiceTest()

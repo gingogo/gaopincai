@@ -71,6 +71,14 @@ namespace Lottery.Model.Common
         /// 列名DbName  
         /// </summary>
         public static readonly String C_DbName = "DbName";
+        /// <summary>
+        /// 列名Times  
+        /// </summary>
+        public static readonly String C_Times = "Times";
+        /// <summary>
+        /// 列名DimType  
+        /// </summary>
+        public static readonly String C_DimType = "DimType";
 
         #endregion
 
@@ -106,6 +114,10 @@ namespace Lottery.Model.Common
         private DateTime _created = DateTime.Now;
 
         private String _dbName;
+
+        private Int32 _times;
+
+        private string _dimType = "D5";
 
         #endregion
 
@@ -246,7 +258,24 @@ namespace Lottery.Model.Common
             get { return this._dbName ?? string.Empty; }
             set { this._dbName = value; }
         }
-
+        /// <summary>
+        /// 获取或设置每天开奖次数
+        /// </summary>
+        [Column(Name = "Times")]
+        public Int32 Times
+        {
+            get { return this._times; }
+            set { this._times = value; }
+        }
+        /// <summary>
+        /// 获取或设置多维分析类型
+        /// </summary>
+        [Column(Name = "DimType")]
+        public String DimType
+        {
+            get { return this._dimType; }
+            set { this._dimType = value; }
+        }
         #endregion
     }
 }

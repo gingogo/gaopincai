@@ -43,26 +43,6 @@ namespace Lottery.Data.SQLServer.D11X5
             get { return this.DataAccessor.Count(); }
         }
 
-        public void RepairPeroidSpan(string name)
-        {
-            //DwPeroidSpanDAO spanDao = new DwPeroidSpanDAO(ConfigHelper.GetDwSpanTableName(name),
-            //    this.DataAccessor.ConnectionString);
-            //long maxPeroid = spanDao.SelectMaxPeroid();
-
-            //if (maxPeroid == -1)
-            //    throw new ArgumentOutOfRangeException("MaxPeroid");
-
-            //Operand operand = Restrictions.Clause(SqlClause.Where)
-            //    .Append(Restrictions.GreaterThan(DwNumber.C_P, maxPeroid));
-            //var dtos = this.DataAccessor.SelectWithCondition(operand.ToString(), DwNumber.C_P, SortTypeEnum.ASC, null);
-            //foreach (var dto in dtos)
-            //{
-            //    string numberId = this.GetNumberIdByProperty(dto, name);
-            //    string filter = Restrictions.And.Append(Restrictions.LessThan(DwNumber.C_Seq, dto.Seq)).ToString();
-            //    this.AddPeroidSpan(numberId, name, dto.Seq, dto.P, filter);
-            //}
-        }
-
         public string GetNumberIdByProperty(DwNumber number,string name)
         {
             if(number[name] == null)
