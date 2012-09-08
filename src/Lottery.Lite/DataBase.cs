@@ -133,6 +133,10 @@ namespace Lottery.Lite
         /// <summary>
         /// 彩种
         /// </summary>
+        public string CaiTypeName { get; set; }
+        /// <summary>
+        /// 彩种
+        /// </summary>
         public string CaiType { get; set; }
         /// <summary>
         /// 每天的期数

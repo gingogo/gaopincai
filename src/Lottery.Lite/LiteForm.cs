@@ -56,21 +56,22 @@ namespace Lottery.Lite
                     CaiData.TimeBeginHour = 9;
                     CaiData.TimeEndHour = 22;
                     CaiData.TimePerPeriod = 10;
-                    this.Text = "老11选5";
+                    CaiData.CaiTypeName = "老11选5";
                     break;
                 case "jiangx11x5":
                     CaiData.PeriodPerDay = 65;
                     CaiData.TimeBeginHour = 9;
                     CaiData.TimeEndHour = 22;
                     CaiData.TimePerPeriod = 12;
-                    this.Text = "11选5";
+                    CaiData.CaiTypeName = "11选5";
+                    
                     break;
                 case "guangd11x5":
                     CaiData.PeriodPerDay = 84;
                     CaiData.TimeBeginHour = 9;
                     CaiData.TimeEndHour = 23;
                     CaiData.TimePerPeriod = 10;
-                    this.Text = "新11选5";
+                    CaiData.CaiTypeName = "新11选5";
                     break;
             }
             //设置计算时间默认为当前时间
@@ -83,6 +84,7 @@ namespace Lottery.Lite
 
             //显示最新的数据
             ShowNewNumber();
+            this.Text = CaiData.CaiTypeName;
         }
 
 
@@ -200,7 +202,10 @@ namespace Lottery.Lite
 
         void BackgroundWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            timerReport.Stop();
             buttonStat.Enabled = true;
+            buttonStat.Text = "Caculate";
+            StatusText.Text = "";
             if (list.values != null && list.values.Count > 0)
                 this.CreateListView(list);
         }
@@ -223,6 +228,9 @@ namespace Lottery.Lite
                     CaculateLeftSpan(7);
                     break;
             }
+            
+            
+
         }
         #endregion
 
@@ -318,6 +326,8 @@ namespace Lottery.Lite
             CaiData.TaskType = comboBoxSType.Text;
             CaiData.IsLoadFromCache = false;
             backgroundWorker.RunWorkerAsync();
+            buttonStat.Enabled = false;
+            timerReport.Start();
         }
 
         private void buttonShow_Click(object sender, EventArgs e)
@@ -426,6 +436,20 @@ namespace Lottery.Lite
         }
 
         #endregion
+
+        private void timerReport_Tick(object sender, EventArgs e)
+        {
+            if(DateTime.Now.Second%4 == 0)
+                buttonStat.Text = "Caculate";
+            if (DateTime.Now.Second % 4 == 1)
+                buttonStat.Text = "Caculate.";
+            if (DateTime.Now.Second % 4 == 2)
+                buttonStat.Text = "Caculate..";
+            if (DateTime.Now.Second % 4 == 3)
+                buttonStat.Text = "Caculate...";
+
+            StatusText.Text = CaiData.StatusLabel;
+        }
 
        
 

@@ -47,11 +47,15 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.timerReport = new System.Windows.Forms.Timer(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.StatusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1.SuspendLayout();
             this.tabPageHall.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.contextMenuStripTab.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -63,7 +67,7 @@
             this.tabControl1.Location = new System.Drawing.Point(6, 36);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(570, 277);
+            this.tabControl1.Size = new System.Drawing.Size(570, 273);
             this.tabControl1.TabIndex = 4;
             // 
             // tabPageHall
@@ -72,7 +76,7 @@
             this.tabPageHall.Location = new System.Drawing.Point(4, 22);
             this.tabPageHall.Name = "tabPageHall";
             this.tabPageHall.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageHall.Size = new System.Drawing.Size(562, 251);
+            this.tabPageHall.Size = new System.Drawing.Size(562, 247);
             this.tabPageHall.TabIndex = 0;
             this.tabPageHall.Text = "Hall";
             this.tabPageHall.UseVisualStyleBackColor = true;
@@ -211,11 +215,32 @@
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorkerDoWork);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorkerRunWorkerCompleted);
             // 
+            // timerReport
+            // 
+            this.timerReport.Interval = 1000;
+            this.timerReport.Tick += new System.EventHandler(this.timerReport_Tick);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusText});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 312);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(580, 22);
+            this.statusStrip1.TabIndex = 31;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // StatusText
+            // 
+            this.StatusText.Name = "StatusText";
+            this.StatusText.Size = new System.Drawing.Size(0, 17);
+            // 
             // LiteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 316);
+            this.ClientSize = new System.Drawing.Size(580, 334);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.buttonShow);
             this.Controls.Add(this.buttonFind);
             this.Controls.Add(this.textBoxFind);
@@ -232,6 +257,8 @@
             this.groupBox1.ResumeLayout(false);
             this.contextMenuStripTab.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,6 +283,9 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.Timer timerReport;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel StatusText;
 
     }
 }

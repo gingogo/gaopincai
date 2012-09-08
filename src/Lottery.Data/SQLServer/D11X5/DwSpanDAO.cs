@@ -58,13 +58,11 @@ namespace Lottery.Data.SQLServer.D11X5
 
         #region 特定数据访问方法
 
-
-       
-        public DataSet SelectTopNSpan(string num,int N)
+        public DataSet SelectTopNSpan(string num,int N,string p)
         {
             //判断num是前几，暂时是前2，tom改成自动的吧
-            string sql = "SELECT TOP " + N + " DwNumber.F2,DwNumber.P DwPeroidSpan.F2Spans FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
-            sql += " WHERE DwNumber.F2 = '" + num + "' order by DwNumber.P desc";
+            string sql = "SELECT TOP " + N + " DwNumber.F2,DwNumber.P,DwPeroidSpan.F2Spans FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
+            sql = sql+  " WHERE DwNumber.F2 = '" + num + "' and DwNumber.P < '"+p+"' order by DwNumber.P desc";
             DataSet ds = SqlHelper.ExecuteDataset(this.ConnectionString, CommandType.Text, sql);
             return ds;
         }
