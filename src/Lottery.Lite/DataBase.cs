@@ -167,7 +167,7 @@ namespace Lottery.Lite
         /// <summary>
         /// 是否从缓存加载
         /// </summary>
-        public bool LoadFromCache { get; set; }
+        public bool IsLoadFromCache { get; set; }
 
         /// <summary>
         /// 应用程序路径

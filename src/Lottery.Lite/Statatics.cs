@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
-using System.Configuration;
 using Lottery.Data.SQLServer.D11X5;
 using Lottery.Model.D11X5;
+using Lottery.Configuration;
 
 namespace Lottery.Lite
 {
@@ -19,7 +19,7 @@ namespace Lottery.Lite
     	/// <returns>周期对象列表</returns>
         public List<NumSpanData> GetSpanCount(CaiConfigData CaiData)
         {
-        	if(CaiData.LoadFromCache){
+        	if(CaiData.IsLoadFromCache){
 	            //从缓存中获取
 	            List<NumSpanData> re = BizBase.XMLDeserialize(CaiData);
 	            if(re!=null)
@@ -336,8 +336,8 @@ namespace Lottery.Lite
         /// <param name="CaiData">配置数据</param>
         /// <returns>周期数据列表</returns>
         public List<NumSpanData> GetNextPeriod(CaiConfigData CaiData,List<NumSpanData> spans){
-        	
-            if (!CaiData.LoadFromCache)
+
+            if (!CaiData.IsLoadFromCache)
             {
                 //需要重新计算以下值
                 //next 并且按照next进行排序

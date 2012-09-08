@@ -58,24 +58,34 @@ namespace Lottery.Data.SQLServer.D11X5
 
         #region 特定数据访问方法
 
-        public long SelectMaxPeroid()
+
+       
+        public DataSet SelectTopNSpan(string num,int N)
         {
-            string sql = string.Format("select max(p) p from {0}", this._tableName);
-            var list = this.GetEntities(sql, "P");
-            return (list == null || list.Count == 0) ? -1 : list[0].P;
+            //判断num是前几，暂时是前2，tom改成自动的吧
+            string sql = "SELECT TOP " + N + " DwNumber.F2,DwNumber.P DwPeroidSpan.F2Spans FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
+            sql += " WHERE DwNumber.F2 = '" + num + "' order by DwNumber.P desc";
+            DataSet ds = SqlHelper.ExecuteDataset(this.ConnectionString, CommandType.Text, sql);
+            return ds;
         }
 
         public int SelectMaxSpan(string num)
         {
-            string sql = string.Format("select max(Spans) Spans from {0} where NumberId = {1}", this._tableName, num);
+            //判断num是前几，暂时是前2，tom改成自动的吧
+            string sql = "SELECT max(DwPeroidSpan.F2Spans) FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
+            sql += " WHERE DwNumber.F2 = '"+ num+"'";
             return (int)SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql);
         }
 
         public int SelectAvgSpan(string num)
         {
-            string sql = string.Format("select avg(Spans) Spans from {0} where NumberId = {1}", this._tableName, num);
+            //判断num是前几，暂时是前2，tom改成自动的吧
+            string sql = "SELECT avg(DwPeroidSpan.F2Spans) FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
+            sql += " WHERE DwNumber.F2 = '" + num + "'";
             return (int)SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql);
         }
+
+
 
         #endregion
     }

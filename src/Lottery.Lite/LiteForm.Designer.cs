@@ -28,7 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LiteForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageHall = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listViewRealTime = new System.Windows.Forms.ListView();
             this.buttonFind = new System.Windows.Forms.Button();
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.comboBoxDate = new System.Windows.Forms.ComboBox();
@@ -36,6 +41,17 @@
             this.comboBoxSType = new System.Windows.Forms.ComboBox();
             this.ComboBoxType = new System.Windows.Forms.ComboBox();
             this.buttonShow = new System.Windows.Forms.Button();
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
+            this.contextMenuStripTab = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.tabControl1.SuspendLayout();
+            this.tabPageHall.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.contextMenuStripTab.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -43,11 +59,45 @@
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPageHall);
             this.tabControl1.Location = new System.Drawing.Point(6, 36);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(570, 410);
+            this.tabControl1.Size = new System.Drawing.Size(570, 277);
             this.tabControl1.TabIndex = 4;
+            // 
+            // tabPageHall
+            // 
+            this.tabPageHall.Controls.Add(this.groupBox1);
+            this.tabPageHall.Location = new System.Drawing.Point(4, 22);
+            this.tabPageHall.Name = "tabPageHall";
+            this.tabPageHall.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageHall.Size = new System.Drawing.Size(562, 251);
+            this.tabPageHall.TabIndex = 0;
+            this.tabPageHall.Text = "Hall";
+            this.tabPageHall.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.listViewRealTime);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(265, 235);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Real Time";
+            // 
+            // listViewRealTime
+            // 
+            this.listViewRealTime.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listViewRealTime.FullRowSelect = true;
+            this.listViewRealTime.GridLines = true;
+            this.listViewRealTime.Location = new System.Drawing.Point(6, 20);
+            this.listViewRealTime.Name = "listViewRealTime";
+            this.listViewRealTime.Size = new System.Drawing.Size(249, 210);
+            this.listViewRealTime.TabIndex = 0;
+            this.listViewRealTime.UseCompatibleStateImageBehavior = false;
+            this.listViewRealTime.View = System.Windows.Forms.View.Details;
             // 
             // buttonFind
             // 
@@ -66,6 +116,7 @@
             this.textBoxFind.Name = "textBoxFind";
             this.textBoxFind.Size = new System.Drawing.Size(59, 20);
             this.textBoxFind.TabIndex = 28;
+            this.textBoxFind.TextChanged += new System.EventHandler(this.TextBoxFindTextChanged);
             // 
             // comboBoxDate
             // 
@@ -75,21 +126,24 @@
             this.comboBoxDate.Size = new System.Drawing.Size(83, 21);
             this.comboBoxDate.TabIndex = 27;
             this.comboBoxDate.Text = "Due Date";
+            this.comboBoxDate.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDateSelectedIndexChanged);
             // 
             // buttonStat
             // 
             this.buttonStat.Location = new System.Drawing.Point(329, 5);
             this.buttonStat.Name = "buttonStat";
-            this.buttonStat.Size = new System.Drawing.Size(66, 23);
+            this.buttonStat.Size = new System.Drawing.Size(99, 23);
             this.buttonStat.TabIndex = 24;
             this.buttonStat.Text = "Caulate";
             this.buttonStat.UseVisualStyleBackColor = true;
+            this.buttonStat.Click += new System.EventHandler(this.buttonStat_Click);
             // 
             // comboBoxSType
             // 
             this.comboBoxSType.FormattingEnabled = true;
             this.comboBoxSType.Items.AddRange(new object[] {
-            "所有周期"});
+            "All Spans",
+            "1008 Spans"});
             this.comboBoxSType.Location = new System.Drawing.Point(181, 7);
             this.comboBoxSType.Name = "comboBoxSType";
             this.comboBoxSType.Size = new System.Drawing.Size(90, 21);
@@ -108,6 +162,7 @@
             this.ComboBoxType.Size = new System.Drawing.Size(79, 21);
             this.ComboBoxType.TabIndex = 22;
             this.ComboBoxType.Text = "jiangx11x5";
+            this.ComboBoxType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxType_SelectedIndexChanged);
             // 
             // buttonShow
             // 
@@ -117,12 +172,50 @@
             this.buttonShow.TabIndex = 30;
             this.buttonShow.Text = "Show";
             this.buttonShow.UseVisualStyleBackColor = true;
+            this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
+            // 
+            // timerRefresh
+            // 
+            this.timerRefresh.Interval = 180000;
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
+            // 
+            // contextMenuStripTab
+            // 
+            this.contextMenuStripTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeToolStripMenuItem});
+            this.contextMenuStripTab.Name = "contextMenuStripTab";
+            this.contextMenuStripTab.Size = new System.Drawing.Size(104, 26);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.contextMenuStrip1.Name = "contextMenuStripTab";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(104, 26);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(103, 22);
+            this.toolStripMenuItem1.Text = "Close";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.CloseToolStripMenuItemClick);
+            // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorkerDoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorkerRunWorkerCompleted);
             // 
             // LiteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 449);
+            this.ClientSize = new System.Drawing.Size(580, 316);
             this.Controls.Add(this.buttonShow);
             this.Controls.Add(this.buttonFind);
             this.Controls.Add(this.textBoxFind);
@@ -131,8 +224,14 @@
             this.Controls.Add(this.comboBoxSType);
             this.Controls.Add(this.ComboBoxType);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LiteForm";
             this.Text = "LotteryLite";
+            this.tabControl1.ResumeLayout(false);
+            this.tabPageHall.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.contextMenuStripTab.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,6 +247,15 @@
         private System.Windows.Forms.ComboBox comboBoxSType;
         private System.Windows.Forms.ComboBox ComboBoxType;
         private System.Windows.Forms.Button buttonShow;
+        private System.Windows.Forms.Timer timerRefresh;
+        private System.Windows.Forms.TabPage tabPageHall;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ListView listViewRealTime;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripTab;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
 
     }
 }
