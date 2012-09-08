@@ -52,6 +52,8 @@ namespace Lottery.WinForms.DataObjects
         /// </summary>
         public string AppPath { get; set; }
 
+        public string StatusLable { get; set; }
+
         public static CaiConfigData Create(string type,string numType,string appPath)
         {
             CaiConfigData caiData = new CaiConfigData();
