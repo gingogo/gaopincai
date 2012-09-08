@@ -80,7 +80,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 477);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 519);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(864, 22);
             this.statusStrip1.TabIndex = 2;
@@ -88,7 +88,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel1.Text = "Ready";
             // 
             // tabControl1
@@ -98,10 +98,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.ContextMenuStrip = this.contextMenuStripTab;
             this.tabControl1.Controls.Add(this.tabPageSet);
-            this.tabControl1.Location = new System.Drawing.Point(5, 35);
+            this.tabControl1.Location = new System.Drawing.Point(5, 38);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(856, 441);
+            this.tabControl1.Size = new System.Drawing.Size(856, 478);
             this.tabControl1.TabIndex = 3;
             // 
             // contextMenuStripTab
@@ -109,12 +109,12 @@
             this.contextMenuStripTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.closeToolStripMenuItem});
             this.contextMenuStripTab.Name = "contextMenuStripTab";
-            this.contextMenuStripTab.Size = new System.Drawing.Size(153, 48);
+            this.contextMenuStripTab.Size = new System.Drawing.Size(104, 26);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItemClick);
             // 
@@ -126,7 +126,7 @@
             this.tabPageSet.Location = new System.Drawing.Point(4, 22);
             this.tabPageSet.Name = "tabPageSet";
             this.tabPageSet.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSet.Size = new System.Drawing.Size(848, 415);
+            this.tabPageSet.Size = new System.Drawing.Size(848, 452);
             this.tabPageSet.TabIndex = 1;
             this.tabPageSet.Text = "Reminder";
             this.tabPageSet.UseVisualStyleBackColor = true;
@@ -134,9 +134,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.listViewReminder);
-            this.groupBox3.Location = new System.Drawing.Point(566, 6);
+            this.groupBox3.Location = new System.Drawing.Point(566, 7);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(273, 217);
+            this.groupBox3.Size = new System.Drawing.Size(273, 235);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Reminder";
@@ -147,9 +147,9 @@
             this.listViewReminder.ContextMenuStrip = this.contextMenuStripReminder;
             this.listViewReminder.FullRowSelect = true;
             this.listViewReminder.GridLines = true;
-            this.listViewReminder.Location = new System.Drawing.Point(6, 18);
+            this.listViewReminder.Location = new System.Drawing.Point(6, 20);
             this.listViewReminder.Name = "listViewReminder";
-            this.listViewReminder.Size = new System.Drawing.Size(261, 194);
+            this.listViewReminder.Size = new System.Drawing.Size(261, 210);
             this.listViewReminder.TabIndex = 4;
             this.listViewReminder.UseCompatibleStateImageBehavior = false;
             this.listViewReminder.View = System.Windows.Forms.View.Details;
@@ -161,33 +161,33 @@
             this.toolStripSeparator4,
             this.clearReminderToolStripMenuItem});
             this.contextMenuStripReminder.Name = "contextMenuStrip";
-            this.contextMenuStripReminder.Size = new System.Drawing.Size(107, 54);
+            this.contextMenuStripReminder.Size = new System.Drawing.Size(108, 54);
             // 
             // toolStripMenuItemDelete
             // 
             this.toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
-            this.toolStripMenuItemDelete.Size = new System.Drawing.Size(106, 22);
+            this.toolStripMenuItemDelete.Size = new System.Drawing.Size(107, 22);
             this.toolStripMenuItemDelete.Text = "Delete";
             this.toolStripMenuItemDelete.Click += new System.EventHandler(this.ToolStripMenuItemDeleteClick);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(103, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(104, 6);
             // 
             // clearReminderToolStripMenuItem
             // 
             this.clearReminderToolStripMenuItem.Name = "clearReminderToolStripMenuItem";
-            this.clearReminderToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.clearReminderToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.clearReminderToolStripMenuItem.Text = "Clear";
             this.clearReminderToolStripMenuItem.Click += new System.EventHandler(this.ClearReminderToolStripMenuItemClick);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.listView1);
-            this.groupBox2.Location = new System.Drawing.Point(287, 6);
+            this.groupBox2.Location = new System.Drawing.Point(287, 7);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(273, 217);
+            this.groupBox2.Size = new System.Drawing.Size(273, 235);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Recomended";
@@ -197,9 +197,9 @@
             this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(6, 18);
+            this.listView1.Location = new System.Drawing.Point(6, 20);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(261, 194);
+            this.listView1.Size = new System.Drawing.Size(261, 210);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -207,9 +207,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.listViewRealTime);
-            this.groupBox1.Location = new System.Drawing.Point(8, 6);
+            this.groupBox1.Location = new System.Drawing.Point(8, 7);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(273, 217);
+            this.groupBox1.Size = new System.Drawing.Size(273, 235);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Real Time";
@@ -219,9 +219,9 @@
             this.listViewRealTime.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listViewRealTime.FullRowSelect = true;
             this.listViewRealTime.GridLines = true;
-            this.listViewRealTime.Location = new System.Drawing.Point(6, 18);
+            this.listViewRealTime.Location = new System.Drawing.Point(6, 20);
             this.listViewRealTime.Name = "listViewRealTime";
-            this.listViewRealTime.Size = new System.Drawing.Size(261, 194);
+            this.listViewRealTime.Size = new System.Drawing.Size(261, 210);
             this.listViewRealTime.TabIndex = 0;
             this.listViewRealTime.UseCompatibleStateImageBehavior = false;
             this.listViewRealTime.View = System.Windows.Forms.View.Details;
@@ -250,9 +250,9 @@
             "shand11x5",
             "jiangx11x5",
             "guangd11x5"});
-            this.ComboBoxType.Location = new System.Drawing.Point(5, 9);
+            this.ComboBoxType.Location = new System.Drawing.Point(5, 10);
             this.ComboBoxType.Name = "ComboBoxType";
-            this.ComboBoxType.Size = new System.Drawing.Size(100, 20);
+            this.ComboBoxType.Size = new System.Drawing.Size(100, 21);
             this.ComboBoxType.TabIndex = 7;
             this.ComboBoxType.Text = "jiangx11x5";
             this.ComboBoxType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxType_SelectedIndexChanged);
@@ -262,17 +262,17 @@
             this.comboBoxSType.FormattingEnabled = true;
             this.comboBoxSType.Items.AddRange(new object[] {
             "所有周期"});
-            this.comboBoxSType.Location = new System.Drawing.Point(307, 9);
+            this.comboBoxSType.Location = new System.Drawing.Point(307, 10);
             this.comboBoxSType.Name = "comboBoxSType";
-            this.comboBoxSType.Size = new System.Drawing.Size(121, 20);
+            this.comboBoxSType.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSType.TabIndex = 8;
             this.comboBoxSType.Text = "Choose One Type";
             // 
             // buttonStat
             // 
-            this.buttonStat.Location = new System.Drawing.Point(434, 9);
+            this.buttonStat.Location = new System.Drawing.Point(434, 10);
             this.buttonStat.Name = "buttonStat";
-            this.buttonStat.Size = new System.Drawing.Size(82, 21);
+            this.buttonStat.Size = new System.Drawing.Size(82, 23);
             this.buttonStat.TabIndex = 9;
             this.buttonStat.Text = "CacheSTAT";
             this.buttonStat.UseVisualStyleBackColor = true;
@@ -281,27 +281,27 @@
             // ComboBoxNumberType
             // 
             this.ComboBoxNumberType.FormattingEnabled = true;
-            this.ComboBoxNumberType.Location = new System.Drawing.Point(111, 9);
+            this.ComboBoxNumberType.Location = new System.Drawing.Point(111, 10);
             this.ComboBoxNumberType.Name = "ComboBoxNumberType";
-            this.ComboBoxNumberType.Size = new System.Drawing.Size(50, 20);
+            this.ComboBoxNumberType.Size = new System.Drawing.Size(50, 21);
             this.ComboBoxNumberType.TabIndex = 11;
             this.ComboBoxNumberType.Text = "F2";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(165, 13);
+            this.label1.Location = new System.Drawing.Point(165, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(11, 12);
+            this.label1.Size = new System.Drawing.Size(9, 13);
             this.label1.TabIndex = 13;
             this.label1.Text = "|";
             // 
             // comboBoxDate
             // 
             this.comboBoxDate.FormattingEnabled = true;
-            this.comboBoxDate.Location = new System.Drawing.Point(180, 9);
+            this.comboBoxDate.Location = new System.Drawing.Point(180, 10);
             this.comboBoxDate.Name = "comboBoxDate";
-            this.comboBoxDate.Size = new System.Drawing.Size(121, 20);
+            this.comboBoxDate.Size = new System.Drawing.Size(121, 21);
             this.comboBoxDate.TabIndex = 15;
             this.comboBoxDate.Text = "Choose Due Date";
             this.comboBoxDate.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDateSelectedIndexChanged);
@@ -309,18 +309,18 @@
             // textBoxFind
             // 
             this.textBoxFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxFind.Location = new System.Drawing.Point(723, 9);
+            this.textBoxFind.Location = new System.Drawing.Point(723, 10);
             this.textBoxFind.Name = "textBoxFind";
-            this.textBoxFind.Size = new System.Drawing.Size(75, 21);
+            this.textBoxFind.Size = new System.Drawing.Size(75, 20);
             this.textBoxFind.TabIndex = 17;
             this.textBoxFind.TextChanged += new System.EventHandler(this.TextBoxFindTextChanged);
             // 
             // buttonFind
             // 
             this.buttonFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFind.Location = new System.Drawing.Point(804, 9);
+            this.buttonFind.Location = new System.Drawing.Point(804, 10);
             this.buttonFind.Name = "buttonFind";
-            this.buttonFind.Size = new System.Drawing.Size(53, 21);
+            this.buttonFind.Size = new System.Drawing.Size(53, 23);
             this.buttonFind.TabIndex = 18;
             this.buttonFind.Text = "Find";
             this.buttonFind.UseVisualStyleBackColor = true;
@@ -331,9 +331,9 @@
             this.pictureBoxLoading.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxLoading.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLoading.Image")));
             this.pictureBoxLoading.InitialImage = null;
-            this.pictureBoxLoading.Location = new System.Drawing.Point(784, 484);
+            this.pictureBoxLoading.Location = new System.Drawing.Point(784, 524);
             this.pictureBoxLoading.Name = "pictureBoxLoading";
-            this.pictureBoxLoading.Size = new System.Drawing.Size(58, 10);
+            this.pictureBoxLoading.Size = new System.Drawing.Size(58, 11);
             this.pictureBoxLoading.TabIndex = 19;
             this.pictureBoxLoading.TabStop = false;
             this.pictureBoxLoading.Visible = false;
@@ -342,9 +342,9 @@
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(239, 479);
+            this.progressBar.Location = new System.Drawing.Point(239, 519);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(520, 20);
+            this.progressBar.Size = new System.Drawing.Size(520, 22);
             this.progressBar.Step = 1;
             this.progressBar.TabIndex = 20;
             this.progressBar.Visible = false;
@@ -354,12 +354,12 @@
             this.contextMenuStripListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAdd});
             this.contextMenuStripListView.Name = "contextMenuStripListView";
-            this.contextMenuStripListView.Size = new System.Drawing.Size(161, 26);
+            this.contextMenuStripListView.Size = new System.Drawing.Size(168, 26);
             // 
             // toolStripMenuItemAdd
             // 
             this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
-            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(160, 22);
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(167, 22);
             this.toolStripMenuItemAdd.Text = "Add To Reminder";
             this.toolStripMenuItemAdd.Click += new System.EventHandler(this.AddToReminderToolStripMenuItemClick);
             // 
@@ -370,9 +370,9 @@
             // 
             // buttonDBCount
             // 
-            this.buttonDBCount.Location = new System.Drawing.Point(522, 9);
+            this.buttonDBCount.Location = new System.Drawing.Point(522, 10);
             this.buttonDBCount.Name = "buttonDBCount";
-            this.buttonDBCount.Size = new System.Drawing.Size(77, 21);
+            this.buttonDBCount.Size = new System.Drawing.Size(77, 23);
             this.buttonDBCount.TabIndex = 21;
             this.buttonDBCount.Text = "DBSTAT";
             this.buttonDBCount.UseVisualStyleBackColor = true;
@@ -380,9 +380,9 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 499);
+            this.ClientSize = new System.Drawing.Size(864, 541);
             this.Controls.Add(this.buttonDBCount);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.buttonFind);
