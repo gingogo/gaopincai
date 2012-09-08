@@ -14,7 +14,7 @@ namespace Lottery.Data.SQLServer.Common
         SinglePKDataAccessBiz<CategoryDAO, Category>
     {
         /// <summary>
-        /// DmCategoryBiz类的一个单件。
+        /// CategoryBiz类的一个单件。
         /// </summary>
         public static readonly CategoryBiz Instance = new CategoryBiz();
 
