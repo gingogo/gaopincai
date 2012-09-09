@@ -4,6 +4,9 @@ namespace Lottery.Model.Common
 {
     using Data;
 
+    /// <summary>
+    /// 彩种实体
+    /// </summary>
     [Serializable]
     public class Category : BaseModel
     {
@@ -12,73 +15,73 @@ namespace Lottery.Model.Common
         #region Const Members
 
         /// <summary>
-        /// 列名Id  
+        /// 列名Id,彩种Id
         /// </summary>
         public static readonly String C_Id = "Id";
         /// <summary>
-        /// 列名ParentId  
+        /// 列名ParentId,彩种父ID
         /// </summary>
         public static readonly String C_ParentId = "ParentId";
         /// <summary>
-        /// 列名Name  
+        /// 列名Type,彩种玩法类型
+        /// </summary>
+        public static readonly String C_RuleType = "RuleType";
+        /// <summary>
+        /// 列名Name,彩种名称 
         /// </summary>
         public static readonly String C_Name = "Name";
         /// <summary>
-        /// 列名Code  
+        /// 列名Code,彩种代号 
         /// </summary>
         public static readonly String C_Code = "Code";
         /// <summary>
-        /// 列名Type  
-        /// </summary>
-        public static readonly String C_Type = "Type";
-        /// <summary>
-        /// 列名Peroid  
+        /// 列名Peroid,彩种开奖周期
         /// </summary>
         public static readonly String C_Peroid = "Peroid";
         /// <summary>
-        /// 列名Seq  
+        /// 列名Seq,彩种在记录集中排序号
         /// </summary>
         public static readonly String C_Seq = "Seq";
         /// <summary>
-        /// 列名Enabled  
+        /// 列名Enabled,彩种是否可用
         /// </summary>
         public static readonly String C_Enabled = "Enabled";
         /// <summary>
-        /// 列名IsGP  
+        /// 列名IsGP,彩种是否为高频彩票  
         /// </summary>
         public static readonly String C_IsGP = "IsGP";
         /// <summary>
-        /// 列名DownPageIndex  
+        /// 列名DownPageIndex,彩种当前数据下载的页码(该项暂时无用)
         /// </summary>
         public static readonly String C_DownPageIndex = "DownPageIndex";
         /// <summary>
-        /// 列名DownIntervals  
+        /// 列名DownIntervals,彩种数据下载程序下载间隔时间
         /// </summary>
         public static readonly String C_DownIntervals = "DownIntervals";
         /// <summary>
-        /// 列名DownPeroid  
+        /// 列名DownPeroid,彩种数据下载程序下载周期(每天、每周、每小时或分钟)
         /// </summary>
         public static readonly String C_DownPeroid = "DownPeroid";
         /// <summary>
-        /// 列名DownUrl  
+        /// 列名DownUrl,彩种数据下载URL
         /// </summary>
         public static readonly String C_DownUrl = "DownUrl";
         /// <summary>
-        /// 列名Created  
-        /// </summary>
-        public static readonly String C_Created = "Created";
-        /// <summary>
-        /// 列名DbName  
+        /// 列名DbName，彩种对应的数据库名称
         /// </summary>
         public static readonly String C_DbName = "DbName";
         /// <summary>
-        /// 列名Times  
+        /// 列名Times,彩种每天开奖次数。 
         /// </summary>
         public static readonly String C_Times = "Times";
         /// <summary>
-        /// 列名DimType  
+        /// 列名DimType,彩种数据维度分析类型,默认是D5(数字5)类型的所有维度 
         /// </summary>
         public static readonly String C_DimType = "DimType";
+        /// <summary>
+        /// 列名Created,彩种记录创建时间
+        /// </summary>
+        public static readonly String C_Created = "Created";
 
         #endregion
 
@@ -93,7 +96,7 @@ namespace Lottery.Model.Common
 
         private String _code;
 
-        private String _type;
+        private String _ruleType;
 
         private String _peroid;
 
@@ -124,7 +127,7 @@ namespace Lottery.Model.Common
         #region Property Members
 
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种Id
         /// </summary>
         [Column(Name = "Id", IsIdentity = true)]
         public Int32 Id
@@ -133,7 +136,7 @@ namespace Lottery.Model.Common
             set { this._id = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种父ID
         /// </summary>
         [Column(Name = "ParentId")]
         public Int32 ParentId
@@ -142,7 +145,16 @@ namespace Lottery.Model.Common
             set { this._parentId = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种玩法类型
+        /// </summary>
+        [Column(Name = "RuleType")]
+        public String RuleType
+        {
+            get { return this._ruleType ?? string.Empty; }
+            set { this._ruleType = value; }
+        }
+        /// <summary>
+        /// 获取或设置彩种名称
         /// </summary>
         [Column(Name = "Name")]
         public String Name
@@ -151,7 +163,7 @@ namespace Lottery.Model.Common
             set { this._name = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种代号
         /// </summary>
         [Column(Name = "Code")]
         public String Code
@@ -160,16 +172,7 @@ namespace Lottery.Model.Common
             set { this._code = value; }
         }
         /// <summary>
-        /// 获取或设置
-        /// </summary>
-        [Column(Name = "Type")]
-        public String Type
-        {
-            get { return this._type ?? string.Empty; }
-            set { this._type = value; }
-        }
-        /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种开奖周期
         /// </summary>
         [Column(Name = "Peroid")]
         public String Peroid
@@ -178,7 +181,7 @@ namespace Lottery.Model.Common
             set { this._peroid = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种在记录集中排序号
         /// </summary>
         [Column(Name = "Seq")]
         public Int32 Seq
@@ -187,7 +190,7 @@ namespace Lottery.Model.Common
             set { this._seq = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种是否可用
         /// </summary>
         [Column(Name = "Enabled")]
         public Byte Enabled
@@ -196,7 +199,7 @@ namespace Lottery.Model.Common
             set { this._enabled = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种是否为高频彩票
         /// </summary>
         [Column(Name = "IsGP")]
         public Byte IsGP
@@ -205,7 +208,7 @@ namespace Lottery.Model.Common
             set { this._isGP = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种当前数据下载的页码(该项暂时无用)
         /// </summary>
         [Column(Name = "DownPageIndex")]
         public Int32 DownPageIndex
@@ -214,7 +217,7 @@ namespace Lottery.Model.Common
             set { this._downPageIndex = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种数据下载程序下载间隔时间
         /// </summary>
         [Column(Name = "DownIntervals")]
         public String DownIntervals
@@ -223,7 +226,7 @@ namespace Lottery.Model.Common
             set { this._downIntervals = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种数据下载程序下载周期(每天、每周、每小时或分钟)
         /// </summary>
         [Column(Name = "DownPeroid")]
         public String DownPeroid
@@ -232,7 +235,7 @@ namespace Lottery.Model.Common
             set { this._downPeroid = value; }
         }
         /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种数据下载URL
         /// </summary>
         [Column(Name = "DownUrl")]
         public String DownUrl
@@ -241,16 +244,7 @@ namespace Lottery.Model.Common
             set { this._downUrl = value; }
         }
         /// <summary>
-        /// 获取或设置
-        /// </summary>
-        [Column(Name = "Created")]
-        public DateTime Created
-        {
-            get { return this._created; }
-            set { this._created = value; }
-        }
-        /// <summary>
-        /// 获取或设置
+        /// 获取或设置彩种数据存储的数据库名称
         /// </summary>
         [Column(Name = "DbName")]
         public String DbName
@@ -259,7 +253,7 @@ namespace Lottery.Model.Common
             set { this._dbName = value; }
         }
         /// <summary>
-        /// 获取或设置每天开奖次数
+        /// 获取或设置彩种每天开奖次数
         /// </summary>
         [Column(Name = "Times")]
         public Int32 Times
@@ -268,13 +262,22 @@ namespace Lottery.Model.Common
             set { this._times = value; }
         }
         /// <summary>
-        /// 获取或设置多维分析类型
+        /// 获取或设置彩种数据维度分析类型,默认是D5(数字5)类型的所有维度 
         /// </summary>
         [Column(Name = "DimType")]
         public String DimType
         {
             get { return this._dimType; }
             set { this._dimType = value; }
+        }
+        /// <summary>
+        /// 获取或设置记录创建时间
+        /// </summary>
+        [Column(Name = "Created")]
+        public DateTime Created
+        {
+            get { return this._created; }
+            set { this._created = value; }
         }
         #endregion
     }

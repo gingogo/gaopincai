@@ -9,17 +9,17 @@ namespace Lottery.Data.SQLServer.Common
     using Model.Common;
 
     /// <summary>
-    /// NumberTypeDAO提供表(NumberType)的相关数据访问操作的类。
+    /// NumberTypeDimDAO提供表(NumberTypeDimDAO)的相关数据访问操作的类。
     /// </summary>
-    public class NumberTypeDAO
-        : SinglePKDataAccess<NumberType>
+    public class NumberTypeDimDAO
+        : SinglePKDataAccess<NumberTypeDim>
     {
         /// <summary>
         /// 构造函数。
         /// </summary>
         /// <param name="connectionString">当前表的数据库连接字符串</param>
-        public NumberTypeDAO(string connectionString)
-            : base(NumberType.ENTITYNAME, NumberType.C_Id, connectionString)
+        public NumberTypeDimDAO(string connectionString)
+            : base(NumberTypeDim.ENTITYNAME, NumberTypeDim.C_Id, connectionString)
         { }
 
         /// <summary>
@@ -27,8 +27,8 @@ namespace Lottery.Data.SQLServer.Common
         /// </summary>
         /// <param name="tableName">表名</param>  
         /// <param name="connectionString">当前表的数据库连接字符串</param>
-        public NumberTypeDAO(string tableName, string connectionString)
-            : base(tableName, NumberType.C_Id, connectionString)
+        public NumberTypeDimDAO(string tableName, string connectionString)
+            : base(tableName, NumberTypeDim.C_Id, connectionString)
         { }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Lottery.Data.SQLServer.Common
         /// <param name="tableName">表名</param>  
         /// <param name="primaryKey">表的单主键名称</param>
         /// <param name="connectionString">当前表的数据库连接字符串</param>
-        public NumberTypeDAO(string tableName, string primaryKey, string connectionString)
+        public NumberTypeDimDAO(string tableName, string primaryKey, string connectionString)
             : base(tableName, primaryKey, connectionString)
         { }
 
@@ -49,12 +49,12 @@ namespace Lottery.Data.SQLServer.Common
         /// <param name="dr">有效的DataReader对象</param>
         /// <param name="columnNames">该数据传输对象中对应的数据库表的字段（列）名</param>
         /// <returns>数据传输对象实例</returns>
-        protected override NumberType DataReaderToEntity(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
+        protected override NumberTypeDim DataReaderToEntity(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
         {
             if (dr == null)
                 throw new ArgumentNullException("dr", "未将对象引用到实例");
 
-            return EntityMapper.GetEntity(dr, new NumberType(), NumberType.ENTITYNAME);
+            return EntityMapper.GetEntity(dr, new NumberTypeDim(), NumberTypeDim.ENTITYNAME);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Lottery.Data.SQLServer.Common
         /// <param name="dto">有效的数据传输对象</param>
         /// <param name="columnNames">该数据传输对象中对应的数据库表的列名</param>
         /// <returns>包含键值映射的DataFieldMap</returns>
-        protected override DataFieldMapTable GetDataFieldMapTable(NumberType dto, params string[] columnNames)
+        protected override DataFieldMapTable GetDataFieldMapTable(NumberTypeDim dto, params string[] columnNames)
         {
             if (dto == null)
                 throw new ArgumentNullException("dto", "未将对象引用到实例");

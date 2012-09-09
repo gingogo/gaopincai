@@ -27,14 +27,18 @@ namespace Lottery.Data.SQLServer.Common
 
         public List<Category> GetEnabledCategories()
         {
-            string condition = "where enabled = 1";
-            return this.DataAccessor.SelectWithCondition(condition);
+            Operand operand = Restrictions.Clause(SqlClause.Where)
+                .Append(Restrictions.Equal(Category.C_Enabled, 1));
+            return this.DataAccessor.SelectWithCondition(operand.ToString());
         }
 
-        public List<Category> GetEnabledCategories(string type)
+        public List<Category> GetEnabledCategories(string ruleType)
         {
-            string condition = string.Format("where enabled = 1 and type = '{0}' ", type);
-            return this.DataAccessor.SelectWithCondition(condition);
+            Operand operand = Restrictions.Clause(SqlClause.Where)
+               .Append(Restrictions.Equal(Category.C_Enabled, 1))
+               .Append(Restrictions.And)
+               .Append(Restrictions.Equal(Category.C_RuleType, ruleType));
+            return this.DataAccessor.SelectWithCondition(operand.ToString());
         }
 
         #endregion

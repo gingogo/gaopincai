@@ -12,8 +12,9 @@ namespace Lottery.Data.SQLServer.Common
     /// DimensionDAO提供表(Dimension)的相关数据访问操作的类。
     /// </summary>
     public class DimensionDAO
-        : SinglePKDataAccess<Dimension>     {
-	        /// <summary>
+        : SinglePKDataAccess<Dimension>
+    {
+        /// <summary>
         /// 构造函数。
         /// </summary>
         /// <param name="connectionString">当前表的数据库连接字符串</param>
@@ -39,7 +40,7 @@ namespace Lottery.Data.SQLServer.Common
         public DimensionDAO(string tableName, string primaryKey, string connectionString)
             : base(tableName, primaryKey, connectionString)
         { }
-	
+
         #region 实现BaseDataAccess类的抽象方法
 
         /// <summary>

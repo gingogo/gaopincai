@@ -41,13 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SQLServer\Common\Biz\NumberTypeDim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLServer\Common\Biz\RuleTypeBiz.cs" />
     <Compile Include="SQLServer\Common\Biz\CategoryBiz.cs" />
     <Compile Include="SQLServer\Common\Biz\DimensionBiz.cs" />
     <Compile Include="SQLServer\Common\Biz\NumberTypeBiz.cs" />
     <Compile Include="SQLServer\Common\CategoryDAO.cs" />
     <Compile Include="SQLServer\Common\DimensionDAO.cs" />
     <Compile Include="SQLServer\Common\NumberTypeDAO.cs" />
+    <Compile Include="SQLServer\Common\NumberTypeDimDAO.cs" />
+    <Compile Include="SQLServer\Common\RuleTypeDAO.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DwSpanBiz.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DmFCAnBiz.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DwNumberBiz.cs" />

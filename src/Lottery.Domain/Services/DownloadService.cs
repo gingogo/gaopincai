@@ -63,7 +63,7 @@ namespace Lottery.Services
                 if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid))
                     continue;
 
-                EventParameter parameter = new EventParameter(category.Type, category.Name, category.DownUrl, category.DbName);
+                EventParameter parameter = new EventParameter(category.RuleType, category.Name, category.DownUrl, category.DbName);
                 parameter.StartDate = GetLatestDate(category.DbName);
                 parameter.EndDate = DateTime.Now;
                 this.asyncEventWorker.RunAsync(Guid.NewGuid().ToString(), parameter);
@@ -74,10 +74,10 @@ namespace Lottery.Services
         {
             foreach (var category in categories)
             {
-                //if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid))
-                //    continue;
+                if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid))
+                    continue;
 
-                EventParameter parameter = new EventParameter(category.Type, category.Name, category.DownUrl, category.DbName);
+                EventParameter parameter = new EventParameter(category.RuleType, category.Name, category.DownUrl, category.DbName);
                 parameter.StartDate = GetLatestDate(category.DbName);
                 parameter.EndDate = DateTime.Now;
                 this.StartDown(parameter);

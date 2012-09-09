@@ -33,8 +33,8 @@ namespace Lottery.ETL.Common
                 NumberType nt = new NumberType();
                 nt.Name = arr[1];
                 nt.Code = arr[0];
-                nt.Type = "11X5";
-                nt.P = kp.Value;
+                nt.RuleType = "11X5";
+                nt.Probability = kp.Value;
                 NumberTypeBiz.Instance.Add(nt);
             }
         }
@@ -57,8 +57,8 @@ namespace Lottery.ETL.Common
                 NumberType nt = new NumberType();
                 nt.Name = arr[1];
                 nt.Code = arr[0];
-                nt.Type = "SSC";
-                nt.P = kp.Value;
+                nt.RuleType = "SSC";
+                nt.Probability = kp.Value;
                 NumberTypeBiz.Instance.Add(nt);
             }
         }

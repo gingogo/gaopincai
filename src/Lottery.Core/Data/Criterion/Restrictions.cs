@@ -39,6 +39,11 @@ namespace Lottery.Data
             return new EqualOperand(columnName, columnValue);
         }
 
+        public static EqualOperand Equal(string columnName, string columnValue)
+        {
+            return new EqualOperand(columnName, string.Format("'{0}'", columnValue));
+        }
+
         public static ClauseOperand Clause(SqlClause sqlClause)
         {
             return new ClauseOperand(sqlClause);

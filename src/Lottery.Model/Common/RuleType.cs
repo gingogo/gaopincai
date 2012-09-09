@@ -5,31 +5,31 @@ namespace Lottery.Model.Common
     using Data;
 
     /// <summary>
-    /// 维度实体。
+    /// 彩票玩法类型
     /// </summary>
     [Serializable]
-    public class Dimension : BaseModel
+    public class RuleType : BaseModel
     {
-        public static string ENTITYNAME = "Dimension";
+        public static string ENTITYNAME = "RuleType";
 
         #region Const Members
 
         /// <summary>
-        /// 列名Id,维度ID  
+        /// 列名Id,玩法类型Id
         /// </summary>
         public static readonly String C_Id = "Id";
         /// <summary>
-        /// 列名Name,维度名称
-        /// </summary>
-        public static readonly String C_Name = "Name";
-        /// <summary>
-        /// 列名Code,维度代码
+        /// 列名Code,玩法类型代号
         /// </summary>
         public static readonly String C_Code = "Code";
         /// <summary>
-        /// 列名Type,维度类型
+        /// 列名Name,玩法类型名称
         /// </summary>
-        public static readonly String C_Type = "Type";
+        public static readonly String C_Name = "Name";
+        /// <summary>
+        /// 列名Seq,玩法类型在记录集中顺序 
+        /// </summary>
+        public static readonly String C_Seq = "Seq";
 
         #endregion
 
@@ -38,38 +38,27 @@ namespace Lottery.Model.Common
 
         private Int32 _id;
 
-        private String _name;
-
         private String _code;
 
-        private String _type;
+        private String _name;
 
-        private Int32 _seq = 10;
+        private Int32 _seq;
 
         #endregion
 
         #region Property Members
 
         /// <summary>
-        /// 获取或设置维度ID
+        /// 获取或设置玩法类型Id
         /// </summary>
-        [Column(Name = "Id",IsIdentity=true)]
+        [Column(Name = "Id", IsIdentity = true)]
         public virtual Int32 Id
         {
             get { return this._id; }
             set { this._id = value; }
         }
         /// <summary>
-        /// 获取或设置维度名称
-        /// </summary>
-        [Column(Name = "Name")]
-        public virtual String Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        /// <summary>
-        /// 获取或设置维度代号
+        /// 获取或设置玩法类型代号
         /// </summary>
         [Column(Name = "Code")]
         public virtual String Code
@@ -78,23 +67,24 @@ namespace Lottery.Model.Common
             set { this._code = value; }
         }
         /// <summary>
-        /// 获取或设置维度类型
+        /// 获取或设置玩法类型名称
         /// </summary>
-        [Column(Name = "Type")]
-        public virtual String Type
+        [Column(Name = "Name")]
+        public virtual String Name
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         /// <summary>
-        /// 获取或设置在记录集中排序号
+        /// 获取或设置玩法类型在记录集中顺序
         /// </summary>
         [Column(Name = "Seq")]
-        public Int32 Seq
+        public virtual Int32 Seq
         {
             get { return this._seq; }
             set { this._seq = value; }
         }
+
         #endregion
     }
 }
