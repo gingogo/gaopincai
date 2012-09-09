@@ -23,13 +23,17 @@ namespace Lottery.Model.Common
         /// </summary>
         public static readonly String C_ParentId = "ParentId";
         /// <summary>
-        /// 列名Type,彩种玩法类型
-        /// </summary>
-        public static readonly String C_RuleType = "RuleType";
-        /// <summary>
         /// 列名Name,彩种名称 
         /// </summary>
         public static readonly String C_Name = "Name";
+        /// <summary>
+        /// 列名RuleType,彩种玩法类型
+        /// </summary>
+        public static readonly String C_RuleType = "RuleType";
+        /// <summary>
+        /// 列名Type,彩种类型
+        /// </summary>
+        public static readonly String C_Type = "Type";
         /// <summary>
         /// 列名Code,彩种代号 
         /// </summary>
@@ -98,6 +102,8 @@ namespace Lottery.Model.Common
 
         private String _ruleType;
 
+        private String _type;
+
         private String _peroid;
 
         private Int32 _seq;
@@ -152,6 +158,15 @@ namespace Lottery.Model.Common
         {
             get { return this._ruleType ?? string.Empty; }
             set { this._ruleType = value; }
+        }
+        /// <summary>
+        /// 获取或设置彩种类型
+        /// </summary>
+        [Column(Name = "Type")]
+        public String Type
+        {
+            get { return this._type ?? string.Empty; }
+            set { this._type = value; }
         }
         /// <summary>
         /// 获取或设置彩种名称

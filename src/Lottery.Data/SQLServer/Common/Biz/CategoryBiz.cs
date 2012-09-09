@@ -32,12 +32,12 @@ namespace Lottery.Data.SQLServer.Common
             return this.DataAccessor.SelectWithCondition(operand.ToString());
         }
 
-        public List<Category> GetEnabledCategories(string ruleType)
+        public List<Category> GetEnabledCategories(string type)
         {
             Operand operand = Restrictions.Clause(SqlClause.Where)
                .Append(Restrictions.Equal(Category.C_Enabled, 1))
                .Append(Restrictions.And)
-               .Append(Restrictions.Equal(Category.C_RuleType, ruleType));
+               .Append(Restrictions.Equal(Category.C_Type, type));
             return this.DataAccessor.SelectWithCondition(operand.ToString());
         }
 

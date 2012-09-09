@@ -33,7 +33,7 @@ namespace Lottery.Model.Common
         /// <summary>
         /// 列名Value,玩法所属维度的值
         /// </summary>
-        public static readonly String C_Value = "Value";
+        public static readonly String C_DimValue = "DimValue";
         /// <summary>
         /// 列名Probability,玩法维度值的中奖概率
         /// </summary>
@@ -60,7 +60,7 @@ namespace Lottery.Model.Common
 
         private String _dimension;
 
-        private String _value;
+        private String _dimValue;
 
         private Double _probability;
 
@@ -111,11 +111,11 @@ namespace Lottery.Model.Common
         /// <summary>
         /// 获取或设置玩法所属维度的值
         /// </summary>
-        [Column(Name = "Value")]
-        public virtual String Value
+        [Column(Name = "DimValue")]
+        public virtual String DimValue
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._dimValue; }
+            set { this._dimValue = value; }
         }
         /// <summary>
         /// 获取或设置玩法维度值的中奖概率

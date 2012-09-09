@@ -30,8 +30,9 @@ namespace Lottery.Test
             //DataDownload.DownPage();
             //ExtractData.Extract();
             //ETL.SCC.ImportDwNumber.Start();
-            ETL.Common.ImportDimension.Import();
-            ETL.Common.ImportNumberType.Import();
+            //ETL.Common.ImportDimension.Import();
+            //ETL.Common.ImportNumberType.Import();
+            //ETL.Common.ImportNumberTypeDim.Import();
         }
 
         static void DownServiceTest()

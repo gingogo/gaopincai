@@ -50,6 +50,7 @@
     <Compile Include="Downloader\DownParameter.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Downloader\SSCDownloader.cs" />
+    <Compile Include="ETL\Common\ImportNumberTypeDim.cs" />
     <Compile Include="ETL\Common\ImportDimension.cs" />
     <Compile Include="ETL\Common\ImportNumberType.cs" />
     <Compile Include="ETL\D11X5\ImportDmFCAn.cs" />

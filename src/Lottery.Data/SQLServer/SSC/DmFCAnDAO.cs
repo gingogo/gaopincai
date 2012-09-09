@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Linq;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Lottery.Data.SQLServer.SSC
 {
+    using Model.Common;
     using Model.SSC;
 
     /// <summary>
@@ -74,6 +77,40 @@ namespace Lottery.Data.SQLServer.SSC
 
         #region 特定数据访问方法
 
+        public List<NumberTypeDim> SelectNumberTypeDimGroupBy(string[] dimensions)
+        {
+            string sqlCmd = this.GetBatchSql(dimensions);
+            return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberTypeDim);
+        }
+
+        #endregion
+
+        #region 私有方法
+
+        private string GetBatchSql(string[] dimensions)
+        {
+            string sqlFormat = string.Empty;
+
+            StringBuilder batchSqlBuilder = new StringBuilder();
+            //select 'DaXiao' Dimension, DaXiao DimValue,COUNT(*) Nums from DmD1 group by DaXiao order by Nums asc;
+            sqlFormat = "select '{0}' Dimension, {0} DimValue,COUNT(*) Nums from {1} group by {0} order by Nums asc;";
+            foreach (string dimension in dimensions)
+            {
+                batchSqlBuilder.AppendFormat(sqlFormat, dimension, this._tableName,
+                    NumberTypeDim.C_Dimension, NumberTypeDim.C_DimValue, NumberTypeDim.C_Nums);
+            }
+
+            return batchSqlBuilder.ToString();
+        }
+
+        private NumberTypeDim DataReaderToNumberTypeDim(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
+        {
+            if (dr == null)
+            {
+                throw new ArgumentNullException("dr", "未将对象引用到实例");
+            }
+            return EntityMapper.GetEntity<NumberTypeDim>(dr, new NumberTypeDim(), this._tableName);
+        }
         #endregion
     }
 }
