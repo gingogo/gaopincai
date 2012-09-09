@@ -20,6 +20,7 @@ namespace Lottery.Test
             //ExtractLotteryData();
             //DmFCAnTest();
             //TransactionTest();
+            Console.WriteLine((1%3).ToString());
             Console.WriteLine("Finished");
             Console.Read();
         }

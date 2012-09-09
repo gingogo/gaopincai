@@ -11,6 +11,15 @@ namespace Lottery.Lite
 	public static class BizBase
     {
 
+        /// <summary>
+        /// 获取当前时间的date格式
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDateNow()
+        {
+            return DateTime.Now.ToString("yyyyMMdd");
+        }
+
         public static List<string> getAllNumbers()
         {
             List<string> numbers = new List<string>();

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
-using System.Configuration;
 using Lottery.Data.SQLServer.D11X5;
 using Lottery.Model.D11X5;
+using Lottery.Configuration;
+using System.Data;
 
 namespace Lottery.Lite
 {
@@ -19,7 +20,7 @@ namespace Lottery.Lite
     	/// <returns>周期对象列表</returns>
         public List<NumSpanData> GetSpanCount(CaiConfigData CaiData)
         {
-        	if(CaiData.LoadFromCache){
+        	if(CaiData.IsLoadFromCache){
 	            //从缓存中获取
 	            List<NumSpanData> re = BizBase.XMLDeserialize(CaiData);
 	            if(re!=null)
@@ -45,25 +46,24 @@ namespace Lottery.Lite
                 span.num = num;
                 
                 string pBegin = BizBase.getPByDate(CaiData.NowCaculate, CaiData);//开始计算的时间
-                string condition = " where NumberId = '" + num + "' and p < "+pBegin+" order by p desc";
-                List<DwSpan> dtos = da.SelectTopN(100,condition, new string[]{"P","LastN","Spans"});
+                
+                DataSet dtos = da.SelectTopNSpan(num,100,pBegin);
                 List<int> spanList = new List<int>();
                 int i = 0;
-                foreach (DwSpan dto in dtos)
+                foreach (DataRow dto in dtos.Tables[0].Rows)
                 {
                     if (i == 0)
                     {
-                        span.p = dto.P.ToString();
-                        span.SpanLast = dto.F2Spans;
-                        span.SpanTillNow = BizBase.getSpanTillNow(dto.P.ToString(), CaiData);
+                        span.p = dto["P"].ToString();
+                        span.SpanLast = Convert.ToInt32(dto["F2"].ToString());
+                        span.SpanTillNow = BizBase.getSpanTillNow(span.p, CaiData);
                     }
-                    span.SpanRec += dto.F2Spans.ToString() + ",";
+                    span.SpanRec += dto["F2"].ToString() + ",";
                     i++;
-                    spanList.Add(dto.F2Spans);
+                    spanList.Add(Convert.ToInt32(dto["F2"].ToString()));
                     
                 }
-
-                
+               
                 span.SpanMax = da.SelectMaxSpan(span.num);
                 span.SpanAvg = da.SelectAvgSpan(span.num);
                 span.NextAll = getNextCyclesByNum(span, spanList, CaiData);
@@ -336,8 +336,8 @@ namespace Lottery.Lite
         /// <param name="CaiData">配置数据</param>
         /// <returns>周期数据列表</returns>
         public List<NumSpanData> GetNextPeriod(CaiConfigData CaiData,List<NumSpanData> spans){
-        	
-            if (!CaiData.LoadFromCache)
+
+            if (!CaiData.IsLoadFromCache)
             {
                 //需要重新计算以下值
                 //next 并且按照next进行排序
@@ -350,9 +350,15 @@ namespace Lottery.Lite
 
                     int spanAvg = span.SpanAvg;//平均值
                     string num = span.num;
-                    string condition = " where NumberId = '" + num + "' order by p desc";
-                    List<DwSpan> dtos = da.SelectWithCondition(condition, new string[] { "Spans" });
-                    int count = dtos.Count>97?97:dtos.Count;
+                     string pBegin = BizBase.getPByDate(CaiData.NowCaculate, CaiData);//开始计算的时间
+                    DataSet ds =  da.SelectTopNSpan(num, 100, pBegin);
+                    List<int> dtos = new List<int>();
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        dtos.Add(Convert.ToInt32(dr["F2Spans"].ToString()));
+                    }
+
+                    int count = 97;
                                         
                     List<int> cycles = new List<int>();
                     int cycleAvg = 0;
@@ -361,7 +367,7 @@ namespace Lottery.Lite
                         int cycle = 0;
                         for (int j = i + 1; j < count; j++)
                         {
-                            int spanJust = dtos[j].F2Spans;
+                            int spanJust = dtos[j];
                             cycle += spanJust;
                             if (Math.Abs((cycle / (j - i)) - spanAvg) <= spanAvg*0.1)
                             {
@@ -371,7 +377,9 @@ namespace Lottery.Lite
                         }
                     }
                     cycleAvg = Convert.ToInt32(cycles.Average());
-                    int cycleLast = Convert.ToInt32(dtos.GetRange(0, cycleAvg - 1).Average(x => x.F2Spans));
+
+                    int cycleLast = Convert.ToInt32(dtos.GetRange(0, cycleAvg - 1).Average());
+
                     span.NextAbility = (2 * spanAvg - cycleLast).ToString();
                     
                     CaiData.StatusLabel = span.num+" NextPeriod Geted!";
