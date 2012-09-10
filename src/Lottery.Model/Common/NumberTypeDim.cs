@@ -82,7 +82,7 @@ namespace Lottery.Model.Common
             set { this._id = value; }
         }
         /// <summary>
-        /// 获取或设置(如：11x5,SSC等)  
+        /// 获取或设置玩法所属规则类型(如：11x5,SSC等)  
         /// </summary>
         [Column(Name = "RuleType")]
         public virtual String RuleType
@@ -91,7 +91,7 @@ namespace Lottery.Model.Common
             set { this._ruleType = value; }
         }
         /// <summary>
-        /// 获取或设置玩法所属规则类型(如：F2,P2,C2,C3等)
+        /// 获取或设置号码类型(如：F2,P2,C2,C3等)
         /// </summary>
         [Column(Name = "NumberType")]
         public virtual String NumberType

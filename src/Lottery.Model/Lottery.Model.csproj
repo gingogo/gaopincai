@@ -45,6 +45,7 @@
     <Compile Include="Common\Dimension.cs" />
     <Compile Include="Common\NumberType.cs" />
     <Compile Include="Common\NumberTypeDim.cs" />
+    <Compile Include="Common\Omission.cs" />
     <Compile Include="Common\RuleType.cs" />
     <Compile Include="D11X5\DmFCAn.cs" />
     <Compile Include="D11X5\DwDmFCANumber.cs" />

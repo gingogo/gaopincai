@@ -10,6 +10,7 @@ namespace Lottery.Test
     using Data.SQLServer.Common;
     using ETL;
     using Utils;
+    using Analysis.Formula;
 
     class Program
     {
@@ -20,9 +21,16 @@ namespace Lottery.Test
             //ExtractLotteryData();
             //DmFCAnTest();
             //TransactionTest();
-            Console.WriteLine((1%3).ToString());
+            FormulaTest();
+            //Console.WriteLine((1%3).ToString());
             Console.WriteLine("Finished");
             Console.Read();
+        }
+
+        static void FormulaTest()
+        {
+            Console.WriteLine(Deviation.GetColdByDC(0.959, 1.0 / 110.0));
+            Console.WriteLine(Deviation.GetWatchColdN(0.959, 0.999, 1.0 / 110.0));
         }
 
         static void ExtractLotteryData()
