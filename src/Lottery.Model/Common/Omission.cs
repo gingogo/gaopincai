@@ -126,7 +126,7 @@ namespace Lottery.Model.Common
         /// 欲出几率为2.55说明如果按理想状况，该号码从最近一次出现那一期到现在应该要再出现2.55次，
         /// 但实际一次未出现。因为是一个理想值，所以并不能完全反应实际情况，只能作为参考。
         /// </summary>
-        public double OccurChance
+        public double OccurRating
         {
             get { return (this._currentSpans * 1.0) / (this._avgSpans * 1.0); }
         }
@@ -147,7 +147,7 @@ namespace Lottery.Model.Common
         /// 因为虽然某些组合会出现一个比较大的冷态，但是在冷态之后一般不会接着再出一个大冷态，
         /// 而是在一个周期内便再次出现甚至多次出现，因此回补几率越大的组合，从统计规律来看近期越容易出。
         /// </summary>
-        public double ReturnChance
+        public double ReturnRating
         {
             get { return ((this._lastSpans - this._currentSpans) * 1.0) / (this._cycle * 1.0); }
         }

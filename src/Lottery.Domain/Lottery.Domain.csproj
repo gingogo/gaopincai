@@ -79,7 +79,10 @@
     <Compile Include="Statistics\SSC\DmSpan.cs" />
     <Compile Include="Statistics\SSC\PeroidSpan.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Analysis\D11X5\" />
+    <Folder Include="Analysis\SSC\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lottery.Core\Lottery.Core.csproj">
       <Project>{F33FE560-9BA7-4384-814B-95716079E620}</Project>

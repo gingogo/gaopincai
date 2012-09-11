@@ -21,7 +21,7 @@ namespace Lottery.Test
             //ExtractLotteryData();
             //DmFCAnTest();
             //TransactionTest();
-            FormulaTest();
+            //FormulaTest();
             //Console.WriteLine((1%3).ToString());
             Console.WriteLine("Finished");
             Console.Read();
