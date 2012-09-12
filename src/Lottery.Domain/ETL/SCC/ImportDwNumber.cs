@@ -19,7 +19,7 @@ namespace Lottery.ETL.SCC
     {
         public static void Start()
         {
-            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("ssc");
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
             foreach (Category category in categories)
             {
                 string dataFileName = string.Format(@"{0}\{1}.txt", @"G:\LotteryData", category.Name);

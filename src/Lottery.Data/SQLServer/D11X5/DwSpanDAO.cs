@@ -83,7 +83,9 @@ namespace Lottery.Data.SQLServer.D11X5
             return (int)SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql);
         }
 
+        #endregion
 
+        #region 私有方法
 
         #endregion
     }

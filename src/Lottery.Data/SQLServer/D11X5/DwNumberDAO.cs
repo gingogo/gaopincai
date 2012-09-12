@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Lottery.Data.SQLServer.D11X5
 {
+    using Model.Common;
     using Model.D11X5;
     using Utils;
 
@@ -129,7 +130,8 @@ namespace Lottery.Data.SQLServer.D11X5
         public string GetPeroidBefore(string numberId, string columnName, DateTime dt)
         {
             string today = dt.ToString("yyyyMMdd");
-            string sql = string.Format("select top 1 p from {0} where {1} = '{2}' and date < {3} ", this._tableName, columnName, numberId, today);
+            string sql = string.Format("select top 1 p from {0} where {1} = '{2}' and date < {3} ", 
+                this._tableName, columnName, numberId, today);
             object result = SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql);
             return (result != null) ? result.ToString() : null;
         }

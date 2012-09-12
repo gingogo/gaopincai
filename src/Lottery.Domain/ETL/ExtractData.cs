@@ -22,7 +22,7 @@ namespace Lottery.ETL
             if(!Directory.Exists(dataFilePath))
                 Directory.CreateDirectory(dataFilePath);
 
-            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("ssc");
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
             foreach (Category category in categories)
             {
                 pset.Clear();
