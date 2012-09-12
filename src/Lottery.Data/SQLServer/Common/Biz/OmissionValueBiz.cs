@@ -20,7 +20,7 @@ namespace Lottery.Data.SQLServer.Common
         }
 
         public List<OmissionValue> GetAll(string ruleType, string numberType, string dimension, string filter,
-            string orderByColName, SortTypeEnum sortType)
+            string orderByColName, string sortType)
         {
             return this.DataAccessor.SelectOmissionValues(ruleType, numberType, dimension, filter, orderByColName, sortType);
         }

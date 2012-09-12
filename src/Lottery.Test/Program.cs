@@ -16,6 +16,7 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
+            OmissionValueTest();
             //DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
@@ -25,6 +26,13 @@ namespace Lottery.Test
             //Console.WriteLine((1%3).ToString());
             Console.WriteLine("Finished");
             Console.Read();
+        }
+
+        static void OmissionValueTest()
+        {
+            OmissionValueBiz biz = new OmissionValueBiz("jiangx11x5");
+            List<OmissionValue> omissionValues = biz.GetAll("11X5", "F2", "DaXiao",
+                string.Empty, "CurrentSpans", Data.SortTypeEnum.DESC);
         }
 
         static void FormulaTest()

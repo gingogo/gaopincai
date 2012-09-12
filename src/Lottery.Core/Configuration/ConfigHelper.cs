@@ -4,6 +4,11 @@ namespace Lottery.Configuration
 {
     public class ConfigHelper
     {
+        public static string CommonDBName
+        {
+            get { return GetAppSettings("commonDB"); }
+        }
+
         public static string CommonTableConnString
         {
             get { return GetConnString(GetAppSettings("commonTable")); }

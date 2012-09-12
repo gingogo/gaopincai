@@ -27,6 +27,11 @@ namespace Lottery.Logging
         private static Queue<MetaLog> _logQueue = null;
 
         /// <summary>
+        /// 默认日志级别
+        /// </summary>
+        private static LogLevel defaultLevel = LogLevel.Info;
+
+        /// <summary>
         /// 私有构造函数。
         /// </summary>
         private AsyncLogger()
@@ -122,6 +127,7 @@ namespace Lottery.Logging
         /// <param name="metaLog">日志数据封送对象</param>
         public void Write(MetaLog metaLog)
         {
+            if (defaultLevel < metaLog.Level) return;
             PushMetaLog(metaLog); 
         }
 

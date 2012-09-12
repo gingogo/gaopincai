@@ -47,7 +47,7 @@ namespace Lottery.Data.SQLServer.Common
             //Operand operand = Restrictions.Clause(SqlClause.Where)
             //    .Append(Restrictions.Equal(Category.C_Enabled, 1));
             //return this.DataAccessor.SelectWithCondition(operand.ToString());
-            return this.listCache.Where(x => x.Enabled == 1).ToList();
+            return this.listCache.Where(x => x.Enabled == 1).OrderBy(x=>x.Seq).ToList();
         }
 
         public List<Category> GetEnabledCategories(string type)

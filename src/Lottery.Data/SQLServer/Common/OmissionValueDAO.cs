@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 namespace Lottery.Data.SQLServer.Common
 {
     using Model.Common;
+    using Configuration;
 
     /// <summary>
     /// OmissionValueDAO提供表(OmissionValue)的相关数据访问操作的类。
@@ -51,7 +52,7 @@ namespace Lottery.Data.SQLServer.Common
         #region 特定数据访问方法
 
         public List<OmissionValue> SelectOmissionValues(string ruleType, string numberType, string dimension, string filter,
-            string orderByColName, SortTypeEnum sortType)
+            string orderByColName, string sortType)
         {
             string sqlCmd = this.GetSqlCommand(ruleType, numberType, dimension, filter, orderByColName, sortType);
             return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToEntity);
@@ -61,14 +62,14 @@ namespace Lottery.Data.SQLServer.Common
 
         #region 私有方法
 
-        private string GetSqlCommand(string ruleType, string numberType, string dimension, string filter, string orderByColName, SortTypeEnum sortType)
+        private string GetSqlCommand(string ruleType, string numberType, string dimension, string filter, string orderByColName, string sortType)
         {
             if (dimension.Equals("Peroid"))
                 return this.GetPeroidDimSqlCommand(ruleType, numberType, filter, orderByColName, sortType);
             return this.GetOtherDimSqlCommand(ruleType, numberType, dimension, filter, orderByColName, sortType);
         }
 
-        private string GetPeroidDimSqlCommand(string ruleType, string numberType, string filter, string orderByColName, SortTypeEnum sortType)
+        private string GetPeroidDimSqlCommand(string ruleType, string numberType, string filter, string orderByColName, string sortType)
         {
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT tmp.RuleType,tmp.NumberType,tmp.Dimension,tmp.NumberId,");
@@ -94,14 +95,14 @@ namespace Lottery.Data.SQLServer.Common
             sqlBuilder.AppendFormat("VARP(t2.{0}Spans) as VarP ", numberType);
             sqlBuilder.AppendFormat("FROM DwNumber t1,DwPeroidSpan t2 ");
             sqlBuilder.Append("WHERE t1.P = t2.P ");
-            sqlBuilder.AppendFormat("GROUP BY t1.{0}) as tmp,DwPeroidSpan t2,Lottery.dbo.NumberType t3 ", numberType);
+            sqlBuilder.AppendFormat("GROUP BY t1.{0}) as tmp,DwPeroidSpan t2,{1}.dbo.NumberType t3 ", numberType, ConfigHelper.CommonDBName);
             sqlBuilder.AppendFormat("WHERE tmp.P = t2.P and tmp.NumberType = t3.Code and tmp.RuleType = t3.RuleType {0} ", filter);
-            sqlBuilder.AppendFormat("ORDER BY tmp.{0} {1}", orderByColName, sortType.ToString());
+            sqlBuilder.AppendFormat("ORDER BY tmp.{0} {1}", orderByColName, sortType);
 
             return sqlBuilder.ToString();
         }
 
-        private string GetOtherDimSqlCommand(string ruleType, string numberType, string dimension, string filter, string orderByColName, SortTypeEnum sortType)
+        private string GetOtherDimSqlCommand(string ruleType, string numberType, string dimension, string filter, string orderByColName, string sortType)
         {
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT tmp.RuleType,tmp.NumberType,tmp.Dimension,tmp.NumberId,");
@@ -127,8 +128,8 @@ namespace Lottery.Data.SQLServer.Common
             sqlBuilder.AppendFormat("VARP(t2.{0}Spans) as VarP ", numberType);
             sqlBuilder.AppendFormat("FROM DwNumber t1,Dw{0}Span t2,Dm{1} t3 ", dimension, numberType);
             sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id ", numberType);
-            sqlBuilder.AppendFormat("GROUP BY t1.{0}) as tmp,Dw{0}Span t2,", dimension);
-            sqlBuilder.AppendFormat("Lottery.dbo.NumberType t3,Lottery.dbo.NumberTypeDim t4 ");
+            sqlBuilder.AppendFormat("GROUP BY t3.{0}) as tmp,Dw{0}Span t2,", dimension);
+            sqlBuilder.AppendFormat("{0}.dbo.NumberType t3,{0}.dbo.NumberTypeDim t4 ",ConfigHelper.CommonDBName);
             sqlBuilder.Append("WHERE tmp.P = t2.P ");
             sqlBuilder.Append("and tmp.NumberType = t3.Code ");
             sqlBuilder.Append("and tmp.RuleType = t3.RuleType ");
@@ -136,7 +137,7 @@ namespace Lottery.Data.SQLServer.Common
             sqlBuilder.Append("and t4.DimValue = tmp.NumberId  ");
             sqlBuilder.Append("and t4.NumberType = t3.Code  ");
             sqlBuilder.AppendFormat("and t4.RuleType = t3.RuleType {0} ", filter);
-            sqlBuilder.AppendFormat("ORDER BY tmp.{0} {1}", orderByColName, sortType.ToString());
+            sqlBuilder.AppendFormat("ORDER BY tmp.{0} {1}", orderByColName, sortType);
 
             return sqlBuilder.ToString();
         }

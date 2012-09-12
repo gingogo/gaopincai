@@ -64,6 +64,13 @@ namespace Lottery.Utils
             return data;
         }
 
+        public static double GetDouble(String str,double defaultValue)
+        {
+            Double data = defaultValue;
+            Double.TryParse(str, out data);
+            return data;
+        }
+
         public static decimal GetDecimal(String str)
         {
             Decimal data = 0;

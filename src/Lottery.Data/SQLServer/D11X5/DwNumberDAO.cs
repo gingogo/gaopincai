@@ -7,7 +7,6 @@ using System.Text;
 
 namespace Lottery.Data.SQLServer.D11X5
 {
-    using Model.Common;
     using Model.D11X5;
     using Utils;
 

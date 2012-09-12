@@ -12,7 +12,7 @@ namespace Lottery.WinForms.ViewData
     /// 遗漏属性视图数据对象
     /// </summary>
     [Serializable]
-    public class OmissionViewData
+    public class OmissionValueViewData
     {
         private string _ruleType;
         private string _numberType;
@@ -41,7 +41,7 @@ namespace Lottery.WinForms.ViewData
         /// </summary>
         /// <param name="startDC">守冷起始确定度</param>
         /// <param name="endDC">守冷止损确定度</param>
-        public OmissionViewData(double startDC, double endDC)
+        public OmissionValueViewData(double startDC, double endDC)
         {
             this._startDC = startDC;
             this._endDC = endDC;
