@@ -27,7 +27,6 @@ namespace Lottery.WinForms
         private void InitializeData()
         {
             this.SetLeftTabControlComboBoxItems();
-            this.SetStatusStripItems();
         }
 
         #endregion
@@ -88,28 +87,39 @@ namespace Lottery.WinForms
 
         private void btnReal_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btnOmisson_Click(object sender, EventArgs e)
         {
             Category category = this.cbxOmissonCategory.SelectedItem as Category;
+            NumberType numberType = this.cbxOmissonNumberType.SelectedItem as NumberType;
+            Dimension dimension = this.cbxOmissonDimesion.SelectedItem as Dimension;
 
             OmissionParameter parameter = new OmissionParameter();
+            parameter.Sender = sender as Button;
+            parameter.Worker = this.asyncEventWorker;
+            parameter.CategoryName = category.Name;
+            parameter.NumberTypeName = numberType.Name;
+            parameter.DimensionName = dimension.Name;
             parameter.DbName = category.DbName;
             parameter.RuleType = category.RuleType;
-            parameter.NumberType = (this.cbxOmissonNumberType.SelectedItem as NumberType).Code;
-            parameter.Dimension = (this.cbxOmissonDimesion.SelectedItem as Dimension).Code;
+            parameter.NumberType = numberType.Code;
+            parameter.Dimension = dimension.Code;
             parameter.StartDC = ConvertHelper.GetDouble(this.txtOmissonStartDC.Text, 0.959);
             parameter.EndDC = ConvertHelper.GetDouble(this.txtOmissonEndDC.Text, 0.999);
             parameter.Precision = (int)this.nudOmissonPrecision.Value;
-            parameter.RightTabControl = this.rightTab;
+            parameter.Target = this.rightTab;
             parameter.OrderByColName = "CurrentSpans";
             parameter.SortType = "DESC";
             parameter.Filter = string.Empty;
+            parameter.UserState = Guid.NewGuid();
 
             TaskArguments arguments = new TaskArguments(new OmissionValueTask(), parameter);
-            this.asyncEventWorker.RunAsync(Guid.NewGuid(), arguments);
+            this.asyncEventWorker.RunAsync(parameter.UserState, arguments);
+
+            this.progressBar.Visible = true;
+            this.pictureBoxLoading.Visible = true;
+            this.btnOmisson.Enabled = false;
         }
 
         #endregion
@@ -120,19 +130,26 @@ namespace Lottery.WinForms
         {
             TaskArguments arguments = args.Argument as TaskArguments;
             if (arguments == null) return;
-
-            arguments.Parameter.Sender = this.asyncEventWorker;
-            arguments.Task.Start(args, arguments.Parameter);
+            arguments.Task.Start(arguments.Parameter);
         }
 
         private void asyncEventWorker_ProgressChanged(object sender, ProgressChangedEventArgs args)
         {
-
+            this.progressBar.Value = args.ProgressPercentage;
+            this.SetStatus(args.ProgressPercentage.ToString());
         }
 
         private void asyncEventWorker_Completed(object sender, WorkerCompletedEventArgs args)
         {
+            TaskArguments arguments = args.Argument as TaskArguments;
+            if (arguments == null) return;
 
+            arguments.Parameter.Sender.Enabled = true;
+            arguments.Task.Set(arguments.Parameter);
+
+            this.pictureBoxLoading.Visible = false;
+            this.progressBar.Visible = false;
+            this.SetStatus("准备");
         }
 
         #endregion
@@ -187,8 +204,9 @@ namespace Lottery.WinForms
             dimensionComboBox.SelectedIndex = 0;
         }
 
-        private void SetStatusStripItems()
+        private void SetStatus(string text)
         {
+            this.tssReadyLabel.Text = text;
         }
 
         #endregion

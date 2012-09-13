@@ -7,6 +7,7 @@ using System.Reflection;
 namespace Lottery.WinForms.ViewData
 {
     using Analysis.Formula;
+    using Model.Common;
 
     /// <summary>
     /// 遗漏属性视图数据对象
@@ -41,10 +42,30 @@ namespace Lottery.WinForms.ViewData
         /// </summary>
         /// <param name="startDC">守冷起始确定度</param>
         /// <param name="endDC">守冷止损确定度</param>
-        public OmissionValueViewData(double startDC, double endDC)
+        /// <param name="omv">遗漏属性实体对象</param>
+        public OmissionValueViewData(double startDC, double endDC,OmissionValue omv)
         {
             this._startDC = startDC;
             this._endDC = endDC;
+            this._actualTimes = omv.ActualTimes;
+            this._amount = omv.Amount;
+            this._avgSpans = omv.AvgSpans;
+            this._currentSpans = omv.CurrentSpans;
+            this._cycle = omv.Cycle;
+            this._dimension = omv.Dimension;
+            this._lastSpans = omv.LastSpans;
+            this._maxSpans = omv.MaxSpans;
+            this._numberId = omv.NumberId;
+            this._numberType = omv.NumberType;
+            this._nums = omv.Nums;
+            this._peroidCount = omv.PeroidCount;
+            this._prize = omv.Prize;
+            this._probability = omv.Probability;
+            this._ruleType = omv.RuleType;
+            this._stdev = omv.StDev;
+            this._stdevp = omv.StDevP;
+            this._var = omv.Var;
+            this._varp = omv.VarP;
         }
 
         /// <summary>
@@ -280,6 +301,14 @@ namespace Lottery.WinForms.ViewData
                     return FFG.GetDC(this._currentSpans, this._probability);
                 return 0.0;
             }
+        }
+
+        /// <summary>
+        /// 获取号码的历史最大遗漏值的确定度(DC)
+        /// </summary>
+        public double MaxDC
+        {
+            get { return FFG.GetDC(this._maxSpans, this._probability); }
         }
 
         /// <summary>

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Windows.Forms;
 
 namespace Lottery.WinForms.Task
 {
     public interface ITask
     {
-        void Start(object userState, Parameter parameter);
+        void Start(Parameter parameter);
+
+        void Set(Parameter parameter);
     }
 }

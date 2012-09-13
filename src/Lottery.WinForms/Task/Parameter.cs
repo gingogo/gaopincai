@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Windows.Forms;
 
 namespace Lottery.WinForms.Task
 {
@@ -11,6 +8,12 @@ namespace Lottery.WinForms.Task
     {
         public Parameter() { }
 
-        public AsyncEventWorker Sender { get; set; }
+        public object UserState { get; set; }
+
+        public AsyncEventWorker Worker { get; set; }
+
+        public Control Sender { get; set; }
+
+        public Control Target { get; set; }
     }
 }
