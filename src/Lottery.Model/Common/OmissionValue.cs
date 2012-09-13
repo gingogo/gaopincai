@@ -17,7 +17,6 @@ namespace Lottery.Model.Common
         private string _dimension;
         private string _numberId;
         private int _peroidCount;
-        private int _cycle;
         private int _nums;
         private int _actualTimes;
         private int _currentSpans;
@@ -92,18 +91,6 @@ namespace Lottery.Model.Common
         {
             get { return this._peroidCount; }
             set { this._peroidCount = value; }
-        }
-
-        /// <summary>
-        /// 获取或设置循环周期,等于某一玩法(前二)的号码类型总数,它的倒数就是某一玩法的中奖概率。
-        /// 循环周期是指理想情况下该对象多少期出现一次，它是一个理论值。
-        /// 一般而言，循环周期越大，则该对象的出现次数越少，循环周期越小，则该对象的出现次数越多。
-        /// </summary>
-        [Column(Name = "Cycle")]
-        public int Cycle
-        {
-            get { return this._cycle; }
-            set { this._cycle = value; }
         }
 
         /// <summary>

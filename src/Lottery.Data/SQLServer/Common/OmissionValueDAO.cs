@@ -73,7 +73,7 @@ namespace Lottery.Data.SQLServer.Common
         {
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT tmp.RuleType,tmp.NumberType,tmp.Dimension,tmp.NumberId,");
-            sqlBuilder.Append("tmp.PeroidCount,tmp.Cycle,'1' as Nums,tmp.ActualTimes,");
+            sqlBuilder.Append("tmp.PeroidCount,'1' as Nums,tmp.ActualTimes,");
             sqlBuilder.AppendFormat("tmp.CurrentSpans,tmp.MaxSpans,t2.{0}Spans as LastSpans,", numberType);
             sqlBuilder.Append("tmp.AvgSpans,tmp.StDev,tmp.StDevP,tmp.Var,tmp.VarP,");
             sqlBuilder.Append("t3.Probability,t3.Prize,t3.Amount FROM ( ");
@@ -84,7 +84,6 @@ namespace Lottery.Data.SQLServer.Common
             sqlBuilder.AppendFormat("t1.{0} as NumberId,", numberType);
             sqlBuilder.Append("Max(t1.P) as P,");
             sqlBuilder.AppendFormat("(SELECT COUNT(*) FROM DwNumber) as PeroidCount,");
-            sqlBuilder.AppendFormat("(SELECT COUNT(*) FROM Dm{0}) as Cycle,", numberType);
             sqlBuilder.Append("COUNT(*) as ActualTimes,");
             sqlBuilder.Append("(SELECT COUNT(*) FROM DwNumber)-MAX(t1.Seq) as CurrentSpans,");
             sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", numberType);
@@ -106,7 +105,7 @@ namespace Lottery.Data.SQLServer.Common
         {
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT tmp.RuleType,tmp.NumberType,tmp.Dimension,tmp.NumberId,");
-            sqlBuilder.Append("tmp.PeroidCount,tmp.Cycle,t4.Nums,tmp.ActualTimes,");
+            sqlBuilder.Append("tmp.PeroidCount,t4.Nums,tmp.ActualTimes,");
             sqlBuilder.AppendFormat("tmp.CurrentSpans,tmp.MaxSpans,t2.{0}Spans as LastSpans,", numberType);
             sqlBuilder.Append("tmp.AvgSpans,tmp.StDev,tmp.StDevP,tmp.Var,tmp.VarP,");
             sqlBuilder.Append("t4.Probability,t3.Prize,t4.Amount FROM ( ");
@@ -117,7 +116,6 @@ namespace Lottery.Data.SQLServer.Common
             sqlBuilder.AppendFormat("t3.{0} as NumberId,", dimension);
             sqlBuilder.Append("Max(t1.P) as P,");
             sqlBuilder.Append("(SELECT COUNT(*) FROM DwNumber) as PeroidCount,");
-            sqlBuilder.AppendFormat("(SELECT COUNT(distinct {0}) FROM Dm{1}) as Cycle,", dimension, numberType);
             sqlBuilder.Append("COUNT(*) as ActualTimes,");
             sqlBuilder.Append("(SELECT COUNT(*) FROM DwNumber)-MAX(t1.Seq) as CurrentSpans,");
             sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", numberType);

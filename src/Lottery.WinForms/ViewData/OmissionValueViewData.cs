@@ -51,7 +51,7 @@ namespace Lottery.WinForms.ViewData
             this._amount = omv.Amount;
             this._avgSpans = omv.AvgSpans;
             this._currentSpans = omv.CurrentSpans;
-            this._cycle = omv.Cycle;
+            this._cycle = (int)(1 / omv.Probability);
             this._dimension = omv.Dimension;
             this._lastSpans = omv.LastSpans;
             this._maxSpans = omv.MaxSpans;
