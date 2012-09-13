@@ -83,53 +83,52 @@ namespace Lottery.WinForms.Task
             listView.GridLines = true;
             tabPage.Controls.Add(listView);
 
-            return listView;
-        }
-
-        private void FillListView(ListView listView, int precision)
-        {
-            Dictionary<string,string> header = this.GetHeader();
+            Dictionary<string, string> header = this.GetHeader();
             foreach (var kv in header)
             {
                 listView.Columns.Add(kv.Key, kv.Value, kv.Value.Length * 20);
             }
 
+            return listView;
+        }
+
+        private void FillListView(ListView listView, int precision)
+        {
+           var maxDcDict = this.viewDatas.GroupBy(x => x.Nums).ToDictionary(x => x.Key, y => y.Max(z => z.MaxDC));
             string prec = string.Format("F{0}", precision);
-            //设置各列的值
-            ListViewItem[] items = new ListViewItem[this.viewDatas.Count];
-            for (int i = 0; i < viewDatas.Count; i++)
+            foreach (var viewData in this.viewDatas)
             {
                 string tag = string.Format("{0}-{1}-{2}-{3}",
-                    viewDatas[i].RuleType, viewDatas[i].NumberType, viewDatas[i].Dimension, viewDatas[i].NumberType);
-                items[i] = new ListViewItem(viewDatas[i].NumberId);
-                items[i].Tag = tag;
-                items[i].SubItems.Add(viewDatas[i].CurrentSpans.ToString());
-                items[i].SubItems.Add(viewDatas[i].DC.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].MaxSpans.ToString());
-                items[i].SubItems.Add(viewDatas[i].MaxDC.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].WatchColdN.ToString("F2"));
-                items[i].SubItems.Add(viewDatas[i].State.ToString("F2"));
-                items[i].SubItems.Add(viewDatas[i].OccurRating.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].InvestmentValue.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].ReturnRating.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].PeroidCount.ToString());
-                items[i].SubItems.Add(viewDatas[i].Cycle.ToString());
-                items[i].SubItems.Add(viewDatas[i].ActualTimes.ToString());
-                items[i].SubItems.Add(viewDatas[i].TheoryTimes.ToString());
-                items[i].SubItems.Add(viewDatas[i].Frequency.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].LastSpans.ToString());
-                items[i].SubItems.Add(viewDatas[i].AvgSpans.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].Nums.ToString());
-                items[i].SubItems.Add(viewDatas[i].Probability.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].Prize.ToString("F2"));
-                items[i].SubItems.Add(viewDatas[i].Amount.ToString("F2"));
-                items[i].SubItems.Add(viewDatas[i].StDev.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].StDevP.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].Var.ToString(prec));
-                items[i].SubItems.Add(viewDatas[i].VarP.ToString(prec));
-                items[i].BackColor = this.GetColor(viewDatas[i].StartDC, viewDatas[i].EndDC, viewDatas[i].MaxDC, viewDatas[i].DC);
+                    viewData.RuleType, viewData.NumberType, viewData.Dimension, viewData.NumberType);
+                ListViewItem item = new ListViewItem(viewData.NumberId);
+                item.Tag = tag;
+                item.SubItems.Add(viewData.CurrentSpans.ToString());
+                item.SubItems.Add(viewData.DC.ToString(prec));
+                item.SubItems.Add(viewData.MaxSpans.ToString());
+                item.SubItems.Add(maxDcDict[viewData.Nums].ToString(prec));
+                item.SubItems.Add(viewData.WatchColdN.ToString("F2"));
+                item.SubItems.Add(viewData.State.ToString("F2"));
+                item.SubItems.Add(viewData.OccurRating.ToString(prec));
+                item.SubItems.Add(viewData.InvestmentValue.ToString(prec));
+                item.SubItems.Add(viewData.ReturnRating.ToString(prec));
+                item.SubItems.Add(viewData.PeroidCount.ToString());
+                item.SubItems.Add(viewData.Cycle.ToString());
+                item.SubItems.Add(viewData.ActualTimes.ToString());
+                item.SubItems.Add(viewData.TheoryTimes.ToString());
+                item.SubItems.Add(viewData.Frequency.ToString(prec));
+                item.SubItems.Add(viewData.LastSpans.ToString());
+                item.SubItems.Add(viewData.AvgSpans.ToString(prec));
+                item.SubItems.Add(viewData.Nums.ToString());
+                item.SubItems.Add(viewData.Probability.ToString(prec));
+                item.SubItems.Add(viewData.Prize.ToString("F2"));
+                item.SubItems.Add(viewData.Amount.ToString("F2"));
+                item.SubItems.Add(viewData.StDev.ToString(prec));
+                item.SubItems.Add(viewData.StDevP.ToString(prec));
+                item.SubItems.Add(viewData.Var.ToString(prec));
+                item.SubItems.Add(viewData.VarP.ToString(prec));
+                item.BackColor = this.GetColor(viewData.StartDC, viewData.EndDC, maxDcDict[viewData.Nums], viewData.DC);
+                listView.Items.Add(item);
             }
-            listView.Items.AddRange(items);
         }
 
         private Dictionary<string, string> GetHeader()
@@ -166,10 +165,11 @@ namespace Lottery.WinForms.Task
 
         private Color GetColor(double startDC, double endDC, double maxDC,double currentDC)
         {
-            if (currentDC >= maxDC) return Color.Red;
-            if (currentDC >= endDC) return Color.Yellow;
-            if (currentDC >= startDC) return Color.Violet;
-            return Color.White;
+            Color color = Color.White;
+            if (currentDC >= startDC) color = Color.Violet;
+            if (currentDC >= maxDC) color = Color.Yellow;
+            if (currentDC >= endDC) color = Color.Red;
+            return color;
         }
     }
 
