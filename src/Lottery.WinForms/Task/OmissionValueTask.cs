@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Lottery.WinForms.Task
@@ -87,29 +88,88 @@ namespace Lottery.WinForms.Task
 
         private void FillListView(ListView listView, int precision)
         {
-            //添加表头
-            for(int i=0;i<20;i++)
+            Dictionary<string,string> header = this.GetHeader();
+            foreach (var kv in header)
             {
-                listView.Columns.Add(i.ToString(), 60);
+                listView.Columns.Add(kv.Key, kv.Value, kv.Value.Length * 20);
             }
 
-            //设置宽度
-            //if (lvd.width != null)
-            //{
-            //    for (int w = 0; w < lvd.width.Length; w++)
-            //    {
-            //        lv.Columns[w].Width = lvd.width[w];
-            //    }
-            //}
-
+            string prec = string.Format("F{0}", precision);
             //设置各列的值
             ListViewItem[] items = new ListViewItem[this.viewDatas.Count];
-            for (int l = 0; l < viewDatas.Count; l++)
+            for (int i = 0; i < viewDatas.Count; i++)
             {
-                items[l] = new ListViewItem(viewDatas[l].NumberId);
-                //item[l].SubItems[0].BackColor = Color.Red; //用于设置某行的背景颜色
+                string tag = string.Format("{0}-{1}-{2}-{3}",
+                    viewDatas[i].RuleType, viewDatas[i].NumberType, viewDatas[i].Dimension, viewDatas[i].NumberType);
+                items[i] = new ListViewItem(viewDatas[i].NumberId);
+                items[i].Tag = tag;
+                items[i].SubItems.Add(viewDatas[i].CurrentSpans.ToString());
+                items[i].SubItems.Add(viewDatas[i].DC.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].MaxSpans.ToString());
+                items[i].SubItems.Add(viewDatas[i].MaxDC.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].WatchColdN.ToString("F2"));
+                items[i].SubItems.Add(viewDatas[i].State.ToString("F2"));
+                items[i].SubItems.Add(viewDatas[i].OccurRating.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].InvestmentValue.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].ReturnRating.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].PeroidCount.ToString());
+                items[i].SubItems.Add(viewDatas[i].Cycle.ToString());
+                items[i].SubItems.Add(viewDatas[i].ActualTimes.ToString());
+                items[i].SubItems.Add(viewDatas[i].TheoryTimes.ToString());
+                items[i].SubItems.Add(viewDatas[i].Frequency.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].LastSpans.ToString());
+                items[i].SubItems.Add(viewDatas[i].AvgSpans.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].Nums.ToString());
+                items[i].SubItems.Add(viewDatas[i].Probability.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].Prize.ToString("F2"));
+                items[i].SubItems.Add(viewDatas[i].Amount.ToString("F2"));
+                items[i].SubItems.Add(viewDatas[i].StDev.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].StDevP.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].Var.ToString(prec));
+                items[i].SubItems.Add(viewDatas[i].VarP.ToString(prec));
+                items[i].BackColor = this.GetColor(viewDatas[i].StartDC, viewDatas[i].EndDC, viewDatas[i].MaxDC, viewDatas[i].DC);
             }
             listView.Items.AddRange(items);
+        }
+
+        private Dictionary<string, string> GetHeader()
+        {
+            Dictionary<string, string> header = new Dictionary<string, string>(25);
+            header.Add("NumberId", "号码");
+            header.Add("CurrentSpans", "本期遗漏");
+            header.Add("DC", "当前确定度");
+            header.Add("MaxSpans", "最大遗漏");
+            header.Add("MaxDC", "最大确定度");
+            header.Add("WatchColdN", "守冷期数");
+            header.Add("State", "偏态值");
+            header.Add("OccurRating", "欲出几率");
+            header.Add("InvestmentValue", "投资价值");
+            header.Add("ReturnRating", "回补几率");
+            header.Add("PeroidCount", "总期数"); 
+            header.Add("Cycle", "循环周期");
+            header.Add("ActualTimes", "出现次数");
+            header.Add("TheoryTimes", "理论出现次数");
+            header.Add("Frequency", "出现频率");
+            header.Add("LastSpans", "上期遗漏");
+            header.Add("AvgSpans", "平均遗漏");
+            header.Add("Nums", "注数");
+            header.Add("Probability", "概率");
+            header.Add("Prize", "奖金");
+            header.Add("Amount", "投注金额"); 
+            header.Add("StDev", "标准偏差"); 
+            header.Add("StDevP", "总体标准偏差");
+            header.Add("Var", "方差"); 
+            header.Add("VarP", "总体方差");
+
+            return header;
+        }
+
+        private Color GetColor(double startDC, double endDC, double maxDC,double currentDC)
+        {
+            if (currentDC >= maxDC) return Color.Red;
+            if (currentDC >= endDC) return Color.Yellow;
+            if (currentDC >= startDC) return Color.Violet;
+            return Color.White;
         }
     }
 

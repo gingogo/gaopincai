@@ -17,11 +17,13 @@ namespace Lottery.Analysis.Formula
         /// <param name="avgN">平均遗漏期数</param>
         /// <param name="p">玩法概率</param>
         /// <returns>当前遗漏值的偏差值</returns>
-        public static double GetN(double n,double avgN, double p)
+        public static double GetN(double n, double avgN, double p)
         {
             if (n > avgN)
                 return GetColdByN(n, p);
-            return GetThermal(n, p);
+            if (n > 0)
+                return GetThermal(n, p);
+            return 0.0;
         }
 
         /// <summary>

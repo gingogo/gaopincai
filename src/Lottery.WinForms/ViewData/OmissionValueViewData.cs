@@ -332,6 +332,22 @@ namespace Lottery.WinForms.ViewData
             get { return Deviation.GetN(this._currentSpans, this._avgSpans, this._probability); }
         }
 
+        /// <summary>
+        /// 获取守冷起始确定度。
+        /// </summary>
+        public double StartDC
+        {
+            get { return this._startDC; }
+        }
+
+        /// <summary>
+        /// 获取守冷止损确定度。
+        /// </summary>
+        public double EndDC
+        {
+            get { return this._endDC; }
+        }
+
         #region Indexer Members
 
         /// <summary>

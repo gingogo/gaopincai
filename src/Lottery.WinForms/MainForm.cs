@@ -149,7 +149,7 @@ namespace Lottery.WinForms
 
             this.pictureBoxLoading.Visible = false;
             this.progressBar.Visible = false;
-            this.SetStatus("准备");
+            this.SetStatus("完成");
         }
 
         #endregion
