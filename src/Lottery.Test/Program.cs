@@ -32,7 +32,7 @@ namespace Lottery.Test
         {
             OmissionValueBiz biz = new OmissionValueBiz("jiangx11x5");
             List<OmissionValue> omissionValues = biz.GetAll("11X5", "F2", "DaXiao",
-                string.Empty, "CurrentSpans", Data.SortTypeEnum.DESC);
+                string.Empty, "CurrentSpans", "DESC");
         }
 
         static void FormulaTest()
