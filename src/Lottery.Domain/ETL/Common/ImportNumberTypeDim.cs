@@ -31,7 +31,7 @@ namespace Lottery.ETL.Common
             foreach (var numberType in numberTypes)
             {
                 Data.SQLServer.D11X5.DmFCAnBiz biz = new Data.SQLServer.D11X5.DmFCAnBiz("jiangx11x5",numberType.Code);
-                double count = (double)biz.DataAccessor.Count();
+                double count = biz.DataAccessor.Count() * 1.0;
 
                 List<NumberTypeDim> ntds = new List<NumberTypeDim>();
                 if (numberType.Code.Equals("D1"))
@@ -46,7 +46,7 @@ namespace Lottery.ETL.Common
                     ntd.NumberType = numberType.Code;
                     ntd.RuleType = numberType.RuleType;
                     ntd.Amount = ntd.Nums * numberType.Amount;
-                    ntd.Probability = ((double)ntd.Nums) / count;
+                    ntd.Probability = (ntd.Nums * 1.0) / count;
                 }
                 NumberTypeDimBiz.Instance.DataAccessor.Insert(ntds, Data.SQLServer.SqlInsertMethod.SqlBulkCopy);
             }
@@ -66,11 +66,7 @@ namespace Lottery.ETL.Common
             foreach (var numberType in numberTypes)
             {
                 Data.SQLServer.D11X5.DmFCAnBiz biz = new Data.SQLServer.D11X5.DmFCAnBiz("jiangxssc", numberType.Code);
-                double count = 220.0;
-                if (!numberType.Code.Equals("C33") && !numberType.Code.Equals("C36"))
-                {
-                    count = (double)biz.DataAccessor.Count();
-                }
+                double count = biz.DataAccessor.Count() * 1.0;
 
                 List<NumberTypeDim> ntds = new List<NumberTypeDim>();
                 if (numberType.Code.Equals("D1"))
@@ -85,10 +81,19 @@ namespace Lottery.ETL.Common
                     ntd.NumberType = numberType.Code;
                     ntd.RuleType = numberType.RuleType;
                     ntd.Amount = ntd.Nums * numberType.Amount;
-                    ntd.Probability = ((double)ntd.Nums) / count;
+                    ntd.Probability = GetProbability(ntd.Nums, count, ntd.NumberType);
                 }
                 NumberTypeDimBiz.Instance.DataAccessor.Insert(ntds, Data.SQLServer.SqlInsertMethod.SqlBulkCopy);
             }
+        }
+
+        private static double GetProbability(int nums, double count,string numberType)
+        {
+            if (numberType.Equals("C33"))
+                return nums * (3.0 / 1000.0);
+            if (numberType.Equals("C36"))
+                return nums * (6.0 / 1000.0);
+            return (nums * 1.0) / count;
         }
     }
 }

@@ -27,10 +27,6 @@ namespace Lottery.WinForms.ViewData
         private int _maxSpans;
         private int _lastSpans;
         private double _avgSpans;
-        private double _stdev;
-        private double _stdevp;
-        private double _var;
-        private double _varp;
         private double _probability;
         private double _prize;
         private double _amount;
@@ -62,10 +58,6 @@ namespace Lottery.WinForms.ViewData
             this._prize = omv.Prize;
             this._probability = omv.Probability;
             this._ruleType = omv.RuleType;
-            this._stdev = omv.StDev;
-            this._stdevp = omv.StDevP;
-            this._var = omv.Var;
-            this._varp = omv.VarP;
         }
 
         /// <summary>
@@ -176,42 +168,6 @@ namespace Lottery.WinForms.ViewData
         {
             get { return this._avgSpans; }
             set { this._avgSpans = value; }
-        }
-
-        /// <summary>
-        /// 获取或设置遗漏值标准偏差。
-        /// </summary>
-        public double StDev
-        {
-            get { return this._stdev; }
-            set { this._stdev = value; }
-        }
-
-        /// <summary>
-        /// 获取或设置遗漏值总体标准偏差
-        /// </summary>
-        public double StDevP
-        {
-            get { return this._stdevp; }
-            set { this._stdevp = value; }
-        }
-
-        /// <summary>
-        /// 获取或设置遗漏值方差
-        /// </summary>
-        public double Var
-        {
-            get { return this._var; }
-            set { this._var = value; }
-        }
-
-        /// <summary>
-        /// 获取或设置遗漏值总体方差
-        /// </summary>
-        public double VarP
-        {
-            get { return this._varp; }
-            set { this._varp = value; }
         }
 
         /// <summary>

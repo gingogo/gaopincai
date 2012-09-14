@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Lottery.WinForms.Task
 {
-    using Components;
     using Data.SQLServer.Common;
     using Model.Common;
     using ViewData;
@@ -94,7 +91,7 @@ namespace Lottery.WinForms.Task
 
         private void FillListView(ListView listView, int precision)
         {
-           var maxDcDict = this.viewDatas.GroupBy(x => x.Nums).ToDictionary(x => x.Key, y => y.Max(z => z.MaxDC));
+            var maxDcDict = this.viewDatas.GroupBy(x => x.Nums).ToDictionary(x => x.Key, y => y.Max(z => z.MaxDC));
             string prec = string.Format("F{0}", precision);
             foreach (var viewData in this.viewDatas)
             {
@@ -122,10 +119,6 @@ namespace Lottery.WinForms.Task
                 item.SubItems.Add(viewData.Probability.ToString(prec));
                 item.SubItems.Add(viewData.Prize.ToString("F2"));
                 item.SubItems.Add(viewData.Amount.ToString("F2"));
-                item.SubItems.Add(viewData.StDev.ToString(prec));
-                item.SubItems.Add(viewData.StDevP.ToString(prec));
-                item.SubItems.Add(viewData.Var.ToString(prec));
-                item.SubItems.Add(viewData.VarP.ToString(prec));
                 item.BackColor = this.GetColor(viewData.StartDC, viewData.EndDC, maxDcDict[viewData.Nums], viewData.DC);
                 listView.Items.Add(item);
             }
@@ -155,10 +148,10 @@ namespace Lottery.WinForms.Task
             header.Add("Probability", "概率");
             header.Add("Prize", "奖金");
             header.Add("Amount", "投注金额"); 
-            header.Add("StDev", "标准偏差"); 
-            header.Add("StDevP", "总体标准偏差");
-            header.Add("Var", "方差"); 
-            header.Add("VarP", "总体方差");
+            //header.Add("StDev", "标准偏差"); 
+            //header.Add("StDevP", "总体标准偏差");
+            //header.Add("Var", "方差"); 
+            //header.Add("VarP", "总体方差");
 
             return header;
         }

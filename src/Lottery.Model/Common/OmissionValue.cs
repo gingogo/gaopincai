@@ -23,10 +23,6 @@ namespace Lottery.Model.Common
         private int _maxSpans;
         private int _lastSpans;
         private double _avgSpans;
-        private double _stdev;
-        private double _stdevp;
-        private double _var;
-        private double _varp;
         private double _probability;
         private double _prize;
         private double _amount;
@@ -142,47 +138,7 @@ namespace Lottery.Model.Common
             get { return this._avgSpans; }
             set { this._avgSpans = value; }
         }
-
-        /// <summary>
-        /// 获取或设置遗漏值标准偏差。
-        /// </summary>
-        [Column(Name = "StDev")]
-        public double StDev
-        {
-            get { return this._stdev; }
-            set { this._stdev = value; }
-        }
-
-        /// <summary>
-        /// 获取或设置遗漏值总体标准偏差
-        /// </summary>
-        [Column(Name = "StDevP")]
-        public double StDevP
-        {
-            get { return this._stdevp; }
-            set { this._stdevp = value; }
-        }
-
-        /// <summary>
-        /// 获取或设置遗漏值方差
-        /// </summary>
-        [Column(Name = "Var")]
-        public double Var
-        {
-            get { return this._var; }
-            set { this._var = value; }
-        }
-
-        /// <summary>
-        /// 获取或设置遗漏值总体方差
-        /// </summary>
-        [Column(Name = "VarP")]
-        public double VarP
-        {
-            get { return this._varp; }
-            set { this._varp = value; }
-        }
-
+  
         /// <summary>
         /// 获取或设置该维度号码玩法的中奖概率
         /// </summary>

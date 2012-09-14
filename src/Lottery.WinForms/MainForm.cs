@@ -136,7 +136,7 @@ namespace Lottery.WinForms
         private void asyncEventWorker_ProgressChanged(object sender, ProgressChangedEventArgs args)
         {
             this.progressBar.Value = args.ProgressPercentage;
-            this.SetStatus(args.ProgressPercentage.ToString());
+            this.SetStatus(args.ProgressPercentage.ToString() + "%");
         }
 
         private void asyncEventWorker_Completed(object sender, WorkerCompletedEventArgs args)

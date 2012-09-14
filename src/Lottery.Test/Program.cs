@@ -16,7 +16,7 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
-            OmissionValueTest();
+            //OmissionValueTest();
             //DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
@@ -37,7 +37,8 @@ namespace Lottery.Test
 
         static void FormulaTest()
         {
-            Console.WriteLine(Deviation.GetColdByDC(0.959, 1.0 / 110.0));
+            Console.WriteLine(FFG.GetDC(119, 1.0 / 10.0));
+            Console.WriteLine(Deviation.GetColdByDC(0.959, 1.0 / 10.0));
             Console.WriteLine(Deviation.GetWatchColdN(0.959, 0.999, 1.0 / 110.0));
         }
 
@@ -47,8 +48,8 @@ namespace Lottery.Test
             //ExtractData.Extract();
             //ETL.SCC.ImportDwNumber.Start();
             //ETL.Common.ImportDimension.Import();
-            //ETL.Common.ImportNumberType.Import();
-            //ETL.Common.ImportNumberTypeDim.Import();
+            ETL.Common.ImportNumberType.Import();
+            ETL.Common.ImportNumberTypeDim.Import();
         }
 
         static void DownServiceTest()
