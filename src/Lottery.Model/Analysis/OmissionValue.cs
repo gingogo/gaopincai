@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lottery.Model.Common
+namespace Lottery.Model.Analysis
 {
     using Data;
 

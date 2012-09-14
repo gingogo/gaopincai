@@ -7,7 +7,7 @@ using System.Reflection;
 namespace Lottery.WinForms.ViewData
 {
     using Analysis.Formula;
-    using Model.Common;
+    using Model.Analysis;
 
     /// <summary>
     /// 遗漏属性视图数据对象
@@ -47,7 +47,6 @@ namespace Lottery.WinForms.ViewData
             this._amount = omv.Amount;
             this._avgSpans = omv.AvgSpans;
             this._currentSpans = omv.CurrentSpans;
-            this._cycle = (int)(1 / omv.Probability);
             this._dimension = omv.Dimension;
             this._lastSpans = omv.LastSpans;
             this._maxSpans = omv.MaxSpans;
@@ -55,146 +54,132 @@ namespace Lottery.WinForms.ViewData
             this._numberType = omv.NumberType;
             this._nums = omv.Nums;
             this._peroidCount = omv.PeroidCount;
+            this._cycle = (int)(1 / omv.Probability);
             this._prize = omv.Prize;
             this._probability = omv.Probability;
             this._ruleType = omv.RuleType;
         }
 
         /// <summary>
-        /// 获取或设置玩法规则
+        /// 获取玩法规则
         /// </summary>
         public string RuleType
         {
             get { return this._ruleType; }
-            set { this._ruleType = value; }
         }
 
         /// <summary>
-        /// 获取或设置号码类型
+        /// 获取号码类型
         /// </summary>
         public string NumberType
         {
             get { return this._numberType; }
-            set { this._numberType = value; }
         }
 
         /// <summary>
-        /// 获取或设置维度
+        /// 获取维度
         /// </summary>
         public string Dimension
         {
             get { return this._dimension; }
-            set { this._dimension = value; }
         }
 
         /// <summary>
-        /// 获取或设置玩法号码或维度值
+        /// 获取玩法号码或维度值
         /// </summary>
         public string NumberId
         {
             get { return this._numberId; }
-            set { this._numberId = value; }
         }
 
         /// <summary>
-        /// 获取或设置该维度包含号码注数。
+        /// 获取该维度包含号码注数。
         /// </summary>
         public int Nums
         {
             get { return this._nums; }
-            set { this._nums = value; }
         }
 
         /// <summary>
-        /// 获取或设置统计期数。
+        /// 获取统计期数。
         /// </summary>
         public int PeroidCount
         {
             get { return this._peroidCount; }
-            set { this._peroidCount = value; }
         }
 
         /// <summary>
-        /// 获取或设置循环周期,等于某一玩法(前二)的号码类型总数,它的倒数就是某一玩法的中奖概率。
+        /// 获取循环周期,等于某一玩法(前二)的号码类型总数,它的倒数就是某一玩法的中奖概率。
         /// 循环周期是指理想情况下该对象多少期出现一次，它是一个理论值。
         /// 一般而言，循环周期越大，则该对象的出现次数越少，循环周期越小，则该对象的出现次数越多。
         /// </summary>
         public int Cycle
         {
             get { return this._cycle; }
-            set { this._cycle = value; }
         }
 
         /// <summary>
-        /// 获取或设置实际出现次数,指该号码历史上实际出现的次数。
+        /// 获取实际出现次数,指该号码历史上实际出现的次数。
         /// </summary>
         public int ActualTimes
         {
             get { return this._actualTimes; }
-            set { this._actualTimes = value; }
         }
 
         /// <summary>
-        /// 获取或设置本期遗漏,该号码自上次开出之后的遗漏次数。
+        /// 获取本期遗漏,该号码自上次开出之后的遗漏次数。
         /// </summary>
         public int CurrentSpans
         {
             get { return this._currentSpans; }
-            set { this._currentSpans = value; }
         }
 
         /// <summary>
-        /// 获取或设置最大遗漏,历史上遗漏的最大值。
+        /// 获取最大遗漏,历史上遗漏的最大值。
         /// </summary>
         public int MaxSpans
         {
             get { return this._maxSpans; }
-            set { this._maxSpans = value; }
         }
 
         /// <summary>
-        /// 获取或设置上期遗漏,指该号码上次开出之前的遗漏次数。
+        /// 获取上期遗漏,指该号码上次开出之前的遗漏次数。
         /// </summary>
         public int LastSpans
         {
             get { return this._lastSpans; }
-            set { this._lastSpans = value; }
         }
 
         /// <summary>
-        /// 获取或设置平均遗漏,是指所有遗漏值的平均值。
+        /// 获取平均遗漏,是指所有遗漏值的平均值。
         /// </summary>
         public double AvgSpans
         {
             get { return this._avgSpans; }
-            set { this._avgSpans = value; }
         }
 
         /// <summary>
-        /// 获取或设置该维度号码玩法的中奖概率
+        /// 获取该维度号码玩法的中奖概率
         /// </summary>
         public double Probability
         {
             get { return this._probability; }
-            set { this._probability = value; }
         }
 
         /// <summary>
-        /// 获取或设置该维度号码玩法的中奖奖金
+        /// 获取该维度号码玩法的中奖奖金
         /// </summary>
         public double Prize
         {
             get { return this._prize; }
-            set { this._prize = value; }
         }
 
         /// <summary>
-        /// 获取或设置该维度号码玩法单注投注金额。
+        /// 获取该维度号码玩法单注投注金额。
         /// </summary>
         public double Amount
         {
             get { return this._amount; }
-            set { this._amount = value; }
         }
 
         /// <summary>
@@ -247,15 +232,15 @@ namespace Lottery.WinForms.ViewData
         }
 
         /// <summary>
-        /// 获取号码的当前确定度(DC),只在当号码遗漏值大于平均遗漏才计算
+        /// 获取号码的当前确定度(DC)
         /// </summary>
         public double DC
         {
             get
             {
-                if (this._currentSpans > this._avgSpans)
+                if (this._currentSpans > 0)
                     return FFG.GetDC(this._currentSpans, this._probability);
-                return 0.0;
+                return this._probability;
             }
         }
 

@@ -4,9 +4,9 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Lottery.Data.SQLServer.Common
+namespace Lottery.Data.SQLServer.Analysis
 {
-    using Model.Common;
+    using Model.Analysis;
     using Configuration;
 
     /// <summary>

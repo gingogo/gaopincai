@@ -5,8 +5,9 @@ using System.Windows.Forms;
 
 namespace Lottery.WinForms.Task
 {
-    using Data.SQLServer.Common;
-    using Model.Common;
+    using Analysis.Common;
+    using Data.SQLServer.Analysis;
+    using Model.Analysis;
     using ViewData;
 
     public class OmissionValueTask : ITask
@@ -18,8 +19,8 @@ namespace Lottery.WinForms.Task
             OmissionParameter param = parameter as OmissionParameter;
             if (param == null) return;
 
-            OmissionValueBiz biz = new OmissionValueBiz(param.DbName);
-            List<OmissionValue> omValues = biz.GetAll(param.RuleType, param.NumberType, param.Dimension,
+            OmissionValueLys lys = new OmissionValueLys(param.DbName);
+            List<OmissionValue> omValues = lys.GetOmissionValues(param.RuleType, param.NumberType, param.Dimension,
                 param.Filter, param.OrderByColName, param.SortType);
             this.viewDatas = new List<OmissionValueViewData>(omValues.Count);
 
@@ -100,8 +101,10 @@ namespace Lottery.WinForms.Task
                 ListViewItem item = new ListViewItem(viewData.NumberId);
                 item.Tag = tag;
                 item.SubItems.Add(viewData.CurrentSpans.ToString());
-                item.SubItems.Add(viewData.DC.ToString(prec));
+                item.SubItems.Add(viewData.LastSpans.ToString());
                 item.SubItems.Add(viewData.MaxSpans.ToString());
+                item.SubItems.Add(viewData.AvgSpans.ToString(prec));
+                item.SubItems.Add(viewData.DC.ToString(prec));
                 item.SubItems.Add(maxDcDict[viewData.Nums].ToString(prec));
                 item.SubItems.Add(viewData.WatchColdN.ToString("F2"));
                 item.SubItems.Add(viewData.State.ToString("F2"));
@@ -112,9 +115,7 @@ namespace Lottery.WinForms.Task
                 item.SubItems.Add(viewData.Cycle.ToString());
                 item.SubItems.Add(viewData.ActualTimes.ToString());
                 item.SubItems.Add(viewData.TheoryTimes.ToString());
-                item.SubItems.Add(viewData.Frequency.ToString(prec));
-                item.SubItems.Add(viewData.LastSpans.ToString());
-                item.SubItems.Add(viewData.AvgSpans.ToString(prec));
+                item.SubItems.Add(viewData.Frequency.ToString(prec));           
                 item.SubItems.Add(viewData.Nums.ToString());
                 item.SubItems.Add(viewData.Probability.ToString(prec));
                 item.SubItems.Add(viewData.Prize.ToString("F2"));
@@ -129,8 +130,10 @@ namespace Lottery.WinForms.Task
             Dictionary<string, string> header = new Dictionary<string, string>(25);
             header.Add("NumberId", "号码");
             header.Add("CurrentSpans", "本期遗漏");
-            header.Add("DC", "当前确定度");
+            header.Add("LastSpans", "上期遗漏");
             header.Add("MaxSpans", "最大遗漏");
+            header.Add("AvgSpans", "平均遗漏");
+            header.Add("DC", "当前确定度");
             header.Add("MaxDC", "最大确定度");
             header.Add("WatchColdN", "守冷期数");
             header.Add("State", "偏态值");
@@ -142,16 +145,10 @@ namespace Lottery.WinForms.Task
             header.Add("ActualTimes", "出现次数");
             header.Add("TheoryTimes", "理论出现次数");
             header.Add("Frequency", "出现频率");
-            header.Add("LastSpans", "上期遗漏");
-            header.Add("AvgSpans", "平均遗漏");
             header.Add("Nums", "注数");
             header.Add("Probability", "概率");
             header.Add("Prize", "奖金");
             header.Add("Amount", "投注金额"); 
-            //header.Add("StDev", "标准偏差"); 
-            //header.Add("StDevP", "总体标准偏差");
-            //header.Add("Var", "方差"); 
-            //header.Add("VarP", "总体方差");
 
             return header;
         }
