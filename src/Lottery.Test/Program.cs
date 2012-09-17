@@ -18,9 +18,9 @@ namespace Lottery.Test
         {
             //OmissionValueTest();
             //DownServiceTest();
-            //StatTest();
+            StatTest();
             //ExtractLotteryData();
-            //DmFCAnTest();
+            //ETLTest();
             //TransactionTest();
             //FormulaTest();
             //Console.WriteLine((1%3).ToString());
@@ -30,9 +30,9 @@ namespace Lottery.Test
 
         static void OmissionValueTest()
         {
-            OmissionValueBiz biz = new OmissionValueBiz("jiangx11x5");
-            List<OmissionValue> omissionValues = biz.GetAll("11X5", "F2", "DaXiao",
-                string.Empty, "CurrentSpans", "DESC");
+            //OmissionValueBiz biz = new OmissionValueBiz("jiangx11x5");
+            //List<OmissionValue> omissionValues = biz.GetAll("11X5", "F2", "DaXiao",
+            //    string.Empty, "CurrentSpans", "DESC");
         }
 
         static void FormulaTest()
@@ -44,12 +44,12 @@ namespace Lottery.Test
 
         static void ExtractLotteryData()
         {
-            //DataDownload.DownPage();
-            //ExtractData.Extract();
-            //ETL.SCC.ImportDwNumber.Start();
-            //ETL.Common.ImportDimension.Import();
-            ETL.Common.ImportNumberType.Import();
-            ETL.Common.ImportNumberTypeDim.Import();
+            //DataDownload.DownPage(101);
+            //DataDownload.DownPage(106);
+
+            //ExtractData.Extract(101);
+            //ExtractData.Extract(106);
+            
         }
 
         static void DownServiceTest()
@@ -65,51 +65,36 @@ namespace Lottery.Test
             }
         }
 
-        static void DmFCAnTest()
+        static void ETLTest()
         {
-            //ETL.D11X5.ImportDmFCAn.Add("txt");
-            //ETL.SCC.ImportDmFCAn.Add("txt");
+            //ETL.D11X5.ImportDmFCAn.Add("db");
+            //ETL.SCC.ImportDmFCAn.Add("db");
+            //ETL.SCC.ImportDwNumber.Start();
+            //ETL.Common.ImportDimension.Import();
+            //ETL.Common.ImportNumberType.Import();
+            //ETL.Common.ImportNumberTypeDim.Import();
+            //ETL.D11X5.ImportDwNumber.UpdateC4();
+            //ETL.SCC.ImportDwNumber.UpdateC45();
         }
 
         static void StatTest()
         {
             Statistics.IStatistics[] stats = new Statistics.IStatistics[] 
             {
-                //new Statistics.D11X5.D1.D1NextNumbers()
-                //,
-                //new Statistics.D11X5.D1.D1PeroidNumbers()
-                //,
-                //new Statistics.D11X5.D1.D1PeroidSpan()
-                //,
-
-                //new Statistics.D11X5.P2.F2NextNumbers()
-                //,
-                //new Statistics.D11X5.P2.F2DayNumbers()
-                //,
-                //new Statistics.D11X5.P2.F2PeroidSpan()
-                //,
-                //new Statistics.D11X5.P2.F2PeroidSpanLimit()
-                //,
-                //new Statistics.D11X5.P3.F3NextNumbers()
-                //,
-                //new Statistics.D11X5.P3.F3DayNumbers()
-                //,
-                //new Statistics.D11X5.P3.F3PeroidSpan()
-                //new Statistics.D11X5.C2.C2PeroidSpan()
-                //new Statistics.D11X5.C3.C3PeroidSpan()
-                //new Statistics.D11X5.P4.A5PeroidSpan()
-                //new Statistics.D11X5.A5.A5PeroidSpanLimit(),
-                //new Statistics.D11X5.F2.F2PeroidSpanLimit()
-                //new Statistics.D11X5.Peroid1008Count()
-                //new Statistics.SSC.PeroidSpan()
-                //new Statistics.D11X5.DmSpan()
-                new Statistics.SSC.DmSpan()
+                //new Statistics.D11X5.PeroidSpan(),
+                //new Statistics.D11X5.DmSpan(),
+                //new Statistics.SSC.PeroidSpan(),
+                //new Statistics.SSC.DmSpan(),
+                new Statistics.D3.PeroidSpan(),
+                new Statistics.D3.DmSpan()
+                //new Statistics.PL35.PeroidSpan(),
+                //new Statistics.PL35.DmSpan()
             };
 
             foreach (var stat in stats)
             {
-                //stat.Stat(Statistics.OutputType.Database, true);
                 stat.Stat(Statistics.OutputType.Database, true);
+                //stat.Stat(Statistics.OutputType.Database, false);
             }
         }
 

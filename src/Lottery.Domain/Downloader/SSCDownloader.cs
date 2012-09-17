@@ -34,7 +34,7 @@ namespace Lottery.Downloader
                 }
 
                 DwNumberBiz biz = new DwNumberBiz(param.DbName);
-                HashSet<long> pSet = biz.GetPeroidsOfByDate(param.CurrentDate);
+                HashSet<long> pSet = biz.GetPeroidsByDate(param.CurrentDate);
                 for (int i = matchs.Count - 1; i >= 0; i--)
                 {
                     Match match = matchs[i];

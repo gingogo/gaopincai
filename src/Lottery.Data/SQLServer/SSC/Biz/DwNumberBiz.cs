@@ -23,12 +23,11 @@ namespace Lottery.Data.SQLServer.SSC
         {
             int num = DataAccessor.SelectLatestDate(string.Empty);
             if (num == 0)
-                return new DateTime(2010, 1, 5);
-
+                return DateTime.Now.AddDays(-3);
             return DateTime.ParseExact(num.ToString(), "yyyyMMdd", null);
         }
 
-        public HashSet<long> GetPeroidsOfByDate(DateTime date)
+        public HashSet<long> GetPeroidsByDate(DateTime date)
         {
             string dayOfBefore3 = date.AddDays(-1).ToString("yyyyMMdd");
             Operand operand = Restrictions.Clause(SqlClause.Where)
@@ -44,45 +43,49 @@ namespace Lottery.Data.SQLServer.SSC
             get { return this.DataAccessor.Count(); }
         }
 
+        private DwNumber Create(long p, int n, string code, int date, string datetime)
+        {
+            string[] arr = code.Split(',');
+            DwNumber number = new DwNumber();
+            number.P = p;
+            number.N = n;
+            number.Seq = this.Count + 1;
+            number.Date = date;
+            number.Created = ConvertHelper.GetDateTime(datetime);
+            number.D5 = ConvertHelper.GetInt32(arr[0]);
+            number.D4 = ConvertHelper.GetInt32(arr[1]);
+            number.D3 = ConvertHelper.GetInt32(arr[2]);
+            number.D2 = ConvertHelper.GetInt32(arr[3]);
+            number.D1 = ConvertHelper.GetInt32(arr[4]);
+            number.P5 = code.Replace(",", "");
+            number.P4 = number.P5.Substring(1);
+            number.P3 = number.P5.Substring(2);
+            number.P2 = number.P5.Substring(3);
+            number.C2 = NumberCache.Instance.GetNumberId("C2", number.P2);
+            number.C3 = NumberCache.Instance.GetNumberId("C3", number.P3);
+            number.C4 = NumberCache.Instance.GetNumberId("C4", number.P4);
+            number.C5 = NumberCache.Instance.GetNumberId("C5", number.P5);
+            return number;
+        }
+
         public bool Add(long p, int n, string code, int date, string datetime)
         {
             lock (lockObj)
             {
-                string[] arr = code.Split(',');
-                DwNumber number = new DwNumber();
-                number.Code = code;
-                number.Date = date;
-                number.P = p;
-                number.N = n;
-                number.Seq = this.Count + 1;
-                number.D5 = ConvertHelper.GetInt32(arr[0]);
-                number.D4 = ConvertHelper.GetInt32(arr[1]);
-                number.D3 = ConvertHelper.GetInt32(arr[2]);
-                number.D2 = ConvertHelper.GetInt32(arr[3]);
-                number.D1 = ConvertHelper.GetInt32(arr[4]);
-                number.Created = ConvertHelper.GetDateTime(datetime);
-                number.P5 = code.Replace(",", "");
-                number.P4 = number.P5.Substring(1);
-                number.P3 = number.P5.Substring(2);
-                number.P2 = number.P5.Substring(3);
-                number.C2 = NumberBiz.Instance.GetC2Id(number.P2);
-                number.C3 = NumberBiz.Instance.GetC3Id(number.P3);
-
+                DwNumber number = Create(p, n, code, date, datetime);
                 return this.SaveToDB(number);
             }
         }
 
-        private void AddSpan(DwNumber number, string filter)
+        private void AddSpan(DwNumber number)
         {
-            string[] dmNames = new string[] {
-                "Peroid", "DaXiao", "DanShuang", "ZiHe", "Lu012", 
-                "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" 
-            };
+            string[] dmNames = new string[] { "Peroid", "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+            string[] numberTypes = new string[] { "D1", "D2", "D3", "D4", "D5", "P2", "C2", "P3", "C3", "P4", "C4", "P5", "C5" };
 
             List<DwSpan> dwSpans = new List<DwSpan>(dmNames.Length);
             foreach (string dmName in dmNames)
             {
-                Dictionary<string, int> spanDict = this.DataAccessor.SelectSpansByNumberTypes(number, dmName, filter);
+                Dictionary<string, int> spanDict = this.DataAccessor.SelectSpansByNumberTypes(number, dmName, numberTypes);
                 DwSpan dwSpan = new DwSpan() { P = number.P };
                 dwSpan.EntityName = ConfigHelper.GetDwSpanTableName(dmName);
                 foreach (string key in spanDict.Keys)
@@ -105,7 +108,7 @@ namespace Lottery.Data.SQLServer.SSC
                 option.IsolationLevel = IsolationLevel.ReadUncommitted;
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
                 {
-                    this.AddSpan(number, string.Empty);
+                    this.AddSpan(number);
                     this.Add(number);
                     scope.Complete();
                 }

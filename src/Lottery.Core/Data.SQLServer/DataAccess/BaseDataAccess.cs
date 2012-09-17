@@ -356,6 +356,7 @@ namespace Lottery.Data.SQLServer
             {
                 bulkCopy.DestinationTableName = this._tableName;
                 bulkCopy.BatchSize = dataTable.Rows.Count;
+                this.SetColumnMappings(bulkCopy.ColumnMappings);
 
                 try
                 {
@@ -414,13 +415,15 @@ namespace Lottery.Data.SQLServer
         /// <returns>DataTable对象</returns>
         private DataTable GetDataTable(List<T> entities)
         {
-            DataTable dataTable = new DataTable();
+            DataTable dataTable = new DataTable(this._tableName);
             MetaDataTable metaDataTable = new MetaDataTable(typeof(T), this._tableName);
-            
+
             foreach (var kp in metaDataTable.Columns)
             {
                 var dataColumn = new DataColumn(kp.Key, kp.Value.DataType);
                 dataTable.Columns.Add(dataColumn);
+                if (kp.Value.Attribute.IsPrimaryKey)
+                    dataTable.PrimaryKey = new DataColumn[] { dataColumn };
             }
 
             foreach (T entity in entities)
@@ -430,8 +433,16 @@ namespace Lottery.Data.SQLServer
                     dr[kp.Key] = kp.Value.Member.GetValue(entity, null);
                 dataTable.Rows.Add(dr);
             }
-
             return dataTable;
+        }
+
+        private void SetColumnMappings(SqlBulkCopyColumnMappingCollection columnMapping)
+        {
+            MetaDataTable metaDataTable = new MetaDataTable(typeof(T), this._tableName);
+            foreach (var kp in metaDataTable.Columns) 
+            {
+                columnMapping.Add(kp.Key, kp.Value.Attribute.Name);
+            }
         }
 
         #endregion

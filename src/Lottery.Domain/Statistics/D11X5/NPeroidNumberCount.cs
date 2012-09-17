@@ -42,7 +42,7 @@ namespace Lottery.Statistics.D11X5
             for (int i = 0; i < allNumbers.Count; i++)
             {
                 if (i + 1008 >= allNumbers.Count) break;
-                var group = allNumbers.GetRange(i, 1008).GroupBy(x => x.F2);
+                var group = allNumbers.GetRange(i, 1008).GroupBy(x => x.P2);
                 foreach (var g in group)
                 {
                     string line = string.Format("{0},{1},{2}", allNumbers[i].P, g.Key, g.Count());

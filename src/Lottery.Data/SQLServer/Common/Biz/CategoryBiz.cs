@@ -42,6 +42,11 @@ namespace Lottery.Data.SQLServer.Common
             this.LoadToCache();
         }
 
+        public List<Category> GetCategories()
+        {
+            return this.listCache;
+        }
+
         public List<Category> GetEnabledCategories()
         {
             //Operand operand = Restrictions.Clause(SqlClause.Where)

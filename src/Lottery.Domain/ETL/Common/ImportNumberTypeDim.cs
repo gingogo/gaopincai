@@ -30,7 +30,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.D11X5.DmFCAnBiz biz = new Data.SQLServer.D11X5.DmFCAnBiz("jiangx11x5",numberType.Code);
+                Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangx11x5",numberType.Code);
                 double count = biz.DataAccessor.Count() * 1.0;
 
                 List<NumberTypeDim> ntds = new List<NumberTypeDim>();
@@ -65,7 +65,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.D11X5.DmFCAnBiz biz = new Data.SQLServer.D11X5.DmFCAnBiz("jiangxssc", numberType.Code);
+                Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangxssc", numberType.Code);
                 double count = biz.DataAccessor.Count() * 1.0;
 
                 List<NumberTypeDim> ntds = new List<NumberTypeDim>();

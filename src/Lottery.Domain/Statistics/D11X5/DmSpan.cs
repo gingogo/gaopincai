@@ -18,11 +18,8 @@ namespace Lottery.Statistics.D11X5
     {
         protected override void Stat(string dbName, OutputType outputType)
         {
-            string[] dmNames = new string[] {
-                "DaXiao", "DanShuang", "ZiHe", "Lu012", 
-                "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" 
-            };
-            string[] numberTypes = new string[] { "D1", "F2", "F3", "C2", "C3", "A5" };
+            string[] dmNames = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+            string[] numberTypes = new string[] { "D1", "D2", "D3", "D4", "D5", "P2", "C2", "P3", "C3", "P4", "C4", "P5", "C5" };
 
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
@@ -50,6 +47,7 @@ namespace Lottery.Statistics.D11X5
             Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict =
                 new Dictionary<string, Dictionary<string, int>>(100000);
 
+            List<DwSpan> entities = new List<DwSpan>(numbers.Count);
             foreach (DwNumber number in numbers)
             {
                 Dictionary<string, int> pSpanDict = GetSpanDict(numberTypeLastSpanDict, dmName, numberTypes, number);
@@ -57,8 +55,10 @@ namespace Lottery.Statistics.D11X5
                 if (writer != null)
                     this.SaveSpanToText(span, writer);
                 else
-                    this.SaveSpanToDB(dbName, dmName, span);
+                    entities.Add(span);
+                    //this.SaveSpanToDB(dbName, dmName, span);
             }
+            this.SaveSpanToDB(dbName, dmName, entities);
         }
 
         private Dictionary<string, int> GetSpanDict(Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict,

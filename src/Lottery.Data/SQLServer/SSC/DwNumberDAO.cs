@@ -75,15 +75,14 @@ namespace Lottery.Data.SQLServer.SSC
         /// </summary>
         /// <param name="number">开奖号码</param>
         /// <param name="dmName">维度名称(区分大小写,取值为:Peroid,DaXiao,DanShuang,ZiHe,Lu012,He,HeWei,Ji,JiWei,KuaDu,AC)</param>
-        /// <param name="filter">过滤条件</param>
         /// <param name="numberTypes">号码类型</param>
         /// <returns></returns>
-        public Dictionary<string, int> SelectSpansByNumberTypes(DwNumber number, string dmName, string filter, params string[] numberTypes)
+        public Dictionary<string, int> SelectSpansByNumberTypes(DwNumber number, string dmName, string[] numberTypes)
         {
             if (numberTypes == null || numberTypes.Length == 0)
-                numberTypes = new string[] { "D1", "P2", "P3", "P4", "P5", "C2", "C3" };
+                throw new ArgumentException("numberTypes is null or length is zero", "numberTypes");
 
-            string sqlCmd = this.GetBatchSql(number, dmName, filter, numberTypes);
+            string sqlCmd = this.GetBatchSpanQuerySql(number, dmName,numberTypes);
             List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
             Dictionary<string, int> numberIdSeqDict = list.ToDictionary(x => x.Id, y => y.Seq);
             Dictionary<string, int> spanDict = new Dictionary<string, int>(7);
@@ -119,53 +118,35 @@ namespace Lottery.Data.SQLServer.SSC
                 return null;
         }
 
-        public List<DwDmFCANumber> SelectDmNumbersOrderBySeq(string numberType, SortTypeEnum sortType)
-        {
-           string sqlFormat = "select t1.*,t2.{0},t2.Seq from Dm{0} t1,{1} t2 where t1.Id = t2.{0} order by t2.Seq {2};";
-           string sqlCmd = string.Format(sqlFormat, numberType, this._tableName, sortType.ToString());
-           return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToDwDmFCANumber);
-        }
-
         #endregion
 
         #region 私有方法
 
-        private string GetBatchSql(DwNumber number, string dmName, string filter, string[] numberTypes)
+        private string GetBatchSpanQuerySql(DwNumber number, string dmName, string[] numberTypes)
         {
             string sqlFormat = string.Empty;
             StringBuilder batchSqlBuilder = new StringBuilder();
 
             if (dmName.Equals("Peroid"))
             {
-                //select "D1|P2|P3|xxx" Id,Max(Seq) Seq from DwNumber where A5 = 'xxxxx';
-                sqlFormat = "select '{0}' Id,Max({1}) {1} from {2} where {0} = '{3}' {4};";
+                //select "D1|P2|xx" Id,Max(Seq) Seq from DwNumber where C5 = 'xxxxx';
+                sqlFormat = "select '{0}' Id,Max({1}) {1} from {2} where {0} = '{3}';";
                 foreach (string numberType in numberTypes)
                 {
                     string typeValue = number[numberType].ToString();
-                    batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, typeValue, filter);
+                    batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, typeValue);
                 }
-
                 return batchSqlBuilder.ToString();
             }
 
-            //select top 1 'D1|P2|P3|xxx' Id,Max(t2.Seq) Seq from DmP5 t1,DwNumber t2 where t1.Id = t2.P5 and t1.DaXiao = 'x|x|x|x|x';
-            sqlFormat = "select '{0}' Id,Max(t2.{1}) {1} from Dm{0} t1,{2} t2 where t1.Id = t2.{0} and t1.{3} = '{4}' {5};"; 
+            //select top 1 'D1|P2|C5|xxx' Id,Max(t2.Seq) Seq from DmC5 t1,DwNumber t2 where t1.Id = t2.C5 and t1.DaXiao = 'x|x|x|x|x';
+            sqlFormat = "select '{0}' Id,Max(t2.{1}) {1} from Dm{5} t1,{2} t2 where t1.Id = t2.{0} and t1.{3} = '{4}';";
             foreach (string numberType in numberTypes)
             {
                 string dmValue = number[numberType].GetDmValue(1, dmName, 4);
-                batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, dmName, dmValue, filter);
+                batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, dmName, dmValue, numberType.GetTableSuffix());
             }
-
             return batchSqlBuilder.ToString();
-        }
-
-        private DwDmFCANumber DataReaderToDwDmFCANumber(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
-        {
-            if (dr == null)
-            {
-                throw new ArgumentNullException("dr", "未将对象引用到实例");
-            }
-            return EntityMapper.GetEntity<DwDmFCANumber>(dr, new DwDmFCANumber(), this._tableName);
         }
 
         private NumberIdSeq DataReaderToNumberIdSeq(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
@@ -175,6 +156,11 @@ namespace Lottery.Data.SQLServer.SSC
                 throw new ArgumentNullException("dr", "未将对象引用到实例");
             }
             return EntityMapper.GetEntity<NumberIdSeq>(dr, new NumberIdSeq(), this._tableName);
+        }
+
+        private string GetTableSuffix(string numberType)
+        {
+            return (numberType[0] == 'D') ? "Dx" : numberType;
         }
 
         #endregion

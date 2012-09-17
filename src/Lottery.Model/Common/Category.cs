@@ -55,9 +55,13 @@ namespace Lottery.Model.Common
         /// </summary>
         public static readonly String C_IsGP = "IsGP";
         /// <summary>
-        /// 列名DownPageIndex,彩种当前数据下载的页码(该项暂时无用)
+        /// 列名DownPageIndex,彩种当前已下载的页码
         /// </summary>
         public static readonly String C_DownPageIndex = "DownPageIndex";
+        /// <summary>
+        /// 列名DownPageCount,彩种当前数据下载的总页码
+        /// </summary>
+        public static readonly String C_DownPageCount = "DownPageCount";
         /// <summary>
         /// 列名DownIntervals,彩种数据下载程序下载间隔时间
         /// </summary>
@@ -113,6 +117,8 @@ namespace Lottery.Model.Common
         private Byte _isGP;
 
         private Int32 _downPageIndex;
+
+        private Int32 _downPageCount;
 
         private String _downIntervals;
 
@@ -223,13 +229,22 @@ namespace Lottery.Model.Common
             set { this._isGP = value; }
         }
         /// <summary>
-        /// 获取或设置彩种当前数据下载的页码(该项暂时无用)
+        /// 获取或设置彩种当前数据下载的页码
         /// </summary>
         [Column(Name = "DownPageIndex")]
         public Int32 DownPageIndex
         {
             get { return this._downPageIndex; }
             set { this._downPageIndex = value; }
+        }
+        /// <summary>
+        /// 获取或设置彩种当前数据下载的总页码
+        /// </summary>
+        [Column(Name = "DownPageCount")]
+        public Int32 DownPageCount
+        {
+            get { return this._downPageCount; }
+            set { this._downPageCount = value; }
         }
         /// <summary>
         /// 获取或设置彩种数据下载程序下载间隔时间

@@ -44,6 +44,11 @@ namespace Lottery.Data.SQLServer.Common
             this.LoadToCache();
         }
 
+        public string[] GetCodes()
+        {
+            return this.listCache.Select(x => x.Code).ToArray();
+        }
+
         public List<Dimension> GetList()
         {
             return listCache;

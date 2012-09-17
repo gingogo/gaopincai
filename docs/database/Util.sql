@@ -331,3 +331,11 @@ select max(p) P from dbo.DwLu012Span;
 select max(p) P  from dbo.DwZiHeSpan;
 
 update DmCategory  set DownIntervals = 6 where Id in(145,147,162,164,165);
+
+insert into DmDx select * from LotteryChongQSSC.dbo.DmDx;
+insert into DmC2 select * from LotteryChongQSSC.dbo.DmC2;
+insert into DmC3 select * from LotteryChongQSSC.dbo.DmC3;
+insert into DmC33 select * from LotteryChongQSSC.dbo.DmC33;
+insert into DmC36 select * from LotteryChongQSSC.dbo.DmC36;
+insert into DmP2 select * from LotteryChongQSSC.dbo.DmP2;
+insert into DmP3 select * from LotteryChongQSSC.dbo.DmP3;

@@ -20,7 +20,7 @@ namespace Lottery.Statistics.SSC
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
             //List<DwNumber> allNumbers = biz.DataAccessor.SelectTopN(10, string.Empty, "P", SortTypeEnum.ASC, null);
-            string[] numberTypes = new string[] { "D1", "P2", "P3", "P4", "P5", "C2", "C3" };
+            string[] numberTypes = new string[] { "D1", "D2", "D3", "D4", "D5", "P2", "C2", "P3", "C3", "P4", "C4", "P5", "C5" };
 
             if (outputType == OutputType.Database)
                 this.Stat(numbers, dbName, numberTypes, null);
@@ -40,6 +40,7 @@ namespace Lottery.Statistics.SSC
             Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict =
                 new Dictionary<string, Dictionary<string, int>>(numbers.Count);
 
+            List<DwSpan> entities = new List<DwSpan>(numbers.Count);
             foreach (DwNumber number in numbers)
             {
                 Dictionary<string, int> pSpanDict = GetPeroidSpanDict(numberTypes, numberTypeLastSpanDict, number);
@@ -47,8 +48,10 @@ namespace Lottery.Statistics.SSC
                 if (writer != null)
                     this.SaveSpanToText(span, writer);
                 else
-                    this.SaveSpanToDB(dbName, "Peroid", span);
+                    entities.Add(span);
+                //this.SaveSpanToDB(dbName, "Peroid", span);
             }
+            this.SaveSpanToDB(dbName, "Peroid", entities);
         }
 
         private Dictionary<string, int> GetPeroidSpanDict(string[] numberTypes, 

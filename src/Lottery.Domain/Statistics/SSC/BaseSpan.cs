@@ -21,6 +21,12 @@ namespace Lottery.Statistics.SSC
             spanDao.Insert(span);
         }
 
+        protected virtual void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans)
+        {
+            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
+            spanDao.Insert(spans, Data.SQLServer.SqlInsertMethod.SqlBulkCopy);
+        }
+
         protected virtual void SaveSpanToText(DwSpan span,StreamWriter writer)
         {
             writer.WriteLine(span.ToString());

@@ -40,6 +40,13 @@ namespace Lottery.Data.SQLServer.Common
             this.LoadToCache();
         }
 
+        public string[] GetCodes(string ruleType)
+        {
+            return this.listCache
+                .Where(x => x.RuleType.Equals(ruleType))
+                .Select(x => x.Code).ToArray();
+        }
+
         public List<NumberType> GetList()
         {
             return listCache;

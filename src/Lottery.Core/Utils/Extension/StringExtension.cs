@@ -186,5 +186,17 @@ namespace Lottery.Utils
 
             return (target.Length <= index) ? target : target.Substring(index, length);
         }
+
+        [DebuggerStepThrough]
+        public static string GetTableSuffix(this string target)
+        {
+            if (string.IsNullOrEmpty(target))
+                throw new ArgumentNullException("target");
+
+            if (target[0] == 'D') return "Dx";
+            if (target.Equals("C33") || target.Equals("C36")) return "C3";
+
+            return target;
+        }
     }
 }
