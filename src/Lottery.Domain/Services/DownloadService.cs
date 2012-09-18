@@ -74,8 +74,9 @@ namespace Lottery.Services
         {
             foreach (var category in categories)
             {
-                if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid))
-                    continue;
+                if (category.DbName.Equals("Fc3D") || category.DbName.Equals("TcPL35")) continue;
+                //if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid))
+                //    continue;
 
                 EventParameter parameter = new EventParameter(category.Type, category.Name, category.DownUrl, category.DbName);
                 parameter.StartDate = GetLatestDate(category.DbName);

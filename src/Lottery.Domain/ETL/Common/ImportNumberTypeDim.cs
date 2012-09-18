@@ -6,6 +6,7 @@ using System.Text;
 namespace Lottery.ETL.Common
 {
     using Model.Common;
+    using Data.SQLServer;
     using Data.SQLServer.Common;
     using Utils;
 
@@ -48,7 +49,7 @@ namespace Lottery.ETL.Common
                     ntd.Amount = ntd.Nums * numberType.Amount;
                     ntd.Probability = (ntd.Nums * 1.0) / count;
                 }
-                NumberTypeDimBiz.Instance.DataAccessor.Insert(ntds, Data.SQLServer.SqlInsertMethod.SqlBulkCopy);
+                NumberTypeDimBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
             }
         }
 
@@ -83,7 +84,7 @@ namespace Lottery.ETL.Common
                     ntd.Amount = ntd.Nums * numberType.Amount;
                     ntd.Probability = GetProbability(ntd.Nums, count, ntd.NumberType);
                 }
-                NumberTypeDimBiz.Instance.DataAccessor.Insert(ntds, Data.SQLServer.SqlInsertMethod.SqlBulkCopy);
+                NumberTypeDimBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
             }
         }
 

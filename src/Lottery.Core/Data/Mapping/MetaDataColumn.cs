@@ -29,7 +29,7 @@ namespace Lottery.Data
 
         public string Name
         {
-            get { return _columnAttr.Name; }
+            get { return _columnAttr.Name.Trim(); }
         }
 
         public PropertyInfo Member

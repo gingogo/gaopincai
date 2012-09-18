@@ -8,6 +8,7 @@ namespace Lottery.ETL.SCC
 {
     using Model.Common;
     using Model.SSC;
+    using Data.SQLServer;
     using Data.SQLServer.SSC;
     using Data.SQLServer.Common;
     using Utils;
@@ -144,7 +145,7 @@ namespace Lottery.ETL.SCC
                 entities.Add(GetDmFCAn(str.ToList()));
                 //biz.Add(GetDmFCAn(str.ToList()));
             }
-            biz.DataAccessor.Insert(entities, Data.SQLServer.SqlInsertMethod.SqlBulkCopy);
+            biz.DataAccessor.Insert(entities, SqlInsertMethod.SqlBulkCopy);
         }
 
         private static DmDPC GetDmFCAn(IList<int> list)

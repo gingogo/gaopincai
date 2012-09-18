@@ -4,6 +4,18 @@ DBCC SHRINKFILE (LotteryJiangX115_Log, 1);
 DBCC SHRINKFILE (LotteryJiangXSSC_Log, 1);
 DBCC SHRINKFILE (LotteryShanD115_Log, 1);
 
+drop table dbo.DwACSpan;
+drop table dbo.DwDanShuangSpan ;
+drop table  dbo.DwDaXiaoSpan;
+drop table  dbo.DwHeSpan;
+drop table  dbo.DwHeWeiSpan;
+drop table  dbo.DwJiSpan;
+drop table   dbo.DwJiWeiSpan;
+drop table    dbo.DwKuaDuSpan;
+drop table   dbo.DwLu012Span;
+drop table   dbo.DwZiHeSpan;
+drop table dbo.DwPeroidSpan;
+
 Alter table DmA4 add [Ji] [int] NULL;
 Alter table DmA4 add [JiWei] [int]  NULL;
 Alter table DmA4 add [KuaDu] [int]  NULL;

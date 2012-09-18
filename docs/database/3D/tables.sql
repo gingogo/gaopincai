@@ -38,38 +38,6 @@ CREATE TABLE [dbo].[DwPeroidSpan](
 
 GO
 
-CREATE TABLE [dbo].[DwHeSpan](
-	[P] [bigint]  NOT NULL,
-	[D1Spans] [int] NOT NULL,
-	[D2Spans] [int] NOT NULL,
-	[D3Spans] [int] NOT NULL,
-	[P2Spans] [int] NOT NULL,
-	[C2Spans] [int] NOT NULL,
-	[P3Spans] [int] NOT NULL,
-	[C3Spans] [int] NOT NULL
- CONSTRAINT [PK_DwHeSpan_P] PRIMARY KEY CLUSTERED 
-(
-	[P] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-CREATE TABLE [dbo].[DwHeWeiSpan](
-	[P] [bigint]  NOT NULL,
-	[D1Spans] [int] NOT NULL,
-	[D2Spans] [int] NOT NULL,
-	[D3Spans] [int] NOT NULL,
-	[P2Spans] [int] NOT NULL,
-	[C2Spans] [int] NOT NULL,
-	[P3Spans] [int] NOT NULL,
-	[C3Spans] [int] NOT NULL
- CONSTRAINT [PK_DwHeWeiSpan_P] PRIMARY KEY CLUSTERED 
-(
-	[P] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
 CREATE TABLE [dbo].[DwDaXiaoSpan](
 	[P] [bigint]  NOT NULL,
 	[D1Spans] [int] NOT NULL,
@@ -134,11 +102,34 @@ CREATE TABLE [dbo].[DwLu012Span](
 ) ON [PRIMARY]
 GO
 
+CREATE TABLE [dbo].[DwHeSpan](
+	[P] [bigint]  NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwHeSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[DwHeWeiSpan](
+	[P] [bigint]  NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwHeWeiSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
 CREATE TABLE [dbo].[DwJiSpan](
 	[P] [bigint]  NOT NULL,
-	[D1Spans] [int] NOT NULL,
-	[D2Spans] [int] NOT NULL,
-	[D3Spans] [int] NOT NULL,
 	[P2Spans] [int] NOT NULL,
 	[C2Spans] [int] NOT NULL,
 	[P3Spans] [int] NOT NULL,
@@ -152,9 +143,6 @@ GO
 
 CREATE TABLE [dbo].[DwJiWeiSpan](
 	[P] [bigint]  NOT NULL,
-	[D1Spans] [int] NOT NULL,
-	[D2Spans] [int] NOT NULL,
-	[D3Spans] [int] NOT NULL,
 	[P2Spans] [int] NOT NULL,
 	[C2Spans] [int] NOT NULL,
 	[P3Spans] [int] NOT NULL,
@@ -168,9 +156,6 @@ GO
 
 CREATE TABLE [dbo].[DwKuaDuSpan](
 	[P] [bigint]  NOT NULL,
-	[D1Spans] [int] NOT NULL,
-	[D2Spans] [int] NOT NULL,
-	[D3Spans] [int] NOT NULL,
 	[P2Spans] [int] NOT NULL,
 	[C2Spans] [int] NOT NULL,
 	[P3Spans] [int] NOT NULL,
@@ -185,11 +170,6 @@ GO
 
 CREATE TABLE [dbo].[DwACSpan](
 	[P] [bigint]  NOT NULL,
-	[D1Spans] [int] NOT NULL,
-	[D2Spans] [int] NOT NULL,
-	[D3Spans] [int] NOT NULL,
-	[P2Spans] [int] NOT NULL,
-	[C2Spans] [int] NOT NULL,
 	[P3Spans] [int] NOT NULL,
 	[C3Spans] [int] NOT NULL
  CONSTRAINT [PK_DwACSpan_P] PRIMARY KEY CLUSTERED 

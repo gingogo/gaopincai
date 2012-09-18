@@ -8,6 +8,7 @@ namespace Lottery.ETL.D11X5
 {
     using Model.Common;
     using Model.D11X5;
+    using Data.SQLServer;
     using Data.SQLServer.D11X5;
     using Data.SQLServer.Common;
     using Utils;
@@ -115,7 +116,7 @@ namespace Lottery.ETL.D11X5
                 entities.Add(GetDmFCAn(list));
                 //biz.Add(GetDmFCAn(list));
             }
-            biz.DataAccessor.Insert(entities, Data.SQLServer.SqlInsertMethod.SqlBulkCopy);
+            biz.DataAccessor.Insert(entities, SqlInsertMethod.SqlBulkCopy);
         }
 
         private static DmDPC GetDmFCAn(IList<int> list)

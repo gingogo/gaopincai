@@ -15,8 +15,11 @@ namespace Lottery.Downloader
             if (type.ToLower().Equals("ssc"))
                 return new SSCDownloader();
 
-            //if (type.ToLower().Equals("3d"))
-            //    return new PL35Downloader();
+            if (type.ToLower().Equals("3d"))
+                return new D3Downloader();
+
+            if (type.ToLower().Equals("pl35"))
+                return new PL35Downloader();
 
             return null;
         }

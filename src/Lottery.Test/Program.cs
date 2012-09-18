@@ -18,7 +18,7 @@ namespace Lottery.Test
         {
             //OmissionValueTest();
             //DownServiceTest();
-            StatTest();
+            //StatTest();
             //ExtractLotteryData();
             //ETLTest();
             //TransactionTest();
@@ -85,8 +85,8 @@ namespace Lottery.Test
                 //new Statistics.D11X5.DmSpan(),
                 //new Statistics.SSC.PeroidSpan(),
                 //new Statistics.SSC.DmSpan(),
-                new Statistics.D3.PeroidSpan(),
-                new Statistics.D3.DmSpan()
+                //new Statistics.D3.PeroidSpan(),
+                //new Statistics.D3.DmSpan()
                 //new Statistics.PL35.PeroidSpan(),
                 //new Statistics.PL35.DmSpan()
             };

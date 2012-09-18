@@ -57,6 +57,7 @@
     <Compile Include="Configuration\ConfigHelper.cs" />
     <Compile Include="Data.SQLServer\DataAccess\BaseDataAccess.cs" />
     <Compile Include="Data.SQLServer\DataAccess\BaseSelect.cs" />
+    <Compile Include="Data.SQLServer\DataAccess\SqlInsertMethod.cs" />
     <Compile Include="Data.SQLServer\DataAccess\SinglePKDataAccess.cs" />
     <Compile Include="Data.SQLServer\DataAccess\SqlExpression.cs" />
     <Compile Include="Data.SQLServer\DataAccess\ViewDataAccess.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Data\Criterion\Operand\OrConjOperand.cs" />
     <Compile Include="Data\Criterion\Restrictions.cs" />
     <Compile Include="Data\Entity\BaseEntity.cs" />
+    <Compile Include="Data\Entity\BatchEntity.cs" />
     <Compile Include="Data\Enums\Enums.cs" />
     <Compile Include="Data\Interfaces\IBaseDataAccess.cs" />
     <Compile Include="Data\Interfaces\IBaseDelete.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Utils\Helper\CheckArgument.cs" />
     <Compile Include="Utils\Helper\Constants.cs" />
     <Compile Include="Utils\Helper\ConvertHelper.cs" />
+    <Compile Include="Utils\Lottery\DimNumberTypes.cs" />
     <Compile Include="Utils\Helper\DisposableResource.cs" />
     <Compile Include="Utils\Helper\FileHelper.cs" />
     <Compile Include="Utils\Helper\RequestHelper.cs" />

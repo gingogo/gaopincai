@@ -75,11 +75,6 @@ namespace Lottery.Data
             return properties.Select(x => ((ColumnAttribute)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute))).Name)
                 .ToArray();
         }
-
-        /// <summary>
-        /// 获取与设置当前实体名称(对应数据库中的表名)。
-        /// </summary>
-        public string EntityName { get; set; }
     }
 }
 

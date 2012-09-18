@@ -7,6 +7,7 @@ using System.IO;
 namespace Lottery.Statistics.PL35
 {
     using Data;
+    using Data.SQLServer;
     using Data.SQLServer.Common;
     using Data.SQLServer.PL35;
     using Model.Common;
@@ -21,10 +22,10 @@ namespace Lottery.Statistics.PL35
             spanDao.Insert(span);
         }
 
-        protected virtual void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans)
+        protected virtual void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans, params string[] columnNames)
         {
             DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
-            spanDao.Insert(spans, Data.SQLServer.SqlInsertMethod.SqlBulkCopy);
+            spanDao.Insert(spans, SqlInsertMethod.SqlBulkCopy, columnNames);
         }
 
         protected virtual void SaveSpanToText(DwSpan span,StreamWriter writer)

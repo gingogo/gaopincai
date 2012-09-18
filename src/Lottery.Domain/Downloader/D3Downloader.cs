@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Lottery.Downloader
 {
@@ -19,11 +20,11 @@ namespace Lottery.Downloader
         private bool DownData(DownParameter param)
         {
             int intDate = int.Parse(param.CurrentDate.ToString("yyyyMMdd"));
-            string url = string.Format(param.DownUrl, intDate, "&");
+            string url = param.DownUrl;
 
             try
             {
-                string htmlText = Regex.Match(this._webClient.DownloadString(url), "<tbody id=\"row_show\">.*</tbody>", RegexOptions.Singleline | RegexOptions.IgnoreCase).Value;
+                string htmlText = Regex.Match(this._webClient.DownloadString(url), "<div id=\"conKjlist\" class=\"kjlist\">.*?</table>", RegexOptions.Singleline | RegexOptions.IgnoreCase).Value;
                 MatchCollection matchs = Regex.Matches(htmlText, "<tr>.*?</tr>", RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
                 if (matchs.Count == 0)
@@ -37,17 +38,19 @@ namespace Lottery.Downloader
                 for (int i = matchs.Count - 1; i >= 0; i--)
                 {
                     Match match = matchs[i];
-                    string peroid = Regex.Match(match.Value, "<td width=\"25%\">(\\d+)期</td>", RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
-                    string datetime = Regex.Match(match.Value, "<td width=\"25%\">(\\d{4}-\\d{2}-\\d{2}.*?)</td>", RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
-                    string code = Regex.Match(match.Value, @"[<spans >|<span >](\d{2},\d{2},\d{2},\d{2},\d{2})[</spans>|<spans>]", RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
+                    string peroid = Regex.Match(match.Value, "<td>(\\d{7})</td>", RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
+                    string datetime = Regex.Match(match.Value, "<td>(\\d{4}-\\d{2}-\\d{2})</td>", RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
+                    string code = Regex.Match(match.Value, "<div class=\"aball\">.*?</div>", RegexOptions.IgnoreCase | RegexOptions.Singleline).Value;
+                    code = Regex.Replace(code, "<.*?>", "");
+                    code = string.Join(",", code.ToArray());
                     if (string.IsNullOrEmpty(code) || code.Trim().Length == 0) continue;
 
                     int p = int.Parse(peroid);
-                    //把期号统一成{yyyymmddnn}
-                    if (p < 2000000000) p += 2000000000;
+                    //把期号统一成{yyyynnn}
+                    if (p < 2000000) p += 2000000;
                     if (pSet.Contains(p)) continue;
 
-                    int n = int.Parse(peroid.Substring(peroid.Length - 2));
+                    int n = int.Parse(peroid.Substring(peroid.Length - 3));
                     if (!biz.Add(p, n, code, intDate, datetime)) return false;
                 }
                 return true;
