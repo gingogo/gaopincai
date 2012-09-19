@@ -34,7 +34,7 @@ namespace Lottery.ETL.Common
                 Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangx11x5",numberType.Code);
                 double count = biz.DataAccessor.Count() * 1.0;
 
-                List<NumberTypeDim> ntds = new List<NumberTypeDim>();
+                List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Code.Equals("D1"))
                     ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(d1dims);
                 else if("F2,C2".Contains(numberType.Code))
@@ -49,7 +49,7 @@ namespace Lottery.ETL.Common
                     ntd.Amount = ntd.Nums * numberType.Amount;
                     ntd.Probability = (ntd.Nums * 1.0) / count;
                 }
-                NumberTypeDimBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
+                DimensionNumberTypeBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Lottery.ETL.Common
                 Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangxssc", numberType.Code);
                 double count = biz.DataAccessor.Count() * 1.0;
 
-                List<NumberTypeDim> ntds = new List<NumberTypeDim>();
+                List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Code.Equals("D1"))
                     ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(d1dims);
                 else if ("P2,C2".Contains(numberType.Code))
@@ -84,7 +84,7 @@ namespace Lottery.ETL.Common
                     ntd.Amount = ntd.Nums * numberType.Amount;
                     ntd.Probability = GetProbability(ntd.Nums, count, ntd.NumberType);
                 }
-                NumberTypeDimBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
+                DimensionNumberTypeBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
             }
         }
 

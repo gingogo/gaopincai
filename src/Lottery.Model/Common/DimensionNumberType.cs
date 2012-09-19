@@ -5,12 +5,12 @@ namespace Lottery.Model.Common
     using Data;
 
     /// <summary>
-    /// 号码玩法的各维度中奖概率配置信息实体
+    /// 各维度号码玩法的中奖概率配置信息实体
     /// </summary>
     [Serializable]
-    public class NumberTypeDim : BaseModel
+    public class DimensionNumberType : BaseModel
     {
-        public static string ENTITYNAME = "NumberTypeDim";
+        public static string ENTITYNAME = "DimensionNumberType";
 
         #region Const Members
 

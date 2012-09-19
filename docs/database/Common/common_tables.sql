@@ -32,7 +32,6 @@ CREATE TABLE [dbo].[Category](
 	[DownPeroid] [nvarchar](2) NOT NULL,
 	[DownUrl] [varchar](200) NOT NULL,
 	[Times] [int] NOT NULL,
-	[DimType] [varchar](10) NOT NULL,
 	[Created] [datetime] NOT NULL,
  CONSTRAINT [PK_DmCategory] PRIMARY KEY CLUSTERED 
 (
@@ -99,7 +98,6 @@ CREATE TABLE [dbo].[Dimension](
 	[Id] [int] IDENTITY(100,1) NOT NULL,
 	[Code] [varchar](20) NOT NULL,
 	[Name] [nvarchar](20) NOT NULL,
-	[Type] [varchar](10) NOT NULL,
 	[Seq] [int] NOT NULL,
  CONSTRAINT [PK_Dimension] PRIMARY KEY CLUSTERED 
 (
@@ -119,7 +117,7 @@ CREATE TABLE [dbo].[Dimension](
 
 GO
 
-CREATE TABLE [dbo].[NumberTypeDim](
+CREATE TABLE [dbo].[DimensionNumberType](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[RuleType] [varchar](20) NOT NULL,
 	[NumberType] [varchar](6) NOT NULL,
@@ -128,11 +126,11 @@ CREATE TABLE [dbo].[NumberTypeDim](
 	[Probability] [decimal](18, 18) NOT NULL,
 	[Nums] [int] NOT NULL,
 	[Amount] [decimal](8, 2) NOT NULL,
- CONSTRAINT [PK_NumberTypeDimension] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_DimensionNumberType] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY],
- CONSTRAINT [UK_NumberTypeDimension] UNIQUE NONCLUSTERED 
+ CONSTRAINT [UK_DimensionNumberType] UNIQUE NONCLUSTERED 
 (
 	[RuleType] ASC,
 	[NumberType] ASC,

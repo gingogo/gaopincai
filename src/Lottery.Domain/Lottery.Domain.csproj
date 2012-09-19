@@ -53,7 +53,7 @@
     <Compile Include="Downloader\D3Downloader.cs" />
     <Compile Include="Downloader\PL35Downloader.cs" />
     <Compile Include="Downloader\SSCDownloader.cs" />
-    <Compile Include="ETL\Common\ImportNumberTypeDim.cs" />
+    <Compile Include="ETL\Common\ImportDimensionNumberType.cs" />
     <Compile Include="ETL\Common\ImportDimension.cs" />
     <Compile Include="ETL\Common\ImportNumberType.cs" />
     <Compile Include="ETL\D11X5\ImportDmDPC.cs" />

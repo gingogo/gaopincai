@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Transactions;
 using System.Linq;
+using System.Transactions;
 
 namespace Lottery.Data.SQLServer.PL35
 {
-    using Model.PL35;
-    using Utils;
+    using Common;
     using Configuration;
     using Logging;
+    using Model.PL35;
+    using Utils;
 
     public class DwNumberBiz : SinglePKDataAccessBiz<DwNumberDAO, DwNumber>
     {
@@ -79,12 +80,11 @@ namespace Lottery.Data.SQLServer.PL35
 
         private void AddSpan(DwNumber number)
         {
-            string[] dmNames = new string[] { "Peroid", "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
-            string[] numberTypes = new string[] { "D1", "D2", "D3", "D4", "D5", "P2", "C2", "P3", "C3", "P4", "C4", "P5", "C5" };
-
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("PL35");
             List<BatchEntity<DwSpan>> batchEntities = new List<BatchEntity<DwSpan>>(dmNames.Length);
             foreach (string dmName in dmNames)
             {
+                string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("PL35", dmName);
                 Dictionary<string, int> spanDict = this.DataAccessor.SelectSpansByNumberTypes(number, dmName, numberTypes);
                 DwSpan dwSpan = new DwSpan() { P = number.P };
                 foreach (string key in spanDict.Keys)

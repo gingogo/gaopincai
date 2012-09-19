@@ -33,13 +33,13 @@ namespace Lottery.Statistics.D3
             writer.WriteLine(span.ToString());
         }
 
-        protected virtual DwSpan CreateSpan(DwNumber number, Dictionary<string, int> pSpanDict)
+        protected virtual DwSpan CreateSpan(DwNumber number, Dictionary<string, int> spanDict)
         {
             DwSpan span = new DwSpan() { P = number.P };
-            foreach (string key in pSpanDict.Keys)
+            foreach (string key in spanDict.Keys)
             {
                 string propertyName = string.Format("{0}Spans", key);
-                span[propertyName] = pSpanDict[key];
+                span[propertyName] = spanDict[key];
             }
             return span;
         }    

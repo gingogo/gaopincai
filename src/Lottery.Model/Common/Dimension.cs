@@ -30,6 +30,10 @@ namespace Lottery.Model.Common
         /// 列名Type,维度类型
         /// </summary>
         public static readonly String C_Type = "Type";
+        /// <summary>
+        /// 列名NumberTypes,维度所有号码类型
+        /// </summary>
+        public static readonly String C_NumberTypes = "NumberTypes";
 
         #endregion
 

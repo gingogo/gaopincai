@@ -134,7 +134,6 @@
     <Compile Include="Utils\Helper\CheckArgument.cs" />
     <Compile Include="Utils\Helper\Constants.cs" />
     <Compile Include="Utils\Helper\ConvertHelper.cs" />
-    <Compile Include="Utils\Lottery\DimNumberTypes.cs" />
     <Compile Include="Utils\Helper\DisposableResource.cs" />
     <Compile Include="Utils\Helper\FileHelper.cs" />
     <Compile Include="Utils\Helper\RequestHelper.cs" />

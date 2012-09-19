@@ -77,7 +77,7 @@ namespace Lottery.Data.SQLServer.D3
 
         #region 特定数据访问方法
 
-        public List<NumberTypeDim> SelectNumberTypeDimGroupBy(string[] dimensions)
+        public List<DimensionNumberType> SelectNumberTypeDimGroupBy(string[] dimensions)
         {
             string sqlCmd = this.GetBatchSql(dimensions);
             return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberTypeDim);
@@ -97,19 +97,19 @@ namespace Lottery.Data.SQLServer.D3
             foreach (string dimension in dimensions)
             {
                 batchSqlBuilder.AppendFormat(sqlFormat, dimension, this._tableName,
-                    NumberTypeDim.C_Dimension, NumberTypeDim.C_DimValue, NumberTypeDim.C_Nums);
+                    DimensionNumberType.C_Dimension, DimensionNumberType.C_DimValue, DimensionNumberType.C_Nums);
             }
 
             return batchSqlBuilder.ToString();
         }
 
-        private NumberTypeDim DataReaderToNumberTypeDim(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
+        private DimensionNumberType DataReaderToNumberTypeDim(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
         {
             if (dr == null)
             {
                 throw new ArgumentNullException("dr", "未将对象引用到实例");
             }
-            return EntityMapper.GetEntity<NumberTypeDim>(dr, new NumberTypeDim(), this._tableName);
+            return EntityMapper.GetEntity<DimensionNumberType>(dr, new DimensionNumberType(), this._tableName);
         }
         #endregion
     }

@@ -195,7 +195,7 @@ namespace Lottery.WinForms
             dimensionComboBox.Items.Clear();
             dimensionComboBox.DisplayMember = Dimension.C_Name;
 
-            List<Dimension> dimensions = NumberTypeDimBiz.Instance.GetDimensions(ruleType, numberType);
+            List<Dimension> dimensions = DimensionNumberTypeBiz.Instance.GetDimensions(ruleType, numberType);
             foreach (var dimension in dimensions)
             {
                 dimensionComboBox.Items.Add(dimension);

@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SQLServer\Common\Biz\NumberTypeDim.cs" />
+    <Compile Include="SQLServer\Common\Biz\DimensionNumberTypeBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLServer\Common\Biz\RuleTypeBiz.cs" />
     <Compile Include="SQLServer\Common\Biz\CategoryBiz.cs" />
@@ -51,7 +51,7 @@
     <Compile Include="SQLServer\Analysis\OmissionValueDAO.cs" />
     <Compile Include="SQLServer\Common\DimensionDAO.cs" />
     <Compile Include="SQLServer\Common\NumberTypeDAO.cs" />
-    <Compile Include="SQLServer\Common\NumberTypeDimDAO.cs" />
+    <Compile Include="SQLServer\Common\DimensionNumberTypeDAO.cs" />
     <Compile Include="SQLServer\Common\RuleTypeDAO.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DwSpanBiz.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DmDPCBiz.cs" />
