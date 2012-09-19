@@ -27,10 +27,6 @@ namespace Lottery.Model.Common
         /// </summary>
         public static readonly String C_Code = "Code";
         /// <summary>
-        /// 列名Type,维度类型
-        /// </summary>
-        public static readonly String C_Type = "Type";
-        /// <summary>
         /// 列名NumberTypes,维度所有号码类型
         /// </summary>
         public static readonly String C_NumberTypes = "NumberTypes";
@@ -45,8 +41,6 @@ namespace Lottery.Model.Common
         private String _name;
 
         private String _code;
-
-        private String _type;
 
         private Int32 _seq = 10;
 
@@ -80,15 +74,6 @@ namespace Lottery.Model.Common
         {
             get { return this._code; }
             set { this._code = value; }
-        }
-        /// <summary>
-        /// 获取或设置维度类型
-        /// </summary>
-        [Column(Name = "Type")]
-        public virtual String Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         /// <summary>
         /// 获取或设置在记录集中排序号

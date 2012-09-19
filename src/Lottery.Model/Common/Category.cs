@@ -83,10 +83,6 @@ namespace Lottery.Model.Common
         /// </summary>
         public static readonly String C_Times = "Times";
         /// <summary>
-        /// 列名DimType,彩种数据维度分析类型,默认是D5(数字5)类型的所有维度 
-        /// </summary>
-        public static readonly String C_DimType = "DimType";
-        /// <summary>
         /// 列名Created,彩种记录创建时间
         /// </summary>
         public static readonly String C_Created = "Created";
@@ -131,8 +127,6 @@ namespace Lottery.Model.Common
         private String _dbName;
 
         private Int32 _times;
-
-        private string _dimType = "D5";
 
         #endregion
 
@@ -290,15 +284,6 @@ namespace Lottery.Model.Common
         {
             get { return this._times; }
             set { this._times = value; }
-        }
-        /// <summary>
-        /// 获取或设置彩种数据维度分析类型,默认是D5(数字5)类型的所有维度 
-        /// </summary>
-        [Column(Name = "DimType")]
-        public String DimType
-        {
-            get { return this._dimType; }
-            set { this._dimType = value; }
         }
         /// <summary>
         /// 获取或设置记录创建时间

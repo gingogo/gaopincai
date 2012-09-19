@@ -36,7 +36,6 @@ namespace Lottery.ETL.Common
                 Dimension dim = new Dimension();
                 dim.Name = kp.Value;
                 dim.Code = kp.Key;
-                dim.Type = "D5";
                 dim.Seq = 10;
                 DimensionBiz.Instance.Add(dim);
             }

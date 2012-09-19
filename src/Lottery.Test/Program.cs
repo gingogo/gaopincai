@@ -20,7 +20,7 @@ namespace Lottery.Test
             //DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
-            //ETLTest();
+            ETLTest();
             //TransactionTest();
             //FormulaTest();
             //Console.WriteLine((1%3).ToString());
@@ -71,7 +71,7 @@ namespace Lottery.Test
             //ETL.SCC.ImportDmFCAn.Add("db");
             //ETL.SCC.ImportDwNumber.Start();
             //ETL.Common.ImportDimension.Import();
-            //ETL.Common.ImportNumberType.Import();
+            ETL.Common.ImportNumberType.Import();
             //ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.SCC.ImportDwNumber.UpdateC45();
