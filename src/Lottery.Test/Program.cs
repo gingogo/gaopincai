@@ -57,7 +57,7 @@ namespace Lottery.Test
             try
             {
                 Services.DownloadService s = new Services.DownloadService();
-                s.StartSync(DateTime.Now);
+                s.StartAsync(DateTime.Now);
             }
             catch (Exception ex)
             {

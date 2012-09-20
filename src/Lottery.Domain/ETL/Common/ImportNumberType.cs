@@ -14,7 +14,7 @@ namespace Lottery.ETL.Common
         public static void Import()
         {
             Import11x5();
-            ImportSSC();
+            ImportJiangXSSC();
             ImportChongQSSC();
             Import3D();
             ImportPL35();
@@ -47,11 +47,12 @@ namespace Lottery.ETL.Common
                 nt.Probability = kp.Value;
                 nt.Amount = 2.0;
                 nt.Prize = double.Parse(arr[2]);
+                nt.Length = GetLength(arr[0]);
                 NumberTypeBiz.Instance.Add(nt);
             }
         }
 
-        private static void ImportSSC()
+        private static void ImportJiangXSSC()
         {
             Dictionary<string, double> dict = new Dictionary<string, double>(11);
             dict.Add("D1|一星|11", 1.0 / 10.0);
@@ -86,10 +87,11 @@ namespace Lottery.ETL.Common
                 NumberType nt = new NumberType();
                 nt.Name = arr[1];
                 nt.Code = arr[0];
-                nt.RuleType = "SSC";
+                nt.RuleType = "JiangXSSC";
                 nt.Probability = kp.Value;
                 nt.Amount = 2.0;
                 nt.Prize = double.Parse(arr[2]);
+                nt.Length = GetLength(arr[0]);
                 NumberTypeBiz.Instance.Add(nt);
             }
         }
@@ -133,6 +135,7 @@ namespace Lottery.ETL.Common
                 nt.Probability = kp.Value;
                 nt.Amount = 2.0;
                 nt.Prize = double.Parse(arr[2]);
+                nt.Length = GetLength(arr[0]);
                 NumberTypeBiz.Instance.Add(nt);
             }
         }
@@ -161,6 +164,7 @@ namespace Lottery.ETL.Common
                 nt.Probability = kp.Value;
                 nt.Amount = 2.0;
                 nt.Prize = double.Parse(arr[2]);
+                nt.Length = GetLength(arr[0]);
                 NumberTypeBiz.Instance.Add(nt);
             }
         }
@@ -179,12 +183,12 @@ namespace Lottery.ETL.Common
             dict.Add("C33|前三组三|320", (3.0 / 1000.0));
             dict.Add("C36|前三组六|160", (6.0 / 1000.0));
             dict.Add("P4|前四直选|0", 1.0 / 10000.0);
-            dict.Add("P5|前五直选|0", 1.0 / 100000.0);
+            dict.Add("P5|前五直选|100000", 1.0 / 100000.0);
             dict.Add("C44|前四组选4|0", 4.0 / 10000.0);
             dict.Add("C46|前四组选6|0", 6.0 / 10000.0);
             dict.Add("C412|前四组选12|0", 12.0 / 10000.0);
             dict.Add("C424|前四组选24|0", 24.0 / 10000.0);
-            dict.Add("C55|前四组选5|0", 5.0 / 100000.0);
+            dict.Add("C55|前五组选5|0", 5.0 / 100000.0);
             dict.Add("C510|前五组选10|0", 10.0 / 100000.0);
             dict.Add("C520|前五组选20|0", 20.0 / 100000.0);
             dict.Add("C530|前五组选30|0", 30.0 / 100000.0);
@@ -204,8 +208,15 @@ namespace Lottery.ETL.Common
                 nt.Probability = kp.Value;
                 nt.Amount = 2.0;
                 nt.Prize = double.Parse(arr[2]);
+                nt.Length = GetLength(arr[0]);
                 NumberTypeBiz.Instance.Add(nt);
             }
+        }
+
+        private static int GetLength(string str)
+        {
+            if (str[0] == 'D') return 1;
+            return int.Parse(str.Substring(1, 1));
         }
     }
 }

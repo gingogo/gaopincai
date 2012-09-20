@@ -256,7 +256,8 @@ CREATE TABLE [dbo].[DmDate](
 GO
 
 CREATE TABLE [dbo].[DmDx](
-	[Id] [varchar](2) NOT NULL,
+	[Id] [char](2) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](2) NOT NULL,
 	[DaXiao] [char](1) NOT NULL,
 	[DanShuang] [char](1) NOT NULL,
@@ -287,6 +288,7 @@ GO
 
 CREATE TABLE [dbo].[DmP2](
 	[Id] [char](4) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](5) NOT NULL,
 	[DaXiao] [char](3) NOT NULL,
 	[DanShuang] [char](3) NOT NULL,
@@ -317,6 +319,7 @@ GO
 
 CREATE TABLE [dbo].[DmC2](
 	[Id] [char](4) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](5) NOT NULL,
 	[DaXiao] [char](3) NOT NULL,
 	[DanShuang] [char](3) NOT NULL,
@@ -347,6 +350,7 @@ GO
 
 CREATE TABLE [dbo].[DmP3](
 	[Id] [char](6) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](8) NOT NULL,
 	[DaXiao] [char](5) NOT NULL,
 	[DanShuang] [char](5) NOT NULL,
@@ -377,6 +381,7 @@ GO
 
 CREATE TABLE [dbo].[DmC3](
 	[Id] [char](6) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](8) NOT NULL,
 	[DaXiao] [char](5) NOT NULL,
 	[DanShuang] [char](5) NOT NULL,
@@ -407,6 +412,7 @@ GO
 
 CREATE TABLE [dbo].[DmP4](
 	[Id] [char](8) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](11) NOT NULL,
 	[DaXiao] [char](7) NOT NULL,
 	[DanShuang] [char](7) NOT NULL,
@@ -437,6 +443,7 @@ GO
 
 CREATE TABLE [dbo].[DmC4](
 	[Id] [char](8) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](11) NOT NULL,
 	[DaXiao] [char](7) NOT NULL,
 	[DanShuang] [char](7) NOT NULL,
@@ -467,6 +474,7 @@ GO
 
 CREATE TABLE [dbo].[DmP5](
 	[Id] [char](10) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](14) NOT NULL,
 	[DaXiao] [char](9) NOT NULL,
 	[DanShuang] [char](9) NOT NULL,
@@ -497,6 +505,7 @@ GO
 
 CREATE TABLE [dbo].[DmC5](
 	[Id] [char](10) NOT NULL,
+	[NumberType] [char](2) NOT NULL,
 	[Number] [char](14) NOT NULL,
 	[DaXiao] [char](9) NOT NULL,
 	[DanShuang] [char](9) NOT NULL,

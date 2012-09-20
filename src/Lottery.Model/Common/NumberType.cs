@@ -31,10 +31,25 @@ namespace Lottery.Model.Common
         /// </summary>
         public static readonly String C_RuleType = "RuleType";
         /// <summary>
+        /// 列名Length,玩法类型字符个数 
+        /// </summary>
+        public static readonly String C_Length = "Length";
+        /// <summary>
         /// 列名Probability,玩法类型概率  
         /// </summary>
         public static readonly String C_Probability = "Probability";
-
+        /// <summary>
+        /// 列名Amount,玩法类型投注金额
+        /// </summary>
+        public static readonly String C_Amount = "Amount";
+        /// <summary>
+        /// 列名Prize,玩法类型的单注中奖金额  
+        /// </summary>
+        public static readonly String C_Prize = "Prize";
+        /// <summary>
+        /// 列名Seq,玩法类型排序号
+        /// </summary>
+        public static readonly String C_Seq = "Seq";
         #endregion
 
         #region Field Members
@@ -47,6 +62,8 @@ namespace Lottery.Model.Common
         private String _code;
 
         private String _ruleType;
+
+        private Int32 _length;
 
         private Double _probability;
 
@@ -95,6 +112,15 @@ namespace Lottery.Model.Common
         {
             get { return this._code; }
             set { this._code = value; }
+        }
+        /// <summary>
+        /// 获取或设置玩法类型数字个数
+        /// </summary>
+        [Column(Name = "Length")]
+        public Int32 Length
+        {
+            get { return this._length; }
+            set { this._length = value; }
         }
         /// <summary>
         /// 获取或设置玩法类型中奖概率

@@ -72,6 +72,7 @@ CREATE TABLE [dbo].[NumberType](
 	[RuleType] [varchar](20) NOT NULL,
 	[Code] [varchar](6) NOT NULL,
 	[Name] [nvarchar](20) NOT NULL,
+	[Length] [int] NOT NULL,
 	[Probability] [decimal](18, 18) NOT NULL,
 	[Amount] [decimal](4, 2) NOT NULL,
 	[Prize] [decimal](10, 2) NOT NULL,

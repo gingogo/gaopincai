@@ -27,9 +27,9 @@ namespace Lottery.Model.Common
         /// </summary>
         public static readonly String C_Code = "Code";
         /// <summary>
-        /// 列名NumberTypes,维度所有号码类型
+        /// 列名Seq,在记录集中排序号
         /// </summary>
-        public static readonly String C_NumberTypes = "NumberTypes";
+        public static readonly String C_Seq = "Seq";
 
         #endregion
 
