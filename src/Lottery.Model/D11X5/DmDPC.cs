@@ -17,6 +17,10 @@ namespace Lottery.Model.D11X5
         /// </summary>
         public static readonly String C_Id = "Id";
         /// <summary>
+        /// 列名NumberType
+        /// </summary>
+        public static readonly String C_NumberType = "NumberType";
+        /// <summary>
         /// 列名Number  
         /// </summary>
         public static readonly String C_Number = "Number";
@@ -100,8 +104,9 @@ namespace Lottery.Model.D11X5
 
         #region Field Members
 
-
         private string _id;
+
+        private string _numberType;
 
         private string _number;
 
@@ -145,7 +150,7 @@ namespace Lottery.Model.D11X5
 
         #endregion
 
-        #region Property Members
+        #region Table Property Members
 
         /// <summary>
         /// 获取或设置
@@ -155,6 +160,15 @@ namespace Lottery.Model.D11X5
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "NumberType")]
+        public virtual String NumberType
+        {
+            get { return this._numberType; }
+            set { this._numberType = value; }
         }
         /// <summary>
         /// 获取或设置
@@ -341,8 +355,8 @@ namespace Lottery.Model.D11X5
 
         public override string ToString()
         {
-            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20}",
-                this._id, this._number, this._daXiao, this._danShuang, this._ziHe, this._lu012, this._he, this._heWei, this._daCnt,
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21}",
+                this._id, this._numberType, this._number, this._daXiao, this._danShuang, this._ziHe, this._lu012, this._he, this._heWei, this._daCnt,
                 this._xiaoCnt, this._danCnt, this._shuangCnt, this._ziCnt, this._heCnt, this._lu0Cnt, this._lu1Cnt, this._lu2Cnt,
                 this._ji, this._jiWei, this._kuaDu, this._aC);
         }

@@ -160,7 +160,7 @@ namespace Lottery.Data.SQLServer.D11X5
             foreach (string numberType in numberTypes)
             {
                 string dmValue = number[numberType].GetDmValue(2, dmName, 5);
-                batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, dmName, dmValue, numberType.GetTableSuffix());
+                batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, dmName, dmValue, numberType.GetDmTableSuffix());
             }
             return batchSqlBuilder.ToString();
         }

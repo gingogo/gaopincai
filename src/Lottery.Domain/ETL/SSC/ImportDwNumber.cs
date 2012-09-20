@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace Lottery.ETL.SCC
+namespace Lottery.ETL.SSC
 {
     using Model.Common;
     using Model.SSC;

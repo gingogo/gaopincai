@@ -350,5 +350,59 @@ namespace Lottery.Utils
 
             return string.Empty;
         }
+
+        /// <summary>
+        /// 获取号码类型。
+        /// </summary>
+        /// <param name="str">号码</param>
+        /// <returns>号码类型</returns>
+        public static string GetNumberType(this string str)
+        {
+            if (str.Length < 2) return string.Empty;
+
+            int digits = 0;
+            if (str.Length == 2)
+            {
+                digits = str.ToArray().Distinct().Count();
+                return (digits == 2) ? "C2" : "B2";
+            }
+
+            if (str.Length == 3)
+            {
+                digits = str.ToArray().Distinct().Count();
+                if (digits == 3) return "C36";
+                return (digits == 2) ? "C33" : "B3";
+            }
+
+            if (str.Length == 4)
+            {
+                string s = string.Join("",str.GroupBy(x => x).Select(g => g.Count()).OrderByDescending(e => e));
+                if (s.Equals("1111")) return "C424";
+                if (s.Equals("211")) return "C412";
+                if (s.Equals("22")) return "C46";
+                if (s.Equals("31")) return "C44";
+                return "B4";
+            }
+
+            string s1 = string.Join("", str.GroupBy(x => x).Select(g => g.Count()).OrderByDescending(e => e));
+            if (s1.Equals("11111")) return "C5120";
+            if (s1.Equals("2111")) return "C560";
+            if (s1.Equals("221")) return "C530";
+            if (s1.Equals("311")) return "C520";
+            if (s1.Equals("32")) return "C510";
+            if (s1.Equals("41")) return "C55";
+            return "B5";
+        }
+
+        /// <summary>
+        /// 获取规范化的NumberType
+        /// </summary>
+        /// <param name="str">原NumberType</param>
+        /// <returns>规范化的NumberType</returns>
+        public static string GetNormNumberType(this string str)
+        {
+            if (str[0] == 'D') return "Dx";
+            return str;
+        }
     }
 }

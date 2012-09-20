@@ -38,7 +38,7 @@ namespace Lottery.Data.SQLServer.SSC
             DmDPCBiz biz = new DmDPCBiz(ConfigHelper.SSCDmTableConnStringName, string.Empty);
             foreach (var numberType in numberTypes)
             {
-                biz.DataAccessor.TableName = ConfigHelper.GetDmTableName(numberType.GetTableSuffix());
+                biz.DataAccessor.TableName = ConfigHelper.GetDmTableName(numberType.GetDmTableSuffix());
                 List<DmDPC> list = biz.GetAll("Id", "Number");
                 this.FillToDictionary(numberType, list);
             }

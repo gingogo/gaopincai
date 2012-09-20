@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace Lottery.ETL.SCC
+namespace Lottery.ETL.SSC
 {
     using Model.Common;
     using Model.SSC;
@@ -15,6 +15,13 @@ namespace Lottery.ETL.SCC
 
     public class ImportDmDPC
     {
+        public static void UpdateNumberType()
+        {
+            UpdateSSC();
+            Update3D();
+            UpdatePL35();
+        }
+
         public static void Update()
         {
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
@@ -29,6 +36,51 @@ namespace Lottery.ETL.SCC
                 //Modify(category.DbName, "C3");
                 //Modify(category.DbName, "C33");
                 //Modify(category.DbName, "C36");
+            }
+        }
+
+        public static void UpdateSSC()
+        {
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
+            foreach (var category in categories)
+            {
+                ModifyNumberType(category.DbName, "C2");
+                ModifyNumberType(category.DbName, "C3");
+                ModifyNumberType(category.DbName, "C4");
+                ModifyNumberType(category.DbName, "C5");
+            }
+        }
+
+        public static void Update3D()
+        {
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("3D");
+            foreach (var category in categories)
+            {
+                ModifyNumberType(category.DbName, "C2");
+                ModifyNumberType(category.DbName, "C3");
+            }
+        }
+
+        public static void UpdatePL35()
+        {
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("PL35");
+            foreach (var category in categories)
+            {
+                ModifyNumberType(category.DbName, "C2");
+                ModifyNumberType(category.DbName, "C3");
+                ModifyNumberType(category.DbName, "C4");
+                ModifyNumberType(category.DbName, "C5");
+            }
+        }
+
+        private static void ModifyNumberType(string name, string type)
+        {
+            DmDPCBiz biz = new DmDPCBiz(name, type);
+            var numbers = biz.GetAll("Id", "Number");
+            foreach (var number in numbers)
+            {
+                number.NumberType = number.Id.GetNumberType();
+                biz.Modify(number, number.Id, DmDPC.C_NumberType);
             }
         }
 

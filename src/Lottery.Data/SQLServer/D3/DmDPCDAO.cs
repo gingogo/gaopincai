@@ -9,6 +9,7 @@ namespace Lottery.Data.SQLServer.D3
 {
     using Model.Common;
     using Model.D3;
+    using Utils;
 
     /// <summary>
     /// DmFCAnDAO提供表(DmDx,DmPx,DmCx)的相关数据访问操作的类。
@@ -77,31 +78,32 @@ namespace Lottery.Data.SQLServer.D3
 
         #region 特定数据访问方法
 
-        public List<DimensionNumberType> SelectNumberTypeDimGroupBy(string[] dimensions)
+        public List<DimensionNumberType> SelectNumberTypeDimGroupBy(string[] dimensions, string numberType)
         {
-            string sqlCmd = this.GetBatchSql(dimensions);
-            return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberTypeDim);
+            string sqlCmd = this.GetBatchSql(dimensions, numberType);
+            return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberTypeDim,
+                DimensionNumberType.C_Dimension, DimensionNumberType.C_DimValue, DimensionNumberType.C_Nums);
         }
 
         #endregion
 
         #region 私有方法
 
-        private string GetBatchSql(string[] dimensions)
+        private string GetBatchSql(string[] dimensions, string numberType)
         {
             string sqlFormat = string.Empty;
 
             StringBuilder batchSqlBuilder = new StringBuilder();
-            //select 'DaXiao' Dimension, DaXiao DimValue,COUNT(*) Nums from DmD1 group by DaXiao order by Nums asc;
-            sqlFormat = "select '{0}' Dimension, {0} DimValue,COUNT(*) Nums from {1} group by {0} order by Nums asc;";
+            //select 'DaXiao' Dimension, DaXiao DimValue,COUNT(*) Nums from DmD1 where NumberType = 'C2' group by DaXiao order by Nums asc;
+            sqlFormat = "select '{0}' Dimension, {0} DimValue,COUNT(*) Nums from Dm{1} where NumberType='{2}' group by {0} order by Nums asc;";
             foreach (string dimension in dimensions)
             {
-                batchSqlBuilder.AppendFormat(sqlFormat, dimension, this._tableName,
-                    DimensionNumberType.C_Dimension, DimensionNumberType.C_DimValue, DimensionNumberType.C_Nums);
+                batchSqlBuilder.AppendFormat(sqlFormat, dimension, numberType.GetDmTableSuffix(), numberType.GetNormNumberType());
             }
 
             return batchSqlBuilder.ToString();
         }
+
 
         private DimensionNumberType DataReaderToNumberTypeDim(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
         {

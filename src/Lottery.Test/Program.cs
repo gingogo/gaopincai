@@ -68,13 +68,14 @@ namespace Lottery.Test
         static void ETLTest()
         {
             //ETL.D11X5.ImportDmFCAn.Add("db");
-            //ETL.SCC.ImportDmFCAn.Add("db");
-            //ETL.SCC.ImportDwNumber.Start();
+            //ETL.SSC.ImportDmFCAn.Add("db");
+            //ETL.SSC.ImportDwNumber.Start();
             //ETL.Common.ImportDimension.Import();
-            ETL.Common.ImportNumberType.Import();
+            //ETL.Common.ImportNumberType.Import();
             //ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDwNumber.UpdateC4();
-            //ETL.SCC.ImportDwNumber.UpdateC45();
+            //ETL.SSC.ImportDwNumber.UpdateC45();
+           // ETL.SSC.ImportDmDPC.UpdateNumberType();
         }
 
         static void StatTest()

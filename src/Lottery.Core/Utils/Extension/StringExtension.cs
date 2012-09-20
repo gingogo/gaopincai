@@ -188,14 +188,13 @@ namespace Lottery.Utils
         }
 
         [DebuggerStepThrough]
-        public static string GetTableSuffix(this string target)
+        public static string GetDmTableSuffix(this string target)
         {
             if (string.IsNullOrEmpty(target))
                 throw new ArgumentNullException("target");
 
             if (target[0] == 'D') return "Dx";
-            if (target.Equals("C33") || target.Equals("C36")) return "C3";
-
+            if (target.Length > 2) return target.Substring(0, 2);
             return target;
         }
     }
