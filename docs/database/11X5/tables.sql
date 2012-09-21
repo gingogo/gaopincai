@@ -255,7 +255,7 @@ CREATE TABLE [dbo].[DmDate](
 
 GO
 
-CREATE TABLE [dbo].[DmDx](
+CREATE TABLE [dbo].[DmDX](
 	[Id] [char](2) NOT NULL,
 	[NumberType] [char](2) NOT NULL,
 	[Number] [char](2) NOT NULL,

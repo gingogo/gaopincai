@@ -401,7 +401,7 @@ namespace Lottery.Utils
         /// <returns>规范化的NumberType</returns>
         public static string GetNormNumberType(this string str)
         {
-            if (str[0] == 'D') return "Dx";
+            if (str[0] == 'D') return "DX";
             return str;
         }
     }

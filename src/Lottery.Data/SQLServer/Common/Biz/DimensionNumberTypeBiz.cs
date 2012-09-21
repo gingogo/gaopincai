@@ -123,23 +123,34 @@ namespace Lottery.Data.SQLServer.Common
                     if (this.tdntCache[entity.Type].ContainsKey(entity.Dimension))
                     {
                         if (!this.tdntCache[entity.Type][entity.Dimension].Contains(entity.NumberType))
+                        {
                             this.tdntCache[entity.Type][entity.Dimension].Add(entity.NumberType);
-                        return;
+                            this.tdntCache[entity.Type]["Peroid"].Add(entity.NumberType);
+                        }
+                        continue;
                     }
 
-                    HashSet<string> hashset = new HashSet<string>();
-                    hashset.Add(entity.NumberType);
-                    this.tdntCache[entity.Type].Add(entity.Dimension, hashset);
-                    return;
+                    HashSet<string> hashset1 = new HashSet<string>();
+                    hashset1.Add(entity.NumberType);
+                    this.tdntCache[entity.Type].Add(entity.Dimension, hashset1);
+                    this.tdntCache[entity.Type]["Peroid"].Add(entity.NumberType);
+                    continue;
                 }
-
-                HashSet<string> hashset2 = new HashSet<string>();
-                hashset2.Add(entity.NumberType);
-                Dictionary<string, HashSet<string>> dimDict = new Dictionary<string, HashSet<string>>(20);
-                dimDict.Add(entity.Dimension, hashset2);
-
-                this.tdntCache.Add(entity.Type, dimDict);
+                this.AddTypeDict(entity);
             }
+        }
+
+        private void AddTypeDict(TypeDimensionNumberType entity)
+        {
+            Dictionary<string, HashSet<string>> dimDict = new Dictionary<string, HashSet<string>>(20);
+            HashSet<string> hashset3 = new HashSet<string>();
+            hashset3.Add(entity.NumberType);
+            dimDict.Add("Peroid", hashset3);
+            this.tdntCache.Add(entity.Type, dimDict);
+
+            HashSet<string> hashset4 = new HashSet<string>();
+            hashset4.Add(entity.NumberType);
+            this.tdntCache[entity.Type].Add(entity.Dimension, hashset4);
         }
 
         #endregion

@@ -27,7 +27,7 @@ namespace Lottery.ETL.SSC
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
             foreach (var category in categories)
             {
-                //Modify(category.DbName, "D1");
+                //Modify(category.DbName, "DX");
                 //Modify(category.DbName, "P2");
                 //Modify(category.DbName, "P3");
                 //Modify(category.DbName, "P4");

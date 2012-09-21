@@ -20,7 +20,7 @@ namespace Lottery.ETL.D11X5
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
             foreach (var category in categories)
             {
-                Modify(category.DbName, "Dx");
+                Modify(category.DbName, "DX");
                 Modify(category.DbName, "P2");
                 Modify(category.DbName, "C2");
                 Modify(category.DbName, "P3");

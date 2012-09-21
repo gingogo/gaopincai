@@ -158,11 +158,6 @@ namespace Lottery.Data.SQLServer.PL35
             return EntityMapper.GetEntity<NumberIdSeq>(dr, new NumberIdSeq(), this._tableName);
         }
 
-        private string GetTableSuffix(string numberType)
-        {
-            return (numberType[0] == 'D') ? "Dx" : numberType;
-        }
-
         #endregion
 
         #region 内部类

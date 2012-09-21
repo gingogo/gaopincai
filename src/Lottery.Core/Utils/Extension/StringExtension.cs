@@ -193,7 +193,7 @@ namespace Lottery.Utils
             if (string.IsNullOrEmpty(target))
                 throw new ArgumentNullException("target");
 
-            if (target[0] == 'D') return "Dx";
+            if (target[0] == 'D') return "DX";
             if (target.Length > 2) return target.Substring(0, 2);
             return target;
         }

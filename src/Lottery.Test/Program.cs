@@ -20,10 +20,11 @@ namespace Lottery.Test
             //DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
-            ETLTest();
+            //ETLTest();
             //TransactionTest();
             //FormulaTest();
             //Console.WriteLine((1%3).ToString());
+            CacheTest();
             Console.WriteLine("Finished");
             Console.Read();
         }
@@ -63,6 +64,11 @@ namespace Lottery.Test
             {
                 Logging.Logger.Instance.Write(ex.ToString());
             }
+        }
+
+        static void CacheTest()
+        {
+           string[] dims = DimensionNumberTypeBiz.Instance.GetDimensions("SSC");
         }
 
         static void ETLTest()
