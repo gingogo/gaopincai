@@ -33,6 +33,7 @@ namespace Lottery.Data.SQLServer.Common
             : base(new DimensionNumberTypeDAO(ConfigHelper.CommonTableConnString))
         {
             this.LoadToCache();
+            this.LoadTypeDimNumberTypeToCache();
         }
 
         #endregion

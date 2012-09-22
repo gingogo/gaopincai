@@ -74,6 +74,7 @@ namespace Lottery.Data.SQLServer.Analysis
         {
             string spanColNamePrefix = numberType.GetSpanColumnPrefix();
             string dmTableNameSuffix = numberType.GetDmTableSuffix();
+            string normNumberType = numberType.GetNormNumberType();
 
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT tmp.RuleType,tmp.NumberType,tmp.Dimension,tmp.NumberId,");
@@ -92,7 +93,7 @@ namespace Lottery.Data.SQLServer.Analysis
             sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", spanColNamePrefix);
             sqlBuilder.AppendFormat("AVG(Convert(float,t2.{0}Spans)) as AvgSpans ", spanColNamePrefix);
             sqlBuilder.AppendFormat("FROM DwNumber t1,DwPeroidSpan t2,Dm{0} t3 ", dmTableNameSuffix);
-            sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id and t3.NumberType = '{1}' ", spanColNamePrefix, numberType);
+            sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id and t3.NumberType = '{1}' ", spanColNamePrefix, normNumberType);
             sqlBuilder.AppendFormat("GROUP BY t1.{0}) as tmp,DwPeroidSpan t2,{1}.dbo.NumberType t3 ", spanColNamePrefix, ConfigHelper.CommonDBName);
             sqlBuilder.AppendFormat("WHERE tmp.P = t2.P and tmp.NumberType = t3.Code and tmp.RuleType = t3.RuleType {0} ", filter);
             sqlBuilder.AppendFormat("ORDER BY tmp.{0} {1}", orderByColName, sortType);
@@ -104,6 +105,7 @@ namespace Lottery.Data.SQLServer.Analysis
         {
             string spanColNamePrefix = numberType.GetSpanColumnPrefix();
             string dmTableNameSuffix = numberType.GetDmTableSuffix();
+            string normNumberType = numberType.GetNormNumberType();
 
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT tmp.RuleType,tmp.NumberType,tmp.Dimension,tmp.NumberId,");
@@ -122,7 +124,7 @@ namespace Lottery.Data.SQLServer.Analysis
             sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", spanColNamePrefix);
             sqlBuilder.AppendFormat("AVG(Convert(float,t2.{0}Spans)) as AvgSpans ", spanColNamePrefix);
             sqlBuilder.AppendFormat("FROM DwNumber t1,Dw{0}Span t2,Dm{1} t3 ", dimension, dmTableNameSuffix);
-            sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id and t3.NumberType = '{1}' ", spanColNamePrefix, numberType);
+            sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id and t3.NumberType = '{1}' ", spanColNamePrefix, normNumberType);
             sqlBuilder.AppendFormat("GROUP BY t3.{0}) as tmp,Dw{0}Span t2,", dimension);
             sqlBuilder.AppendFormat("{0}.dbo.NumberType t3,{0}.dbo.DimensionNumberType t4 ", ConfigHelper.CommonDBName);
             sqlBuilder.Append("WHERE tmp.P = t2.P ");

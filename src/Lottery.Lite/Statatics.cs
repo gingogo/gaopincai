@@ -32,7 +32,7 @@ namespace Lottery.Lite
              DwSpanDAO da = new DwSpanDAO("DwPeroidSpan", ConfigHelper.GetConnString(CaiData.CaiType));
 
             //全部数字组合
-             string[] numList = null;//NumberCache.Instance.GetNumberIds(CaiData.NumType).Keys.ToArray<string>();
+             string[] numList = NumberCache.Instance.GetNumbers(CaiData.NumType).ToArray<string>();
             
             //获取今天出的全部号码
             DwNumberDAO nda = new DwNumberDAO(ConfigHelper.GetConnString(CaiData.CaiType));
@@ -301,7 +301,7 @@ namespace Lottery.Lite
             string pBegin = BizBase.getPByDate(CaiData.NowCaculate, CaiData);//开始计算的时间
             string condition = " where p < "+pBegin+" order by p desc";
             List<DwNumber> dtos = da.SelectTopN(day*CaiData.PeriodPerDay,condition,new string[]{"P","D1","N","P2","Date"});
-            string[] numList = null;// NumberCache.Instance.GetNumberIds(CaiData.NumType).Keys.ToArray<string>();
+            string[] numList = NumberCache.Instance.GetNumbers(CaiData.NumType).ToArray<string>();
            
             foreach (string num in numList)
             {

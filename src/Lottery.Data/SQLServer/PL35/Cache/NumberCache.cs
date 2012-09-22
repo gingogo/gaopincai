@@ -32,6 +32,13 @@ namespace Lottery.Data.SQLServer.PL35
             return numberId;
         }
 
+        public List<string> GetNumbers(string numberType)
+        {
+            string dmTableNameSuffix = numberType.GetDmTableSuffix();
+            DmDPCBiz biz = new DmDPCBiz(ConfigHelper.PL35DmTableConnStringName, dmTableNameSuffix);
+            return biz.GetAll("Id").Select(x => x.Id).ToList();
+        }
+
         private void LoadData()
         {
             string[] numberTypes = new string[] { "C2", "C3", "C4", "C5" };

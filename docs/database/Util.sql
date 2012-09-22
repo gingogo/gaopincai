@@ -119,3 +119,43 @@ insert into DmC33 select * from LotteryChongQSSC.dbo.DmC33;
 insert into DmC36 select * from LotteryChongQSSC.dbo.DmC36;
 insert into DmP2 select * from LotteryChongQSSC.dbo.DmP2;
 insert into DmP3 select * from LotteryChongQSSC.dbo.DmP3;
+
+SELECT tmp.ruletype, 
+       tmp.numbertype, 
+       tmp.dimension, 
+       tmp.numberid, 
+       tmp.peroidcount, 
+       '1' AS Nums, 
+       tmp.actualtimes, 
+       tmp.currentspans, 
+       tmp.maxspans, 
+       t2.d1spans AS LastSpans, 
+       tmp.avgspans, 
+       t3.probability, 
+       t3.prize, 
+       t3.amount 
+FROM   (SELECT '11X5'                          AS RuleType, 
+               'D1'                            AS NumberType, 
+               'Peroid'                        AS Dimension, 
+               t1.d1                           AS NumberId, 
+               Max(t1.p)                       AS P, 
+               (SELECT Count(*) 
+                FROM   dwnumber)               AS PeroidCount, 
+               Count(*)                        AS ActualTimes, 
+               (SELECT Count(*) 
+                FROM   dwnumber) - Max(t1.seq) AS CurrentSpans, 
+               Max(t2.d1spans)                 AS MaxSpans, 
+               Avg(CONVERT(FLOAT, t2.d1spans)) AS AvgSpans 
+        FROM   dwnumber t1, 
+               dwperoidspan t2, 
+               dmdx t3 
+        WHERE  t1.p = t2.p 
+               AND t1.d1 = t3.id 
+               AND t3.numbertype = 'DX' 
+        GROUP  BY t1.d1) AS tmp, 
+       dwperoidspan t2, 
+       lottery.dbo.numbertype t3 
+WHERE  tmp.p = t2.p 
+       AND tmp.numbertype = t3.code 
+       AND tmp.ruletype = t3.ruletype 
+ORDER  BY tmp.currentspans DESC 
