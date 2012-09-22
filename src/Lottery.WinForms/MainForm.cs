@@ -118,6 +118,7 @@ namespace Lottery.WinForms
             this.asyncEventWorker.RunAsync(parameter.UserState, arguments);
 
             this.progressBar.Visible = true;
+            this.progressBar.Value = 0;
             this.pictureBoxLoading.Visible = true;
             this.btnOmisson.Enabled = false;
         }

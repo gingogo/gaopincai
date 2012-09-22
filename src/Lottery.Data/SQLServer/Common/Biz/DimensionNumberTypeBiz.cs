@@ -42,6 +42,7 @@ namespace Lottery.Data.SQLServer.Common
         public void RefreshCache()
         {
             this.LoadToCache();
+            this.LoadTypeDimNumberTypeToCache();
         }
 
         public List<Dimension> GetDimensions(string ruleType, string numberType)
@@ -104,8 +105,6 @@ namespace Lottery.Data.SQLServer.Common
             idDictCache = this.GetAll().ToDictionary(x => x.Id, y => y);
             typeDimDictCache = idDictCache.Values.ToDictionary(x =>
                 string.Format("{0}-{1}-{2}-{3}", x.RuleType, x.NumberType, x.Dimension, x.DimValue), y => y);
-
-            this.LoadTypeDimNumberTypeToCache();
         }
 
         private void LoadTypeDimNumberTypeToCache()

@@ -60,13 +60,13 @@ namespace Lottery.Services
         {
             foreach (var category in categories)
             {
-                if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid))
-                    continue;
+                if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid)) continue;
+                if (this.asyncEventWorker.Exists(category.Code)) continue;
 
                 EventParameter parameter = new EventParameter(category.Type, category.Name, category.DownUrl, category.DbName);
                 parameter.StartDate = GetLatestDate(category.DbName);
                 parameter.EndDate = DateTime.Now;
-                this.asyncEventWorker.RunAsync(Guid.NewGuid().ToString(), parameter);
+                this.asyncEventWorker.RunAsync(category.Code, parameter);
             }
         }
 
@@ -81,6 +81,8 @@ namespace Lottery.Services
                 parameter.StartDate = GetLatestDate(category.DbName);
                 parameter.EndDate = DateTime.Now;
                 this.StartDown(parameter);
+
+                Console.WriteLine(string.Format("{0}:Finished"), category.DbName);
             }
         }
 
@@ -113,12 +115,12 @@ namespace Lottery.Services
 
             if (peroid.Equals("d"))
             {
-                return (currentTime.Hour == 23 && currentTime.Minute == 0 && currentTime.Second == 0);
+                return (currentTime.Hour == 22 && currentTime.Minute == 0 && currentTime.Second == 0);
             }
 
             if (peroid.Equals("w"))
             {
-                return (currentTime.Hour == 23 && currentTime.Minute == 0 &&
+                return (currentTime.Hour == 22 && currentTime.Minute == 0 &&
                     currentTime.Second == 0 && intervals.Contains(((int)currentTime.DayOfWeek).ToString()));
             }
 

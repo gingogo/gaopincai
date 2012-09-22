@@ -8,6 +8,7 @@ namespace Lottery.Data.SQLServer.Analysis
 {
     using Model.Analysis;
     using Configuration;
+    using Utils;
 
     /// <summary>
     /// OmissionValueDAO提供表(OmissionValue)的相关数据访问操作的类。
@@ -71,25 +72,28 @@ namespace Lottery.Data.SQLServer.Analysis
 
         private string GetPeroidDimSqlCommand(string ruleType, string numberType, string filter, string orderByColName, string sortType)
         {
+            string spanColNamePrefix = numberType.GetSpanColumnPrefix();
+            string dmTableNameSuffix = numberType.GetDmTableSuffix();
+
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT tmp.RuleType,tmp.NumberType,tmp.Dimension,tmp.NumberId,");
             sqlBuilder.Append("tmp.PeroidCount,'1' as Nums,tmp.ActualTimes,");
-            sqlBuilder.AppendFormat("tmp.CurrentSpans,tmp.MaxSpans,t2.{0}Spans as LastSpans,", this.GetNumberType(numberType));
+            sqlBuilder.AppendFormat("tmp.CurrentSpans,tmp.MaxSpans,t2.{0}Spans as LastSpans,", spanColNamePrefix);
             sqlBuilder.Append("tmp.AvgSpans,t3.Probability,t3.Prize,t3.Amount FROM ( ");
             sqlBuilder.Append("SELECT ");
             sqlBuilder.AppendFormat("'{0}' as RuleType,", ruleType);
             sqlBuilder.AppendFormat("'{0}' as NumberType,", numberType);
             sqlBuilder.Append("'Peroid' as Dimension,");
-            sqlBuilder.AppendFormat("t1.{0} as NumberId,", this.GetNumberType(numberType));
+            sqlBuilder.AppendFormat("t1.{0} as NumberId,", spanColNamePrefix);
             sqlBuilder.Append("Max(t1.P) as P,");
             sqlBuilder.AppendFormat("(SELECT COUNT(*) FROM DwNumber) as PeroidCount,");
             sqlBuilder.Append("COUNT(*) as ActualTimes,");
             sqlBuilder.Append("(SELECT COUNT(*) FROM DwNumber)-MAX(t1.Seq) as CurrentSpans,");
-            sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", this.GetNumberType(numberType));
-            sqlBuilder.AppendFormat("AVG(Convert(float,t2.{0}Spans)) as AvgSpans ", this.GetNumberType(numberType));
-            sqlBuilder.AppendFormat("FROM DwNumber t1,DwPeroidSpan t2{0} ", this.GetTableName(numberType));
-            sqlBuilder.AppendFormat("WHERE t1.P = t2.P {0} ", this.GetCondition(numberType));
-            sqlBuilder.AppendFormat("GROUP BY t1.{0}) as tmp,DwPeroidSpan t2,{1}.dbo.NumberType t3 ", this.GetNumberType(numberType), ConfigHelper.CommonDBName);
+            sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", spanColNamePrefix);
+            sqlBuilder.AppendFormat("AVG(Convert(float,t2.{0}Spans)) as AvgSpans ", spanColNamePrefix);
+            sqlBuilder.AppendFormat("FROM DwNumber t1,DwPeroidSpan t2,Dm{0} t3 ", dmTableNameSuffix);
+            sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id and t3.NumberType = '{1}' ", spanColNamePrefix, numberType);
+            sqlBuilder.AppendFormat("GROUP BY t1.{0}) as tmp,DwPeroidSpan t2,{1}.dbo.NumberType t3 ", spanColNamePrefix, ConfigHelper.CommonDBName);
             sqlBuilder.AppendFormat("WHERE tmp.P = t2.P and tmp.NumberType = t3.Code and tmp.RuleType = t3.RuleType {0} ", filter);
             sqlBuilder.AppendFormat("ORDER BY tmp.{0} {1}", orderByColName, sortType);
 
@@ -98,10 +102,13 @@ namespace Lottery.Data.SQLServer.Analysis
 
         private string GetOtherDimSqlCommand(string ruleType, string numberType, string dimension, string filter, string orderByColName, string sortType)
         {
+            string spanColNamePrefix = numberType.GetSpanColumnPrefix();
+            string dmTableNameSuffix = numberType.GetDmTableSuffix();
+
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT tmp.RuleType,tmp.NumberType,tmp.Dimension,tmp.NumberId,");
             sqlBuilder.Append("tmp.PeroidCount,t4.Nums,tmp.ActualTimes,");
-            sqlBuilder.AppendFormat("tmp.CurrentSpans,tmp.MaxSpans,t2.{0}Spans as LastSpans,", this.GetNumberType(numberType));
+            sqlBuilder.AppendFormat("tmp.CurrentSpans,tmp.MaxSpans,t2.{0}Spans as LastSpans,", spanColNamePrefix);
             sqlBuilder.Append("tmp.AvgSpans,t4.Probability,t3.Prize,t4.Amount FROM ( ");
             sqlBuilder.Append("SELECT ");
             sqlBuilder.AppendFormat("'{0}' as RuleType,", ruleType);
@@ -112,12 +119,12 @@ namespace Lottery.Data.SQLServer.Analysis
             sqlBuilder.Append("(SELECT COUNT(*) FROM DwNumber) as PeroidCount,");
             sqlBuilder.Append("COUNT(*) as ActualTimes,");
             sqlBuilder.Append("(SELECT COUNT(*) FROM DwNumber)-MAX(t1.Seq) as CurrentSpans,");
-            sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", this.GetNumberType(numberType));
-            sqlBuilder.AppendFormat("AVG(Convert(float,t2.{0}Spans)) as AvgSpans ", this.GetNumberType(numberType));
-            sqlBuilder.AppendFormat("FROM DwNumber t1,Dw{0}Span t2,Dm{1} t3 ", dimension, numberType);
-            sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id ", this.GetNumberType(numberType));
+            sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", spanColNamePrefix);
+            sqlBuilder.AppendFormat("AVG(Convert(float,t2.{0}Spans)) as AvgSpans ", spanColNamePrefix);
+            sqlBuilder.AppendFormat("FROM DwNumber t1,Dw{0}Span t2,Dm{1} t3 ", dimension, dmTableNameSuffix);
+            sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id and t3.NumberType = '{1}' ", spanColNamePrefix, numberType);
             sqlBuilder.AppendFormat("GROUP BY t3.{0}) as tmp,Dw{0}Span t2,", dimension);
-            sqlBuilder.AppendFormat("{0}.dbo.NumberType t3,{0}.dbo.NumberTypeDim t4 ",ConfigHelper.CommonDBName);
+            sqlBuilder.AppendFormat("{0}.dbo.NumberType t3,{0}.dbo.DimensionNumberType t4 ", ConfigHelper.CommonDBName);
             sqlBuilder.Append("WHERE tmp.P = t2.P ");
             sqlBuilder.Append("and tmp.NumberType = t3.Code ");
             sqlBuilder.Append("and tmp.RuleType = t3.RuleType ");
@@ -130,27 +137,6 @@ namespace Lottery.Data.SQLServer.Analysis
             return sqlBuilder.ToString();
         }
 
-        private string GetNumberType(string srcNumberType)
-        {
-            if (srcNumberType.Equals("C33") ||
-                srcNumberType.Equals("C36")) return "C3";
-            return srcNumberType;
-        }
-
-        private string GetTableName(string numberType)
-        {
-            if (numberType.Equals("C33") ||
-                numberType.Equals("C36"))
-                return string.Format(",Dm{0} t3 ", numberType);
-            return string.Empty;
-        }
-
-        private string GetCondition(string numberType)
-        {
-            if (numberType.Equals("C33") ||
-                numberType.Equals("C36")) return " and t1.C3 = t3.Id ";
-            return string.Empty;
-        }
 
         #endregion
     }

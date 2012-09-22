@@ -111,6 +111,19 @@ namespace Lottery.Components
             }
         }
 
+        public bool Exists(object userState)
+        {
+            lock (this.userStateToLifetime.SyncRoot)
+            {
+                return this.userStateToLifetime.Contains(userState);
+            }
+        }
+
+        public int ThreadCount
+        {
+            get { return this.userStateToLifetime.Count; }
+        }
+
         protected virtual void OnDoWork(DoWorkEventArgs e)
         {
             if (DoWork != null)

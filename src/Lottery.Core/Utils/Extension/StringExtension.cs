@@ -197,5 +197,14 @@ namespace Lottery.Utils
             if (target.Length > 2) return target.Substring(0, 2);
             return target;
         }
+
+        [DebuggerStepThrough]
+        public static string GetSpanColumnPrefix(this string target)
+        {
+            if (string.IsNullOrEmpty(target))
+                throw new ArgumentNullException("target");
+
+            return (target.Length > 2) ? target.Substring(0, 2) : target;
+        }
     }
 }

@@ -3,6 +3,8 @@ DBCC SHRINKFILE (LotteryGuangD115_Log, 1);
 DBCC SHRINKFILE (LotteryJiangX115_Log, 1);
 DBCC SHRINKFILE (LotteryJiangXSSC_Log, 1);
 DBCC SHRINKFILE (LotteryShanD115_Log, 1);
+DBCC SHRINKFILE (LotteryFC3D_Log, 1);
+DBCC SHRINKFILE (LotteryPL35_Log, 1);
 
 drop table dbo.DwACSpan;
 drop table dbo.DwDanShuangSpan ;
