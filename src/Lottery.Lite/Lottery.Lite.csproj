@@ -77,6 +77,7 @@
     <Compile Include="Statatics.cs" />
     <EmbeddedResource Include="LiteForm.resx">
       <DependentUpon>LiteForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

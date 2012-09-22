@@ -32,13 +32,13 @@ namespace Lottery.Lite
              DwSpanDAO da = new DwSpanDAO("DwPeroidSpan", ConfigHelper.GetConnString(CaiData.CaiType));
 
             //全部数字组合
-            string[] numList = NumberCache.Instance.GetNumberIds(CaiData.NumType).Keys.ToArray<string>();
+             string[] numList = null;//NumberCache.Instance.GetNumberIds(CaiData.NumType).Keys.ToArray<string>();
             
             //获取今天出的全部号码
             DwNumberDAO nda = new DwNumberDAO(ConfigHelper.GetConnString(CaiData.CaiType));
             DateTime dt = CaiData.NowCaculate.AddDays(1);
 	        string NumCondition = "where date = "+dt.ToString("yyyyMMdd");
-	        List<DwNumber> TodayDtos = nda.SelectWithCondition(NumCondition,new string[]{"P","D1","N","F2","Date"});
+	        List<DwNumber> TodayDtos = nda.SelectWithCondition(NumCondition,new string[]{"P","D1","N","P2","Date"});
 			
             foreach (string num in numList)
             {
@@ -55,12 +55,12 @@ namespace Lottery.Lite
                     if (i == 0)
                     {
                         span.p = dto["P"].ToString();
-                        span.SpanLast = Convert.ToInt32(dto["F2"].ToString());
+                        span.SpanLast = Convert.ToInt32(dto["P2"].ToString());
                         span.SpanTillNow = BizBase.getSpanTillNow(span.p, CaiData);
                     }
-                    span.SpanRec += dto["F2"].ToString() + ",";
+                    span.SpanRec += dto["P2"].ToString() + ",";
                     i++;
-                    spanList.Add(Convert.ToInt32(dto["F2"].ToString()));
+                    spanList.Add(Convert.ToInt32(dto["P2"].ToString()));
                     
                 }
                
@@ -75,7 +75,7 @@ namespace Lottery.Lite
 	        	
                 //最近出现的总次数及每日次数
 				string numsql = " where p < "+pBegin+" order by p desc";
-				List<DwNumber> numdtos = nda.SelectTopN((1008+(10*CaiData.PeriodPerDay)),numsql,new string[]{"P","D1","N","F2","Date"});
+				List<DwNumber> numdtos = nda.SelectTopN((1008+(10*CaiData.PeriodPerDay)),numsql,new string[]{"P","D1","N","P2","Date"});
                 span = this.getTimesByNum(span,CaiData,numdtos);
                 span.TimesDay1 = span.Next.Split(',').Length-1;
                 
@@ -119,7 +119,7 @@ namespace Lottery.Lite
 			for(int i=0;i<10;i++){
                 //按日期推算每一天前的1008期出现的次数
                 List<DwNumber> list = dtos.GetRange(i * CaiData.PeriodPerDay, max);
-				times.Add(list.Where(x => x.F2==span.num).ToList().Count);
+				times.Add(list.Where(x => x.P2==span.num).ToList().Count);
 			}
 			//判断趋向热
 			if(times[0]==times.Max()&&times[times.Count-1]==times.Min()&&times.Max()-times.Min()>=3){
@@ -160,7 +160,7 @@ namespace Lottery.Lite
 			int max = dtos.Count>=1008?1008:dtos.Count;
             foreach (DwNumber dto in dtos.GetRange(0, max).ToList())
             {
-				if(dto.F2==span.num){
+				if(dto.P2==span.num){
 					span.Times++;
 					string date = dto.Date.ToString();
 					TimeSpan ts = now-Convert.ToDateTime(date.Substring(0,4)+"-"+date.Substring(4,2)+"-"+date.Substring(6,2));
@@ -246,7 +246,7 @@ namespace Lottery.Lite
         {
         	string N = "";
         	foreach(DwNumber dto in dtos){
-        		if(dto.F2==num){
+        		if(dto.P2==num){
        				N+= dto.N.ToString()+",";
         		}
         	}
@@ -300,8 +300,8 @@ namespace Lottery.Lite
             DwSpanDAO spanda = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(CaiData.NumType), ConfigHelper.GetConnString(CaiData.CaiType));
             string pBegin = BizBase.getPByDate(CaiData.NowCaculate, CaiData);//开始计算的时间
             string condition = " where p < "+pBegin+" order by p desc";
-            List<DwNumber> dtos = da.SelectTopN(day*CaiData.PeriodPerDay,condition,new string[]{"P","D1","N","F2","Date"});
-            string[] numList = NumberCache.Instance.GetNumberIds(CaiData.NumType).Keys.ToArray<string>();
+            List<DwNumber> dtos = da.SelectTopN(day*CaiData.PeriodPerDay,condition,new string[]{"P","D1","N","P2","Date"});
+            string[] numList = null;// NumberCache.Instance.GetNumberIds(CaiData.NumType).Keys.ToArray<string>();
            
             foreach (string num in numList)
             {
@@ -355,7 +355,7 @@ namespace Lottery.Lite
                     List<int> dtos = new List<int>();
                     foreach (DataRow dr in ds.Tables[0].Rows)
                     {
-                        dtos.Add(Convert.ToInt32(dr["F2Spans"].ToString()));
+                        dtos.Add(Convert.ToInt32(dr["P2Spans"].ToString()));
                     }
 
                     int count = 97;

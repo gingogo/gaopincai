@@ -76,7 +76,7 @@ namespace Lottery.Lite
             }
             //设置计算时间默认为当前时间
             CaiData.NowCaculate = DateTime.Now;
-            CaiData.NumType = "F2";
+            CaiData.NumType = "P2";
             
             CaiData.AppPath = Application.StartupPath;
 
@@ -357,12 +357,12 @@ namespace Lottery.Lite
             List<DwNumber> lists = da.SelectTopN(CaiData.PeriodPerDay, condition, null);
             ListViewData lvd = new ListViewData();
             lvd.name = CaiData.CaiType + " NEW";
-            lvd.title = new string[] { "f2", "n", "f5" };
+            lvd.title = new string[] { "p2", "n", "p5" };
             lvd.width = new int[] { 60, 60, 100 };
             lvd.values = new List<string[]>();
             foreach (DwNumber dto in lists)
             {
-                string[] values = new string[] { dto.F2, dto.N.ToString(), dto.F5.ToString() };
+                string[] values = new string[] { dto.P2, dto.N.ToString(), dto.P5.ToString() };
                 lvd.values.Add(values);
             }
             this.SetListView(listViewRealTime, lvd);
@@ -403,7 +403,7 @@ namespace Lottery.Lite
         public void CaculateLeftSpan(int day)
         {
             //5天 6天 7天遗漏
-            //F2 NOW MAX MIN 
+            //P2 NOW MAX MIN 
             Statatics stat = new Statatics();
             List<NumSpanData> spans = stat.GetMaxLeft(CaiData, day);
             ListViewData lvd = new ListViewData();

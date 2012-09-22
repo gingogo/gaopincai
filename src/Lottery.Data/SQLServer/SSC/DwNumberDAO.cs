@@ -82,7 +82,7 @@ namespace Lottery.Data.SQLServer.SSC
             if (numberTypes == null || numberTypes.Length == 0)
                 throw new ArgumentException("numberTypes is null or length is zero", "numberTypes");
 
-            string sqlCmd = this.GetBatchSpanQuerySql(number, dmName,numberTypes);
+            string sqlCmd = this.GetBatchSpanQuerySql(number, dmName, numberTypes);
             List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
             Dictionary<string, int> numberIdSeqDict = list.ToDictionary(x => x.Id, y => y.Seq);
             Dictionary<string, int> spanDict = new Dictionary<string, int>(13);

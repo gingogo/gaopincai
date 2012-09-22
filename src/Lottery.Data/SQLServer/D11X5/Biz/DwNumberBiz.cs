@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Transactions;
 
 namespace Lottery.Data.SQLServer.D11X5
@@ -93,7 +94,8 @@ namespace Lottery.Data.SQLServer.D11X5
                 }
 
                 string destTableName = ConfigHelper.GetDwSpanTableName(dmName);
-                BatchEntity<DwSpan> batchEntity = new BatchEntity<DwSpan>(dwSpan, destTableName, numberTypes);
+                string[] columnNames = numberTypes.Select(x => x + "Spans").Union(new string[] { "P" }).ToArray();
+                BatchEntity<DwSpan> batchEntity = new BatchEntity<DwSpan>(dwSpan, destTableName, columnNames);
                 batchEntities.Add(batchEntity);
             }
 
@@ -109,7 +111,7 @@ namespace Lottery.Data.SQLServer.D11X5
                 option.IsolationLevel = IsolationLevel.ReadUncommitted;
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
                 {
-                    //this.AddSpan(number);
+                    this.AddSpan(number);
                     this.Add(number);
                     scope.Complete();
                 }

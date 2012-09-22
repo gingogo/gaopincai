@@ -39,7 +39,7 @@ namespace Lottery.Statistics.D11X5
                 }
             }
 
-            Console.WriteLine("{0} {1} Finished", dbName, "DmSpan");
+            Console.WriteLine("{0} {1} Finished", dbName, "ALL Span");
         }
 
         private void Stat(List<DwNumber> numbers, string dbName, string dmName,string[] numberTypes, StreamWriter writer)
@@ -58,7 +58,7 @@ namespace Lottery.Statistics.D11X5
             }
 
             string[] colmnNames = numberTypes.Select(x => x + "Spans").Union(new string[] { "P" }).ToArray();
-            this.SaveSpanToDB(dbName, dmName, entities, numberTypes);
+            this.SaveSpanToDB(dbName, dmName, entities, colmnNames);
 
             Console.WriteLine("{0} {1} Finished", dbName, dmName);
         }

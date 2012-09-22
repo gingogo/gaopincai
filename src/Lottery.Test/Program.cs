@@ -17,8 +17,8 @@ namespace Lottery.Test
         static void Main(string[] args)
         {
             //OmissionValueTest();
-            //DownServiceTest();
-            StatTest();
+            DownServiceTest();
+            //StatTest();
             //ExtractLotteryData();
             //ETLTest();
             //TransactionTest();
@@ -58,7 +58,8 @@ namespace Lottery.Test
             try
             {
                 Services.DownloadService s = new Services.DownloadService();
-                s.StartAsync(DateTime.Now);
+                //s.StartAsync(DateTime.Now);
+                s.StartSync(DateTime.Now);
             }
             catch (Exception ex)
             {
@@ -88,13 +89,9 @@ namespace Lottery.Test
         {
             Statistics.IStatistics[] stats = new Statistics.IStatistics[] 
             {
-                //new Statistics.D11X5.PeroidSpan(),
-                //new Statistics.D11X5.DmSpan(),
-                //new Statistics.SSC.PeroidSpan(),
-                //new Statistics.SSC.DmSpan(),
-                //new Statistics.D3.PeroidSpan(),
-                new Statistics.D3.DmSpan()
-                //new Statistics.PL35.PeroidSpan(),
+                new Statistics.D11X5.DmSpan(),
+                new Statistics.SSC.DmSpan(),
+                //new Statistics.D3.DmSpan()
                 //new Statistics.PL35.DmSpan()
             };
 

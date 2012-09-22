@@ -159,7 +159,7 @@ namespace Lottery.Lite
         /// </summary>
         public DateTime NowCaculate { get; set; }
         /// <summary>
-        /// 号码类型，F2等
+        /// 号码类型，P2等
         /// </summary>
         public string NumType { get; set; }
 
