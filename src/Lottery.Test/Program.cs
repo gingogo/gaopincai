@@ -18,13 +18,13 @@ namespace Lottery.Test
         {
             //OmissionValueTest();
             //DownServiceTest();
-            //StatTest();
+            StatTest();
             //ExtractLotteryData();
             //ETLTest();
             //TransactionTest();
             //FormulaTest();
             //Console.WriteLine((1%3).ToString());
-            CacheTest();
+            //CacheTest();
             Console.WriteLine("Finished");
             Console.Read();
         }
@@ -81,7 +81,7 @@ namespace Lottery.Test
             //ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.SSC.ImportDwNumber.UpdateC45();
-           // ETL.SSC.ImportDmDPC.UpdateNumberType();
+            // ETL.SSC.ImportDmDPC.UpdateNumberType();
         }
 
         static void StatTest()
@@ -93,15 +93,15 @@ namespace Lottery.Test
                 //new Statistics.SSC.PeroidSpan(),
                 //new Statistics.SSC.DmSpan(),
                 //new Statistics.D3.PeroidSpan(),
-                //new Statistics.D3.DmSpan()
+                new Statistics.D3.DmSpan()
                 //new Statistics.PL35.PeroidSpan(),
                 //new Statistics.PL35.DmSpan()
             };
 
             foreach (var stat in stats)
             {
-                stat.Stat(Statistics.OutputType.Database, true);
-                //stat.Stat(Statistics.OutputType.Database, false);
+                //stat.Stat(Statistics.OutputType.Database, true);
+                stat.Stat(Statistics.OutputType.Database, false);
             }
         }
 

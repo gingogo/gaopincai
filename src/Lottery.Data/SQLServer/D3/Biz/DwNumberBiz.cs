@@ -89,7 +89,7 @@ namespace Lottery.Data.SQLServer.D3
                 }
 
                 string destTableName = ConfigHelper.GetDwSpanTableName(dmName);
-                BatchEntity<DwSpan> batchEntity = new BatchEntity<DwSpan>(dwSpan, destTableName, null);
+                BatchEntity<DwSpan> batchEntity = new BatchEntity<DwSpan>(dwSpan, destTableName, numberTypes);
                 batchEntities.Add(batchEntity);
             }
 

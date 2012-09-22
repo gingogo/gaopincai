@@ -85,7 +85,7 @@ namespace Lottery.Data.SQLServer.D11X5
             string sqlCmd = this.GetBatchSpanQuerySql(number, dmName, numberTypes);
             List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
             Dictionary<string, int> numberIdSeqDict = list.ToDictionary(x => x.Id, y => y.Seq);
-            Dictionary<string, int> spanDict = new Dictionary<string, int>(6);
+            Dictionary<string, int> spanDict = new Dictionary<string, int>(13);
 
             foreach (string numberType in numberTypes)
             {

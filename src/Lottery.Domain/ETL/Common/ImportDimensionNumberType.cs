@@ -14,7 +14,7 @@ namespace Lottery.ETL.Common
     {
         public static void Import()
         {
-            //Import11x5();
+            Import11x5();
             ImportSSC();
             Import3D();
             ImportPL35();

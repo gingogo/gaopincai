@@ -140,8 +140,6 @@ namespace Lottery.ETL.Common
             dict.Add("D1|一位|0", 1.0 / 10.0);
             dict.Add("D2|二位|0", 1.0 / 10.0);
             dict.Add("D3|三位|0", 1.0 / 10.0);
-            dict.Add("D4|四位|0", 1.0 / 10.0);
-            dict.Add("D5|五位|0", 1.0 / 10.0);
             dict.Add("P2|前二直选|0", 1.0 / 100.0);
             dict.Add("C2|前二组选|0", 1.0 / 55.0);
             dict.Add("P3|前三直选|1000", 1.0 / 1000.0);

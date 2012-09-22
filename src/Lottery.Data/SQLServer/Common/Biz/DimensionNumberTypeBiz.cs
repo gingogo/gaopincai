@@ -112,8 +112,7 @@ namespace Lottery.Data.SQLServer.Common
         {
             if (this.tdntCache == null)
                 this.tdntCache = new Dictionary<string, Dictionary<string, HashSet<string>>>(10);
-            if (this.tdntCache.Count > 0)
-                this.tdntCache.Clear();
+            if (this.tdntCache.Count > 0) this.tdntCache.Clear();
 
             var entities = this.DataAccessor.SelectGroupByTypeDimensionNumberType();
             foreach (var entity in entities)
@@ -122,35 +121,32 @@ namespace Lottery.Data.SQLServer.Common
                 {
                     if (this.tdntCache[entity.Type].ContainsKey(entity.Dimension))
                     {
-                        if (!this.tdntCache[entity.Type][entity.Dimension].Contains(entity.NumberType))
-                        {
-                            this.tdntCache[entity.Type][entity.Dimension].Add(entity.NumberType);
-                            this.tdntCache[entity.Type]["Peroid"].Add(entity.NumberType);
-                        }
+                        this.tdntCache[entity.Type][entity.Dimension].Add(entity.NumberType); 
                         continue;
                     }
 
-                    HashSet<string> hashset1 = new HashSet<string>();
-                    hashset1.Add(entity.NumberType);
-                    this.tdntCache[entity.Type].Add(entity.Dimension, hashset1);
-                    this.tdntCache[entity.Type]["Peroid"].Add(entity.NumberType);
+                    HashSet<string> hashset = new HashSet<string>();
+                    hashset.Add(entity.NumberType);
+                    this.tdntCache[entity.Type].Add(entity.Dimension, hashset);
                     continue;
                 }
                 this.AddTypeDict(entity);
+            }
+
+            foreach (var kp in this.tdntCache)
+            {
+                HashSet<string> hashset = this.tdntCache[kp.Key]["DaXiao"];
+                this.tdntCache[kp.Key].Add("Peroid", hashset);
             }
         }
 
         private void AddTypeDict(TypeDimensionNumberType entity)
         {
             Dictionary<string, HashSet<string>> dimDict = new Dictionary<string, HashSet<string>>(20);
-            HashSet<string> hashset3 = new HashSet<string>();
-            hashset3.Add(entity.NumberType);
-            dimDict.Add("Peroid", hashset3);
+            HashSet<string> hashset = new HashSet<string>();
+            hashset.Add(entity.NumberType);
+            dimDict.Add(entity.Dimension, hashset);
             this.tdntCache.Add(entity.Type, dimDict);
-
-            HashSet<string> hashset4 = new HashSet<string>();
-            hashset4.Add(entity.NumberType);
-            this.tdntCache[entity.Type].Add(entity.Dimension, hashset4);
         }
 
         #endregion
