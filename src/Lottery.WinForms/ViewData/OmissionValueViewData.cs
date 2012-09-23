@@ -54,7 +54,7 @@ namespace Lottery.WinForms.ViewData
             this._numberType = omv.NumberType;
             this._nums = omv.Nums;
             this._peroidCount = omv.PeroidCount;
-            this._cycle = (int)(1 / omv.Probability);
+            this._cycle = (int)Math.Round(1 / omv.Probability,MidpointRounding.AwayFromZero);
             this._prize = omv.Prize;
             this._probability = omv.Probability;
             this._ruleType = omv.RuleType;
@@ -234,7 +234,7 @@ namespace Lottery.WinForms.ViewData
         /// <summary>
         /// 获取号码的当前确定度(DC)
         /// </summary>
-        public double DC
+        public double CurrentDC
         {
             get
             {
@@ -247,7 +247,7 @@ namespace Lottery.WinForms.ViewData
         /// <summary>
         /// 获取号码的历史最大遗漏值的确定度(DC)
         /// </summary>
-        public double MaxDC
+        public double HistoryMaxDC
         {
             get { return FFG.GetDC(this._maxSpans, this._probability); }
         }
@@ -259,8 +259,8 @@ namespace Lottery.WinForms.ViewData
         {
             get
             {
-                if (this.DC > this._startDC)
-                    return Deviation.GetWatchColdN(this.DC, this._endDC, this._probability);
+                if (this.CurrentDC > this._startDC)
+                    return Deviation.GetWatchColdN(this.CurrentDC, this._endDC, this._probability);
                 return -1.0;
             }
         }

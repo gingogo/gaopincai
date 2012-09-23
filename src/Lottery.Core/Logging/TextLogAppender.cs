@@ -53,7 +53,7 @@ namespace Lottery.Logging
         public string Format(MetaLog metaLog)
         {
             string format = "[级别:{0}][时间:{1}],[信息:{2}]\r\n";
-            return string.Format(format, metaLog.Level,metaLog.LogDateTime.ToString("yyyy-MM-dd"), metaLog.Message);
+            return string.Format(format, metaLog.Level,metaLog.LogDateTime, metaLog.Message);
         }
 
         #endregion

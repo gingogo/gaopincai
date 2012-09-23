@@ -36,6 +36,16 @@
             this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.leftTab = new System.Windows.Forms.TabControl();
+            this.leftRealPage = new System.Windows.Forms.TabPage();
+            this.cbxRealStat = new System.Windows.Forms.ComboBox();
+            this.lblRealStat = new System.Windows.Forms.Label();
+            this.btnReal = new System.Windows.Forms.Button();
+            this.cbxRealDimesion = new System.Windows.Forms.ComboBox();
+            this.lblRealDimension = new System.Windows.Forms.Label();
+            this.cbxRealNumberType = new System.Windows.Forms.ComboBox();
+            this.lblRealNumberType = new System.Windows.Forms.Label();
+            this.cbxRealCategory = new System.Windows.Forms.ComboBox();
+            this.lblRealCategory = new System.Windows.Forms.Label();
             this.leftOmissionPage = new System.Windows.Forms.TabPage();
             this.btnOmisson = new System.Windows.Forms.Button();
             this.nudOmissonPrecision = new System.Windows.Forms.NumericUpDown();
@@ -60,24 +70,14 @@
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.omValueCtxMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.leftRealPage = new System.Windows.Forms.TabPage();
-            this.btnReal = new System.Windows.Forms.Button();
-            this.cbxRealDimesion = new System.Windows.Forms.ComboBox();
-            this.lblRealDimension = new System.Windows.Forms.Label();
-            this.cbxRealNumberType = new System.Windows.Forms.ComboBox();
-            this.lblRealNumberType = new System.Windows.Forms.Label();
-            this.cbxRealCategory = new System.Windows.Forms.ComboBox();
-            this.lblRealCategory = new System.Windows.Forms.Label();
-            this.cbxRealStat = new System.Windows.Forms.ComboBox();
-            this.lblRealStat = new System.Windows.Forms.Label();
             this.asyncEventWorker = new Lottery.Components.AsyncEventWorker(this.components);
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.leftTab.SuspendLayout();
+            this.leftRealPage.SuspendLayout();
             this.leftOmissionPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).BeginInit();
             this.menuStrip.SuspendLayout();
-            this.leftRealPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -140,6 +140,104 @@
             this.leftTab.SelectedIndex = 0;
             this.leftTab.Size = new System.Drawing.Size(291, 426);
             this.leftTab.TabIndex = 21;
+            // 
+            // leftRealPage
+            // 
+            this.leftRealPage.Controls.Add(this.cbxRealStat);
+            this.leftRealPage.Controls.Add(this.lblRealStat);
+            this.leftRealPage.Controls.Add(this.btnReal);
+            this.leftRealPage.Controls.Add(this.cbxRealDimesion);
+            this.leftRealPage.Controls.Add(this.lblRealDimension);
+            this.leftRealPage.Controls.Add(this.cbxRealNumberType);
+            this.leftRealPage.Controls.Add(this.lblRealNumberType);
+            this.leftRealPage.Controls.Add(this.cbxRealCategory);
+            this.leftRealPage.Controls.Add(this.lblRealCategory);
+            this.leftRealPage.Location = new System.Drawing.Point(4, 28);
+            this.leftRealPage.Name = "leftRealPage";
+            this.leftRealPage.Size = new System.Drawing.Size(283, 394);
+            this.leftRealPage.TabIndex = 3;
+            this.leftRealPage.Text = "实时数据";
+            this.leftRealPage.UseVisualStyleBackColor = true;
+            // 
+            // cbxRealStat
+            // 
+            this.cbxRealStat.FormattingEnabled = true;
+            this.cbxRealStat.Location = new System.Drawing.Point(89, 140);
+            this.cbxRealStat.Name = "cbxRealStat";
+            this.cbxRealStat.Size = new System.Drawing.Size(140, 20);
+            this.cbxRealStat.TabIndex = 27;
+            // 
+            // lblRealStat
+            // 
+            this.lblRealStat.AutoSize = true;
+            this.lblRealStat.Location = new System.Drawing.Point(16, 148);
+            this.lblRealStat.Name = "lblRealStat";
+            this.lblRealStat.Size = new System.Drawing.Size(59, 12);
+            this.lblRealStat.TabIndex = 26;
+            this.lblRealStat.Text = "统计指标:";
+            // 
+            // btnReal
+            // 
+            this.btnReal.Location = new System.Drawing.Point(154, 183);
+            this.btnReal.Name = "btnReal";
+            this.btnReal.Size = new System.Drawing.Size(75, 23);
+            this.btnReal.TabIndex = 25;
+            this.btnReal.Text = "确定(&C)";
+            this.btnReal.UseVisualStyleBackColor = true;
+            this.btnReal.Click += new System.EventHandler(this.btnReal_Click);
+            // 
+            // cbxRealDimesion
+            // 
+            this.cbxRealDimesion.FormattingEnabled = true;
+            this.cbxRealDimesion.Location = new System.Drawing.Point(89, 102);
+            this.cbxRealDimesion.Name = "cbxRealDimesion";
+            this.cbxRealDimesion.Size = new System.Drawing.Size(140, 20);
+            this.cbxRealDimesion.TabIndex = 18;
+            // 
+            // lblRealDimension
+            // 
+            this.lblRealDimension.AutoSize = true;
+            this.lblRealDimension.Location = new System.Drawing.Point(16, 110);
+            this.lblRealDimension.Name = "lblRealDimension";
+            this.lblRealDimension.Size = new System.Drawing.Size(35, 12);
+            this.lblRealDimension.TabIndex = 17;
+            this.lblRealDimension.Text = "维度:";
+            // 
+            // cbxRealNumberType
+            // 
+            this.cbxRealNumberType.FormattingEnabled = true;
+            this.cbxRealNumberType.Location = new System.Drawing.Point(89, 61);
+            this.cbxRealNumberType.Name = "cbxRealNumberType";
+            this.cbxRealNumberType.Size = new System.Drawing.Size(140, 20);
+            this.cbxRealNumberType.TabIndex = 16;
+            this.cbxRealNumberType.SelectedIndexChanged += new System.EventHandler(this.cbxRealNumberType_SelectedIndexChanged);
+            // 
+            // lblRealNumberType
+            // 
+            this.lblRealNumberType.AutoSize = true;
+            this.lblRealNumberType.Location = new System.Drawing.Point(16, 69);
+            this.lblRealNumberType.Name = "lblRealNumberType";
+            this.lblRealNumberType.Size = new System.Drawing.Size(59, 12);
+            this.lblRealNumberType.TabIndex = 15;
+            this.lblRealNumberType.Text = "号码类型:";
+            // 
+            // cbxRealCategory
+            // 
+            this.cbxRealCategory.FormattingEnabled = true;
+            this.cbxRealCategory.Location = new System.Drawing.Point(89, 20);
+            this.cbxRealCategory.Name = "cbxRealCategory";
+            this.cbxRealCategory.Size = new System.Drawing.Size(140, 20);
+            this.cbxRealCategory.TabIndex = 14;
+            this.cbxRealCategory.SelectedIndexChanged += new System.EventHandler(this.cbxRealCategory_SelectedIndexChanged);
+            // 
+            // lblRealCategory
+            // 
+            this.lblRealCategory.AutoSize = true;
+            this.lblRealCategory.Location = new System.Drawing.Point(16, 28);
+            this.lblRealCategory.Name = "lblRealCategory";
+            this.lblRealCategory.Size = new System.Drawing.Size(35, 12);
+            this.lblRealCategory.TabIndex = 13;
+            this.lblRealCategory.Text = "彩种:";
             // 
             // leftOmissionPage
             // 
@@ -211,7 +309,7 @@
             this.txtOmissonStartDC.Name = "txtOmissonStartDC";
             this.txtOmissonStartDC.Size = new System.Drawing.Size(100, 21);
             this.txtOmissonStartDC.TabIndex = 9;
-            this.txtOmissonStartDC.Text = "0.950";
+            this.txtOmissonStartDC.Text = "0.9800";
             // 
             // lblOmissonEndDC
             // 
@@ -228,7 +326,7 @@
             this.txtOmissonEndDC.Name = "txtOmissonEndDC";
             this.txtOmissonEndDC.Size = new System.Drawing.Size(100, 21);
             this.txtOmissonEndDC.TabIndex = 7;
-            this.txtOmissonEndDC.Text = "0.999";
+            this.txtOmissonEndDC.Text = "0.9999";
             // 
             // lblOmissonStartDC
             // 
@@ -376,104 +474,6 @@
             this.omValueCtxMenu.Name = "omValueCtxMenu";
             this.omValueCtxMenu.Size = new System.Drawing.Size(61, 4);
             // 
-            // leftRealPage
-            // 
-            this.leftRealPage.Controls.Add(this.cbxRealStat);
-            this.leftRealPage.Controls.Add(this.lblRealStat);
-            this.leftRealPage.Controls.Add(this.btnReal);
-            this.leftRealPage.Controls.Add(this.cbxRealDimesion);
-            this.leftRealPage.Controls.Add(this.lblRealDimension);
-            this.leftRealPage.Controls.Add(this.cbxRealNumberType);
-            this.leftRealPage.Controls.Add(this.lblRealNumberType);
-            this.leftRealPage.Controls.Add(this.cbxRealCategory);
-            this.leftRealPage.Controls.Add(this.lblRealCategory);
-            this.leftRealPage.Location = new System.Drawing.Point(4, 28);
-            this.leftRealPage.Name = "leftRealPage";
-            this.leftRealPage.Size = new System.Drawing.Size(283, 394);
-            this.leftRealPage.TabIndex = 3;
-            this.leftRealPage.Text = "实时数据";
-            this.leftRealPage.UseVisualStyleBackColor = true;
-            // 
-            // btnReal
-            // 
-            this.btnReal.Location = new System.Drawing.Point(154, 183);
-            this.btnReal.Name = "btnReal";
-            this.btnReal.Size = new System.Drawing.Size(75, 23);
-            this.btnReal.TabIndex = 25;
-            this.btnReal.Text = "确定(&C)";
-            this.btnReal.UseVisualStyleBackColor = true;
-            this.btnReal.Click += new System.EventHandler(this.btnReal_Click);
-            // 
-            // cbxRealDimesion
-            // 
-            this.cbxRealDimesion.FormattingEnabled = true;
-            this.cbxRealDimesion.Location = new System.Drawing.Point(89, 102);
-            this.cbxRealDimesion.Name = "cbxRealDimesion";
-            this.cbxRealDimesion.Size = new System.Drawing.Size(140, 20);
-            this.cbxRealDimesion.TabIndex = 18;
-            // 
-            // lblRealDimension
-            // 
-            this.lblRealDimension.AutoSize = true;
-            this.lblRealDimension.Location = new System.Drawing.Point(16, 110);
-            this.lblRealDimension.Name = "lblRealDimension";
-            this.lblRealDimension.Size = new System.Drawing.Size(35, 12);
-            this.lblRealDimension.TabIndex = 17;
-            this.lblRealDimension.Text = "维度:";
-            // 
-            // cbxRealNumberType
-            // 
-            this.cbxRealNumberType.FormattingEnabled = true;
-            this.cbxRealNumberType.Location = new System.Drawing.Point(89, 61);
-            this.cbxRealNumberType.Name = "cbxRealNumberType";
-            this.cbxRealNumberType.Size = new System.Drawing.Size(140, 20);
-            this.cbxRealNumberType.TabIndex = 16;
-            this.cbxRealNumberType.SelectedIndexChanged += new System.EventHandler(this.cbxRealNumberType_SelectedIndexChanged);
-            // 
-            // lblRealNumberType
-            // 
-            this.lblRealNumberType.AutoSize = true;
-            this.lblRealNumberType.Location = new System.Drawing.Point(16, 69);
-            this.lblRealNumberType.Name = "lblRealNumberType";
-            this.lblRealNumberType.Size = new System.Drawing.Size(59, 12);
-            this.lblRealNumberType.TabIndex = 15;
-            this.lblRealNumberType.Text = "号码类型:";
-            // 
-            // cbxRealCategory
-            // 
-            this.cbxRealCategory.FormattingEnabled = true;
-            this.cbxRealCategory.Location = new System.Drawing.Point(89, 20);
-            this.cbxRealCategory.Name = "cbxRealCategory";
-            this.cbxRealCategory.Size = new System.Drawing.Size(140, 20);
-            this.cbxRealCategory.TabIndex = 14;
-            this.cbxRealCategory.SelectedIndexChanged += new System.EventHandler(this.cbxRealCategory_SelectedIndexChanged);
-            // 
-            // lblRealCategory
-            // 
-            this.lblRealCategory.AutoSize = true;
-            this.lblRealCategory.Location = new System.Drawing.Point(16, 28);
-            this.lblRealCategory.Name = "lblRealCategory";
-            this.lblRealCategory.Size = new System.Drawing.Size(35, 12);
-            this.lblRealCategory.TabIndex = 13;
-            this.lblRealCategory.Text = "彩种:";
-            // 
-            // cbxRealStat
-            // 
-            this.cbxRealStat.FormattingEnabled = true;
-            this.cbxRealStat.Location = new System.Drawing.Point(89, 140);
-            this.cbxRealStat.Name = "cbxRealStat";
-            this.cbxRealStat.Size = new System.Drawing.Size(140, 20);
-            this.cbxRealStat.TabIndex = 27;
-            // 
-            // lblRealStat
-            // 
-            this.lblRealStat.AutoSize = true;
-            this.lblRealStat.Location = new System.Drawing.Point(16, 148);
-            this.lblRealStat.Name = "lblRealStat";
-            this.lblRealStat.Size = new System.Drawing.Size(59, 12);
-            this.lblRealStat.TabIndex = 26;
-            this.lblRealStat.Text = "统计指标:";
-            // 
             // asyncEventWorker
             // 
             this.asyncEventWorker.DoWork += new Lottery.Components.DoWorkEventHandler(this.asyncEventWorker_DoWork);
@@ -500,13 +500,13 @@
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).EndInit();
             this.leftTab.ResumeLayout(false);
+            this.leftRealPage.ResumeLayout(false);
+            this.leftRealPage.PerformLayout();
             this.leftOmissionPage.ResumeLayout(false);
             this.leftOmissionPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.leftRealPage.ResumeLayout(false);
-            this.leftRealPage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

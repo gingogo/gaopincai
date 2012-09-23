@@ -84,28 +84,32 @@ namespace Lottery.WinForms.Task
             Dictionary<string, string> header = this.GetHeader();
             foreach (var kv in header)
             {
-                listView.Columns.Add(kv.Key, kv.Value, kv.Value.Length * 20);
+                string[] arr = kv.Value.Split('|');
+                listView.Columns.Add(kv.Key, arr[0], int.Parse(arr[1]));
             }
-
             return listView;
         }
 
         private void FillListView(ListView listView, int precision)
         {
-            var maxDcDict = this.viewDatas.GroupBy(x => x.Nums).ToDictionary(x => x.Key, y => y.Max(z => z.MaxDC));
+            var maxAvgDcDict = this.viewDatas.GroupBy(x => x.Nums)
+                .ToDictionary(x => x.Key, y => new MaxAvgDC(y.Max(z => z.HistoryMaxDC), y.Average(z => z.HistoryMaxDC)));
+  
             string prec = string.Format("F{0}", precision);
             foreach (var viewData in this.viewDatas)
             {
                 string tag = string.Format("{0}-{1}-{2}-{3}",
-                    viewData.RuleType, viewData.NumberType, viewData.Dimension, viewData.NumberType);
+                    viewData.RuleType, viewData.NumberType, viewData.Dimension, viewData.NumberId);
                 ListViewItem item = new ListViewItem(viewData.NumberId);
                 item.Tag = tag;
                 item.SubItems.Add(viewData.CurrentSpans.ToString());
                 item.SubItems.Add(viewData.LastSpans.ToString());
                 item.SubItems.Add(viewData.MaxSpans.ToString());
                 item.SubItems.Add(viewData.AvgSpans.ToString(prec));
-                item.SubItems.Add(viewData.DC.ToString(prec));
-                item.SubItems.Add(maxDcDict[viewData.Nums].ToString(prec));
+                item.SubItems.Add(viewData.CurrentDC.ToString(prec));
+                item.SubItems.Add(viewData.HistoryMaxDC.ToString(prec));
+                item.SubItems.Add(maxAvgDcDict[viewData.Nums].AvgDC.ToString(prec));
+                item.SubItems.Add(maxAvgDcDict[viewData.Nums].MaxDC.ToString(prec));
                 item.SubItems.Add(viewData.WatchColdN.ToString("F2"));
                 item.SubItems.Add(viewData.State.ToString("F2"));
                 item.SubItems.Add(viewData.OccurRating.ToString(prec));
@@ -120,7 +124,7 @@ namespace Lottery.WinForms.Task
                 item.SubItems.Add(viewData.Probability.ToString(prec));
                 item.SubItems.Add(viewData.Prize.ToString("F2"));
                 item.SubItems.Add(viewData.Amount.ToString("F2"));
-                item.BackColor = this.GetColor(viewData.StartDC, viewData.EndDC, maxDcDict[viewData.Nums], viewData.DC);
+                item.BackColor = this.GetColor(viewData, maxAvgDcDict[viewData.Nums]);
                 listView.Items.Add(item);
             }
         }
@@ -128,38 +132,55 @@ namespace Lottery.WinForms.Task
         private Dictionary<string, string> GetHeader()
         {
             Dictionary<string, string> header = new Dictionary<string, string>(25);
-            header.Add("NumberId", "号码");
-            header.Add("CurrentSpans", "本期遗漏");
-            header.Add("LastSpans", "上期遗漏");
-            header.Add("MaxSpans", "最大遗漏");
-            header.Add("AvgSpans", "平均遗漏");
-            header.Add("DC", "当前确定度");
-            header.Add("MaxDC", "最大确定度");
-            header.Add("WatchColdN", "守冷期数");
-            header.Add("State", "偏态值");
-            header.Add("OccurRating", "欲出几率");
-            header.Add("InvestmentValue", "投资价值");
-            header.Add("ReturnRating", "回补几率");
-            header.Add("PeroidCount", "总期数"); 
-            header.Add("Cycle", "循环周期");
-            header.Add("ActualTimes", "出现次数");
-            header.Add("TheoryTimes", "理论出现次数");
-            header.Add("Frequency", "出现频率");
-            header.Add("Nums", "注数");
-            header.Add("Probability", "概率");
-            header.Add("Prize", "奖金");
-            header.Add("Amount", "投注金额"); 
+            header.Add("NumberId", "号码|70");
+            header.Add("CurrentSpans", "本期遗漏|60");
+            header.Add("LastSpans", "上期遗漏|60");
+            header.Add("MaxSpans", "最大遗漏|60");
+            header.Add("AvgSpans", "平均遗漏|80");
+            header.Add("CurrentDC", "当前确定度|80");
+            header.Add("HistoryMaxDC", "历史最大确定度|100");
+            header.Add("AvgMaxDC", "平均最大确定度|100");
+            header.Add("MaxDC", "总体最大确定度|100");
+            header.Add("WatchColdN", "守冷期数|60");
+            header.Add("State", "偏态值|55");
+            header.Add("OccurRating", "欲出几率|70");
+            header.Add("InvestmentValue", "投资价值|70");
+            header.Add("ReturnRating", "回补几率|70");
+            header.Add("PeroidCount", "总期数|55");
+            header.Add("Cycle", "循环周期|60");
+            header.Add("ActualTimes", "出现次数|60");
+            header.Add("TheoryTimes", "理论出现次数|90");
+            header.Add("Frequency", "出现频率|70");
+            header.Add("Nums", "注数|50");
+            header.Add("Probability", "概率|65");
+            header.Add("Prize", "奖金|70");
+            header.Add("Amount", "投注金额|70"); 
 
             return header;
         }
 
-        private Color GetColor(double startDC, double endDC, double maxDC,double currentDC)
+        private Color GetColor(OmissionValueViewData viewData, MaxAvgDC maxAvgDc)
         {
-            Color color = Color.White;
-            if (currentDC >= startDC) color = Color.Violet;
-            if (currentDC >= maxDC) color = Color.Yellow;
-            if (currentDC >= endDC) color = Color.Red;
-            return color;
+            if (viewData.CurrentDC >= maxAvgDc.MaxDC) return Color.Red;
+            if (viewData.CurrentDC >= viewData.EndDC) return Color.Yellow;
+            if (viewData.CurrentDC >= maxAvgDc.AvgDC) return Color.Violet;
+            if (viewData.CurrentDC >= viewData.HistoryMaxDC &&
+                viewData.CurrentDC >= viewData.StartDC) return Color.YellowGreen;
+            if (viewData.CurrentDC >= viewData.StartDC) return Color.GreenYellow;
+            return Color.White;
+        }
+
+        private class MaxAvgDC
+        {
+            public MaxAvgDC(double maxDC, double avgDC)
+            {
+                this.MaxDC = maxDC;
+                this.AvgDC = avgDC;
+            }
+
+            public double MaxDC { get; set; }
+
+            public double AvgDC { get; set; }
         }
     }
 
