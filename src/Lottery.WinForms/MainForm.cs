@@ -60,7 +60,10 @@ namespace Lottery.WinForms
             NumberType numberType = numberTypeComboBox.SelectedItem as NumberType;
             if (numberType == null) return;
 
-            this.SetDimensionComboBox(numberType.RuleType, numberType.Code, this.cbxRealDimesion);
+            Category category = this.cbxRealCategory.SelectedItem as Category;
+            if (category == null) return;
+
+            this.SetDimensionComboBox(category.Type, numberType.Code, this.cbxRealDimesion);
         }
 
         private void cbxOmissonCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,7 +85,10 @@ namespace Lottery.WinForms
             NumberType numberType = numberTypeComboBox.SelectedItem as NumberType;
             if (numberType == null) return;
 
-            this.SetDimensionComboBox(numberType.RuleType, numberType.Code, this.cbxOmissonDimesion);
+            Category category = this.cbxOmissonCategory.SelectedItem as Category;
+            if (category == null) return;
+
+            this.SetDimensionComboBox(category.Type, numberType.Code, this.cbxOmissonDimesion);
         }
 
         private void btnReal_Click(object sender, EventArgs e)

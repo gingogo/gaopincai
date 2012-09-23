@@ -33,7 +33,6 @@ namespace Lottery.Data.SQLServer.Common
             : base(new DimensionNumberTypeDAO(ConfigHelper.CommonTableConnString))
         {
             this.LoadToCache();
-            this.LoadTypeDimNumberTypeToCache();
         }
 
         #endregion
@@ -43,25 +42,28 @@ namespace Lottery.Data.SQLServer.Common
         public void RefreshCache()
         {
             this.LoadToCache();
-            this.LoadTypeDimNumberTypeToCache();
         }
 
-        public List<Dimension> GetDimensions(string ruleType, string numberType)
+        /// <summary>
+        /// 根据彩种类型及号码类型获取其对应的维度集合。
+        /// </summary>
+        /// <param name="type">彩种类型取值为：(11X5,SSC,3D,PL35等)</param>
+        /// <param name="numberType">号码类型</param>
+        /// <returns>维度集合</returns>
+        public List<Dimension> GetDimensions(string type, string numberType)
         {
-            var dimCodes = this.idDictCache.Values
-                .Where(x => x.RuleType.Equals(ruleType) && x.NumberType.Equals(numberType))
-                .Select(x => x.Dimension)
-                .Distinct();
+            if (!this.tdntCache.ContainsKey(type))
+                throw new ArgumentException("Not found this type");
 
-            //加入默认维度
-            Dimension peroidDim = DimensionBiz.Instance.GetByCode("Peroid");
-            List<Dimension> list = new List<Dimension>(11);
-            list.Add(peroidDim);
+            string[] dimensions = this.tdntCache[type]
+                .Where(x => x.Value.Contains(numberType))
+                .Select(x => x.Key).ToArray();
+            List<Dimension> list = new List<Dimension>(dimensions.Length);
 
-            foreach (var dimCode in dimCodes)
+            foreach (var dimension in dimensions)
             {
-                var dimension = DimensionBiz.Instance.GetByCode(dimCode);
-                list.Add(dimension);
+                var dim = DimensionBiz.Instance.GetByCode(dimension);
+                list.Add(dim);
             }
 
             return list.OrderBy(x => x.Seq).ToList();
@@ -99,16 +101,6 @@ namespace Lottery.Data.SQLServer.Common
         #region 私有方法成员
 
         private void LoadToCache()
-        {
-            if (idDictCache != null &&
-                idDictCache.Count > 0) idDictCache.Clear();
-
-            idDictCache = this.GetAll().ToDictionary(x => x.Id, y => y);
-            typeDimDictCache = idDictCache.Values.ToDictionary(x =>
-                string.Format("{0}-{1}-{2}-{3}", x.RuleType, x.NumberType, x.Dimension, x.DimValue), y => y);
-        }
-
-        private void LoadTypeDimNumberTypeToCache()
         {
             if (this.tdntCache == null)
                 this.tdntCache = new Dictionary<string, Dictionary<string, HashSet<string>>>(10);
