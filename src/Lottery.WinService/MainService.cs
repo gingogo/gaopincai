@@ -38,7 +38,7 @@ namespace Lottery.WinService
         {
             try
             {
-                if (e.SignalTime.Hour < 9) return;
+                if (e.SignalTime.Hour < 8) return;
                 Services.ServiceManager.RunAllService(e.SignalTime);
             }
             catch (Exception ex)
