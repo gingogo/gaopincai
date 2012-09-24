@@ -14,6 +14,8 @@ namespace Lottery.ETL.Common
     {
         public static void Import()
         {
+            DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
+
             Import11x5();
             ImportSSC();
             Import3D();

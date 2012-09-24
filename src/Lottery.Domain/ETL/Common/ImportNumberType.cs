@@ -13,6 +13,8 @@ namespace Lottery.ETL.Common
     {
         public static void Import()
         {
+            NumberTypeBiz.Instance.DataAccessor.Truncate();
+
             Import11x5();
             ImportJiangXSSC();
             ImportChongQSSC();
@@ -61,7 +63,7 @@ namespace Lottery.ETL.Common
             dict.Add("D4|四位|11", 1.0 / 10.0);
             dict.Add("D5|五位|11", 1.0 / 10.0);
             dict.Add("P2|二星直选|116", 1.0 / 100.0);
-            dict.Add("C2|二星组选|58", 1.0 / 55.0);
+            dict.Add("C2|二星组选|58", 1.0 / 45.0);
             dict.Add("P3|三星直选|1160", 1.0 / 1000.0);
             dict.Add("C33|三星组三|385", (3.0 / 1000.0));
             dict.Add("C36|三星组六|190", (6.0 / 1000.0));
@@ -102,7 +104,7 @@ namespace Lottery.ETL.Common
             dict.Add("D4|四位|10", 1.0 / 10.0);
             dict.Add("D5|五位|10", 1.0 / 10.0);
             dict.Add("P2|二星直选|100", 1.0 / 100.0);
-            dict.Add("C2|二星组选|50", 1.0 / 55.0);
+            dict.Add("C2|二星组选|50", 1.0 / 45.0);
             dict.Add("P3|三星直选|1000", 1.0 / 1000.0);
             dict.Add("C33|三星组三|320", (3.0 / 1000.0));
             dict.Add("C36|三星组六|160", (6.0 / 1000.0));
@@ -141,7 +143,7 @@ namespace Lottery.ETL.Common
             dict.Add("D2|二位|0", 1.0 / 10.0);
             dict.Add("D3|三位|0", 1.0 / 10.0);
             dict.Add("P2|前二直选|0", 1.0 / 100.0);
-            dict.Add("C2|前二组选|0", 1.0 / 55.0);
+            dict.Add("C2|前二组选|0", 1.0 / 45.0);
             dict.Add("P3|前三直选|1000", 1.0 / 1000.0);
             dict.Add("C33|前三组三|320", (3.0 / 1000.0));
             dict.Add("C36|前三组六|160", (6.0 / 1000.0));
@@ -170,7 +172,7 @@ namespace Lottery.ETL.Common
             dict.Add("D4|四位|0", 1.0 / 10.0);
             dict.Add("D5|五位|0", 1.0 / 10.0);
             dict.Add("P2|前二直选|0", 1.0 / 100.0);
-            dict.Add("C2|前二组选|0", 1.0 / 55.0);
+            dict.Add("C2|前二组选|0", 1.0 / 45.0);
             dict.Add("P3|前三直选|1000", 1.0 / 1000.0);
             dict.Add("C33|前三组三|320", (3.0 / 1000.0));
             dict.Add("C36|前三组六|160", (6.0 / 1000.0));

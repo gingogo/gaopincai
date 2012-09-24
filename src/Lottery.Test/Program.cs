@@ -17,7 +17,7 @@ namespace Lottery.Test
         static void Main(string[] args)
         {
             //OmissionValueTest();
-            DownServiceTest();
+            //DownServiceTest();
             //StatTest();
             //ExtractLotteryData();
             //ETLTest();
@@ -78,8 +78,8 @@ namespace Lottery.Test
             //ETL.SSC.ImportDmFCAn.Add("db");
             //ETL.SSC.ImportDwNumber.Start();
             //ETL.Common.ImportDimension.Import();
-            //ETL.Common.ImportNumberType.Import();
-            //ETL.Common.ImportNumberTypeDim.Import();
+            ETL.Common.ImportNumberType.Import();
+            ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.SSC.ImportDwNumber.UpdateC45();
             // ETL.SSC.ImportDmDPC.UpdateNumberType();
