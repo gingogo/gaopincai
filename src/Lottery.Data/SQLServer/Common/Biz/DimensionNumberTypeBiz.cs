@@ -16,8 +16,6 @@ namespace Lottery.Data.SQLServer.Common
     {
         #region 私有字段
 
-        private Dictionary<int, DimensionNumberType> idDictCache;
-        private Dictionary<string, DimensionNumberType> typeDimDictCache;
         private Dictionary<string, Dictionary<string, HashSet<string>>> tdntCache;
 
         #endregion
@@ -54,9 +52,12 @@ namespace Lottery.Data.SQLServer.Common
         {
             if (!this.tdntCache.ContainsKey(type))
                 throw new ArgumentException("Not found this type");
+            if (string.IsNullOrEmpty(numberType))
+                throw new ArgumentNullException("numberType");
 
+            string numType = (numberType.Length > 2) ? numberType.Substring(0, 2) : numberType;
             string[] dimensions = this.tdntCache[type]
-                .Where(x => x.Value.Contains(numberType))
+                .Where(x => x.Value.Contains(numType))
                 .Select(x => x.Key).ToArray();
             List<Dimension> list = new List<Dimension>(dimensions.Length);
 

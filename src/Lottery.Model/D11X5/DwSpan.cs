@@ -4,8 +4,6 @@ namespace Lottery.Model.D11X5
 {
     using Data;
 
-    using Data;
-
     [Serializable]
     public class DwSpan : BaseModel
     {

@@ -4,8 +4,6 @@ namespace Lottery.Model.PL35
 {
     using Data;
 
-    using Data;
-
     [Serializable]
     public class DwSpan : BaseModel
     {
