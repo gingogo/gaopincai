@@ -41,7 +41,7 @@ namespace Lottery.WinForms.Task
 
             string pageKey = string.Format("{0}-{1}-{2}", param.DbName, param.NumberType, param.Dimension);
             string pageText = string.Format("{0}-{1}-{2}", param.CategoryName, param.NumberTypeName, param.DimensionName);
-            string listViewKey = "listview1";
+            string listViewKey = "lv" + pageKey;
 
             Control target = parameter.Target;
             TabPage tabPage = this.GetTabPage(target, pageKey, pageText);
@@ -88,6 +88,10 @@ namespace Lottery.WinForms.Task
                 listView.Columns.Add(kv.Key, arr[0], int.Parse(arr[1]));
             }
             return listView;
+        }
+
+        private void listView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
         }
 
         private void FillListView(ListView listView, int precision)
@@ -164,8 +168,7 @@ namespace Lottery.WinForms.Task
             if (viewData.CurrentDC >= maxAvgDc.MaxDC) return Color.Red;
             if (viewData.CurrentDC >= viewData.EndDC) return Color.Yellow;
             if (viewData.CurrentDC >= maxAvgDc.AvgDC) return Color.Violet;
-            if (viewData.CurrentDC >= viewData.HistoryMaxDC &&
-                viewData.CurrentDC >= viewData.StartDC) return Color.YellowGreen;
+            if (viewData.CurrentDC >= viewData.HistoryMaxDC && viewData.CurrentDC >= viewData.StartDC) return Color.YellowGreen;
             if (viewData.CurrentDC >= viewData.StartDC) return Color.GreenYellow;
             return Color.White;
         }

@@ -115,13 +115,17 @@ namespace Lottery.Services
 
             if (peroid.Equals("d"))
             {
-                return (currentTime.Hour == 22 && currentTime.Minute == 0 && currentTime.Second == 0);
+                return (intervals.Contains(currentTime.Hour.ToString()) &&
+                    currentTime.Minute == 0 &&
+                    currentTime.Second == 0);
             }
 
             if (peroid.Equals("w"))
             {
-                return (currentTime.Hour == 22 && currentTime.Minute == 0 &&
-                    currentTime.Second == 0 && intervals.Contains(((int)currentTime.DayOfWeek).ToString()));
+                return (intervals.Contains(currentTime.Hour.ToString()) && 
+                    currentTime.Minute == 0 &&
+                    currentTime.Second == 0 && 
+                    intervals.Contains(((int)currentTime.DayOfWeek).ToString()));
             }
 
             return false;

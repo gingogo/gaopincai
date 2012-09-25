@@ -69,8 +69,10 @@
             this.setMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.omValueCtxMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ctxMenuRightTab = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.asyncEventWorker = new Lottery.Components.AsyncEventWorker(this.components);
+            this.ctxMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxMenuItemCloseAll = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.leftTab.SuspendLayout();
@@ -78,6 +80,7 @@
             this.leftOmissionPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).BeginInit();
             this.menuStrip.SuspendLayout();
+            this.ctxMenuRightTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -414,6 +417,7 @@
             this.rightTab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.rightTab.ContextMenuStrip = this.ctxMenuRightTab;
             this.rightTab.Location = new System.Drawing.Point(292, 50);
             this.rightTab.Margin = new System.Windows.Forms.Padding(0);
             this.rightTab.Name = "rightTab";
@@ -469,16 +473,33 @@
             this.toolStrip.TabIndex = 23;
             this.toolStrip.Text = "toolStrip";
             // 
-            // omValueCtxMenu
+            // ctxMenuRightTab
             // 
-            this.omValueCtxMenu.Name = "omValueCtxMenu";
-            this.omValueCtxMenu.Size = new System.Drawing.Size(61, 4);
+            this.ctxMenuRightTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuItemClose,
+            this.ctxMenuItemCloseAll});
+            this.ctxMenuRightTab.Name = "omValueCtxMenu";
+            this.ctxMenuRightTab.Size = new System.Drawing.Size(137, 48);
             // 
             // asyncEventWorker
             // 
             this.asyncEventWorker.DoWork += new Lottery.Components.DoWorkEventHandler(this.asyncEventWorker_DoWork);
             this.asyncEventWorker.Completed += new Lottery.Components.WorkerCompletedEventHandler(this.asyncEventWorker_Completed);
             this.asyncEventWorker.ProgressChanged += new Lottery.Components.ProgressChangedEventHandler(this.asyncEventWorker_ProgressChanged);
+            // 
+            // ctxMenuItemClose
+            // 
+            this.ctxMenuItemClose.Name = "ctxMenuItemClose";
+            this.ctxMenuItemClose.Size = new System.Drawing.Size(152, 22);
+            this.ctxMenuItemClose.Text = "关闭(&C)";
+            this.ctxMenuItemClose.Click += new System.EventHandler(this.ctxMenuItemClose_Click);
+            // 
+            // ctxMenuItemCloseAll
+            // 
+            this.ctxMenuItemCloseAll.Name = "ctxMenuItemCloseAll";
+            this.ctxMenuItemCloseAll.Size = new System.Drawing.Size(152, 22);
+            this.ctxMenuItemCloseAll.Text = "关闭所有(&A)";
+            this.ctxMenuItemCloseAll.Click += new System.EventHandler(this.ctxMenuItemCloseAll_Click);
             // 
             // MainForm
             // 
@@ -507,6 +528,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.ctxMenuRightTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -530,7 +552,7 @@
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripMenuItem funcExitMenuItem;
         private System.Windows.Forms.TabPage leftComposiePage;
-        private System.Windows.Forms.ContextMenuStrip omValueCtxMenu;
+        private System.Windows.Forms.ContextMenuStrip ctxMenuRightTab;
         private Components.AsyncEventWorker asyncEventWorker;
         private System.Windows.Forms.Label lblOmissonPrecision;
         private System.Windows.Forms.TextBox txtOmissonStartDC;
@@ -555,6 +577,8 @@
         private System.Windows.Forms.Label lblRealCategory;
         private System.Windows.Forms.ComboBox cbxRealStat;
         private System.Windows.Forms.Label lblRealStat;
+        private System.Windows.Forms.ToolStripMenuItem ctxMenuItemClose;
+        private System.Windows.Forms.ToolStripMenuItem ctxMenuItemCloseAll;
     }
 }
 

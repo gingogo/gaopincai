@@ -18,7 +18,7 @@ namespace Lottery.Analysis.Formula
         /// <returns></returns>
         public static double GetN(double dc, double p)
         {
-            return Math.Log(1 - dc, Math.E) / Math.Log(1 - p, Math.E);
+            return Math.Log(1 - dc) / Math.Log(1 - p);
         }
 
         /// <summary>
@@ -29,7 +29,8 @@ namespace Lottery.Analysis.Formula
         /// <returns></returns>
         public static double GetDC(int n, double p)
         {
-            return (1 - Math.Exp(n * Math.Log(1 - p, Math.E)));
+            //(1 - Math.Exp(n * Math.Log(1 - p, Math.E)));
+            return 1 - Math.Pow(1 - p, n);
         }
     }
 }

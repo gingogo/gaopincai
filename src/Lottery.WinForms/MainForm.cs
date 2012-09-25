@@ -37,6 +37,16 @@ namespace Lottery.WinForms
 
         #region Context Menu Handlers
 
+        private void ctxMenuItemClose_Click(object sender, EventArgs e)
+        {
+            this.rightTab.Controls.RemoveAt(this.rightTab.SelectedIndex);
+        }
+
+        private void ctxMenuItemCloseAll_Click(object sender, EventArgs e)
+        {
+            this.rightTab.Controls.Clear();
+        }
+
         #endregion
 
         #region Left TabControl Handlers
