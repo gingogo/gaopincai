@@ -20,17 +20,7 @@ namespace Lottery.WinForms.Task
             OmissionParameter param = parameter as OmissionParameter;
             if (param == null) return;
 
-            var omValues = this.GetSortedOmissionValues(param);
-            this.viewDatas = new List<OmissionValueViewData>(omValues.Count);
-
-            int progressCount = 0;
-            int total = omValues.Count;
-            foreach (var omv in omValues)
-            {
-                this.viewDatas.Add(new OmissionValueViewData(param.StartDC, param.EndDC, omv));
-                int percent = (int)((float)(++progressCount) / (float)total * 100);
-                param.Worker.ReportProgress(percent, param.UserState);
-            }
+            this.SetViewData(param);
         }
 
         public void Set(Parameter parameter)
@@ -54,24 +44,39 @@ namespace Lottery.WinForms.Task
             param.Owner.SetStatusText(pageText, string.Format("号码个数:{0}", this.viewDatas.Count));
         }
 
-        private List<OmissionValue> GetSortedOmissionValues(OmissionParameter param)
+        private void SetViewData(OmissionParameter param)
         {
             OmissionValueLys lys = new OmissionValueLys(param.DbName);
             List<OmissionValue> omValues = null;
 
             if (Cache.OmissonValueColumnHeaders[param.OrderByColName].IsDbSort)
             {
-                omValues = lys.GetOmissionValues(param.RuleType, param.NumberType, param.Dimension, param.Filter, param.OrderByColName, param.SortType);
+                omValues = lys.GetOmissionValues(param.RuleType, param.NumberType,
+                    param.Dimension, param.Filter, param.OrderByColName, param.SortType);
+                this.SetViewData(param, omValues);
             }
             else
             {
                 omValues = lys.GetOmissionValues(param.RuleType, param.NumberType, param.Dimension, param.Filter);
-                omValues = param.SortType.Equals("DESC") ?
-                    omValues.OrderByDescending(x => x[param.OrderByColName]).ToList() :
-                    omValues.OrderBy(x => x[param.OrderByColName]).ToList();
+                this.SetViewData(param, omValues);
+                this.viewDatas = param.SortType.Equals("DESC") ?
+                    this.viewDatas.OrderByDescending(x => x[param.OrderByColName]).ToList() :
+                    this.viewDatas.OrderBy(x => x[param.OrderByColName]).ToList();
             }
+        }
 
-            return omValues;
+        private void SetViewData(OmissionParameter param, List<OmissionValue> omValues)
+        {
+            this.viewDatas = new List<OmissionValueViewData>(omValues.Count);
+
+            int progressCount = 0;
+            int total = omValues.Count;
+            foreach (var omv in omValues)
+            {
+                this.viewDatas.Add(new OmissionValueViewData(param.StartDC, param.EndDC, omv));
+                int percent = (int)((float)(++progressCount) / (float)total * 100);
+                param.Worker.ReportProgress(percent, param.UserState);
+            }
         }
 
         private TabPage GetTabPage(TabControl target, string key, string text)
