@@ -23,5 +23,10 @@ namespace Lottery.Analysis.Common
         {
             return this._dao.SelectOmissionValues(ruleType, numberType, dimension, filter, orderByColName, sortType);
         }
+
+        public List<OmissionValue> GetOmissionValues(string ruleType, string numberType, string dimension, string filter)
+        {
+            return this._dao.SelectOmissionValues(ruleType, numberType, dimension, filter, "CurrentSpans", "DESC");
+        }
     }
 }

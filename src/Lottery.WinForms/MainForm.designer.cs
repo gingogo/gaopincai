@@ -34,7 +34,6 @@
             this.tssReadyLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.leftTab = new System.Windows.Forms.TabControl();
             this.leftRealPage = new System.Windows.Forms.TabPage();
             this.cbxRealStat = new System.Windows.Forms.ComboBox();
@@ -63,30 +62,35 @@
             this.leftFilterPage = new System.Windows.Forms.TabPage();
             this.leftComposiePage = new System.Windows.Forms.TabPage();
             this.rightTab = new System.Windows.Forms.TabControl();
+            this.ctxMenuRightTab = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ctxMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxMenuItemCloseAll = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.funcMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.funcExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.ctxMenuRightTab = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tssLblCategory = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssLblCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.asyncEventWorker = new Lottery.Components.AsyncEventWorker(this.components);
-            this.ctxMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxMenuItemCloseAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.leftTab.SuspendLayout();
             this.leftRealPage.SuspendLayout();
             this.leftOmissionPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).BeginInit();
-            this.menuStrip.SuspendLayout();
             this.ctxMenuRightTab.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tssReadyLabel});
+            this.tssReadyLabel,
+            this.tssLblCategory,
+            this.tssLblCount});
             this.statusStrip.Location = new System.Drawing.Point(0, 477);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(864, 22);
@@ -94,9 +98,11 @@
             // 
             // tssReadyLabel
             // 
+            this.tssReadyLabel.AutoSize = false;
             this.tssReadyLabel.Name = "tssReadyLabel";
-            this.tssReadyLabel.Size = new System.Drawing.Size(29, 17);
+            this.tssReadyLabel.Size = new System.Drawing.Size(100, 17);
             this.tssReadyLabel.Text = "准备";
+            this.tssReadyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // notifyIcon
             // 
@@ -115,17 +121,6 @@
             this.pictureBoxLoading.TabIndex = 19;
             this.pictureBoxLoading.TabStop = false;
             this.pictureBoxLoading.Visible = false;
-            // 
-            // progressBar
-            // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(239, 480);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(520, 16);
-            this.progressBar.Step = 1;
-            this.progressBar.TabIndex = 20;
-            this.progressBar.Visible = false;
             // 
             // leftTab
             // 
@@ -426,6 +421,28 @@
             this.rightTab.Size = new System.Drawing.Size(571, 426);
             this.rightTab.TabIndex = 0;
             // 
+            // ctxMenuRightTab
+            // 
+            this.ctxMenuRightTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuItemClose,
+            this.ctxMenuItemCloseAll});
+            this.ctxMenuRightTab.Name = "omValueCtxMenu";
+            this.ctxMenuRightTab.Size = new System.Drawing.Size(137, 48);
+            // 
+            // ctxMenuItemClose
+            // 
+            this.ctxMenuItemClose.Name = "ctxMenuItemClose";
+            this.ctxMenuItemClose.Size = new System.Drawing.Size(136, 22);
+            this.ctxMenuItemClose.Text = "关闭(&C)";
+            this.ctxMenuItemClose.Click += new System.EventHandler(this.ctxMenuItemClose_Click);
+            // 
+            // ctxMenuItemCloseAll
+            // 
+            this.ctxMenuItemCloseAll.Name = "ctxMenuItemCloseAll";
+            this.ctxMenuItemCloseAll.Size = new System.Drawing.Size(136, 22);
+            this.ctxMenuItemCloseAll.Text = "关闭所有(&A)";
+            this.ctxMenuItemCloseAll.Click += new System.EventHandler(this.ctxMenuItemCloseAll_Click);
+            // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -451,6 +468,7 @@
             this.funcExitMenuItem.Name = "funcExitMenuItem";
             this.funcExitMenuItem.Size = new System.Drawing.Size(112, 22);
             this.funcExitMenuItem.Text = "退出(&E)";
+            this.funcExitMenuItem.Click += new System.EventHandler(this.funcExitMenuItem_Click);
             // 
             // setMenuItem
             // 
@@ -473,13 +491,19 @@
             this.toolStrip.TabIndex = 23;
             this.toolStrip.Text = "toolStrip";
             // 
-            // ctxMenuRightTab
+            // tssLblCategory
             // 
-            this.ctxMenuRightTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxMenuItemClose,
-            this.ctxMenuItemCloseAll});
-            this.ctxMenuRightTab.Name = "omValueCtxMenu";
-            this.ctxMenuRightTab.Size = new System.Drawing.Size(137, 48);
+            this.tssLblCategory.AutoSize = false;
+            this.tssLblCategory.Name = "tssLblCategory";
+            this.tssLblCategory.Size = new System.Drawing.Size(200, 17);
+            this.tssLblCategory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tssLblCount
+            // 
+            this.tssLblCount.AutoSize = false;
+            this.tssLblCount.Name = "tssLblCount";
+            this.tssLblCount.Size = new System.Drawing.Size(100, 17);
+            this.tssLblCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // asyncEventWorker
             // 
@@ -487,19 +511,16 @@
             this.asyncEventWorker.Completed += new Lottery.Components.WorkerCompletedEventHandler(this.asyncEventWorker_Completed);
             this.asyncEventWorker.ProgressChanged += new Lottery.Components.ProgressChangedEventHandler(this.asyncEventWorker_ProgressChanged);
             // 
-            // ctxMenuItemClose
+            // progressBar
             // 
-            this.ctxMenuItemClose.Name = "ctxMenuItemClose";
-            this.ctxMenuItemClose.Size = new System.Drawing.Size(152, 22);
-            this.ctxMenuItemClose.Text = "关闭(&C)";
-            this.ctxMenuItemClose.Click += new System.EventHandler(this.ctxMenuItemClose_Click);
-            // 
-            // ctxMenuItemCloseAll
-            // 
-            this.ctxMenuItemCloseAll.Name = "ctxMenuItemCloseAll";
-            this.ctxMenuItemCloseAll.Size = new System.Drawing.Size(152, 22);
-            this.ctxMenuItemCloseAll.Text = "关闭所有(&A)";
-            this.ctxMenuItemCloseAll.Click += new System.EventHandler(this.ctxMenuItemCloseAll_Click);
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(425, 480);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(346, 16);
+            this.progressBar.Step = 1;
+            this.progressBar.TabIndex = 20;
+            this.progressBar.Visible = false;
             // 
             // MainForm
             // 
@@ -509,8 +530,8 @@
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.rightTab);
             this.Controls.Add(this.leftTab);
-            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.pictureBoxLoading);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -526,15 +547,14 @@
             this.leftOmissionPage.ResumeLayout(false);
             this.leftOmissionPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).EndInit();
+            this.ctxMenuRightTab.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.ctxMenuRightTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
         private System.Windows.Forms.PictureBox pictureBoxLoading;
-        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ToolStripStatusLabel tssReadyLabel;
 
@@ -579,6 +599,9 @@
         private System.Windows.Forms.Label lblRealStat;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuItemClose;
         private System.Windows.Forms.ToolStripMenuItem ctxMenuItemCloseAll;
+        private System.Windows.Forms.ToolStripStatusLabel tssLblCategory;
+        private System.Windows.Forms.ToolStripStatusLabel tssLblCount;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
 

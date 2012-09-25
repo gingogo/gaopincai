@@ -6,6 +6,7 @@ using System.Windows.Forms;
 namespace Lottery.WinForms.Task
 {
     using Analysis.Common;
+    using Caching;
     using Data.SQLServer.Analysis;
     using Model.Analysis;
     using ViewData;
@@ -19,9 +20,7 @@ namespace Lottery.WinForms.Task
             OmissionParameter param = parameter as OmissionParameter;
             if (param == null) return;
 
-            OmissionValueLys lys = new OmissionValueLys(param.DbName);
-            List<OmissionValue> omValues = lys.GetOmissionValues(param.RuleType, param.NumberType, param.Dimension,
-                param.Filter, param.OrderByColName, param.SortType);
+            var omValues = this.GetSortedOmissionValues(param);
             this.viewDatas = new List<OmissionValueViewData>(omValues.Count);
 
             int progressCount = 0;
@@ -39,22 +38,46 @@ namespace Lottery.WinForms.Task
             OmissionParameter param = parameter as OmissionParameter;
             if (param == null) return;
 
-            string pageKey = string.Format("{0}-{1}-{2}", param.DbName, param.NumberType, param.Dimension);
-            string pageText = string.Format("{0}-{1}-{2}", param.CategoryName, param.NumberTypeName, param.DimensionName);
-            string listViewKey = "lv" + pageKey;
+            TabControl target = parameter.Target as TabControl;
+            if (target == null) return;
 
-            Control target = parameter.Target;
+            string pageKey = string.Format("{0}|{1}|{2}", param.DbName, param.NumberType, param.Dimension);
+            string pageText = string.Format("{0}|{1}|{2}", param.CategoryName, param.NumberTypeName, param.DimensionName);
+            string listViewKey = "omv_" + pageKey;
+
             TabPage tabPage = this.GetTabPage(target, pageKey, pageText);
-            ListView listView = this.GetListView(tabPage, listViewKey);
+            ListView listView = this.GetListView(tabPage, listViewKey, param);
             this.FillListView(listView, param.Precision);
+
+            target.SelectedTab = tabPage;
+
+            param.Owner.SetStatusText(pageText, string.Format("号码个数:{0}", this.viewDatas.Count));
         }
 
-        private TabPage GetTabPage(Control target, string key, string text)
+        private List<OmissionValue> GetSortedOmissionValues(OmissionParameter param)
+        {
+            OmissionValueLys lys = new OmissionValueLys(param.DbName);
+            List<OmissionValue> omValues = null;
+
+            if (Cache.OmissonValueColumnHeaders[param.OrderByColName].IsDbSort)
+            {
+                omValues = lys.GetOmissionValues(param.RuleType, param.NumberType, param.Dimension, param.Filter, param.OrderByColName, param.SortType);
+            }
+            else
+            {
+                omValues = lys.GetOmissionValues(param.RuleType, param.NumberType, param.Dimension, param.Filter);
+                omValues = param.SortType.Equals("DESC") ?
+                    omValues.OrderByDescending(x => x[param.OrderByColName]).ToList() :
+                    omValues.OrderBy(x => x[param.OrderByColName]).ToList();
+            }
+
+            return omValues;
+        }
+
+        private TabPage GetTabPage(TabControl target, string key, string text)
         {
             if (target.Controls.ContainsKey(key))
-            {
                 return target.Controls[key] as TabPage;
-            }
 
             TabPage tabPage = new TabPage(text);
             tabPage.Dock = DockStyle.Fill;
@@ -64,34 +87,56 @@ namespace Lottery.WinForms.Task
             return tabPage;
         }
 
-        private ListView GetListView(Control tabPage, string key)
+        private ListView GetListView(Control tabPage, string key, OmissionParameter param)
         {
+            ListView listView = null;
+
             if (tabPage.Controls.ContainsKey(key))
             {
-                ListView oldListView = tabPage.Controls[key] as ListView;
-                oldListView.Items.Clear();
-                return oldListView;
+                listView = tabPage.Controls[key] as ListView;
+                listView.Items.Clear();
+                listView.Tag = param;
+                return listView;
             }
 
-            ListView listView = new ListView();
+            listView = new ListView();
             listView.Name = key;
             listView.Dock = DockStyle.Fill;
             listView.View = View.Details;
             listView.FullRowSelect = true;
             listView.GridLines = true;
+            listView.Tag = param;
+
+            this.AddListViewColumnHeaders(listView);
+            this.AddListViewEvents(listView, param);
             tabPage.Controls.Add(listView);
 
-            Dictionary<string, string> header = this.GetHeader();
-            foreach (var kv in header)
-            {
-                string[] arr = kv.Value.Split('|');
-                listView.Columns.Add(kv.Key, arr[0], int.Parse(arr[1]));
-            }
             return listView;
         }
 
-        private void listView_ColumnClick(object sender, ColumnClickEventArgs e)
+        private void AddListViewColumnHeaders(ListView listView)
         {
+            foreach (var kv in Cache.OmissonValueColumnHeaders)
+            {
+                ColumnHeader colHeader = new ColumnHeader();
+                colHeader.Text = kv.Value.Text;
+                colHeader.Width = kv.Value.Width;
+                colHeader.Name = kv.Value.Key;
+                listView.Columns.Add(colHeader);
+            }
+        }
+
+        private void AddListViewEvents(ListView listView, OmissionParameter param)
+        {
+            listView.ColumnClick += new ColumnClickEventHandler(param.Owner.OmissionValueListViewColumnClick);
+
+            listView.ContextMenu = new ContextMenu();
+            MenuItem menuItem = new MenuItem("查看(&V)", param.Owner.OmissionValueListViewContextMenuItemClick);
+            menuItem.Name = "omv_view";
+            listView.ContextMenu.MenuItems.Add(menuItem);
+            menuItem = new MenuItem("公式(&F)", param.Owner.OmissionValueListViewContextMenuItemClick);
+            menuItem.Name = "omv_formula";
+            listView.ContextMenu.MenuItems.Add(menuItem);
         }
 
         private void FillListView(ListView listView, int precision)
@@ -131,36 +176,6 @@ namespace Lottery.WinForms.Task
                 item.BackColor = this.GetColor(viewData, maxAvgDcDict[viewData.Nums]);
                 listView.Items.Add(item);
             }
-        }
-
-        private Dictionary<string, string> GetHeader()
-        {
-            Dictionary<string, string> header = new Dictionary<string, string>(25);
-            header.Add("NumberId", "号码|70");
-            header.Add("CurrentSpans", "本期遗漏|60");
-            header.Add("LastSpans", "上期遗漏|60");
-            header.Add("MaxSpans", "最大遗漏|60");
-            header.Add("AvgSpans", "平均遗漏|80");
-            header.Add("CurrentDC", "当前确定度|80");
-            header.Add("HistoryMaxDC", "历史最大确定度|100");
-            header.Add("AvgMaxDC", "平均最大确定度|100");
-            header.Add("MaxDC", "总体最大确定度|100");
-            header.Add("WatchColdN", "守冷期数|60");
-            header.Add("State", "偏态值|55");
-            header.Add("OccurRating", "欲出几率|70");
-            header.Add("InvestmentValue", "投资价值|70");
-            header.Add("ReturnRating", "回补几率|70");
-            header.Add("PeroidCount", "总期数|55");
-            header.Add("Cycle", "循环周期|60");
-            header.Add("ActualTimes", "出现次数|60");
-            header.Add("TheoryTimes", "理论出现次数|90");
-            header.Add("Frequency", "出现频率|70");
-            header.Add("Nums", "注数|50");
-            header.Add("Probability", "概率|65");
-            header.Add("Prize", "奖金|70");
-            header.Add("Amount", "投注金额|70"); 
-
-            return header;
         }
 
         private Color GetColor(OmissionValueViewData viewData, MaxAvgDC maxAvgDc)

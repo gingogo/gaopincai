@@ -15,5 +15,7 @@ namespace Lottery.WinForms.Task
         public Control Sender { get; set; }
 
         public Control Target { get; set; }
+
+        public MainForm Owner { get; set; }
     }
 }

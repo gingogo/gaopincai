@@ -7,9 +7,11 @@ using System.Windows.Forms;
 
 namespace Lottery.WinForms
 {
+    using Caching;
     using Components;
     using Configuration;
     using Data.SQLServer.Common;
+    using Helpers;
     using Model.Common;
     using Task;
     using Utils;
@@ -32,6 +34,11 @@ namespace Lottery.WinForms
         #endregion
 
         #region Menu Handlers
+
+        private void funcExitMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
         #endregion
 
@@ -121,14 +128,15 @@ namespace Lottery.WinForms
             parameter.RuleType = category.RuleType;
             parameter.NumberType = numberType.Code;
             parameter.Dimension = dimension.Code;
-            parameter.StartDC = ConvertHelper.GetDouble(this.txtOmissonStartDC.Text, 0.959);
-            parameter.EndDC = ConvertHelper.GetDouble(this.txtOmissonEndDC.Text, 0.999);
+            parameter.StartDC = ConvertHelper.GetDouble(this.txtOmissonStartDC.Text, 0.989);
+            parameter.EndDC = ConvertHelper.GetDouble(this.txtOmissonEndDC.Text, 0.9999);
             parameter.Precision = (int)this.nudOmissonPrecision.Value;
             parameter.Target = this.rightTab;
             parameter.OrderByColName = "CurrentSpans";
             parameter.SortType = "DESC";
             parameter.Filter = string.Empty;
             parameter.UserState = Guid.NewGuid();
+            parameter.Owner = this;
 
             TaskArguments arguments = new TaskArguments(new OmissionValueTask(), parameter);
             this.asyncEventWorker.RunAsync(parameter.UserState, arguments);
@@ -153,7 +161,7 @@ namespace Lottery.WinForms
         private void asyncEventWorker_ProgressChanged(object sender, ProgressChangedEventArgs args)
         {
             this.progressBar.Value = args.ProgressPercentage;
-            this.SetStatus(args.ProgressPercentage.ToString() + "%");
+            this.SetStatusText(args.ProgressPercentage.ToString() + "%");
         }
 
         private void asyncEventWorker_Completed(object sender, WorkerCompletedEventArgs args)
@@ -162,15 +170,52 @@ namespace Lottery.WinForms
             if (arguments == null) return;
 
             arguments.Parameter.Sender.Enabled = true;
-            arguments.Task.Set(arguments.Parameter);
+            try
+            {
+                arguments.Task.Set(arguments.Parameter);
+            }
+            catch (Exception ex)
+            {
+                MessageBoxHelper.DisplayFailure(ex.Message);
+            }
 
             this.pictureBoxLoading.Visible = false;
             this.progressBar.Visible = false;
-            this.SetStatus("完成");
         }
 
         #endregion
 
+        #region Outer Control Handlers
+
+        public void OmissionValueListViewColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ListView listView = sender as ListView;
+            if (listView == null) return;
+
+            OmissionParameter parameter = listView.Tag as OmissionParameter;
+            if (parameter == null) return;
+
+            parameter.UserState = Guid.NewGuid();
+            parameter.StartDC = ConvertHelper.GetDouble(this.txtOmissonStartDC.Text, 0.989);
+            parameter.EndDC = ConvertHelper.GetDouble(this.txtOmissonEndDC.Text, 0.9999);
+            parameter.OrderByColName = listView.Columns[e.Column].Name;
+            parameter.SortType = parameter.SortType.Equals("DESC") ? "ASC" : "DESC";
+
+            TaskArguments arguments = new TaskArguments(new OmissionValueTask(), parameter);
+            this.asyncEventWorker.RunAsync(parameter.UserState, arguments);
+
+            this.progressBar.Visible = true;
+            this.progressBar.Value = 0;
+            this.pictureBoxLoading.Visible = true;
+        }
+
+        public void OmissionValueListViewContextMenuItemClick(object sender, EventArgs e)
+        {
+            MenuItem menuItem = sender as MenuItem;
+            if (menuItem == null) return;
+        }
+
+        #endregion
 
         #region Helper methods for modifying the UI display
 
@@ -221,9 +266,21 @@ namespace Lottery.WinForms
             dimensionComboBox.SelectedIndex = 0;
         }
 
-        private void SetStatus(string text)
+        public void SetStatusText(string readyText)
         {
-            this.tssReadyLabel.Text = text;
+            this.SetStatusText(readyText, string.Empty, string.Empty);
+        }
+
+        public void SetStatusText(string categoryText, string countText)
+        {
+            this.SetStatusText("完成", categoryText, countText);
+        }
+
+        public void SetStatusText(string readyText,string categoryText,string countText)
+        {
+            this.tssReadyLabel.Text = readyText;
+            this.tssLblCategory.Text = categoryText;
+            this.tssLblCount.Text = countText;
         }
 
         #endregion
