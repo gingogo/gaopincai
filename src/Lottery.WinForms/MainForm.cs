@@ -15,6 +15,7 @@ namespace Lottery.WinForms
     using Model.Common;
     using Task;
     using Utils;
+    using UI;
 
     public partial class MainForm : Form
     {
@@ -47,6 +48,14 @@ namespace Lottery.WinForms
         private void tsbCaculator_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("Calc.exe");
+        }
+
+        private void tsbMultiple_Click(object sender, EventArgs e)
+        {
+            using (MultipleForm form = new MultipleForm())
+            {
+                form.ShowDialog();
+            }
         }
 
         #endregion

@@ -76,6 +76,7 @@
             this.tsbCaculator = new System.Windows.Forms.ToolStripButton();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.asyncEventWorker = new Lottery.Components.AsyncEventWorker(this.components);
+            this.tsbMultiple = new System.Windows.Forms.ToolStripButton();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.leftTab.SuspendLayout();
@@ -501,7 +502,8 @@
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbCaculator});
+            this.tsbCaculator,
+            this.tsbMultiple});
             this.toolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
@@ -535,6 +537,18 @@
             this.asyncEventWorker.DoWork += new Lottery.Components.DoWorkEventHandler(this.asyncEventWorker_DoWork);
             this.asyncEventWorker.Completed += new Lottery.Components.WorkerCompletedEventHandler(this.asyncEventWorker_Completed);
             this.asyncEventWorker.ProgressChanged += new Lottery.Components.ProgressChangedEventHandler(this.asyncEventWorker_ProgressChanged);
+            // 
+            // tsbMultiple
+            // 
+            this.tsbMultiple.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbMultiple.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold);
+            this.tsbMultiple.ForeColor = System.Drawing.Color.Red;
+            this.tsbMultiple.Image = ((System.Drawing.Image)(resources.GetObject("tsbMultiple.Image")));
+            this.tsbMultiple.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbMultiple.Name = "tsbMultiple";
+            this.tsbMultiple.Size = new System.Drawing.Size(26, 22);
+            this.tsbMultiple.Text = "倍";
+            this.tsbMultiple.Click += new System.EventHandler(this.tsbMultiple_Click);
             // 
             // MainForm
             // 
@@ -619,6 +633,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tssLblCount;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.ToolStripButton tsbCaculator;
+        private System.Windows.Forms.ToolStripButton tsbMultiple;
     }
 }
 
