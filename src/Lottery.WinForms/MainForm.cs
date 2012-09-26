@@ -215,6 +215,7 @@ namespace Lottery.WinForms
             parameter.UserState = Guid.NewGuid();
             parameter.StartDC = ConvertHelper.GetDouble(this.txtOmissonStartDC.Text, 0.989);
             parameter.EndDC = ConvertHelper.GetDouble(this.txtOmissonEndDC.Text, 0.9999);
+            parameter.Precision = (int)this.nudOmissonPrecision.Value;
             parameter.OrderByColName = listView.Columns[e.Column].Name;
             parameter.SortType = parameter.SortType.Equals("DESC") ? "ASC" : "DESC";
 
@@ -237,6 +238,7 @@ namespace Lottery.WinForms
                 parameter.UserState = Guid.NewGuid();
                 parameter.StartDC = ConvertHelper.GetDouble(this.txtOmissonStartDC.Text, 0.989);
                 parameter.EndDC = ConvertHelper.GetDouble(this.txtOmissonEndDC.Text, 0.9999);
+                parameter.Precision = (int)this.nudOmissonPrecision.Value;
                 TaskArguments arguments = new TaskArguments(new OmissionValueTask(), parameter);
                 this.asyncEventWorker.RunAsync(parameter.UserState, arguments);
 
