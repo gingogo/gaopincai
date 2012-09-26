@@ -138,9 +138,17 @@ namespace Lottery.WinForms.Task
             listView.ContextMenu = new ContextMenu();
             MenuItem menuItem = new MenuItem("查看(&V)", param.Owner.OmissionValueListViewContextMenuItemClick);
             menuItem.Name = "omv_view";
+            menuItem.Tag = param;
             listView.ContextMenu.MenuItems.Add(menuItem);
+
             menuItem = new MenuItem("公式(&F)", param.Owner.OmissionValueListViewContextMenuItemClick);
             menuItem.Name = "omv_formula";
+            menuItem.Tag = param;
+            listView.ContextMenu.MenuItems.Add(menuItem);
+
+            menuItem = new MenuItem("刷新(&R)", param.Owner.OmissionValueListViewContextMenuItemClick);
+            menuItem.Name = "omv_refresh";
+            menuItem.Tag = param;
             listView.ContextMenu.MenuItems.Add(menuItem);
         }
 

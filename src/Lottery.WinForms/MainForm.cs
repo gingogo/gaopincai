@@ -132,10 +132,12 @@ namespace Lottery.WinForms
 
         private void btnOmisson_Click(object sender, EventArgs e)
         {
+            this.btnOmisson.Enabled = false;
+
             Category category = this.cbxOmissonCategory.SelectedItem as Category;
             NumberType numberType = this.cbxOmissonNumberType.SelectedItem as NumberType;
             Dimension dimension = this.cbxOmissonDimesion.SelectedItem as Dimension;
-
+            
             OmissionParameter parameter = new OmissionParameter();
             parameter.Sender = sender as Button;
             parameter.Worker = this.asyncEventWorker;
@@ -159,10 +161,7 @@ namespace Lottery.WinForms
             TaskArguments arguments = new TaskArguments(new OmissionValueTask(), parameter);
             this.asyncEventWorker.RunAsync(parameter.UserState, arguments);
 
-            this.progressBar.Visible = true;
-            this.progressBar.Value = 0;
-            this.pictureBoxLoading.Visible = true;
-            this.btnOmisson.Enabled = false;
+            this.SetProgressBar();
         }
 
         #endregion
@@ -222,15 +221,28 @@ namespace Lottery.WinForms
             TaskArguments arguments = new TaskArguments(new OmissionValueTask(), parameter);
             this.asyncEventWorker.RunAsync(parameter.UserState, arguments);
 
-            this.progressBar.Visible = true;
-            this.progressBar.Value = 0;
-            this.pictureBoxLoading.Visible = true;
+            this.SetProgressBar();
         }
 
         public void OmissionValueListViewContextMenuItemClick(object sender, EventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
             if (menuItem == null) return;
+
+            OmissionParameter parameter = menuItem.Tag as OmissionParameter;
+            if (parameter == null) return;
+
+            if (menuItem.Name.Contains("refresh"))
+            {
+                parameter.UserState = Guid.NewGuid();
+                parameter.StartDC = ConvertHelper.GetDouble(this.txtOmissonStartDC.Text, 0.989);
+                parameter.EndDC = ConvertHelper.GetDouble(this.txtOmissonEndDC.Text, 0.9999);
+                TaskArguments arguments = new TaskArguments(new OmissionValueTask(), parameter);
+                this.asyncEventWorker.RunAsync(parameter.UserState, arguments);
+
+                this.SetProgressBar();
+                return;
+            }
         }
 
         #endregion
@@ -282,6 +294,13 @@ namespace Lottery.WinForms
             }
 
             dimensionComboBox.SelectedIndex = 0;
+        }
+
+        private void SetProgressBar()
+        {
+            this.progressBar.Visible = true;
+            this.progressBar.Value = 0;
+            this.pictureBoxLoading.Visible = true;
         }
 
         public void SetStatusText(string readyText)
