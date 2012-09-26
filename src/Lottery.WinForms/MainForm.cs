@@ -42,6 +42,15 @@ namespace Lottery.WinForms
 
         #endregion
 
+        #region ToolStrip Handlers
+
+        private void tsbCaculator_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("Calc.exe");
+        }
+
+        #endregion
+
         #region Context Menu Handlers
 
         private void ctxMenuItemClose_Click(object sender, EventArgs e)
@@ -172,7 +181,7 @@ namespace Lottery.WinForms
             arguments.Parameter.Sender.Enabled = true;
             try
             {
-                arguments.Task.Set(arguments.Parameter);
+                arguments.Task.Complete(arguments.Parameter);
             }
             catch (Exception ex)
             {

@@ -59,5 +59,19 @@ namespace Lottery.WinForms.Properties {
                 resourceCulture = value;
             }
         }
+        
+        public static System.Drawing.Bitmap Caculator {
+            get {
+                object obj = ResourceManager.GetObject("Caculator", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Icon Lottery {
+            get {
+                object obj = ResourceManager.GetObject("Lottery", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

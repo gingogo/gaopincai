@@ -6,6 +6,6 @@ namespace Lottery.WinForms.Task
     {
         void Start(Parameter parameter);
 
-        void Set(Parameter parameter);
+        void Complete(Parameter parameter);
     }
 }

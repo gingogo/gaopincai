@@ -23,7 +23,7 @@ namespace Lottery.WinForms.Task
             this.SetViewData(param);
         }
 
-        public void Set(Parameter parameter)
+        public void Complete(Parameter parameter)
         {
             OmissionParameter param = parameter as OmissionParameter;
             if (param == null) return;

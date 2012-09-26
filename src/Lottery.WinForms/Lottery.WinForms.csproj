@@ -34,6 +34,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Lottery.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -65,6 +69,12 @@
     <Compile Include="Task\OmissionValueTask.cs" />
     <Compile Include="Task\RealTimeDataTask.cs" />
     <Compile Include="UI\AppContainer.cs" />
+    <Compile Include="UI\Forms\MultipleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\MultipleForm.Designer.cs">
+      <DependentUpon>MultipleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\OptionsDialog.cs" />
     <Compile Include="ViewData\ColumnHeaderViewData.cs" />
     <Compile Include="ViewData\OmissionValueViewData.cs" />
@@ -82,6 +92,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\Forms\MultipleForm.resx">
+      <DependentUpon>MultipleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -112,6 +125,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Caculator.ico" />
+    <None Include="Resources\Lottery.ico" />
     <Content Include="Resources\notice.wav" />
   </ItemGroup>
   <ItemGroup />

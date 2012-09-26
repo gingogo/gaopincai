@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssReadyLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssLblCategory = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssLblCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
             this.leftTab = new System.Windows.Forms.TabControl();
@@ -71,10 +73,9 @@
             this.setMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.tssLblCategory = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tssLblCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.asyncEventWorker = new Lottery.Components.AsyncEventWorker(this.components);
+            this.tsbCaculator = new System.Windows.Forms.ToolStripButton();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.asyncEventWorker = new Lottery.Components.AsyncEventWorker(this.components);
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.leftTab.SuspendLayout();
@@ -83,6 +84,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).BeginInit();
             this.ctxMenuRightTab.SuspendLayout();
             this.menuStrip.SuspendLayout();
+            this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -103,6 +105,20 @@
             this.tssReadyLabel.Size = new System.Drawing.Size(100, 17);
             this.tssReadyLabel.Text = "准备";
             this.tssReadyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tssLblCategory
+            // 
+            this.tssLblCategory.AutoSize = false;
+            this.tssLblCategory.Name = "tssLblCategory";
+            this.tssLblCategory.Size = new System.Drawing.Size(200, 17);
+            this.tssLblCategory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tssLblCount
+            // 
+            this.tssLblCount.AutoSize = false;
+            this.tssLblCount.Name = "tssLblCount";
+            this.tssLblCount.Size = new System.Drawing.Size(100, 17);
+            this.tssLblCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // notifyIcon
             // 
@@ -484,6 +500,8 @@
             // 
             // toolStrip
             // 
+            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbCaculator});
             this.toolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
@@ -491,25 +509,15 @@
             this.toolStrip.TabIndex = 23;
             this.toolStrip.Text = "toolStrip";
             // 
-            // tssLblCategory
+            // tsbCaculator
             // 
-            this.tssLblCategory.AutoSize = false;
-            this.tssLblCategory.Name = "tssLblCategory";
-            this.tssLblCategory.Size = new System.Drawing.Size(200, 17);
-            this.tssLblCategory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tssLblCount
-            // 
-            this.tssLblCount.AutoSize = false;
-            this.tssLblCount.Name = "tssLblCount";
-            this.tssLblCount.Size = new System.Drawing.Size(100, 17);
-            this.tssLblCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // asyncEventWorker
-            // 
-            this.asyncEventWorker.DoWork += new Lottery.Components.DoWorkEventHandler(this.asyncEventWorker_DoWork);
-            this.asyncEventWorker.Completed += new Lottery.Components.WorkerCompletedEventHandler(this.asyncEventWorker_Completed);
-            this.asyncEventWorker.ProgressChanged += new Lottery.Components.ProgressChangedEventHandler(this.asyncEventWorker_ProgressChanged);
+            this.tsbCaculator.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCaculator.Image = global::Lottery.WinForms.Properties.Resources.Caculator;
+            this.tsbCaculator.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCaculator.Name = "tsbCaculator";
+            this.tsbCaculator.Size = new System.Drawing.Size(23, 22);
+            this.tsbCaculator.Text = "计算器";
+            this.tsbCaculator.Click += new System.EventHandler(this.tsbCaculator_Click);
             // 
             // progressBar
             // 
@@ -521,6 +529,12 @@
             this.progressBar.Step = 1;
             this.progressBar.TabIndex = 20;
             this.progressBar.Visible = false;
+            // 
+            // asyncEventWorker
+            // 
+            this.asyncEventWorker.DoWork += new Lottery.Components.DoWorkEventHandler(this.asyncEventWorker_DoWork);
+            this.asyncEventWorker.Completed += new Lottery.Components.WorkerCompletedEventHandler(this.asyncEventWorker_Completed);
+            this.asyncEventWorker.ProgressChanged += new Lottery.Components.ProgressChangedEventHandler(this.asyncEventWorker_ProgressChanged);
             // 
             // MainForm
             // 
@@ -550,6 +564,8 @@
             this.ctxMenuRightTab.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -602,6 +618,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tssLblCategory;
         private System.Windows.Forms.ToolStripStatusLabel tssLblCount;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.ToolStripButton tsbCaculator;
     }
 }
 

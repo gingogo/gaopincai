@@ -12,7 +12,7 @@ namespace Lottery.WinForms.Task
             throw new NotImplementedException();
         }
 
-        public void Set(Parameter parameter)
+        public void Complete(Parameter parameter)
         {
             throw new NotImplementedException();
         }
