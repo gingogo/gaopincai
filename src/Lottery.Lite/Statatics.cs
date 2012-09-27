@@ -47,7 +47,7 @@ namespace Lottery.Lite
                 
                 string pBegin = BizBase.getPByDate(CaiData.NowCaculate, CaiData);//开始计算的时间
                 
-                DataSet dtos = da.SelectTopNSpan(num,100,pBegin);
+                DataSet dtos = da.SelectTopNSpan(num,1008,pBegin);
                 List<int> spanList = new List<int>();
                 int i = 0;
                 foreach (DataRow dto in dtos.Tables[0].Rows)
@@ -207,7 +207,7 @@ namespace Lottery.Lite
             int lastp = span.SpanTillNow;
 
             List<int> cycles = new List<int>();
-            for (int i = 3; i < 94; i++)
+            for (int i = 3; i < spans.Count; i++)
             {
                 int cycle = 0;
                 for (int j = 0; j < i - 1; j++)
@@ -369,7 +369,7 @@ namespace Lottery.Lite
                         {
                             int spanJust = dtos[j];
                             cycle += spanJust;
-                            if (Math.Abs((cycle / (j - i)) - spanAvg) <= spanAvg*0.1)
+                            if (Math.Abs((cycle / (j - i)) - spanAvg) <= spanAvg*0.2)
                             {
                                 cycles.Add(j - i);
                                 break;
