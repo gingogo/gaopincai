@@ -13,13 +13,14 @@ namespace Lottery.ETL.Common
     {
         public static void Import()
         {
-            NumberTypeBiz.Instance.DataAccessor.Truncate();
+            //NumberTypeBiz.Instance.DataAccessor.Truncate();
 
-            Import11x5();
-            ImportJiangXSSC();
-            ImportChongQSSC();
-            Import3D();
-            ImportPL35();
+            //Import11x5();
+            //ImportJiangXSSC();
+            //ImportChongQSSC();
+            //Import3D();
+            //ImportPL35();
+            ImportSSL();
         }
 
         private static void Import11x5()
@@ -196,6 +197,33 @@ namespace Lottery.ETL.Common
                 nt.Name = arr[1];
                 nt.Code = arr[0];
                 nt.RuleType = "PL35";
+                nt.Probability = kp.Value;
+                nt.Amount = 2.0;
+                nt.Prize = double.Parse(arr[2]);
+                nt.Length = GetLength(arr[0]);
+                NumberTypeBiz.Instance.Add(nt);
+            }
+        }
+
+        private static void ImportSSL()
+        {
+            Dictionary<string, double> dict = new Dictionary<string, double>(11);
+            dict.Add("D1|前一|10", 1.0 / 10.0);
+            dict.Add("D2|二位|0", 1.0 / 10.0);
+            dict.Add("D3|后一|10", 1.0 / 10.0);
+            dict.Add("P2|前二直选|98", 1.0 / 100.0);
+            dict.Add("C2|前二组选|0", 1.0 / 45.0);
+            dict.Add("P3|直选三|980", 1.0 / 1000.0);
+            dict.Add("C33|组选三|320", (3.0 / 1000.0));
+            dict.Add("C36|组选六|160", (6.0 / 1000.0));
+
+            foreach (var kp in dict)
+            {
+                string[] arr = kp.Key.Split('|');
+                NumberType nt = new NumberType();
+                nt.Name = arr[1];
+                nt.Code = arr[0];
+                nt.RuleType = "SSL";
                 nt.Probability = kp.Value;
                 nt.Amount = 2.0;
                 nt.Prize = double.Parse(arr[2]);

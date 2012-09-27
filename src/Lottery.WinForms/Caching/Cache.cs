@@ -28,7 +28,7 @@ namespace Lottery.WinForms.Caching
             omissonValueColumnHeaders.Add("LastSpans", new ColumnHeaderViewData("LastSpans", "上期遗漏", 60));
             omissonValueColumnHeaders.Add("MaxSpans", new ColumnHeaderViewData("MaxSpans", "最大遗漏", 60, true));
             omissonValueColumnHeaders.Add("AvgSpans", new ColumnHeaderViewData("AvgSpans", "平均遗漏", 80, true));
-            omissonValueColumnHeaders.Add("CurrentDC", new ColumnHeaderViewData("CurrentDC", "当前确定度", 80));
+            omissonValueColumnHeaders.Add("CurrentDC", new ColumnHeaderViewData("CurrentDC", "当前确定度", 100));
             omissonValueColumnHeaders.Add("HistoryMaxDC", new ColumnHeaderViewData("HistoryMaxDC", "历史最大确定度", 100));
             omissonValueColumnHeaders.Add("AvgMaxDC", new ColumnHeaderViewData("AvgMaxDC", "平均最大确定度", 100));
             omissonValueColumnHeaders.Add("MaxDC", new ColumnHeaderViewData("MaxDC", "总体最大确定度", 100));

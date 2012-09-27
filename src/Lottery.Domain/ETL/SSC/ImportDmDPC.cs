@@ -34,8 +34,6 @@ namespace Lottery.ETL.SSC
                 //Modify(category.DbName, "P5");
                 //Modify(category.DbName, "C2");
                 //Modify(category.DbName, "C3");
-                //Modify(category.DbName, "C33");
-                //Modify(category.DbName, "C36");
             }
         }
 
@@ -113,17 +111,15 @@ namespace Lottery.ETL.SSC
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
             foreach (var category in categories)
             {
-               // P(category.DbName, "D1", 1, output);
-               // P(category.DbName, "P2", 2, output);
-               // P(category.DbName, "P3", 3, output);
-               // //P(category.DbName, "P4", 4, output);
-               ////P(category.DbName, "P5", 5, output);
-               // C(category.DbName, "C2", 2, output);
-               // C(category.DbName, "C3", 3, output);
-               // C(category.DbName, "C33", 3, output);
-               // C(category.DbName, "C36", 3, output);
-                C(category.DbName, "C4", 4, output);
-                C(category.DbName, "C5", 5, output);
+                // P(category.DbName, "D1", 1, output);
+                // P(category.DbName, "P2", 2, output);
+                // P(category.DbName, "P3", 3, output);
+                //P(category.DbName, "P4", 4, output);
+                //P(category.DbName, "P5", 5, output);
+                // C(category.DbName, "C2", 2, output);
+                // C(category.DbName, "C3", 3, output);
+                //C(category.DbName, "C4", 4, output);
+                //C(category.DbName, "C5", 5, output);
                 //break;
             }
         }

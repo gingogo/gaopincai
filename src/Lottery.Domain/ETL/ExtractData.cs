@@ -72,6 +72,7 @@ namespace Lottery.ETL
             if (type.Equals("SSC")) return new Action<StreamWriter, string, string, string, string, string>(ExtractSSC);
             if (type.Equals("3D")) return new Action<StreamWriter, string, string, string, string, string>(Extract3D);
             if (type.Equals("PL35")) return new Action<StreamWriter, string, string, string, string, string>(ExtractPL35);
+            if (type.Equals("SSL")) return new Action<StreamWriter, string, string, string, string, string>(ExtractSSL);
 
             return null;
         }
@@ -90,7 +91,7 @@ namespace Lottery.ETL
                     RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
                 string speroid = Regex.Match(m.Value, "<td style='width: 20%;'>(.*?)</td>",
                     RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
-                string code = Regex.Match(m.Value, "'MyGridView_ctl02_lblHao'>(\\d+)</(spans|span)>",
+                string code = Regex.Match(m.Value, "'MyGridView_ctl02_lblHao'>(.*?)</(spans|span)>",
                     RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
                 if (code.Trim().Length == 0) continue;
 
@@ -123,29 +124,28 @@ namespace Lottery.ETL
         private static void Extract11X5(StreamWriter writer, string name, string sdate, string speroid, string code, string dbName)
         {
             string no = code.Replace(" ", ",");
-            string f5 = code.Replace(" ", "");
-            string f2 = f5.Substring(0, 4);
-            string f3 = f5.Substring(0, 6);
-
             DateTime datetime = DateTime.Parse(sdate);
             int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
-
             int p = 2000000000 + int.Parse(speroid);
             int n = int.Parse(speroid.Substring(speroid.Length - 2));
-            if (name.Equals("山东十一运夺金") &&
-                dateint < 20090909)
-            {
-                if (pdic.ContainsKey(dateint))
-                    pdic[dateint]++;
-                else
-                    pdic.Add(dateint, 1);
-                n = pdic[dateint];
-                p = dateint * 100 + n;
-            }
 
-            string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}",
-                no, f2, f3, f5, p, n, dateint, datetime);
-            writer.WriteLine(line);
+            Data.SQLServer.D11X5.DwNumberBiz biz = new Data.SQLServer.D11X5.DwNumberBiz(dbName);
+            biz.Add(biz.Create(p, n, no, dateint, sdate));
+
+            //if (name.Equals("山东十一运夺金") &&
+            //    dateint < 20090909)
+            //{
+            //    if (pdic.ContainsKey(dateint))
+            //        pdic[dateint]++;
+            //    else
+            //        pdic.Add(dateint, 1);
+            //    n = pdic[dateint];
+            //    p = dateint * 100 + n;
+            //}
+
+            //string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}",
+            //    no, f2, f3, f5, p, n, dateint, datetime);
+            //writer.WriteLine(line);
         }
 
         private static void Extract3D(StreamWriter writer, string name, string sdate, string speroid, string code,string dbName)
@@ -179,5 +179,22 @@ namespace Lottery.ETL
             Data.SQLServer.PL35.DwNumberBiz biz = new Data.SQLServer.PL35.DwNumberBiz(dbName);
             biz.Add(biz.Create(p, n, no, dateint, sdate));
         }
+
+        private static void ExtractSSL(StreamWriter writer, string name, string sdate, string speroid, string code, string dbName)
+        {
+            char[] numbers = code.ToArray();
+            string no = string.Join(",", numbers);
+            DateTime datetime = DateTime.Parse(sdate);
+            int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
+            long p = int.Parse(speroid);
+            int n = int.Parse(speroid.Substring(speroid.Length - 2));
+
+            if (pset.Contains(p)) return;
+            pset.Add(p);
+
+            Data.SQLServer.SSL.DwNumberBiz biz = new Data.SQLServer.SSL.DwNumberBiz(dbName);
+            biz.Add(biz.Create(p, n, no, dateint, sdate));
+        }
+
     }
 }

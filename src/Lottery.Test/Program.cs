@@ -45,11 +45,11 @@ namespace Lottery.Test
 
         static void ExtractLotteryData()
         {
-            //DataDownload.DownPage(101);
-            //DataDownload.DownPage(106);
+            //DataDownload.DownPage(144);
+            //DataDownload.DownPage(167);
 
-            //ExtractData.Extract(101);
-            //ExtractData.Extract(106);
+            ExtractData.Extract(144);
+            ExtractData.Extract(167);
             
         }
 

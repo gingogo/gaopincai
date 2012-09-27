@@ -29,6 +29,11 @@ namespace Lottery.Configuration
             get { return GetAppSettings("3dDmTable"); }
         }
 
+        public static string SSLDmTableConnStringName
+        {
+            get { return GetAppSettings("sslDmTable"); }
+        }
+
         public static string PL35DmTableConnStringName
         {
             get { return GetAppSettings("pl35DmTable"); }

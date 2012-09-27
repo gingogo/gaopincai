@@ -8,7 +8,8 @@ namespace Lottery.Services
     using Configuration;
     using Data.SQLServer.Common;
     using Data.SQLServer.D11X5;
-    using Downloader;
+    using Data.Downloader;
+    using Data.Parameter;
     using Logging;
     using Model.Common;
     using Model.D11X5;
@@ -63,10 +64,8 @@ namespace Lottery.Services
                 if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid)) continue;
                 if (this.asyncEventWorker.Exists(category.Code)) continue;
 
-                EventParameter parameter = new EventParameter(category.Type, category.Name, category.DownUrl, category.DbName);
-                parameter.StartDate = GetLatestDate(category.DbName);
-                parameter.EndDate = DateTime.Now;
-                this.asyncEventWorker.RunAsync(category.Code, parameter);
+                EventParameter eventParameter = new EventParameter(category);
+                this.asyncEventWorker.RunAsync(category.Code, eventParameter);
             }
         }
 
@@ -77,30 +76,20 @@ namespace Lottery.Services
                 //if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid))
                 //    continue;
 
-                EventParameter parameter = new EventParameter(category.Type, category.Name, category.DownUrl, category.DbName);
-                parameter.StartDate = GetLatestDate(category.DbName);
-                parameter.EndDate = DateTime.Now;
-                this.StartDown(parameter);
+                EventParameter eventParameter = new EventParameter(category);
+                this.StartDown(eventParameter);
 
                 Console.WriteLine(string.Format("{0}:Finished"), category.DbName);
             }
         }
 
-        private void StartDown(EventParameter parameter)
+        private void StartDown(EventParameter eventParameter)
         {
-            IDownloader downloader = DownloaderFactory.Creator(parameter.Type);
-            for (DateTime date = parameter.StartDate; date <= parameter.EndDate; date = date.AddDays(1))
-            {
-                try
-                {
-                    DownParameter param = new DownParameter(date, parameter.Name, parameter.DownUrl, parameter.DbName);
-                    if (!downloader.Down(param)) break;
-                }
-                catch (Exception exception)
-                {
-                    Logger.Instance.Write(string.Format("Name:{0}-{1},Date:{2},Msg:{3}", parameter.Name, parameter.Type, date, exception.ToString()));
-                }
-            }
+            IDownloader downloader = DownloaderFactory.Creator(eventParameter.Category.DownUrl);
+            if (downloader == null) return;
+
+            DownParameter downParameter = new DownParameter(eventParameter.Category);
+            downloader.Down(downParameter);
         }
 
         private bool IsUpdateTime(DateTime currentTime,string intervals,string peroid)

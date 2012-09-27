@@ -18,9 +18,11 @@ namespace Lottery.ETL.SSC
         public static void Start()
         {
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Extract");
+
             foreach (Category category in categories)
             {
-                string dataFileName = string.Format(@"{0}\{1}.txt", @"G:\LotteryData", category.Name);
+                string dataFileName = string.Format(@"{0}\{1}.txt", path, category.Name);
                 if (!File.Exists(dataFileName)) continue;
                 StreamReader reader = new StreamReader(dataFileName, Encoding.UTF8);
                 int index = 1;

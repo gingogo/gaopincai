@@ -41,6 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Downloader\Common\BaseDownloader.cs" />
+    <Compile Include="Downloader\Common\DownloaderFactory.cs" />
+    <Compile Include="Parameter\DownParameter.cs" />
+    <Compile Include="Parameter\EventParameter.cs" />
+    <Compile Include="Downloader\Common\IDownloader.cs" />
+    <Compile Include="Downloader\QQDownloader.cs" />
+    <Compile Include="Downloader\CP360Downloader.cs" />
+    <Compile Include="Downloader\PinbleDownloader.cs" />
+    <Compile Include="Downloader\LeCaiDownloader.cs" />
+    <Compile Include="Downloader\Common\NumberInfo.cs" />
     <Compile Include="SQLServer\Common\Biz\DimensionNumberTypeBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLServer\Common\Biz\RuleTypeBiz.cs" />
@@ -53,6 +63,13 @@
     <Compile Include="SQLServer\Common\NumberTypeDAO.cs" />
     <Compile Include="SQLServer\Common\DimensionNumberTypeDAO.cs" />
     <Compile Include="SQLServer\Common\RuleTypeDAO.cs" />
+    <Compile Include="SQLServer\SSL\Biz\DmDPCBiz.cs" />
+    <Compile Include="SQLServer\SSL\Biz\DwNumberBiz.cs" />
+    <Compile Include="SQLServer\SSL\Biz\DwSpanBiz.cs" />
+    <Compile Include="SQLServer\SSL\Cache\NumberCache.cs" />
+    <Compile Include="SQLServer\SSL\DmDPCDAO.cs" />
+    <Compile Include="SQLServer\SSL\DwNumberDAO.cs" />
+    <Compile Include="SQLServer\SSL\DwSpanDAO.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DwSpanBiz.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DmDPCBiz.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DwNumberBiz.cs" />

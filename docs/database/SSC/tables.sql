@@ -410,68 +410,6 @@ CREATE TABLE [dbo].[DmC3](
 
 GO
 
-CREATE TABLE [dbo].[DmC33](
-	[Id] [char](3) NOT NULL,
-	[NumberType] [char](3) NOT NULL,
-	[Number] [char](5) NOT NULL,
-	[DaXiao] [char](5) NOT NULL,
-	[DanShuang] [char](5) NOT NULL,
-	[ZiHe] [char](5) NOT NULL,
-	[Lu012] [char](5) NOT NULL,
-	[He] [int] NOT NULL,
-	[HeWei] [int] NOT NULL,
-	[DaCnt] [int] NOT NULL,
-	[XiaoCnt] [int] NOT NULL,
-	[DanCnt] [int] NOT NULL,
-	[ShuangCnt] [int] NOT NULL,
-	[ZiCnt] [int] NOT NULL,
-	[HeCnt] [int] NOT NULL,
-	[Lu0Cnt] [int] NOT NULL,
-	[Lu1Cnt] [int] NOT NULL,
-	[Lu2Cnt] [int] NOT NULL,
-	[Ji] [int] NOT NULL,
-	[JiWei] [int] NOT NULL,
-	[KuaDu] [int] NOT NULL,
-	[AC] [int] NOT NULL
- CONSTRAINT [PK_DmC33] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-CREATE TABLE [dbo].[DmC36](
-	[Id] [char](3) NOT NULL,
-	[NumberType] [char](3) NOT NULL,
-	[Number] [char](5) NOT NULL,
-	[DaXiao] [char](5) NOT NULL,
-	[DanShuang] [char](5) NOT NULL,
-	[ZiHe] [char](5) NOT NULL,
-	[Lu012] [char](5) NOT NULL,
-	[He] [int] NOT NULL,
-	[HeWei] [int] NOT NULL,
-	[DaCnt] [int] NOT NULL,
-	[XiaoCnt] [int] NOT NULL,
-	[DanCnt] [int] NOT NULL,
-	[ShuangCnt] [int] NOT NULL,
-	[ZiCnt] [int] NOT NULL,
-	[HeCnt] [int] NOT NULL,
-	[Lu0Cnt] [int] NOT NULL,
-	[Lu1Cnt] [int] NOT NULL,
-	[Lu2Cnt] [int] NOT NULL,
-	[Ji] [int] NOT NULL,
-	[JiWei] [int] NOT NULL,
-	[KuaDu] [int] NOT NULL,
-	[AC] [int] NOT NULL
- CONSTRAINT [PK_DmC36] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
 CREATE TABLE [dbo].[DmP4](
 	[Id] [char](4) NOT NULL,
 	[NumberType] [char](2) NOT NULL,

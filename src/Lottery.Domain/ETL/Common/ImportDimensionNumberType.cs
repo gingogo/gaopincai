@@ -14,12 +14,13 @@ namespace Lottery.ETL.Common
     {
         public static void Import()
         {
-            DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
+            //DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
 
-            Import11x5();
-            ImportSSC();
-            Import3D();
-            ImportPL35();
+            //Import11x5();
+            //ImportSSC();
+            //Import3D();
+            //ImportPL35();
+            ImportSSL();
         }
 
         public static void Import11x5()
@@ -122,6 +123,36 @@ namespace Lottery.ETL.Common
             foreach (var numberType in numberTypes)
             {
                 Data.SQLServer.PL35.DmDPCBiz biz = new Data.SQLServer.PL35.DmDPCBiz("tcpl35", numberType.Code.GetDmTableSuffix());
+
+                List<DimensionNumberType> ntds = new List<DimensionNumberType>();
+                if (numberType.Length == 1)
+                    ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(number1, numberType.Code);
+                else if (numberType.Length == 2)
+                    ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(number2, numberType.Code);
+                else
+                    ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(number3, numberType.Code);
+
+                foreach (var ntd in ntds)
+                {
+                    ntd.NumberType = numberType.Code;
+                    ntd.RuleType = numberType.RuleType;
+                    ntd.Amount = ntd.Nums * numberType.Amount;
+                    ntd.Probability = (ntd.Nums * 1.0) * numberType.Probability;
+                }
+                DimensionNumberTypeBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
+            }
+        }
+
+        public static void ImportSSL()
+        {
+            List<NumberType> numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("SSL")).ToList();
+            string[] number1 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012" };
+            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu" };
+            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+
+            foreach (var numberType in numberTypes)
+            {
+                Data.SQLServer.SSL.DmDPCBiz biz = new Data.SQLServer.SSL.DmDPCBiz("shanghssl", numberType.Code.GetDmTableSuffix());
 
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)
