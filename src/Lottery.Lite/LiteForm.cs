@@ -59,12 +59,11 @@ namespace Lottery.Lite
                     CaiData.CaiTypeName = "老11选5";
                     break;
                 case "jiangx11x5":
-                    CaiData.PeriodPerDay = 65;
+                    CaiData.PeriodPerDay = 78;
                     CaiData.TimeBeginHour = 9;
                     CaiData.TimeEndHour = 22;
-                    CaiData.TimePerPeriod = 12;
+                    CaiData.TimePerPeriod = 10;
                     CaiData.CaiTypeName = "11选5";
-                    
                     break;
                 case "guangd11x5":
                     CaiData.PeriodPerDay = 84;
@@ -321,6 +320,11 @@ namespace Lottery.Lite
             ShowNewNumber();
         }
 
+        /// <summary>
+        /// 重新计算，然后保存缓存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonStat_Click(object sender, EventArgs e)
         {
             CaiData.TaskType = comboBoxSType.Text;
@@ -330,6 +334,11 @@ namespace Lottery.Lite
             timerReport.Start();
         }
 
+        /// <summary>
+        /// 从缓存中获取，只展示，除非没有缓存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonShow_Click(object sender, EventArgs e)
         {
             CaiData.TaskType = comboBoxSType.Text;

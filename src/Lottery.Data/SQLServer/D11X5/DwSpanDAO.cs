@@ -61,8 +61,8 @@ namespace Lottery.Data.SQLServer.D11X5
         public DataSet SelectTopNSpan(string num,int N,string p)
         {
             //判断num是前几，暂时是前2，tom改成自动的吧
-            string sql = "SELECT TOP " + N + " DwNumber.F2,DwNumber.P,DwPeroidSpan.F2Spans FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
-            sql = sql+  " WHERE DwNumber.F2 = '" + num + "' and DwNumber.P < '"+p+"' order by DwNumber.P desc";
+            string sql = "SELECT TOP " + N + " DwNumber.P2,DwNumber.P,DwPeroidSpan.P2Spans FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
+            sql = sql+  " WHERE DwNumber.P2 = '" + num + "' and DwNumber.P < '"+p+"' order by DwNumber.P desc";
             DataSet ds = SqlHelper.ExecuteDataset(this.ConnectionString, CommandType.Text, sql);
             return ds;
         }
@@ -70,16 +70,16 @@ namespace Lottery.Data.SQLServer.D11X5
         public int SelectMaxSpan(string num)
         {
             //判断num是前几，暂时是前2，tom改成自动的吧
-            string sql = "SELECT max(DwPeroidSpan.F2Spans) FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
-            sql += " WHERE DwNumber.F2 = '"+ num+"'";
+            string sql = "SELECT max(DwPeroidSpan.P2Spans) FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
+            sql += " WHERE DwNumber.P2 = '"+ num+"'";
             return (int)SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql);
         }
 
         public int SelectAvgSpan(string num)
         {
             //判断num是前几，暂时是前2，tom改成自动的吧
-            string sql = "SELECT avg(DwPeroidSpan.F2Spans) FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
-            sql += " WHERE DwNumber.F2 = '" + num + "'";
+            string sql = "SELECT avg(DwPeroidSpan.P2Spans) FROM DwNumber INNER JOIN DwPeroidSpan ON DwNumber.P = DwPeroidSpan.P";
+            sql += " WHERE DwNumber.P2 = '" + num + "'";
             return (int)SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql);
         }
 
