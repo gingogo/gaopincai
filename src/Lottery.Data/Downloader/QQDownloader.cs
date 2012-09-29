@@ -11,7 +11,7 @@ namespace Lottery.Data.Downloader
     using Utils;
 
     /// <summary>
-    /// 11选5彩种数据导入。
+    /// 抓取888.qq.com网站的彩票数据类。
     /// </summary>
     public class QQDownloader : BaseDownloader, IDownloader
     {
@@ -44,7 +44,8 @@ namespace Lottery.Data.Downloader
                     return false;
                 }
 
-                HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
+                long lastP = biz.GetLatestPeroid();
+                //HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
                 for (int i = matchs.Count - 1; i >= 0; i--)
                 {
                     Match match = matchs[i];
@@ -60,7 +61,8 @@ namespace Lottery.Data.Downloader
                     int p = int.Parse(peroid);
                     //把期号统一成{yyyymmddnn}
                     if (p < 2000000000) p += 2000000000;
-                    if (pSet.Contains(p)) continue;
+                    //if (pSet.Contains(p)) continue;
+                    if (p <= lastP) continue;
 
                     int n = int.Parse(peroid.Substring(peroid.Length - 2));
                     if (!biz.Add(p, n, code, intDate, datetime)) return false;
@@ -102,7 +104,8 @@ namespace Lottery.Data.Downloader
                     return false;
                 }
 
-                HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
+                long lastP = biz.GetLatestPeroid();
+                //HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
                 for (int i = matchs.Count - 1; i >= 0; i--)
                 {
                     Match match = matchs[i];
@@ -119,7 +122,8 @@ namespace Lottery.Data.Downloader
                     long p = long.Parse(peroid);
                     //把期号统一成{yyyymmddnnn}
                     if (p < 20000000000) p += 20000000000;
-                    if (pSet.Contains(p)) continue;
+                    //if (pSet.Contains(p)) continue;
+                    if (p <= lastP) continue;
 
                     code = string.Join(",", code.ToArray());
                     int n = int.Parse(peroid.Substring(peroid.Length - 3));

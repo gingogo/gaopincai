@@ -39,6 +39,10 @@ namespace Lottery.Model.Common
         /// </summary>
         public static readonly String C_Code = "Code";
         /// <summary>
+        /// 列名DbName，彩种对应的数据库名称
+        /// </summary>
+        public static readonly String C_DbName = "DbName";   
+        /// <summary>
         /// 列名Peroid,彩种开奖周期
         /// </summary>
         public static readonly String C_Peroid = "Peroid";
@@ -55,9 +59,17 @@ namespace Lottery.Model.Common
         /// </summary>
         public static readonly String C_IsGP = "IsGP";
         /// <summary>
-        /// 列名DownPageIndex,彩种当前已下载的页码
+        /// 列名Times,彩种每天开奖次数。 
         /// </summary>
-        public static readonly String C_DownPageIndex = "DownPageIndex";
+        public static readonly String C_Times = "Times";
+        /// <summary>
+        /// 列名PeroidCount,彩种已开奖的总期数
+        /// </summary>
+        public static readonly String C_PeroidCount = "PeroidCount";
+        /// <summary>
+        /// 列名DownPageSize,彩种当前下载页的分页大小（即每页有几条记录)
+        /// </summary>
+        public static readonly String C_DownPageSize = "DownPageSize";
         /// <summary>
         /// 列名DownPageCount,彩种当前数据下载的总页码
         /// </summary>
@@ -74,14 +86,6 @@ namespace Lottery.Model.Common
         /// 列名DownUrl,彩种数据下载URL
         /// </summary>
         public static readonly String C_DownUrl = "DownUrl";
-        /// <summary>
-        /// 列名DbName，彩种对应的数据库名称
-        /// </summary>
-        public static readonly String C_DbName = "DbName";
-        /// <summary>
-        /// 列名Times,彩种每天开奖次数。 
-        /// </summary>
-        public static readonly String C_Times = "Times";
         /// <summary>
         /// 列名Created,彩种记录创建时间
         /// </summary>
@@ -100,6 +104,8 @@ namespace Lottery.Model.Common
 
         private String _code;
 
+        private String _dbName;
+
         private String _ruleType;
 
         private String _type;
@@ -112,7 +118,11 @@ namespace Lottery.Model.Common
 
         private Byte _isGP;
 
-        private Int32 _downPageIndex;
+        private Int32 _times;
+
+        private Int32 _peroidCount;
+
+        private Int32 _downPageSize;
 
         private Int32 _downPageCount;
 
@@ -123,10 +133,6 @@ namespace Lottery.Model.Common
         private String _downUrl;
 
         private DateTime _created = DateTime.Now;
-
-        private String _dbName;
-
-        private Int32 _times;
 
         #endregion
 
@@ -187,6 +193,15 @@ namespace Lottery.Model.Common
             set { this._code = value; }
         }
         /// <summary>
+        /// 获取或设置彩种数据存储的数据库名称
+        /// </summary>
+        [Column(Name = "DbName")]
+        public String DbName
+        {
+            get { return this._dbName ?? string.Empty; }
+            set { this._dbName = value; }
+        }
+        /// <summary>
         /// 获取或设置彩种开奖周期
         /// </summary>
         [Column(Name = "Peroid")]
@@ -223,13 +238,31 @@ namespace Lottery.Model.Common
             set { this._isGP = value; }
         }
         /// <summary>
-        /// 获取或设置彩种当前数据下载的页码
+        /// 获取或设置彩种每天开奖次数
         /// </summary>
-        [Column(Name = "DownPageIndex")]
-        public Int32 DownPageIndex
+        [Column(Name = "Times")]
+        public Int32 Times
         {
-            get { return this._downPageIndex; }
-            set { this._downPageIndex = value; }
+            get { return this._times; }
+            set { this._times = value; }
+        }
+        /// <summary>
+        /// 获取或设置彩种已开奖的总期数
+        /// </summary>
+        [Column(Name = "PeroidCount")]
+        public Int32 PeroidCount
+        {
+            get { return this._peroidCount; }
+            set { this._peroidCount = value; }
+        }
+        /// <summary>
+        /// 获取或设置彩种当前下载页的分页大小（即每页有几条记录)
+        /// </summary>
+        [Column(Name = "DownPageSize")]
+        public Int32 DownPageSize
+        {
+            get { return this._downPageSize; }
+            set { this._downPageSize = value; }
         }
         /// <summary>
         /// 获取或设置彩种当前数据下载的总页码
@@ -266,24 +299,6 @@ namespace Lottery.Model.Common
         {
             get { return this._downUrl ?? string.Empty; }
             set { this._downUrl = value; }
-        }
-        /// <summary>
-        /// 获取或设置彩种数据存储的数据库名称
-        /// </summary>
-        [Column(Name = "DbName")]
-        public String DbName
-        {
-            get { return this._dbName ?? string.Empty; }
-            set { this._dbName = value; }
-        }
-        /// <summary>
-        /// 获取或设置彩种每天开奖次数
-        /// </summary>
-        [Column(Name = "Times")]
-        public Int32 Times
-        {
-            get { return this._times; }
-            set { this._times = value; }
         }
         /// <summary>
         /// 获取或设置记录创建时间

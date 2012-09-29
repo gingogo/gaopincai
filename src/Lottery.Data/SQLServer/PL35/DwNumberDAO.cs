@@ -56,6 +56,12 @@ namespace Lottery.Data.SQLServer.PL35
             return Convert.ToInt32(SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sqlCmd));
         }
 
+        public long SelectLatestPeroid(string condition)
+        {
+            string sqlCmd = string.Format("SELECT Max(P) as P FROM {0} {1} ", this._tableName, condition);
+            return Convert.ToInt64(SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sqlCmd));
+        }
+
         public List<DwNumber> SelectDistinctDate()
         {
             string sqlCmd = string.Format("select distinct date from {0} order by date asc", this._tableName);

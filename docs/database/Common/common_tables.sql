@@ -27,11 +27,13 @@ CREATE TABLE [dbo].[Category](
 	[Seq] [int] NOT NULL,
 	[Enabled] [tinyint] NOT NULL,
 	[IsGP] [tinyint] NOT NULL,
-	[DownPageIndex] [int] NOT NULL,
+	[Times] [int] NOT NULL,
+	[PeroidCount] [int] NOT NULL,
+	[DownPageCount] [int] NOT NULL,
+	[DownPageSize] [int] NOT NULL,
 	[DownIntervals] [nvarchar](10) NOT NULL,
 	[DownPeroid] [nvarchar](2) NOT NULL,
 	[DownUrl] [varchar](200) NOT NULL,
-	[Times] [int] NOT NULL,
 	[Created] [datetime] NOT NULL,
  CONSTRAINT [PK_DmCategory] PRIMARY KEY CLUSTERED 
 (

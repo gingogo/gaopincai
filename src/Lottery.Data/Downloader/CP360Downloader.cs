@@ -30,7 +30,6 @@ namespace Lottery.Data.Downloader
 
         private bool Down3D(DownParameter param, SQLServer.D3.DwNumberBiz biz, DateTime currentDate)
         {
-            int intDate = int.Parse(currentDate.ToString("yyyyMMdd"));
             string url = param.Category.DownUrl;
 
             try
@@ -44,7 +43,8 @@ namespace Lottery.Data.Downloader
                     return false;
                 }
 
-                HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
+                long lastP = biz.GetLatestPeroid();
+                //HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
                 for (int i = matchs.Count - 1; i >= 0; i--)
                 {
                     Match match = matchs[i];
@@ -56,10 +56,13 @@ namespace Lottery.Data.Downloader
 
                     if (string.IsNullOrEmpty(code) || code.Trim().Length == 0) continue;
 
+                    int intDate = int.Parse(datetime.Replace("-", ""));
                     int p = int.Parse(peroid);
+
                     //把期号统一成{yyyynnn}
                     if (p < 2000000) p += 2000000;
-                    if (pSet.Contains(p)) continue;
+                    //if (pSet.Contains(p)) continue;
+                    if (p <= lastP) continue;
 
                     int n = int.Parse(peroid.Substring(peroid.Length - 3));
                     if (!biz.Add(p, n, code, intDate, datetime)) return false;
@@ -88,7 +91,6 @@ namespace Lottery.Data.Downloader
 
         private bool DownPL35(DownParameter param, SQLServer.PL35.DwNumberBiz biz, DateTime currentDate)
         {
-            int intDate = int.Parse(currentDate.ToString("yyyyMMdd"));
             string url = param.Category.DownUrl;
 
             try
@@ -102,7 +104,8 @@ namespace Lottery.Data.Downloader
                     return false;
                 }
 
-                HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
+                long lastP = biz.GetLatestPeroid();
+                //HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
                 for (int i = matchs.Count - 1; i >= 0; i--)
                 {
                     Match match = matchs[i];
@@ -111,12 +114,16 @@ namespace Lottery.Data.Downloader
                     string code = Regex.Match(match.Value, "<div class=\"aball\">.*?</div>", RegexOptions.IgnoreCase | RegexOptions.Singleline).Value;
                     code = Regex.Replace(code, "<.*?>", "");
                     code = string.Join(",", code.ToArray());
+                    
                     if (string.IsNullOrEmpty(code) || code.Trim().Length == 0) continue;
 
+                    int intDate = int.Parse(datetime.Replace("-", ""));
                     int p = int.Parse(peroid);
+
                     //把期号统一成{yyyynnn}
                     if (p < 2000000) p += 2000000;
-                    if (pSet.Contains(p)) continue;
+                    //if (pSet.Contains(p)) continue;
+                    if (p <= lastP) continue;
 
                     int n = int.Parse(peroid.Substring(peroid.Length - 3));
                     if (!biz.Add(p, n, code, intDate, datetime)) return false;

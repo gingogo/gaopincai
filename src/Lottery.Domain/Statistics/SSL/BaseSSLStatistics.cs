@@ -12,7 +12,9 @@ namespace Lottery.Statistics.SSL
     {
         protected override List<Category> GetCatgories()
         {
-            return CategoryBiz.Instance.GetEnabledCategories("SSL");
+            Category category = CategoryBiz.Instance.GetById(144);
+            return new List<Category>() { category };
+            //return CategoryBiz.Instance.GetEnabledCategories("SSL");
         }
     }
 }

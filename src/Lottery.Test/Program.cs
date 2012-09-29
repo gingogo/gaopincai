@@ -11,20 +11,23 @@ namespace Lottery.Test
     using ETL;
     using Utils;
     using Analysis.Formula;
+    using Data.Downloader;
 
     class Program
     {
         static void Main(string[] args)
         {
+            ExtractNumber();
+            StatTest();
             //OmissionValueTest();
             //DownServiceTest();
-            //StatTest();
-            //ExtractLotteryData();
             //ETLTest();
             //TransactionTest();
             //FormulaTest();
             //Console.WriteLine((1%3).ToString());
             //CacheTest();
+            //DownloaderTest();
+            //ServiceTest();
             Console.WriteLine("Finished");
             Console.Read();
         }
@@ -43,14 +46,20 @@ namespace Lottery.Test
             Console.WriteLine(Deviation.GetWatchColdN(0.959, 0.999, 1.0 / 110.0));
         }
 
-        static void ExtractLotteryData()
+        static void ExtractNumber()
         {
-            //DataDownload.DownPage(144);
-            //DataDownload.DownPage(167);
+            DataDownload.DownPage(144);
+            DataDownload.DownPage(167);
 
             ExtractData.Extract(144);
             ExtractData.Extract(167);
             
+        }
+
+        static void ExtractNumber(int categoryId)
+        {
+            DataDownload.DownPage(categoryId);
+            ExtractData.Extract(categoryId);
         }
 
         static void DownServiceTest()
@@ -65,6 +74,22 @@ namespace Lottery.Test
             {
                 Logging.Logger.Instance.Write(ex.ToString());
             }
+        }
+
+        static void DownloaderTest()
+        {
+            Category category = CategoryBiz.Instance.GetById(144);
+            PinbleDownloader downloader = new PinbleDownloader();
+            //downloader.Down(new Data.Parameter.DownParameter(category));
+
+            category = CategoryBiz.Instance.GetById(167);
+            downloader.Down(new Data.Parameter.DownParameter(category));
+        }
+
+        static void ServiceTest()
+        {
+            Services.CategoryService service = new Services.CategoryService();
+            service.Start(DateTime.Now);
         }
 
         static void CacheTest()
@@ -90,7 +115,8 @@ namespace Lottery.Test
             Statistics.IStatistics[] stats = new Statistics.IStatistics[] 
             {
                 new Statistics.D11X5.DmSpan(),
-                new Statistics.SSC.DmSpan(),
+                new Statistics.SSL.DmSpan(),
+                //new Statistics.SSC.DmSpan(),
                 //new Statistics.D3.DmSpan()
                 //new Statistics.PL35.DmSpan()
             };

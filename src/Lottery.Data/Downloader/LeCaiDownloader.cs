@@ -11,7 +11,7 @@ namespace Lottery.Data.Downloader
     using Utils;
 
     /// <summary>
-    /// 时时彩彩种数据下载类。
+    /// 抓取www.lecai.com网站的彩票数据类。
     /// </summary>
     public class LeCaiDownloader : BaseDownloader, IDownloader
     {

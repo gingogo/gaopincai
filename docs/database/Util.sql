@@ -6,6 +6,8 @@ DBCC SHRINKFILE (LotteryShanD115_Log, 1);
 DBCC SHRINKFILE (LotteryFC3D_Log, 1);
 DBCC SHRINKFILE (LotteryPL35_Log, 1);
 
+update DwNumber set Date = Replace(CONVERT(varchar(10),created,120),'-','');
+
 drop table dbo.DwACSpan;
 drop table dbo.DwDanShuangSpan ;
 drop table  dbo.DwDaXiaoSpan;

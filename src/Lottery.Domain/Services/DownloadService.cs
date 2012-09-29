@@ -79,7 +79,7 @@ namespace Lottery.Services
                 EventParameter eventParameter = new EventParameter(category);
                 this.StartDown(eventParameter);
 
-                Console.WriteLine(string.Format("{0}:Finished"), category.DbName);
+                Console.WriteLine(string.Format("{0}:Finished", category.DbName));
             }
         }
 
@@ -118,11 +118,6 @@ namespace Lottery.Services
             }
 
             return false;
-        }
-
-        private DateTime GetLatestDate(string dbName)
-        {
-            return new DwNumberBiz(dbName).GetLatestDate();
         }
     }
 }

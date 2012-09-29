@@ -44,7 +44,7 @@ namespace Lottery.ETL
             WebClient wc = new WebClient();
             wc.Encoding = Encoding.UTF8;
 
-            for (int i = category.DownPageIndex; i <= category.DownPageCount; i++)
+            for (int i = 1; i <= category.DownPageCount; i++)
             {
                 string url = string.Format(dataUrl, i, category.Code, "", category.Name, category.IsGP);
                 string fileName = string.Format("{0}\\{1}.html", path, i);
@@ -58,7 +58,8 @@ namespace Lottery.ETL
                     Logger.Instance.Write(url);
                 }
             }
-            Console.WriteLine("Finished!");
+
+            Console.WriteLine("{0}:DownPage Finished!", category.Name);
         }
 
         public static void DownCategory()

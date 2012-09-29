@@ -49,22 +49,35 @@ namespace Lottery.Data.SQLServer.Common
 
         public List<Category> GetEnabledCategories()
         {
-            //Operand operand = Restrictions.Clause(SqlClause.Where)
-            //    .Append(Restrictions.Equal(Category.C_Enabled, 1));
-            //return this.DataAccessor.SelectWithCondition(operand.ToString());
             return this.listCache.Where(x => x.Enabled == 1).OrderBy(x=>x.Seq).ToList();
         }
 
         public List<Category> GetEnabledCategories(string type)
         {
-            //Operand operand = Restrictions.Clause(SqlClause.Where)
-            //   .Append(Restrictions.Equal(Category.C_Enabled, 1))
-            //   .Append(Restrictions.And)
-            //   .Append(Restrictions.Equal(Category.C_Type, type));
-            //return this.DataAccessor.SelectWithCondition(operand.ToString());
             return this.listCache.Where(x => x.Enabled == 1 && x.Type.ToLower().Equals(type.ToLower())).ToList();
         }
 
+        public List<Category> GetEnabledCategories(bool isFromCache)
+        {
+            if (isFromCache) 
+                return this.GetEnabledCategories();
+
+            Operand operand = Restrictions.Clause(SqlClause.Where)
+                .Append(Restrictions.Equal(Category.C_Enabled, 1));
+            return this.DataAccessor.SelectWithCondition(operand.ToString());
+        }
+
+        public List<Category> GetEnabledCategories(bool isFromCache,string type)
+        {
+            if (isFromCache)
+                return this.GetEnabledCategories(type);
+
+            Operand operand = Restrictions.Clause(SqlClause.Where)
+               .Append(Restrictions.Equal(Category.C_Enabled, 1))
+               .Append(Restrictions.And)
+               .Append(Restrictions.Equal(Category.C_Type, type));
+            return this.DataAccessor.SelectWithCondition(operand.ToString());
+        }
         #endregion
 
         #region 私有方法成员

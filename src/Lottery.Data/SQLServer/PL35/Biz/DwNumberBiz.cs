@@ -23,9 +23,13 @@ namespace Lottery.Data.SQLServer.PL35
         public DateTime GetLatestDate()
         {
             int num = DataAccessor.SelectLatestDate(string.Empty);
-            if (num == 0)
-                return DateTime.Now.AddDays(-35);
+            if (num == 0) return DateTime.Now.AddDays(-35);
             return DateTime.ParseExact(num.ToString(), "yyyyMMdd", null);
+        }
+
+        public long GetLatestPeroid()
+        {
+            return this.DataAccessor.SelectLatestPeroid(string.Empty);
         }
 
         public HashSet<long> GetPeroidsByDate(DateTime date)

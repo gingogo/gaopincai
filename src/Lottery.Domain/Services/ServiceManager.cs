@@ -13,6 +13,7 @@ namespace Lottery.Services
         {
             _services = new List<IService>(2);
             _services.Add(new DownloadService());
+            _services.Add(new CategoryService());
         }
 
         public static void RunAllService(DateTime currentDateTime)

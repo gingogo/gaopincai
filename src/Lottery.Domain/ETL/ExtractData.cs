@@ -47,7 +47,7 @@ namespace Lottery.ETL
             string fileName = string.Format(@"{0}\{1}.txt", path, category.Name);
 
             StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
-            for (int i = category.DownPageCount; i >= category.DownPageIndex; i--)
+            for (int i = category.DownPageCount; i >= 1; i--)
             {
                 string htmlFileName = string.Format(@"{0}\{1}.html", downPath, i);
                 if (!File.Exists(htmlFileName))
@@ -63,7 +63,7 @@ namespace Lottery.ETL
             }
             sw.Close();
 
-            Console.WriteLine("Finished!");
+            Console.WriteLine("{0}:Extract Data Finished!", category.Name);
         }
 
         private static Action<StreamWriter, string, string, string, string, string> CreateAction(string type)
@@ -114,8 +114,8 @@ namespace Lottery.ETL
             int n = int.Parse(speroid.Substring(speroid.Length - 3));
 
             if (pset.Contains(p)) return;
-
             pset.Add(p);
+
             string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
                 p, no, p2, p3, p4, p5, n, dateint, datetime);
             writer.WriteLine(line);
@@ -128,6 +128,9 @@ namespace Lottery.ETL
             int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
             int p = 2000000000 + int.Parse(speroid);
             int n = int.Parse(speroid.Substring(speroid.Length - 2));
+
+            if (pset.Contains(p)) return;
+            pset.Add(p);
 
             Data.SQLServer.D11X5.DwNumberBiz biz = new Data.SQLServer.D11X5.DwNumberBiz(dbName);
             biz.Add(biz.Create(p, n, no, dateint, sdate));
