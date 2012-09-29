@@ -19,7 +19,7 @@ namespace Lottery.Services
     {
         public void Start(DateTime currentDateTime)
         {
-            //if (!this.IsUpdateTime(currentDateTime)) return;
+            if (!this.IsUpdateTime(currentDateTime)) return;
 
             string urlFormat = "http://www.pinble.com/Template/WebService1.asmx/Present3DList?pageindex={0}&lottory={1}&pl3={2}&name={3}&isgp={4}";
             List<Category> categories = CategoryBiz.Instance.GetCategories();
