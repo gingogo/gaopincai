@@ -75,6 +75,7 @@ KuaDu = t2.KuaDu,
 AC = t2.AC
 from LotteryChongQSSC.dbo.DmP5 t2 where DmP5.Id = t2.Id;
 
+truncate table dbo.DwPeroidSpan;
 truncate table dbo.DwACSpan;
 truncate table dbo.DwDanShuangSpan ;
 truncate table  dbo.DwDaXiaoSpan;
