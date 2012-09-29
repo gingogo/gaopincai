@@ -351,7 +351,7 @@ namespace Lottery.Lite
                     int spanAvg = span.SpanAvg;//平均值
                     string num = span.num;
                      string pBegin = BizBase.getPByDate(CaiData.NowCaculate, CaiData);//开始计算的时间
-                    DataSet ds =  da.SelectTopNSpan(num, 100, pBegin);
+                    DataSet ds =  da.SelectTopNSpan(num, 1008, pBegin);
                     List<int> dtos = new List<int>();
                     foreach (DataRow dr in ds.Tables[0].Rows)
                     {
