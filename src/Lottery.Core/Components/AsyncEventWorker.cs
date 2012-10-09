@@ -126,8 +126,8 @@ namespace Lottery.Components
 
         protected virtual void OnDoWork(DoWorkEventArgs e)
         {
-            if (DoWork != null)
-                DoWork(this, e);
+            if (this.DoWork != null)
+                this.DoWork(this, e);
         }
 
         protected virtual void OnCompleted(WorkerCompletedEventArgs e)

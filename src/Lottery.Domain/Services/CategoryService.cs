@@ -48,14 +48,6 @@ namespace Lottery.Services
             }
         }
 
-        public void Stop()
-        {
-        }
-
-        public void Refresh()
-        {
-        }
-
         private bool IsUpdateTime(DateTime currentTime)
         {
             string hours = "21,22,23,0,1,2,3";

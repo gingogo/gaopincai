@@ -17,8 +17,8 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
-            ExtractNumber();
-            StatTest();
+            //ExtractNumber();
+            //StatTest();
             //OmissionValueTest();
             //DownServiceTest();
             //ETLTest();
@@ -48,8 +48,8 @@ namespace Lottery.Test
 
         static void ExtractNumber()
         {
-            DataDownload.DownPage(144);
-            DataDownload.DownPage(167);
+            //DataDownload.DownPage(144);
+            //DataDownload.DownPage(167);
 
             ExtractData.Extract(144);
             ExtractData.Extract(167);

@@ -41,14 +41,6 @@ namespace Lottery.Services
         {
         }
 
-        public void Stop()
-        {
-        }
-
-        public void Refresh()
-        {
-        }
-
         public void Start(DateTime currentDateTime)
         {
             if (ConfigHelper.IsAsyncDown)

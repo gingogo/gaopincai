@@ -20,10 +20,5 @@ namespace Lottery.Services
         {
             _services.ForEach(x => x.Start(currentDateTime));
         }
-
-        public static void RefreshAllService()
-        {
-            _services.ForEach(x => x.Refresh());
-        }
     }
 }

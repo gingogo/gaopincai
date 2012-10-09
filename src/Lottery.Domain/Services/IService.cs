@@ -8,7 +8,5 @@ namespace Lottery.Services
     public interface IService
     {
         void Start(DateTime currentDateTime);
-        void Stop();
-        void Refresh();
     }
 }

@@ -38,6 +38,8 @@
             this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
             this.leftTab = new System.Windows.Forms.TabControl();
             this.leftRealPage = new System.Windows.Forms.TabPage();
+            this.nudPeroid = new System.Windows.Forms.NumericUpDown();
+            this.lblPeroid = new System.Windows.Forms.Label();
             this.cbxRealStat = new System.Windows.Forms.ComboBox();
             this.lblRealStat = new System.Windows.Forms.Label();
             this.btnReal = new System.Windows.Forms.Button();
@@ -81,6 +83,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.leftTab.SuspendLayout();
             this.leftRealPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPeroid)).BeginInit();
             this.leftOmissionPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).BeginInit();
             this.ctxMenuRightTab.SuspendLayout();
@@ -158,6 +161,8 @@
             // 
             // leftRealPage
             // 
+            this.leftRealPage.Controls.Add(this.nudPeroid);
+            this.leftRealPage.Controls.Add(this.lblPeroid);
             this.leftRealPage.Controls.Add(this.cbxRealStat);
             this.leftRealPage.Controls.Add(this.lblRealStat);
             this.leftRealPage.Controls.Add(this.btnReal);
@@ -173,6 +178,37 @@
             this.leftRealPage.TabIndex = 3;
             this.leftRealPage.Text = "实时数据";
             this.leftRealPage.UseVisualStyleBackColor = true;
+            // 
+            // nudPeroid
+            // 
+            this.nudPeroid.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.nudPeroid.Location = new System.Drawing.Point(89, 180);
+            this.nudPeroid.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+            this.nudPeroid.Name = "nudPeroid";
+            this.nudPeroid.Size = new System.Drawing.Size(140, 21);
+            this.nudPeroid.TabIndex = 29;
+            this.nudPeroid.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // lblPeroid
+            // 
+            this.lblPeroid.AutoSize = true;
+            this.lblPeroid.Location = new System.Drawing.Point(16, 189);
+            this.lblPeroid.Name = "lblPeroid";
+            this.lblPeroid.Size = new System.Drawing.Size(59, 12);
+            this.lblPeroid.TabIndex = 28;
+            this.lblPeroid.Text = "最近期数:";
             // 
             // cbxRealStat
             // 
@@ -193,7 +229,7 @@
             // 
             // btnReal
             // 
-            this.btnReal.Location = new System.Drawing.Point(154, 183);
+            this.btnReal.Location = new System.Drawing.Point(154, 228);
             this.btnReal.Name = "btnReal";
             this.btnReal.Size = new System.Drawing.Size(75, 23);
             this.btnReal.TabIndex = 25;
@@ -304,7 +340,7 @@
             this.nudOmissonPrecision.Size = new System.Drawing.Size(140, 21);
             this.nudOmissonPrecision.TabIndex = 11;
             this.nudOmissonPrecision.Value = new decimal(new int[] {
-            5,
+            6,
             0,
             0,
             0});
@@ -574,6 +610,7 @@
             this.leftTab.ResumeLayout(false);
             this.leftRealPage.ResumeLayout(false);
             this.leftRealPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPeroid)).EndInit();
             this.leftOmissionPage.ResumeLayout(false);
             this.leftOmissionPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOmissonPrecision)).EndInit();
@@ -636,6 +673,8 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.ToolStripButton tsbCaculator;
         private System.Windows.Forms.ToolStripButton tsbMultiple;
+        private System.Windows.Forms.NumericUpDown nudPeroid;
+        private System.Windows.Forms.Label lblPeroid;
     }
 }
 
