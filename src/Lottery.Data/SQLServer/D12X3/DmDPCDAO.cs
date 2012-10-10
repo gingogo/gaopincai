@@ -5,10 +5,10 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Lottery.Data.SQLServer.D11X5
+namespace Lottery.Data.SQLServer.D12X3
 {
     using Model.Common;
-    using Model.D11X5;
+    using Model.D12X3;
     using Utils;
 
     /// <summary>

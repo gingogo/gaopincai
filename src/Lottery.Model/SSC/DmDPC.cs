@@ -100,6 +100,23 @@ namespace Lottery.Model.SSC
         /// 列名AC  
         /// </summary>
         public static readonly String C_AC = "AC";
+        /// <summary>
+        /// 列名DaXiaoBi  
+        /// </summary>
+        public static readonly String C_DaXiaoBi = "DaXiaoBi";
+        /// <summary>
+        /// 列名ZiHeBi  
+        /// </summary>
+        public static readonly String C_ZiHeBi = "ZiHeBi";
+        /// <summary>
+        /// 列名DanShuangBi  
+        /// </summary>
+        public static readonly String C_DanShuangBi = "DanShuangBi";
+        /// <summary>
+        /// 列名Lu012Bi  
+        /// </summary>
+        public static readonly String C_Lu012Bi = "Lu012Bi";
+
         #endregion
 
         #region Field Members
@@ -147,6 +164,14 @@ namespace Lottery.Model.SSC
         private int _kuaDu;
 
         private int _aC;
+
+        private string _daXiaoBi;
+
+        private string _ziHeBi;
+
+        private string _danShuangBi;
+
+        private string _lu012Bi;
 
         #endregion
 
@@ -350,15 +375,50 @@ namespace Lottery.Model.SSC
             get { return this._aC; }
             set { this._aC = value; }
         }
-
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "DaXiaoBi")]
+        public virtual String DaXiaoBi
+        {
+            get { return this._daXiaoBi; }
+            set { this._daXiaoBi = value; }
+        }
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "ZiHeBi")]
+        public virtual String ZiHeBi
+        {
+            get { return this._ziHeBi; }
+            set { this._ziHeBi = value; }
+        }
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "DanShuangBi")]
+        public virtual String DanShuangBi
+        {
+            get { return this._danShuangBi; }
+            set { this._danShuangBi = value; }
+        }
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "Lu012Bi")]
+        public virtual String Lu012Bi
+        {
+            get { return this._lu012Bi; }
+            set { this._lu012Bi = value; }
+        }
         #endregion
 
         public override string ToString()
         {
-            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21}",
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25}",
                 this._id, this._numberType, this._number, this._daXiao, this._danShuang, this._ziHe, this._lu012, this._he, this._heWei, this._daCnt,
                 this._xiaoCnt, this._danCnt, this._shuangCnt, this._ziCnt, this._heCnt, this._lu0Cnt, this._lu1Cnt, this._lu2Cnt,
-                this._ji, this._jiWei, this._kuaDu, this._aC);
+                this._ji, this._jiWei, this._kuaDu, this._aC, this._daXiaoBi, this._ziHeBi, this._danShuangBi, this._lu012Bi);
         }
     }
 }

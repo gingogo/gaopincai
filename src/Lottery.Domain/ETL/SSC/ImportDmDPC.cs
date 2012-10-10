@@ -151,11 +151,6 @@ namespace Lottery.ETL.SSC
             for (int i = 0; i < count; i++)
             {
                 var digits = i.ToString(format).ToArray();
-                if (type.Equals("C33") && digits.Distinct().Count() != 2)
-                    continue;
-                if (type.Equals("C36") && digits.Distinct().Count() != 3)
-                    continue;
-
                 Permutations<char> p = new Permutations<char>(digits, length);
                 List<string> pn = p.Get(",");
                 if (pn.Exists(x => list.Contains(x))) continue;
@@ -191,7 +186,6 @@ namespace Lottery.ETL.SSC
             foreach (string str in list)
             {
                 entities.Add(GetDmFCAn(str.ToList()));
-                //biz.Add(GetDmFCAn(str.ToList()));
             }
             biz.DataAccessor.Insert(entities, SqlInsertMethod.SqlBulkCopy);
         }
@@ -220,6 +214,10 @@ namespace Lottery.ETL.SSC
             dto.JiWei = dto.Ji.GetWei();
             dto.KuaDu = list.GetKuaDu();
             dto.AC = list.GetAC();
+            dto.DaXiaoBi = list.GetDaXiaoBi(4);
+            dto.ZiHeBi = list.GetZiHeBi();
+            dto.DanShuangBi = list.GetDanShuangBi();
+            dto.Lu012Bi = list.GetLu012Bi();
 
             return dto;
         }

@@ -79,6 +79,7 @@ CREATE TABLE [dbo].[NumberType](
 	[Amount] [decimal](4, 2) NOT NULL,
 	[Prize] [decimal](10, 2) NOT NULL,
 	[Seq] [int] NOT NULL,
+	[Status] [tinyint] NOT NULL,
  CONSTRAINT [PK_NumberType] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

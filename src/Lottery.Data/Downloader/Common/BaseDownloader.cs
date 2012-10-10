@@ -21,6 +21,7 @@ namespace Lottery.Data.Downloader
             if (type.Equals("3d")) return this.Down3D(param);
             if (type.Equals("pl35")) return this.DownPL35(param);
             if (type.Equals("ssl")) return this.DownSSL(param);
+            if (type.Equals("12x3")) return this.Down12X3(param);
 
             return false;
         }
@@ -46,6 +47,11 @@ namespace Lottery.Data.Downloader
         }
 
         protected virtual bool DownSSL(DownParameter param)
+        {
+            return false;
+        }
+
+        protected virtual bool Down12X3(DownParameter param)
         {
             return false;
         }

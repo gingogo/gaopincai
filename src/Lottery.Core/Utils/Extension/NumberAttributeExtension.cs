@@ -99,6 +99,17 @@ namespace Lottery.Utils
         }
 
         /// <summary>
+        /// 把数字集合格式化成D2格式的字符串。
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <param name="separator">分隔符</param>
+        /// <returns></returns>
+        public static string Format(this IEnumerable<int> digits, string separator)
+        {
+            return digits.Format("D2", separator);
+        }
+
+        /// <summary>
         /// 把数字集合格式化成指定格式的字符串
         /// </summary>
         /// <param name="digits">号码的各位数字集合</param>
@@ -159,7 +170,8 @@ namespace Lottery.Utils
                     e == 6 ||
                     e == 8 ||
                     e == 9 ||
-                    e == 10) ? "0" : "1");
+                    e == 10 ||
+                    e == 12) ? "0" : "1");
             }
             return string.Join("|", result.ToArray());
         }
@@ -266,6 +278,51 @@ namespace Lottery.Utils
         }
 
         /// <summary>
+        /// 获取号码的大小比
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <param name="middle">大小中间值</param>
+        /// <returns>大|小</returns>
+        public static string GetDaXiaoBi(this IEnumerable<int> digits, int middle)
+        {
+            string str = digits.GetDaXiao(middle);
+            return string.Format("{0}|{1}", str.Count("1"), str.Count("0"));
+        }
+
+        /// <summary>
+        /// 获取号码的质合比
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <returns>质|合</returns>
+        public static string GetZiHeBi(this IEnumerable<int> digits)
+        {
+            string str = digits.GetZiHe();
+            return string.Format("{0}|{1}", str.Count("1"), str.Count("0"));
+        }
+
+        /// <summary>
+        /// 获取号码的单双比
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <returns>单|双</returns>
+        public static string GetDanShuangBi(this IEnumerable<int> digits)
+        {
+            string str = digits.GetDanShuang();
+            return string.Format("{0}|{1}", str.Count("1"), str.Count("0"));
+        }
+
+        /// <summary>
+        /// 获取012路比
+        /// </summary>
+        /// <param name="digits">号码的各位数字集合</param>
+        /// <returns>0|1|2</returns>
+        public static string GetLu012Bi(this IEnumerable<int> digits)
+        {
+            string str = digits.GetLu012();
+            return string.Format("{0}|{1}|{2}", str.Count("0"), str.Count("1"), str.Count("2"));
+        }
+
+        /// <summary>
         /// 获取号码某一属性(大小，单双，质合，012路)，的比例
         /// </summary>
         /// <param name="digits">号码的各位数字集合</param>
@@ -347,6 +404,10 @@ namespace Lottery.Utils
             if (dmName.Equals("JiWei")) return digits.GetJi().GetWei().ToString();
             if (dmName.Equals("KuaDu")) return digits.GetKuaDu().ToString();
             if (dmName.Equals("AC")) return digits.GetAC().ToString();
+            if (dmName.Equals("DaXiaoBi")) return digits.GetDaXiaoBi(daXiaoMiddle);
+            if (dmName.Equals("ZiHeBi")) return digits.GetZiHeBi();
+            if (dmName.Equals("DanShuangBi")) return digits.GetDanShuangBi();
+            if (dmName.Equals("Lu012Bi")) return digits.GetLu012Bi();
 
             return string.Empty;
         }

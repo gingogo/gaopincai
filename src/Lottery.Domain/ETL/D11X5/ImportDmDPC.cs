@@ -58,8 +58,8 @@ namespace Lottery.ETL.D11X5
             foreach (var category in categories)
             {
                 //P(category.DbName, "Dx", 1, output);
-                //P(category.DbName, "F2", 2, output);
-                //P(category.DbName, "F3", 3, output);
+                //P(category.DbName, "P2", 2, output);
+                //P(category.DbName, "P3", 3, output);
                 //P(category.DbName, "P4", 4, output);
                 //P(category.DbName, "P5", 5, output);
                 //C(category.DbName, "C2", 2, output);
@@ -114,7 +114,6 @@ namespace Lottery.ETL.D11X5
             foreach (var list in lists)
             {
                 entities.Add(GetDmFCAn(list));
-                //biz.Add(GetDmFCAn(list));
             }
             biz.DataAccessor.Insert(entities, SqlInsertMethod.SqlBulkCopy);
         }
@@ -143,6 +142,10 @@ namespace Lottery.ETL.D11X5
             dto.JiWei = dto.Ji.GetWei();
             dto.KuaDu = list.GetKuaDu();
             dto.AC = list.GetAC();
+            dto.DaXiaoBi = list.GetDaXiaoBi(5);
+            dto.ZiHeBi = list.GetZiHeBi();
+            dto.DanShuangBi = list.GetDanShuangBi();
+            dto.Lu012Bi = list.GetLu012Bi();
 
             return dto;
         }

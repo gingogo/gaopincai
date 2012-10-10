@@ -155,6 +155,33 @@ namespace Lottery.Data.Downloader
             return true;
         }
 
+        protected override bool Down12X3(DownParameter param)
+        {
+            SQLServer.D12X3.DwNumberBiz biz = new SQLServer.D12X3.DwNumberBiz(param.Category.DbName);
+            DateTime lastDate = biz.GetLatestDate();
+
+            int endIndex = this.GetEndIndex(param, lastDate);
+            if (endIndex <= 0) return false;
+            var numbers = this.GetNumbers(param, endIndex);
+            if (numbers.Count == 0) return false;
+
+            long lastP = biz.GetLatestPeroid();
+            foreach (var numberInfo in numbers)
+            {
+                char[] digits = numberInfo.Number.ToArray();
+                string code = string.Join(",", digits);
+                DateTime datetime = DateTime.Parse(numberInfo.DateTime);
+                int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
+                long p = int.Parse(numberInfo.Peroid);
+                int n = int.Parse(numberInfo.Peroid.Substring(numberInfo.Peroid.Length - 2));
+
+                if (p <= lastP) continue;
+                if (biz.Add(p, n, code, dateint, numberInfo.DateTime)) continue;
+                return false;
+            }
+            return true;
+        }
+
         private List<NumberInfo> GetNumbers(DownParameter param,int endIndex)
         {
             string url = string.Empty;

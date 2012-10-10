@@ -179,6 +179,62 @@ CREATE TABLE [dbo].[DwACSpan](
 ) ON [PRIMARY]
 GO
 
+CREATE TABLE [dbo].[DwDaXiaoBiSpan](
+	[P] [bigint]  NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwDaXiaoBiSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[DwZiHeBiSpan](
+	[P] [bigint]  NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwZiHeBiSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[DwDanShuangBiSpan](
+	[P] [bigint]  NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwDanShuangBiSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[DwLu012BiSpan](
+	[P] [bigint]  NOT NULL,
+	[P2Spans] [int] NOT NULL,
+	[C2Spans] [int] NOT NULL,
+	[P3Spans] [int] NOT NULL,
+	[C3Spans] [int] NOT NULL
+ CONSTRAINT [PK_DwLu012BiSpan_P] PRIMARY KEY CLUSTERED 
+(
+	[P] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
 ----------------------------------------------dimension tables ------------------------------------
 
 CREATE TABLE [dbo].[DmDate](
@@ -218,7 +274,11 @@ CREATE TABLE [dbo].[DmDX](
 	[Ji] [int] NOT NULL,
 	[JiWei] [int] NOT NULL,
 	[KuaDu] [int] NOT NULL,
-	[AC] [int] NOT NULL
+	[AC] [int] NOT NULL,
+	[DaXiaoBi] [char](3) NOT NULL,
+	[ZiHeBi] [char](3) NOT NULL,
+	[DanShuangBi] [char](3) NOT NULL,
+	[Lu012Bi] [char](5) NOT NULL
  CONSTRAINT [PK_DmDx] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -249,7 +309,11 @@ CREATE TABLE [dbo].[DmP2](
 	[Ji] [int] NOT NULL,
 	[JiWei] [int] NOT NULL,
 	[KuaDu] [int] NOT NULL,
-	[AC] [int] NOT NULL
+	[AC] [int] NOT NULL,
+	[DaXiaoBi] [char](3) NOT NULL,
+	[ZiHeBi] [char](3) NOT NULL,
+	[DanShuangBi] [char](3) NOT NULL,
+	[Lu012Bi] [char](5) NOT NULL
  CONSTRAINT [PK_DmP2] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -280,7 +344,11 @@ CREATE TABLE [dbo].[DmC2](
 	[Ji] [int] NOT NULL,
 	[JiWei] [int] NOT NULL,
 	[KuaDu] [int] NOT NULL,
-	[AC] [int] NOT NULL
+	[AC] [int] NOT NULL,
+	[DaXiaoBi] [char](3) NOT NULL,
+	[ZiHeBi] [char](3) NOT NULL,
+	[DanShuangBi] [char](3) NOT NULL,
+	[Lu012Bi] [char](5) NOT NULL
  CONSTRAINT [PK_DmC2] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -311,7 +379,11 @@ CREATE TABLE [dbo].[DmP3](
 	[Ji] [int] NOT NULL,
 	[JiWei] [int] NOT NULL,
 	[KuaDu] [int] NOT NULL,
-	[AC] [int] NOT NULL
+	[AC] [int] NOT NULL,
+	[DaXiaoBi] [char](3) NOT NULL,
+	[ZiHeBi] [char](3) NOT NULL,
+	[DanShuangBi] [char](3) NOT NULL,
+	[Lu012Bi] [char](5) NOT NULL
  CONSTRAINT [PK_DmP3] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -342,7 +414,11 @@ CREATE TABLE [dbo].[DmC3](
 	[Ji] [int] NOT NULL,
 	[JiWei] [int] NOT NULL,
 	[KuaDu] [int] NOT NULL,
-	[AC] [int] NOT NULL
+	[AC] [int] NOT NULL,
+	[DaXiaoBi] [char](3) NOT NULL,
+	[ZiHeBi] [char](3) NOT NULL,
+	[DanShuangBi] [char](3) NOT NULL,
+	[Lu012Bi] [char](5) NOT NULL
  CONSTRAINT [PK_DmC3] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

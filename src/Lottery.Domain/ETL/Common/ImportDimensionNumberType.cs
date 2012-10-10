@@ -20,7 +20,8 @@ namespace Lottery.ETL.Common
             //ImportSSC();
             //Import3D();
             //ImportPL35();
-            ImportSSL();
+            //ImportSSL();
+            //Import12X3();
         }
 
         public static void Import11x5()
@@ -153,6 +154,36 @@ namespace Lottery.ETL.Common
             foreach (var numberType in numberTypes)
             {
                 Data.SQLServer.SSL.DmDPCBiz biz = new Data.SQLServer.SSL.DmDPCBiz("shanghssl", numberType.Code.GetDmTableSuffix());
+
+                List<DimensionNumberType> ntds = new List<DimensionNumberType>();
+                if (numberType.Length == 1)
+                    ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(number1, numberType.Code);
+                else if (numberType.Length == 2)
+                    ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(number2, numberType.Code);
+                else
+                    ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(number3, numberType.Code);
+
+                foreach (var ntd in ntds)
+                {
+                    ntd.NumberType = numberType.Code;
+                    ntd.RuleType = numberType.RuleType;
+                    ntd.Amount = ntd.Nums * numberType.Amount;
+                    ntd.Probability = (ntd.Nums * 1.0) * numberType.Probability;
+                }
+                DimensionNumberTypeBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
+            }
+        }
+
+        public static void Import12X3()
+        {
+            List<NumberType> numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("12X3")).ToList();
+            string[] number1 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012" };
+            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu" };
+            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+
+            foreach (var numberType in numberTypes)
+            {
+                Data.SQLServer.D12X3.DmDPCBiz biz = new Data.SQLServer.D12X3.DmDPCBiz("hun12x3", numberType.Code.GetDmTableSuffix());
 
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)

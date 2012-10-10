@@ -13,7 +13,7 @@ namespace Lottery.ETL
 
     public class ExtractData
     {
-        private static Dictionary<int, int> pdic = new Dictionary<int, int>(1000);
+        private static Dictionary<int, int> pdic = new Dictionary<int, int>(10000);
         private static HashSet<long> pset = new HashSet<long>();
 
         public static void ExtractAll()
@@ -43,6 +43,7 @@ namespace Lottery.ETL
                 Directory.CreateDirectory(path);
 
             pset.Clear();
+            pdic.Clear();
             string downPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Down", category.Name);
             string fileName = string.Format(@"{0}\{1}.txt", path, category.Name);
 
@@ -73,6 +74,7 @@ namespace Lottery.ETL
             if (type.Equals("3D")) return new Action<StreamWriter, string, string, string, string, string>(Extract3D);
             if (type.Equals("PL35")) return new Action<StreamWriter, string, string, string, string, string>(ExtractPL35);
             if (type.Equals("SSL")) return new Action<StreamWriter, string, string, string, string, string>(ExtractSSL);
+            if (type.Equals("12X3")) return new Action<StreamWriter, string, string, string, string, string>(Extract12X3);
 
             return null;
         }
@@ -199,5 +201,29 @@ namespace Lottery.ETL
             biz.Add(biz.Create(p, n, no, dateint, sdate));
         }
 
+        private static void Extract12X3(StreamWriter writer, string name, string sdate, string speroid, string code, string dbName)
+        {
+            string no = code.Replace(" ", ",");
+            DateTime datetime = DateTime.Parse(sdate);
+            int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
+            long p = int.Parse(speroid);
+            int n = int.Parse(speroid.Substring(speroid.Length - 2));
+
+            if (dateint < 20120217)
+            {
+                if (pdic.ContainsKey(dateint))
+                    pdic[dateint]++;
+                else
+                    pdic.Add(dateint, 1);
+                n = pdic[dateint];
+            }
+            p = dateint * 100 + n;
+
+            if (pset.Contains(p)) return;
+            pset.Add(p);
+
+            Data.SQLServer.D12X3.DwNumberBiz biz = new Data.SQLServer.D12X3.DwNumberBiz(dbName);
+            biz.Add(biz.Create(p, n, no, dateint, sdate));
+        }
     }
 }

@@ -39,6 +39,11 @@ namespace Lottery.Configuration
             get { return GetAppSettings("pl35DmTable"); }
         }
 
+        public static string HuN12x3DmTableDmTableConnStringName
+        {
+            get { return GetAppSettings("hun12x3DmTable"); }
+        }
+
         public static string GetConnString(string name)
         {
             return ConfigurationManager.ConnectionStrings[name.Trim().ToLower()].ConnectionString; 

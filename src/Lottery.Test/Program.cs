@@ -18,7 +18,7 @@ namespace Lottery.Test
         static void Main(string[] args)
         {
             //ExtractNumber();
-            //StatTest();
+            StatTest();
             //OmissionValueTest();
             //DownServiceTest();
             //ETLTest();
@@ -48,11 +48,11 @@ namespace Lottery.Test
 
         static void ExtractNumber()
         {
-            //DataDownload.DownPage(144);
+            //DataDownload.DownPage(185);
             //DataDownload.DownPage(167);
 
-            ExtractData.Extract(144);
-            ExtractData.Extract(167);
+            //ExtractData.Extract(185);
+            //ExtractData.Extract(167);
             
         }
 
@@ -78,11 +78,8 @@ namespace Lottery.Test
 
         static void DownloaderTest()
         {
-            Category category = CategoryBiz.Instance.GetById(144);
+            Category category = CategoryBiz.Instance.GetById(185);
             PinbleDownloader downloader = new PinbleDownloader();
-            //downloader.Down(new Data.Parameter.DownParameter(category));
-
-            category = CategoryBiz.Instance.GetById(167);
             downloader.Down(new Data.Parameter.DownParameter(category));
         }
 
@@ -102,23 +99,25 @@ namespace Lottery.Test
             //ETL.D11X5.ImportDmFCAn.Add("db");
             //ETL.SSC.ImportDmFCAn.Add("db");
             //ETL.SSC.ImportDwNumber.Start();
-            //ETL.Common.ImportDimension.Import();
+            ETL.Common.ImportDimension.Import();
             ETL.Common.ImportNumberType.Import();
             ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.SSC.ImportDwNumber.UpdateC45();
-            // ETL.SSC.ImportDmDPC.UpdateNumberType();
+            //ETL.SSC.ImportDmDPC.UpdateNumberType();
+            //ETL.D12X3.ImportDmDPC.Add("db");
         }
 
         static void StatTest()
         {
             Statistics.IStatistics[] stats = new Statistics.IStatistics[] 
             {
-                new Statistics.D11X5.DmSpan(),
-                new Statistics.SSL.DmSpan(),
+                //new Statistics.D11X5.DmSpan(),
+                //new Statistics.SSL.DmSpan(),
                 //new Statistics.SSC.DmSpan(),
                 //new Statistics.D3.DmSpan()
                 //new Statistics.PL35.DmSpan()
+                new Statistics.D12X3.DmSpan()
             };
 
             foreach (var stat in stats)

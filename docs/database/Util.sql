@@ -20,17 +20,15 @@ drop table   dbo.DwLu012Span;
 drop table   dbo.DwZiHeSpan;
 drop table dbo.DwPeroidSpan;
 
-Alter table DmC2 add [NumberType] [varchar](6) NULL;
-Alter table DmC3 add [NumberType] [varchar](6) NULL;
-Alter table DmC33 add [NumberType] [varchar](6) NULL;
-Alter table DmC36 add [NumberType] [varchar](6) NULL;
-Alter table DmC4 add [NumberType] [varchar](6) NULL;
-Alter table DmC5 add [NumberType] [varchar](6) NULL;
-Alter table DmDX add [NumberType] [varchar](6) NULL;
-Alter table DmP2 add [NumberType] [varchar](6) NULL;
-Alter table DmP3 add [NumberType] [varchar](6) NULL;
-Alter table DmP4 add [NumberType] [varchar](6) NULL;
-Alter table DmP5 add [NumberType] [varchar](6) NULL;
+Alter table DmC2 add [NumberType] [varchar](2) NULL;
+Alter table DmC3 add [NumberType] [varchar](3) NULL;
+Alter table DmC4 add [NumberType] [varchar](3) NULL;
+Alter table DmC5 add [NumberType] [varchar](3) NULL;
+Alter table DmDX add [NumberType] [varchar](2) NULL;
+Alter table DmP2 add [NumberType] [varchar](2) NULL;
+Alter table DmP3 add [NumberType] [varchar](2) NULL;
+Alter table DmP4 add [NumberType] [varchar](2) NULL;
+Alter table DmP5 add [NumberType] [varchar](2) NULL;
 
 update DmC2 set [NumberType] ='C2';
 update DmC3 set [NumberType] ='C3';
@@ -162,3 +160,136 @@ WHERE  tmp.p = t2.p
        AND tmp.numbertype = t3.code 
        AND tmp.ruletype = t3.ruletype 
 ORDER  BY tmp.currentspans DESC 
+
+Alter table DmC2 add [DaXiaoBi] [char](3) NULL;
+Alter table DmC2 add [ZiHeBi] [char](3) NULL;
+Alter table DmC2 add [DanShuangBi] [char](3) NULL;
+Alter table DmC2 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmC3 add [DaXiaoBi] [char](3) NULL;
+Alter table DmC3 add [ZiHeBi] [char](3) NULL;
+Alter table DmC3 add [DanShuangBi] [char](3) NULL;
+Alter table DmC3 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmDX add [DaXiaoBi] [char](3) NULL;
+Alter table DmDX add [ZiHeBi] [char](3) NULL;
+Alter table DmDX add [DanShuangBi] [char](3) NULL;
+Alter table DmDX add [Lu012Bi] [char](5) NULL;
+
+Alter table DmP2 add [DaXiaoBi] [char](3) NULL;
+Alter table DmP2 add [ZiHeBi] [char](3) NULL;
+Alter table DmP2 add [DanShuangBi] [char](3) NULL;
+Alter table DmP2 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmP3 add [DaXiaoBi] [char](3) NULL;
+Alter table DmP3 add [ZiHeBi] [char](3) NULL;
+Alter table DmP3 add [DanShuangBi] [char](3) NULL;
+Alter table DmP3 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmC4 add [DaXiaoBi] [char](3) NULL;
+Alter table DmC4 add [ZiHeBi] [char](3) NULL;
+Alter table DmC4 add [DanShuangBi] [char](3) NULL;
+Alter table DmC4 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmC5 add [DaXiaoBi] [char](3) NULL;
+Alter table DmC5 add [ZiHeBi] [char](3) NULL;
+Alter table DmC5 add [DanShuangBi] [char](3) NULL;
+Alter table DmC5 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmP4 add [DaXiaoBi] [char](3) NULL;
+Alter table DmP4 add [ZiHeBi] [char](3) NULL;
+Alter table DmP4 add [DanShuangBi] [char](3) NULL;
+Alter table DmP4 add [Lu012Bi] [char](5) NULL;
+	
+Alter table DmP5 add [DaXiaoBi] [char](3) NULL;
+Alter table DmP5 add [ZiHeBi] [char](3) NULL;
+Alter table DmP5 add [DanShuangBi] [char](3) NULL;
+Alter table DmP5 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmG2 add [DaXiaoBi] [char](3) NULL;
+Alter table DmG2 add [ZiHeBi] [char](3) NULL;
+Alter table DmG2 add [DanShuangBi] [char](3) NULL;
+Alter table DmG2 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmG3 add [DaXiaoBi] [char](3) NULL;
+Alter table DmG3 add [ZiHeBi] [char](3) NULL;
+Alter table DmG3 add [DanShuangBi] [char](3) NULL;
+Alter table DmG3 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmZ2 add [DaXiaoBi] [char](3) NULL;
+Alter table DmZ2 add [ZiHeBi] [char](3) NULL;
+Alter table DmZ2 add [DanShuangBi] [char](3) NULL;
+Alter table DmZ2 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmZ3 add [DaXiaoBi] [char](3) NULL;
+Alter table DmZ3 add [ZiHeBi] [char](3) NULL;
+Alter table DmZ3 add [DanShuangBi] [char](3) NULL;
+Alter table DmZ3 add [Lu012Bi] [char](5) NULL;
+
+Alter table DmC2 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmC2 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmC2 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmC2 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmC3 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmC3 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmC3 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmC3 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmDX ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmDX ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmDX ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmDX ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmP2 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmP2 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmP2 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmP2 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmP3 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmP3 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmP3 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmP3 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmC4 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmC4 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmC4 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmC4 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmC5 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmC5 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmC5 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmC5 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmP4 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmP4 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmP4 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmP4 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+	
+Alter table DmP5 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmP5 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmP5 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmP5 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmG2 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmG2 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmG2 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmG2 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmG3 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmG3 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmG3 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmG3 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmZ2 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmZ2 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmZ2 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmZ2 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+Alter table DmZ3 ALTER COLUMN  [DaXiaoBi] [char](3) NOT NULL;
+Alter table DmZ3 ALTER COLUMN  [ZiHeBi] [char](3) NOT NULL;
+Alter table DmZ3 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
+Alter table DmZ3 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
+
+
+

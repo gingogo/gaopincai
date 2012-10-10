@@ -20,7 +20,8 @@ namespace Lottery.ETL.Common
             //ImportChongQSSC();
             //Import3D();
             //ImportPL35();
-            ImportSSL();
+            //ImportSSL();
+            //Import12X3();
         }
 
         private static void Import11x5()
@@ -64,7 +65,7 @@ namespace Lottery.ETL.Common
             dict.Add("D4|四位|11", 1.0 / 10.0);
             dict.Add("D5|五位|11", 1.0 / 10.0);
             dict.Add("P2|二星直选|116", 1.0 / 100.0);
-            dict.Add("C2|二星组选|58", 1.0 / 45.0);
+            dict.Add("C2|二星组选|58", 1.0 / 50.0);
             dict.Add("P3|三星直选|1160", 1.0 / 1000.0);
             dict.Add("C33|三星组三|385", (3.0 / 1000.0));
             dict.Add("C36|三星组六|190", (6.0 / 1000.0));
@@ -105,7 +106,7 @@ namespace Lottery.ETL.Common
             dict.Add("D4|四位|10", 1.0 / 10.0);
             dict.Add("D5|五位|10", 1.0 / 10.0);
             dict.Add("P2|二星直选|100", 1.0 / 100.0);
-            dict.Add("C2|二星组选|50", 1.0 / 45.0);
+            dict.Add("C2|二星组选|50", 1.0 / 50.0);
             dict.Add("P3|三星直选|1000", 1.0 / 1000.0);
             dict.Add("C33|三星组三|320", (3.0 / 1000.0));
             dict.Add("C36|三星组六|160", (6.0 / 1000.0));
@@ -144,7 +145,7 @@ namespace Lottery.ETL.Common
             dict.Add("D2|二位|0", 1.0 / 10.0);
             dict.Add("D3|三位|0", 1.0 / 10.0);
             dict.Add("P2|前二直选|0", 1.0 / 100.0);
-            dict.Add("C2|前二组选|0", 1.0 / 45.0);
+            dict.Add("C2|前二组选|0", 1.0 / 50.0);
             dict.Add("P3|前三直选|1000", 1.0 / 1000.0);
             dict.Add("C33|前三组三|320", (3.0 / 1000.0));
             dict.Add("C36|前三组六|160", (6.0 / 1000.0));
@@ -173,7 +174,7 @@ namespace Lottery.ETL.Common
             dict.Add("D4|四位|0", 1.0 / 10.0);
             dict.Add("D5|五位|0", 1.0 / 10.0);
             dict.Add("P2|前二直选|0", 1.0 / 100.0);
-            dict.Add("C2|前二组选|0", 1.0 / 45.0);
+            dict.Add("C2|前二组选|0", 1.0 / 50.0);
             dict.Add("P3|前三直选|1000", 1.0 / 1000.0);
             dict.Add("C33|前三组三|320", (3.0 / 1000.0));
             dict.Add("C36|前三组六|160", (6.0 / 1000.0));
@@ -212,7 +213,7 @@ namespace Lottery.ETL.Common
             dict.Add("D2|二位|0", 1.0 / 10.0);
             dict.Add("D3|后一|10", 1.0 / 10.0);
             dict.Add("P2|前二直选|98", 1.0 / 100.0);
-            dict.Add("C2|前二组选|0", 1.0 / 45.0);
+            dict.Add("C2|前二组选|0", 1.0 / 50.0);
             dict.Add("P3|直选三|980", 1.0 / 1000.0);
             dict.Add("C33|组选三|320", (3.0 / 1000.0));
             dict.Add("C36|组选六|160", (6.0 / 1000.0));
@@ -224,6 +225,37 @@ namespace Lottery.ETL.Common
                 nt.Name = arr[1];
                 nt.Code = arr[0];
                 nt.RuleType = "SSL";
+                nt.Probability = kp.Value;
+                nt.Amount = 2.0;
+                nt.Prize = double.Parse(arr[2]);
+                nt.Length = GetLength(arr[0]);
+                NumberTypeBiz.Instance.Add(nt);
+            }
+        }
+
+        private static void Import12X3()
+        {
+            Dictionary<string, double> dict = new Dictionary<string, double>(11);
+            dict.Add("D1|前一|110", 1.0 / 12.0);
+            dict.Add("D2|二位|0", 1.0 / 12.0);
+            dict.Add("D3|三位|0", 1.0 / 12.0);
+            dict.Add("P2|前二直选|5000", 1.0 / 132.0);
+            dict.Add("C2|前二组选|3344", 1.0 / 66.0);
+            dict.Add("P3|前三直选|50000", 1.0 / 1320.0);
+            dict.Add("C3|前三组选|27774", 1.0 / 220.0);
+            dict.Add("G2|过二关|10000", 1.0 / 144.0);
+            dict.Add("G3|过三关|500000", 1.0 / 1728.0);
+            dict.Add("Z2|过二关组选|0", 2.0 / 144.0);
+            dict.Add("Z33|过三关组选三|0", 3.0 / 1728.0);
+            dict.Add("Z36|过三关组选六|0", 6.0 / 1728.0);
+
+            foreach (var kp in dict)
+            {
+                string[] arr = kp.Key.Split('|');
+                NumberType nt = new NumberType();
+                nt.Name = arr[1];
+                nt.Code = arr[0];
+                nt.RuleType = "12X3";
                 nt.Probability = kp.Value;
                 nt.Amount = 2.0;
                 nt.Prize = double.Parse(arr[2]);

@@ -50,6 +50,11 @@ namespace Lottery.Model.Common
         /// 列名Seq,玩法类型排序号
         /// </summary>
         public static readonly String C_Seq = "Seq";
+        /// <summary>
+        /// 列名Status,玩法类型状态
+        /// </summary>
+        public static readonly String C_Status = "Status";
+
         #endregion
 
         #region Field Members
@@ -72,6 +77,8 @@ namespace Lottery.Model.Common
         private Double _prize;
 
         private Int32 _seq = 10;
+
+        private Byte _status = 1;
 
         #endregion
 
@@ -157,6 +164,15 @@ namespace Lottery.Model.Common
         {
             get { return this._seq; }
             set { this._seq = value; }
+        }
+        /// <summary>
+        /// 获取或设置状态
+        /// </summary>
+        [Column(Name = "Status")]
+        public Byte Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
         }
         #endregion
     }

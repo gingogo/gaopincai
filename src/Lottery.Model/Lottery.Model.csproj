@@ -48,6 +48,9 @@
     <Compile Include="Analysis\OmissionValue.cs" />
     <Compile Include="Common\RuleType.cs" />
     <Compile Include="Common\TypeDimensionNumberType.cs" />
+    <Compile Include="D12X3\DmDPC.cs" />
+    <Compile Include="D12X3\DwNumber.cs" />
+    <Compile Include="D12X3\DwSpan.cs" />
     <Compile Include="SSL\DmDPC.cs" />
     <Compile Include="SSL\DwNumber.cs" />
     <Compile Include="SSL\DwSpan.cs" />

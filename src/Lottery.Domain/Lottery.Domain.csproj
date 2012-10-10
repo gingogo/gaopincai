@@ -49,6 +49,8 @@
     <Compile Include="ETL\Common\ImportNumberType.cs" />
     <Compile Include="ETL\D11X5\ImportDmDPC.cs" />
     <Compile Include="ETL\D11X5\ImportDwNumber.cs" />
+    <Compile Include="ETL\D12X3\ImportDmDPC.cs" />
+    <Compile Include="ETL\D12X3\ImportDwNumber.cs" />
     <Compile Include="ETL\DataDownload.cs" />
     <Compile Include="ETL\ExtractData.cs" />
     <Compile Include="ETL\ImportDate.cs" />
@@ -60,6 +62,8 @@
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\ServiceManager.cs" />
     <Compile Include="Statistics\BaseStatistics.cs" />
+    <Compile Include="Statistics\D12X3\Base12X3Statistics.cs" />
+    <Compile Include="Statistics\D12X3\DmSpan.cs" />
     <Compile Include="Statistics\SSL\BaseSSLStatistics.cs" />
     <Compile Include="Statistics\SSL\DmSpan.cs" />
     <Compile Include="Statistics\D11X5\Base11X5Statistics.cs" />
