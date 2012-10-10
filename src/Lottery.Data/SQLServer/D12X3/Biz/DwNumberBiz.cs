@@ -65,10 +65,10 @@ namespace Lottery.Data.SQLServer.D12X3
             number.P2 = number.P3.Substring(0, 4);
             number.C2 = NumberCache.Instance.GetNumberId("C2", string.Format("{0},{1}", arr[0], arr[1]));
             number.C3 = NumberCache.Instance.GetNumberId("C3", string.Format("{0},{1},{2}", arr[0], arr[1], arr[2]));
-            number.G2 = string.Format("{0}{1}", arr[0], arrLastD1[0]);
-            number.G3 = string.Format("{0}{1}{2}", arr[0], arrLastD1[0], arrLastD1[1]);
-            number.Z2 = NumberCache.Instance.GetNumberId("Z2", string.Format("{0},{1}", arr[0], arrLastD1[0]));
-            number.Z3 = NumberCache.Instance.GetNumberId("Z3", string.Format("{0},{1},{2}", arr[0], arrLastD1[0], arrLastD1[1]));
+            number.G2 = string.Format("{0}{1}", arrLastD1[0], arr[0]);
+            number.G3 = string.Format("{0}{1}{2}", arrLastD1[1], arrLastD1[0], arr[0]);
+            number.Z2 = NumberCache.Instance.GetNumberId("Z2", string.Format("{0},{1}", arrLastD1[0], arr[0]));
+            number.Z3 = NumberCache.Instance.GetNumberId("Z3", string.Format("{0},{1},{2}", arrLastD1[1], arrLastD1[0], arr[0]));
 
             return number;
         }

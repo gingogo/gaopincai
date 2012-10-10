@@ -67,7 +67,7 @@ namespace Lottery.Services
             {
                 //if (!IsUpdateTime(currentDateTime, category.DownIntervals, category.DownPeroid))
                 //    continue;
-
+                //if (category.Id != 185) continue;
                 EventParameter eventParameter = new EventParameter(category);
                 this.StartDown(eventParameter);
 

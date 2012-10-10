@@ -292,4 +292,48 @@ Alter table DmZ3 ALTER COLUMN  [DanShuangBi] [char](3) NOT NULL;
 Alter table DmZ3 ALTER COLUMN  [Lu012Bi] [char](5) NOT NULL;
 
 
+update DmDX set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmDX set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmDX set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmDX set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+update DmC2 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmC2 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmC2 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmC2 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+update DmC3 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmC3 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmC3 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmC3 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+update DmC4 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmC4 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmC4 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmC4 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+update DmC5 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmC5 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmC5 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmC5 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+update DmP2 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmP2 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmP2 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmP2 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+update DmP3 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmP3 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmP3 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmP3 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+update DmP4 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmP4 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmP4 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmP4 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+update DmP5 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt);
+update DmP5 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
+update DmP5 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
+update DmP5 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
 

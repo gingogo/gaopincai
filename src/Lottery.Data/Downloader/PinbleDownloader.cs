@@ -168,11 +168,10 @@ namespace Lottery.Data.Downloader
             long lastP = biz.GetLatestPeroid();
             foreach (var numberInfo in numbers)
             {
-                char[] digits = numberInfo.Number.ToArray();
-                string code = string.Join(",", digits);
+                string code = numberInfo.Number.Replace(" ", ",");
                 DateTime datetime = DateTime.Parse(numberInfo.DateTime);
                 int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
-                long p = int.Parse(numberInfo.Peroid);
+                int p = 2000000000 + int.Parse(numberInfo.Peroid);
                 int n = int.Parse(numberInfo.Peroid.Substring(numberInfo.Peroid.Length - 2));
 
                 if (p <= lastP) continue;
