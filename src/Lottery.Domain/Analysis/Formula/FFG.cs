@@ -27,7 +27,7 @@ namespace Lottery.Analysis.Formula
         /// <param name="n">期数</param>
         /// <param name="p">某一种玩法的中奖概率</param>
         /// <returns></returns>
-        public static double GetDC(int n, double p)
+        public static double GetDC(double n, double p)
         {
             //(1 - Math.Exp(n * Math.Log(1 - p, Math.E)));
             return 1 - Math.Pow(1 - p, n);

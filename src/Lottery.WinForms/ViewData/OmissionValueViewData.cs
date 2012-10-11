@@ -245,6 +245,19 @@ namespace Lottery.WinForms.ViewData
         }
 
         /// <summary>
+        /// 获取号码的平均确定度(DC)
+        /// </summary>
+        public double AvgDC
+        {
+            get
+            {
+                if (this._avgSpans > 0)
+                    return FFG.GetDC(this._avgSpans, this._probability);
+                return this._probability;
+            }
+        }
+
+        /// <summary>
         /// 获取号码的历史最大遗漏值的确定度(DC)
         /// </summary>
         public double HistoryMaxDC
