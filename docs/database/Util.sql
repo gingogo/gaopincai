@@ -1,10 +1,15 @@
+update Category set Enabled = 1 where Id in(101,106,144,145,147,162,164,165,167,185);
+
 DBCC SHRINKFILE (LotteryChongQSSC_Log, 1);
+DBCC SHRINKFILE (LotteryJiangXSSC_Log, 1);
+DBCC SHRINKFILE (LotteryChongQ115_Log, 1);
 DBCC SHRINKFILE (LotteryGuangD115_Log, 1);
 DBCC SHRINKFILE (LotteryJiangX115_Log, 1);
-DBCC SHRINKFILE (LotteryJiangXSSC_Log, 1);
 DBCC SHRINKFILE (LotteryShanD115_Log, 1);
-DBCC SHRINKFILE (LotteryFC3D_Log, 1);
+DBCC SHRINKFILE (Lottery3D_Log, 1);
 DBCC SHRINKFILE (LotteryPL35_Log, 1);
+DBCC SHRINKFILE (LotteryShangHSSL_Log, 1);
+DBCC SHRINKFILE (LotteryHuN12X3_Log, 1);
 
 update DwNumber set Date = Replace(CONVERT(varchar(10),created,120),'-','');
 

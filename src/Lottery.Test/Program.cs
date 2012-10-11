@@ -28,6 +28,7 @@ namespace Lottery.Test
             //CacheTest();
             //DownloaderTest();
             //ServiceTest();
+            //DisplayPeroidCount();
             Console.WriteLine("Finished");
             Console.Read();
         }
@@ -48,10 +49,10 @@ namespace Lottery.Test
 
         static void ExtractNumber()
         {
-             DataDownload.DownPage(185);
+            // DataDownload.DownPage(185);
             //DataDownload.DownPage(167);
 
-            ExtractData.Extract(185);
+            //ExtractData.Extract(185);
             //ExtractData.Extract(167);
             
         }
@@ -99,10 +100,11 @@ namespace Lottery.Test
             //ETL.D11X5.ImportDmFCAn.Add("db");
             //ETL.SSC.ImportDmFCAn.Add("db");
             //ETL.SSC.ImportDwNumber.Start();
-            ETL.Common.ImportDimension.Import();
-            ETL.Common.ImportNumberType.Import();
-            ETL.Common.ImportNumberTypeDim.Import();
+            //ETL.Common.ImportDimension.Import();
+            //ETL.Common.ImportNumberType.Import();
+            //ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDwNumber.UpdateC4();
+            //ETL.D11X5.ImportDwNumber.UpdateP(167, "2012090644", "05,07,01,09,10");
             //ETL.SSC.ImportDwNumber.UpdateC45();
             //ETL.SSC.ImportDmDPC.UpdateNumberType();
             //ETL.D12X3.ImportDmDPC.Add("db");
@@ -112,12 +114,12 @@ namespace Lottery.Test
         {
             Statistics.IStatistics[] stats = new Statistics.IStatistics[] 
             {
-                //new Statistics.D11X5.DmSpan(),
+                new Statistics.D11X5.DmSpan(),
                 //new Statistics.SSL.DmSpan(),
                 //new Statistics.SSC.DmSpan(),
                 //new Statistics.D3.DmSpan()
                 //new Statistics.PL35.DmSpan()
-                new Statistics.D12X3.DmSpan()
+                //new Statistics.D12X3.DmSpan()
             };
 
             foreach (var stat in stats)
@@ -137,6 +139,15 @@ namespace Lottery.Test
         static void TransactionTest()
         {
             TransactionScopeTest.Test();
+        }
+
+        static void DisplayPeroidCount()
+        {
+           var dict= CategoryBiz.Instance.GetEnabledCategoriesPeroidCount();
+           foreach (var kp in dict)
+           {
+               Console.WriteLine("{0}:{1}", kp.Key, kp.Value);
+           }
         }
     }
 }

@@ -79,6 +79,7 @@ namespace Lottery.Data.SQLServer.D11X5
             {
                 var arr = kp.Value.Number.Split(' ').Select(x => x.Trim());
                 if (digits.Except(arr).Count() != 0) continue;
+                if (arr.Except(digits).Count() != 0) continue;
                 id = kp.Key;
                 break;
             }

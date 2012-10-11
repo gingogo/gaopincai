@@ -66,5 +66,15 @@ namespace Lottery.ETL.D11X5
                 }
             }
         }
+
+        public static void UpdateP(int categoryId, string p, string code)
+        {
+            Category category = CategoryBiz.Instance.GetById(categoryId);
+            DwNumberBiz biz = new DwNumberBiz(category.DbName);
+            DwNumber number = biz.GetById(p);
+            DwNumber newNumber = biz.Create(number.P, number.N, code, number.Date, number.Created.ToString());
+            newNumber.Seq = number.Seq;
+            biz.Modify(newNumber, newNumber.P.ToString());
+        }
     }
 }

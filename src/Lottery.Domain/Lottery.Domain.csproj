@@ -60,6 +60,7 @@
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\DownloadService.cs" />
     <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\ServiceManager.cs" />
     <Compile Include="Statistics\BaseStatistics.cs" />
     <Compile Include="Statistics\D12X3\Base12X3Statistics.cs" />
