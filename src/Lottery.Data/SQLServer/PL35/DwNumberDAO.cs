@@ -89,19 +89,12 @@ namespace Lottery.Data.SQLServer.PL35
                 throw new ArgumentException("numberTypes is null or length is zero", "numberTypes");
 
             string sqlCmd = this.GetBatchSpanQuerySql(number, dmName,numberTypes);
-            List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
-            Dictionary<string, int> numberIdSeqDict = list.ToDictionary(x => x.Id, y => y.Seq);
-            Dictionary<string, int> spanDict = new Dictionary<string, int>(13);
+            List<NumberIdSeq> numberIdSeqs = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
 
-            foreach (string numberType in numberTypes)
+            Dictionary<string, int> spanDict = new Dictionary<string, int>(15);
+            foreach (var numberIdSeq in numberIdSeqs)
             {
-                int seq = numberIdSeqDict.ContainsKey(numberType) ? numberIdSeqDict[numberType] : 0;
-                if (seq == 0)
-                {
-                    spanDict.Add(numberType, -1);
-                    continue;
-                }
-                spanDict.Add(numberType, number.Seq - seq - 1);
+                spanDict.Add(numberIdSeq.Id, number.Seq - numberIdSeq.Seq - 1);
             }
 
             return spanDict;

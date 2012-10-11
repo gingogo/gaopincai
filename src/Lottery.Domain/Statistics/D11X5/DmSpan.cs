@@ -74,7 +74,7 @@ namespace Lottery.Statistics.D11X5
                 if (!numberTypeLastSpanDict.ContainsKey(numberType))
                     numberTypeLastSpanDict.Add(numberType, new Dictionary<string, int>(1000));
 
-                int spans = -1;
+                int spans = number.Seq - 1;
                 string dmValue = number[numberType].GetDmValue(2, dmName, 5);
                 if (numberTypeLastSpanDict[numberType].ContainsKey(dmValue))
                 {
@@ -98,7 +98,7 @@ namespace Lottery.Statistics.D11X5
                 if (!numberTypeLastSpanDict.ContainsKey(numberType))
                     numberTypeLastSpanDict.Add(numberType, new Dictionary<string, int>(1000));
 
-                int spans = -1;
+                int spans = number.Seq - 1;
                 string numTypeValue = number[numberType].ToString();
                 if (numberTypeLastSpanDict[numberType].ContainsKey(numTypeValue))
                 {

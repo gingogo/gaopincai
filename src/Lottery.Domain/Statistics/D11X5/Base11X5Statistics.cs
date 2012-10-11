@@ -12,9 +12,9 @@ namespace Lottery.Statistics.D11X5
     {
         protected override List<Category> GetCatgories()
         {
-            Category category = CategoryBiz.Instance.GetById(167);
-            return new List<Category>() { category };
-            //return CategoryBiz.Instance.GetEnabledCategories("11X5");
+            //Category category = CategoryBiz.Instance.GetById(167);
+            //return new List<Category>() { category };
+            return CategoryBiz.Instance.GetEnabledCategories("11X5");
         }
     }
 }

@@ -59,7 +59,6 @@ namespace Lottery.Model.Common
 
         #region Field Members
 
-
         private Int32 _id;
 
         private String _name;
@@ -78,7 +77,7 @@ namespace Lottery.Model.Common
 
         private Int32 _seq = 10;
 
-        private Byte _status = 1;
+        private Byte _status;
 
         #endregion
 

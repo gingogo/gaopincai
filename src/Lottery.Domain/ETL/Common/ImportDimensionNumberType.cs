@@ -14,22 +14,22 @@ namespace Lottery.ETL.Common
     {
         public static void Import()
         {
-            //DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
+            DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
 
-            //Import11x5();
-            //ImportSSC();
-            //Import3D();
-            //ImportPL35();
-            //ImportSSL();
-            //Import12X3();
+            Import11x5();
+            ImportSSC();
+            Import3D();
+            ImportPL35();
+            ImportSSL();
+            Import12X3();
         }
 
         public static void Import11x5()
         {
             List<NumberType> numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("11X5")).ToList();
             string[] number1 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012" };
-            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu" };
-            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
+            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
 
             foreach (var numberType in numberTypes)
             {
@@ -58,8 +58,8 @@ namespace Lottery.ETL.Common
         {
             List<NumberType> numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("SSC")).ToList();
             string[] number1 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012" };
-            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu" };
-            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
+            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
 
             foreach (var numberType in numberTypes)
             {
@@ -88,8 +88,8 @@ namespace Lottery.ETL.Common
         {
             List<NumberType> numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("3D")).ToList();
             string[] number1 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012" };
-            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu" };
-            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
+            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
 
             foreach (var numberType in numberTypes)
             {
@@ -118,8 +118,8 @@ namespace Lottery.ETL.Common
         {
             List<NumberType> numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("PL35")).ToList();
             string[] number1 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012" };
-            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu" };
-            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
+            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
 
             foreach (var numberType in numberTypes)
             {
@@ -148,8 +148,8 @@ namespace Lottery.ETL.Common
         {
             List<NumberType> numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("SSL")).ToList();
             string[] number1 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012" };
-            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu" };
-            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
+            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
 
             foreach (var numberType in numberTypes)
             {
@@ -178,8 +178,8 @@ namespace Lottery.ETL.Common
         {
             List<NumberType> numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("12X3")).ToList();
             string[] number1 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012" };
-            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu" };
-            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC" };
+            string[] number2 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
+            string[] number3 = new string[] { "DaXiao", "DanShuang", "ZiHe", "Lu012", "He", "HeWei", "Ji", "JiWei", "KuaDu", "AC", "DaXiaoBi", "ZiHeBi", "DanShuangBi", "Lu012Bi" };
 
             foreach (var numberType in numberTypes)
             {

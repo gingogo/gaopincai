@@ -79,7 +79,7 @@ CREATE TABLE [dbo].[NumberType](
 	[Amount] [decimal](4, 2) NOT NULL,
 	[Prize] [decimal](10, 2) NOT NULL,
 	[Seq] [int] NOT NULL,
-	[Status] [tinyint] NOT NULL,
+	[Status] [tinyint] NOT NULL
  CONSTRAINT [PK_NumberType] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -103,6 +103,7 @@ CREATE TABLE [dbo].[Dimension](
 	[Code] [varchar](20) NOT NULL,
 	[Name] [nvarchar](20) NOT NULL,
 	[Seq] [int] NOT NULL,
+	[Status] [tinyint] NOT NULL
  CONSTRAINT [PK_Dimension] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

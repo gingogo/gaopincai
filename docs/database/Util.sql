@@ -89,6 +89,10 @@ truncate table  dbo.DwJiWeiSpan;
 truncate table  dbo.DwKuaDuSpan;
 truncate table  dbo.DwLu012Span;
 truncate table  dbo.DwZiHeSpan;
+truncate table dbo.DwDaXiaoBiSpan;
+truncate table dbo.DwZiHeBiSpan;
+truncate table  dbo.DwDanShuangBiSpan;
+truncate table  dbo.DwLu012BiSpan;
 
 select count(*) from dbo.DwNumber;
 select count(*) from dbo.DwPeroidSpan;

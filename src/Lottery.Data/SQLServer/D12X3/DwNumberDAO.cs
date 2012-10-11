@@ -89,19 +89,12 @@ namespace Lottery.Data.SQLServer.D12X3
                 throw new ArgumentException("numberTypes is null or length is zero", "numberTypes");
 
             string sqlCmd = this.GetBatchSpanQuerySql(number, dmName, numberTypes);
-            List<NumberIdSeq> list = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
-            Dictionary<string, int> numberIdSeqDict = list.ToDictionary(x => x.Id, y => y.Seq);
-            Dictionary<string, int> spanDict = new Dictionary<string, int>(13);
+            List<NumberIdSeq> numberIdSeqs = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
 
-            foreach (string numberType in numberTypes)
+            Dictionary<string, int> spanDict = new Dictionary<string, int>(15);
+            foreach (var numberIdSeq in numberIdSeqs)
             {
-                int seq = numberIdSeqDict.ContainsKey(numberType) ? numberIdSeqDict[numberType] : 0;
-                if (seq == 0)
-                {
-                    spanDict.Add(numberType, -1);
-                    continue;
-                }
-                spanDict.Add(numberType, number.Seq - seq - 1);
+                spanDict.Add(numberIdSeq.Id, number.Seq - numberIdSeq.Seq - 1);
             }
 
             return spanDict;
@@ -165,7 +158,7 @@ namespace Lottery.Data.SQLServer.D12X3
             sqlFormat = "select '{0}' Id,Max(t2.{1}) {1} from Dm{5} t1,{2} t2 where t1.Id = t2.{0} and t1.{3} = '{4}';";
             foreach (string numberType in numberTypes)
             {
-                string dmValue = number[numberType].GetDmValue(2, dmName, 5);
+                string dmValue = number[numberType].GetDmValue(2, dmName, 6);
                 batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, dmName, dmValue, numberType.GetDmTableSuffix());
             }
             return batchSqlBuilder.ToString();
