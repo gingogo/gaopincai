@@ -79,8 +79,8 @@ namespace Lottery.Data.SQLServer.Common
         public string[] GetNumberTypes(string type, string dimension)
         {
             if (this.tdntCache.ContainsKey(type) &&
-                this.tdntCache[type].ContainsKey(dimension)) 
-                return this.tdntCache[type][dimension].ToArray();
+                this.tdntCache[type].ContainsKey(dimension))
+                return this.tdntCache[type][dimension].OrderBy(x => x).ToArray();
 
             throw new ArgumentException("Not found this dimType and name");
         }
@@ -93,7 +93,7 @@ namespace Lottery.Data.SQLServer.Common
         public string[] GetDimensions(string type)
         {
             if (this.tdntCache.ContainsKey(type))
-                return this.tdntCache[type].Keys.ToArray();
+                return this.tdntCache[type].Keys.OrderBy(x => x).ToArray();
 
             throw new ArgumentException("Not found this dimType");
         }
