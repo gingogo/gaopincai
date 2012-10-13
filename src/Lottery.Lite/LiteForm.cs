@@ -38,7 +38,27 @@ namespace Lottery.Lite
         /// </summary>
         public CaiConfigData CaiData = new CaiConfigData();
 
+        public List<ListViewData> lvds = new List<ListViewData>();
 
+        private ListViewData getCachedListView(ListViewData newlvd)
+        {
+            bool isIn = false;
+            foreach (ListViewData lvd in lvds)
+            {
+                if (lvd.name == newlvd.name)
+                {
+                    isIn = true;
+                    return lvd;
+                }
+            }
+            if (!isIn)
+            {
+                lvds.Add(newlvd);
+            }
+            return newlvd;
+            
+            
+        }
         /// <summary>
         /// 初始化数据
         /// </summary>
@@ -131,6 +151,7 @@ namespace Lottery.Lite
         /// <param name="lvd"></param>
         public void CreateListView(ListViewData lvd)
         {
+            lvd = getCachedListView(lvd);
             TabPage tp = new TabPage();
             tp.Dock = DockStyle.Fill;
             tp.Text = lvd.name;
@@ -144,7 +165,7 @@ namespace Lottery.Lite
             tp.Controls.Add(lv);
             SetListView(lv, lvd);
             tabControl1.SelectedTab = tp;
-            //lv.ContextMenuStrip = contextMenuStripListView;
+            lv.ContextMenuStrip = contextMenuStripClose;
         }
 
         /// <summary>
@@ -388,20 +409,20 @@ namespace Lottery.Lite
             List<NumSpanData> spans = stat.GetSpanCount(CaiData);
             ListViewData lvd = new ListViewData();
             lvd.name = CaiData.CaiType + " " + CaiData.NumType + " 周期 " + CaiData.NowCaculate.ToString("yyyy-MM-dd");
-            lvd.title = new string[] { CaiData.NumType, "p", "now", "next", "nexttest", "nextall", "max", "avg",
+            lvd.title = new string[] { CaiData.NumType, "p", "now", "next", "nexttest", "nextability","nextall", "max", "avg",
             	"times","1day","2day","3day","4day","5day","6days","7days","hot","hottrend","hotrec"};
             lvd.values = new List<string[]>();
 
             foreach (NumSpanData span in spans)
             {
-                string[] values = new string[] { span.num,span.p, span.SpanTillNow.ToString(),span.Next,span.NextTest.ToString(),span.NextAll, span.SpanMax.ToString(), span.SpanAvg.ToString(),
+                string[] values = new string[] { span.num,span.p, span.SpanTillNow.ToString(),span.Next,span.NextTest.ToString(),span.NextAbility,span.NextAll, span.SpanMax.ToString(), span.SpanAvg.ToString(),
             		span.Times.ToString(),span.TimesDay1.ToString(),span.TimesDay2.ToString(),
             		span.TimesDay3.ToString(),span.TimesDay4.ToString(),span.TimesDay5.ToString(),
             		span.TimesDay6.ToString(),span.TimesDay7.ToString(),
             		span.HotType.ToString(),span.HotTrend.ToString(),span.HotRecent};
                 lvd.values.Add(values);
             }
-            lvd.values = lvd.values.OrderBy(x => int.Parse(x[8])).ToList();
+            lvd.values = lvd.values.OrderBy(x => int.Parse(x[4])).ToList();
             list = lvd;
 
         }
@@ -459,6 +480,20 @@ namespace Lottery.Lite
 
             StatusText.Text = CaiData.StatusLabel;
         }
+
+        private void toolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            ListView lv = getCurrentListView();
+            ListViewData lvd = new ListViewData();
+            lvd.name = tabControl1.SelectedTab.Text;
+            lvd = getCachedListView(lvd);
+            int index = Convert.ToInt32(item.Text);
+            lvd.values = lvd.values.OrderBy(x => int.Parse(x[index])).ToList();
+            SetListView(lv, lvd);
+        }
+
+       
 
        
 
