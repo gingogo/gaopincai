@@ -23,8 +23,12 @@ namespace Lottery.Lite
         	if(CaiData.IsLoadFromCache){
 	            //从缓存中获取
 	            List<NumSpanData> re = BizBase.XMLDeserialize(CaiData);
-	            if(re!=null)
-	            	return re;
+                if (re != null)
+                {
+                    //计算一下next period
+                    re = GetNextPeriod(CaiData, re);
+                    return re;
+                }
         	}
             
              List<NumSpanData> spans = new List<NumSpanData>();
@@ -55,12 +59,12 @@ namespace Lottery.Lite
                     if (i == 0)
                     {
                         span.p = dto["P"].ToString();
-                        span.SpanLast = Convert.ToInt32(dto["P2"].ToString());
+                        span.SpanLast = Convert.ToInt32(dto["P2Spans"].ToString());
                         span.SpanTillNow = BizBase.getSpanTillNow(span.p, CaiData);
                     }
-                    span.SpanRec += dto["P2"].ToString() + ",";
+                    //span.SpanRec += dto["P2Span"].ToString() + ",";
                     i++;
-                    spanList.Add(Convert.ToInt32(dto["P2"].ToString()));
+                    spanList.Add(Convert.ToInt32(dto["P2Spans"].ToString()));
                     
                 }
                
@@ -217,12 +221,10 @@ namespace Lottery.Lite
                 }
                 int next = avg * i - cycle;
                 next = next - lastp;
-                int cycleMax = CaiData.PeriodPerDay * 6;
-                if (next > 0 && next < cycleMax)//6天总周期
+                int cycleMax = CaiData.PeriodPerDay * 2;
+                if (next > 0 && next < cycleMax)
                 {
-                    if(next<=(CaiData.PeriodPerDay*2))
-                        cycles.Add(next);
-
+                    cycles.Add(next);
                 }
                 
             }
@@ -337,8 +339,7 @@ namespace Lottery.Lite
         /// <returns>周期数据列表</returns>
         public List<NumSpanData> GetNextPeriod(CaiConfigData CaiData,List<NumSpanData> spans){
 
-            if (!CaiData.IsLoadFromCache)
-            {
+          
                 //需要重新计算以下值
                 //next 并且按照next进行排序
                 //计算第二天出现的情况进行参照
@@ -347,7 +348,6 @@ namespace Lottery.Lite
 
                 foreach (NumSpanData span in spans)
                 {
-
                     int spanAvg = span.SpanAvg;//平均值
                     string num = span.num;
                      string pBegin = BizBase.getPByDate(CaiData.NowCaculate, CaiData);//开始计算的时间
@@ -371,20 +371,30 @@ namespace Lottery.Lite
                             cycle += spanJust;
                             if (Math.Abs((cycle / (j - i)) - spanAvg) <= spanAvg*0.2)
                             {
-                                cycles.Add(j - i);
-                                break;
+                                if (j - i < CaiData.PeriodPerDay)
+                                {
+                                    cycles.Add(j - i);
+                                    break;
+                                }
                             }
                         }
                     }
+                    //var gps = cycles.GroupBy(x =>x).ToDictionary(x=>x.Key,y=>y.Count()).OrderByDescending(x=>x.Value).ToDictionary(x=>x,y=>y);
+                    
                     cycleAvg = Convert.ToInt32(cycles.Average());
 
                     int cycleLast = Convert.ToInt32(dtos.GetRange(0, cycleAvg - 1).Average());
 
-                    span.NextAbility = (2 * spanAvg - cycleLast).ToString();
+                    //span.NextAbility = (2 * spanAvg - cycleLast).ToString();
+                    int ability =  (2 * spanAvg - cycleLast)-span.SpanTillNow;
+                    if (ability > 0 && ability < CaiData.PeriodPerDay)
+                    {
+                        span.NextAbility = ability.ToString();
+                    }
                     
                     CaiData.StatusLabel = span.num+" NextPeriod Geted!";
 
-                }
+              
                 
             }
             return spans;
