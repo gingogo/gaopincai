@@ -242,7 +242,6 @@ namespace Lottery.Data.Downloader
 
             try
             {
-                //http://www.pinble.com/Template/WebService1.asmx/Present3DList?pageindex={0}&lottory={1}&pl3={2}&name={3}&isgp={4}
                 string url = string.Format(param.Category.DownUrl, 1, param.Category.Code, "", param.Category.Name, param.Category.IsGP);
                 string pageText = this._webClient.DownloadString(url);
                 pageText = pageText.Replace("&amp;", "&").Replace("&quot;", "\"").Replace("&lt;", "<").Replace("&gt;", ">");

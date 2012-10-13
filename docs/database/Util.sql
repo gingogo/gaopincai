@@ -11,6 +11,14 @@ DBCC SHRINKFILE (LotteryPL35_Log, 1);
 DBCC SHRINKFILE (LotteryShangHSSL_Log, 1);
 DBCC SHRINKFILE (LotteryHuN12X3_Log, 1);
 
+RESTORE DATABASE [RawLotteryData] FROM DISK = N'完全备份文件名' WITH NORECOVERY,  REPLACE
+RESTORE DATABASE DB 
+   FROM DISK = 'g:\back.Bak'
+   WITH MOVE 'DBTest' TO 'E:\Program Files\Microsoft SQL Server2005\Data\DB.mdf', 
+   MOVE 'DBTest_log' TO 'E:\Program Files\Microsoft SQL Server2005\Data\DB_log.ldf',
+STATS = 10, REPLACE
+GO
+
 update DwNumber set Date = Replace(CONVERT(varchar(10),created,120),'-','');
 
 drop table dbo.DwACSpan;

@@ -28,7 +28,7 @@ namespace Lottery.Test
             //CacheTest();
             //DownloaderTest();
             //ServiceTest();
-            //DisplayPeroidCount();
+            DisplayPeroidCount();
             Console.WriteLine("Finished");
             Console.Read();
         }
