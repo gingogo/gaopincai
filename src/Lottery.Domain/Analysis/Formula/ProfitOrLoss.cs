@@ -84,12 +84,18 @@ namespace Lottery.Analysis.Formula
         public static List<ProfitRate> GetMultiProfitRates(MultiParameter parameter)
         {
             List<ProfitRate> profitRates = new List<ProfitRate>(parameter.PeroidNums);
-            for (int i = 1; i <= parameter.PeroidNums; i++)
+            ProfitRate profitRate = new ProfitRate();
+            profitRate.PeroidNum = 1;
+            profitRate.CurrentAmount = parameter.Nums * profitRate.MultiNums * 2;
+            profitRates.Add(profitRate);
+
+            for (int i = 2; i <= parameter.PeroidNums; i++)
             {
-                ProfitRate profitRate = new ProfitRate();
+                profitRate = new ProfitRate();
                 profitRate.PeroidNum = i;
                 profitRate.CurrentAmount = parameter.Nums * profitRate.MultiNums * 2;
-                //profitRate.TotalAmount += 
+                profitRate.TotalAmount = profitRates[i - 2].TotalAmount + profitRate.CurrentAmount;
+                profitRates.Add(profitRate);
             }
 
             return profitRates;

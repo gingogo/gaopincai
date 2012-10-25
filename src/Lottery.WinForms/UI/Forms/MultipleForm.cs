@@ -28,7 +28,7 @@ namespace Lottery.WinForms.UI
             parameter.Nums = ConvertHelper.GetInt32(this.txtNums.Text);
             parameter.StartMultiNums = ConvertHelper.GetInt32(this.txtStartMultiNums.Text);
             parameter.MaxMultiNums = ConvertHelper.GetInt32(this.txtMaxMultiNums.Text);
-            parameter.Prize = ConvertHelper.GetDouble(this.txtPeroidNums.Text);
+            parameter.Prize = ConvertHelper.GetDouble(this.txtPrize.Text);
             parameter.IsGlobal = this.rdGlobalRating.Checked;
             parameter.GlobalRating = ConvertHelper.GetDouble(this.txtGlobalRating.Text) / 100.0;
             parameter.PrevPeroidNums = ConvertHelper.GetInt32(this.txtPrevPeroidNums.Text);
@@ -51,7 +51,7 @@ namespace Lottery.WinForms.UI
                 item.SubItems.Add(viewData.TotalAmount);
                 item.SubItems.Add(viewData.CurrentProfit);
                 item.SubItems.Add(viewData.TotalProfit);
-                item.SubItems.Add(viewData.ProfitRating + "%");
+                item.SubItems.Add(viewData.ProfitRating);
                 this.listView.Items.Add(item);
             }
         }

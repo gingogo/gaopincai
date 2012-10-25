@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.gboxBasic = new System.Windows.Forms.GroupBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtPrize = new System.Windows.Forms.TextBox();
             this.txtMaxMultiNums = new System.Windows.Forms.TextBox();
             this.txtStartMultiNums = new System.Windows.Forms.TextBox();
             this.txtNums = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblPrize = new System.Windows.Forms.Label();
             this.txtPeroidNums = new System.Windows.Forms.TextBox();
             this.lblMaxMultiNums = new System.Windows.Forms.Label();
             this.lblStartMultiNums = new System.Windows.Forms.Label();
@@ -69,11 +69,11 @@
             // 
             // gboxBasic
             // 
-            this.gboxBasic.Controls.Add(this.textBox5);
+            this.gboxBasic.Controls.Add(this.txtPrize);
             this.gboxBasic.Controls.Add(this.txtMaxMultiNums);
             this.gboxBasic.Controls.Add(this.txtStartMultiNums);
             this.gboxBasic.Controls.Add(this.txtNums);
-            this.gboxBasic.Controls.Add(this.label5);
+            this.gboxBasic.Controls.Add(this.lblPrize);
             this.gboxBasic.Controls.Add(this.txtPeroidNums);
             this.gboxBasic.Controls.Add(this.lblMaxMultiNums);
             this.gboxBasic.Controls.Add(this.lblStartMultiNums);
@@ -86,13 +86,13 @@
             this.gboxBasic.TabStop = false;
             this.gboxBasic.Text = "基本设置";
             // 
-            // textBox5
+            // txtPrize
             // 
-            this.textBox5.Location = new System.Drawing.Point(84, 124);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(123, 21);
-            this.textBox5.TabIndex = 9;
-            this.textBox5.Text = "130";
+            this.txtPrize.Location = new System.Drawing.Point(84, 124);
+            this.txtPrize.Name = "txtPrize";
+            this.txtPrize.Size = new System.Drawing.Size(123, 21);
+            this.txtPrize.TabIndex = 9;
+            this.txtPrize.Text = "130";
             // 
             // txtMaxMultiNums
             // 
@@ -118,14 +118,14 @@
             this.txtNums.TabIndex = 6;
             this.txtNums.Text = "1";
             // 
-            // label5
+            // lblPrize
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 133);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 12);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "单倍奖金:";
+            this.lblPrize.AutoSize = true;
+            this.lblPrize.Location = new System.Drawing.Point(19, 133);
+            this.lblPrize.Name = "lblPrize";
+            this.lblPrize.Size = new System.Drawing.Size(59, 12);
+            this.lblPrize.TabIndex = 5;
+            this.lblPrize.Text = "单倍奖金:";
             // 
             // txtPeroidNums
             // 
@@ -435,8 +435,8 @@
         private System.Windows.Forms.Label lblStartMultiNums;
         private System.Windows.Forms.Label lblNums;
         private System.Windows.Forms.Label lblPeroid;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label lblPrize;
+        private System.Windows.Forms.TextBox txtPrize;
         private System.Windows.Forms.TextBox txtMaxMultiNums;
         private System.Windows.Forms.TextBox txtStartMultiNums;
         private System.Windows.Forms.TextBox txtNums;
