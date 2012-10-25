@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Lottery.Analysis.Formula
 {
+    using Model.Analysis;
+
     /// <summary>
     /// 投资损益相关公式。
     /// </summary>
@@ -72,6 +74,25 @@ namespace Lottery.Analysis.Formula
         public static double GetGains(double odds, double p)
         {
             return (odds + 1) * p - 1;
+        }
+
+        /// <summary>
+        /// 获取倍投收益率。
+        /// </summary>
+        /// <param name="parameter">倍投参数</param>
+        /// <returns>倍投收益率集合</returns>
+        public static List<ProfitRate> GetMultiProfitRates(MultiParameter parameter)
+        {
+            List<ProfitRate> profitRates = new List<ProfitRate>(parameter.PeroidNums);
+            for (int i = 1; i <= parameter.PeroidNums; i++)
+            {
+                ProfitRate profitRate = new ProfitRate();
+                profitRate.PeroidNum = i;
+                profitRate.CurrentAmount = parameter.Nums * profitRate.MultiNums * 2;
+                //profitRate.TotalAmount += 
+            }
+
+            return profitRates;
         }
     }
 }

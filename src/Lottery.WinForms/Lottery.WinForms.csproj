@@ -78,6 +78,7 @@
     <Compile Include="UI\OptionsDialog.cs" />
     <Compile Include="ViewData\ColumnHeaderViewData.cs" />
     <Compile Include="ViewData\OmissionValueViewData.cs" />
+    <Compile Include="ViewData\ProfitRateViewData.cs" />
     <Compile Include="ViewData\SortedColumnViewData.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
