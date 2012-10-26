@@ -13,8 +13,6 @@ namespace Lottery.Data.SQLServer.SSC
 
     public class DwNumberBiz : SinglePKDataAccessBiz<DwNumberDAO, DwNumber>
     {
-        private static object lockObj = new object();
-
         public DwNumberBiz(string dbName)
             : base(new DwNumberDAO(ConfigHelper.GetConnString(dbName)))
         {
@@ -75,11 +73,8 @@ namespace Lottery.Data.SQLServer.SSC
 
         public bool Add(long p, int n, string code, int date, string datetime)
         {
-            lock (lockObj)
-            {
-                DwNumber number = Create(p, n, code, date, datetime);
-                return this.SaveToDB(number);
-            }
+            DwNumber number = Create(p, n, code, date, datetime);
+            return this.SaveToDB(number);
         }
 
         private void AddSpan(DwNumber number)

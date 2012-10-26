@@ -13,8 +13,6 @@ namespace Lottery.Data.SQLServer.SSL
 
     public class DwNumberBiz : SinglePKDataAccessBiz<DwNumberDAO, DwNumber>
     {
-        private static object lockObj = new object();
-
         public DwNumberBiz(string dbName)
             : base(new DwNumberDAO(ConfigHelper.GetConnString(dbName)))
         {
@@ -70,11 +68,8 @@ namespace Lottery.Data.SQLServer.SSL
 
         public bool Add(long p, int n, string code, int date, string datetime)
         {
-            lock (lockObj)
-            {
-                DwNumber number = this.Create(p, n, code, date, datetime);
-                return this.SaveToDB(number);
-            }
+            DwNumber number = this.Create(p, n, code, date, datetime);
+            return this.SaveToDB(number);
         }
 
         private void AddSpan(DwNumber number)

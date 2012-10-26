@@ -102,31 +102,39 @@ truncate table dbo.DwZiHeBiSpan;
 truncate table  dbo.DwDanShuangBiSpan;
 truncate table  dbo.DwLu012BiSpan;
 
-select count(*) from dbo.DwNumber;
-select count(*) from dbo.DwPeroidSpan;
-select count(*) from dbo.DwACSpan;
-select count(*) from dbo.DwDanShuangSpan ;
-select count(*) from dbo.DwDaXiaoSpan;
-select count(*) from dbo.DwHeSpan;
-select count(*) from dbo.DwHeWeiSpan;
-select count(*) from dbo.DwJiSpan;
-select count(*) from dbo.DwJiWeiSpan;
-select count(*) from dbo.DwKuaDuSpan;
-select count(*) from dbo.DwLu012Span;
-select count(*) from dbo.DwZiHeSpan;
+select count(*) Peroids from dbo.DwNumber;
+select count(*) Peroids from dbo.DwPeroidSpan;
+select count(*) Peroids from  dbo.DwACSpan;
+select count(*) Peroids from  dbo.DwDanShuangSpan ;
+select count(*) Peroids from   dbo.DwDaXiaoSpan;
+select count(*) Peroids from   dbo.DwHeSpan;
+select count(*) Peroids from   dbo.DwHeWeiSpan;
+select count(*) Peroids from   dbo.DwJiSpan;
+select count(*) Peroids from   dbo.DwJiWeiSpan;
+select count(*) Peroids from  dbo.DwKuaDuSpan;
+select count(*) Peroids from   dbo.DwLu012Span;
+select count(*) Peroids from   dbo.DwZiHeSpan;
+select count(*) Peroids from  dbo.DwDaXiaoBiSpan;
+select count(*) Peroids from  dbo.DwZiHeBiSpan;
+select count(*) Peroids from   dbo.DwDanShuangBiSpan;
+select count(*) Peroids from   dbo.DwLu012BiSpan;
 
-select max(p) P from dbo.DwNumber;
-select max(p) P from dbo.DwPeroidSpan;
-select max(p) P from dbo.DwACSpan;
-select max(p) P from dbo.DwDanShuangSpan ;
-select max(p) P from dbo.DwDaXiaoSpan;
-select max(p) P from dbo.DwHeSpan;
-select max(p) P  from dbo.DwHeWeiSpan;
-select max(p) P from dbo.DwJiSpan;
-select max(p) P  from dbo.DwJiWeiSpan;
-select max(p) P from dbo.DwKuaDuSpan;
-select max(p) P from dbo.DwLu012Span;
-select max(p) P  from dbo.DwZiHeSpan;
+select Max(P) P from dbo.DwNumber;
+select Max(P) P from dbo.DwPeroidSpan;
+select Max(P) P from  dbo.DwACSpan;
+select Max(P) P from  dbo.DwDanShuangSpan ;
+select Max(P) P from   dbo.DwDaXiaoSpan;
+select Max(P) P from   dbo.DwHeSpan;
+select Max(P) P from   dbo.DwHeWeiSpan;
+select Max(P) P from   dbo.DwJiSpan;
+select Max(P) P from   dbo.DwJiWeiSpan;
+select Max(P) P from  dbo.DwKuaDuSpan;
+select Max(P) P from   dbo.DwLu012Span;
+select Max(P) P from   dbo.DwZiHeSpan;
+select Max(P) P from  dbo.DwDaXiaoBiSpan;
+select Max(P) P from  dbo.DwZiHeBiSpan;
+select Max(P) P from   dbo.DwDanShuangBiSpan;
+select Max(P) P from   dbo.DwLu012BiSpan;
 
 update DmCategory  set DownIntervals = 6 where Id in(145,147,162,164,165);
 
@@ -353,4 +361,23 @@ update DmP5 set DaXiaoBi= Convert(char(1),DaCnt) + '|' + Convert(char(1),XiaoCnt
 update DmP5 set ZiHeBi= Convert(char(1),ZiCnt) + '|' + Convert(char(1),HeCnt);
 update DmP5 set DanShuangBi= Convert(char(1),DanCnt) + '|' + Convert(char(1),ShuangCnt);
 update DmP5 set Lu012Bi= Convert(char(1),Lu0Cnt) + '|' + Convert(char(1),Lu1Cnt) + '|' + Convert(char(1),Lu2Cnt);
+
+
+delete from dbo.DwPeroidSpan where P > 20121025060;
+delete from dbo.DwACSpan where P > 20121025060;
+delete from dbo.DwDanShuangSpan  where P > 20121025060;
+delete from  dbo.DwDaXiaoSpan where P > 20121025060;
+delete from dbo.DwHeSpan where P > 20121025060;
+delete from dbo.DwHeWeiSpan where P > 20121025060;
+delete from  dbo.DwJiSpan where P > 20121025060;
+delete from  dbo.DwJiWeiSpan where P > 20121025060;
+delete from  dbo.DwKuaDuSpan where P > 20121025060;
+delete from  dbo.DwLu012Span where P > 20121025060;
+delete from  dbo.DwZiHeSpan where P > 20121025060;
+delete from dbo.DwDaXiaoBiSpan where P > 20121025060;
+delete from dbo.DwZiHeBiSpan where P > 20121025060;
+delete from  dbo.DwDanShuangBiSpan where P > 20121025060;
+delete from  dbo.DwLu012BiSpan where P > 20121025060;
+delete from  dbo.DwNumber where P > 20121025060;
+
 

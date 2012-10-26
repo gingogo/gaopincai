@@ -75,11 +75,8 @@ namespace Lottery.Data.SQLServer.PL35
 
         public bool Add(long p, int n, string code, int date, string datetime)
         {
-            lock (lockObj)
-            {
-                DwNumber number = this.Create(p, n, code, date, datetime);
-                return this.SaveToDB(number);
-            }
+            DwNumber number = this.Create(p, n, code, date, datetime);
+            return this.SaveToDB(number);
         }
 
         private void AddSpan(DwNumber number)
