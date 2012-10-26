@@ -133,6 +133,13 @@ namespace Lottery.Data.SQLServer.D11X5
             return (result != null) ? result.ToString() : null;
         }
 
+        public void UpdateSeq(int n,long p)
+        {
+            string sqlCmd = string.Format("UPDATE {0} SET {1} = {1} + {2} WHERE {3} > {4};",
+                this._tableName, DwNumber.C_Seq, n, DwNumber.C_P, p);
+            SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, sqlCmd);
+        }
+
         #endregion
 
         #region 私有方法

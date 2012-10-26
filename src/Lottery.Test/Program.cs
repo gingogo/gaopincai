@@ -105,6 +105,8 @@ namespace Lottery.Test
             //ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.D11X5.ImportDwNumber.UpdateP(167, "2012090644", "05,07,01,09,10");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12073084", "09,03,05,06,04", "2012-07-30 22:50:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12073085", "09,06,02,03,05", "2012-07-30 23:00:00");
             //ETL.SSC.ImportDwNumber.UpdateC45();
             //ETL.SSC.ImportDmDPC.UpdateNumberType();
             //ETL.D12X3.ImportDmDPC.Add("db");

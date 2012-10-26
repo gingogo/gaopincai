@@ -9,6 +9,7 @@ namespace Lottery.ETL.D11X5
 {
     using Model.Common;
     using Model.D11X5;
+    using Data;
     using Lottery.Data.SQLServer.Common;
     using Lottery.Data.SQLServer.D11X5;
     using Utils;
@@ -75,6 +76,26 @@ namespace Lottery.ETL.D11X5
             DwNumber newNumber = biz.Create(number.P, number.N, code, number.Date, number.Created.ToString());
             newNumber.Seq = number.Seq;
             biz.Modify(newNumber, newNumber.P.ToString());
+        }
+
+        public static void InsertP(int categoryId, string speroid, string code, string sdate)
+        {
+            DateTime datetime = DateTime.Parse(sdate);
+            int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
+            int p = 2000000000 + int.Parse(speroid);
+            int n = int.Parse(speroid.Substring(speroid.Length - 2));
+
+            Category category = CategoryBiz.Instance.GetById(categoryId);
+            DwNumberBiz biz = new DwNumberBiz(category.DbName);
+
+            //select MAX(seq) seq from DwNumber where P < 2012073084;
+            int seq = biz.DataAccessor.GetMaxValue(DwNumber.C_Seq, 10, "where P <" + p);
+            DwNumber number = biz.Create(p, n, code, dateint, sdate);
+            number.Seq = seq + 1;
+            biz.Add(number);
+
+            //UPDATE DwNumber set Seq=seq+ 1 where P > 2012073084;
+            biz.DataAccessor.UpdateSeq(1, p);
         }
     }
 }
