@@ -32,15 +32,16 @@ namespace Lottery.WinForms.UI
             parameter.IsGlobal = this.rdGlobalRating.Checked;
             parameter.GlobalRating = ConvertHelper.GetDouble(this.txtGlobalRating.Text) / 100.0;
             parameter.PrevPeroidNums = ConvertHelper.GetInt32(this.txtPrevPeroidNums.Text);
-            parameter.PrevPeroidRating = ConvertHelper.GetDouble(this.txtPrevPeroidNums.Text) / 100.0;
+            parameter.PrevPeroidRating = ConvertHelper.GetDouble(this.txtPrevRating.Text) / 100.0;
             parameter.RestPeroidRating = ConvertHelper.GetDouble(this.txtRestRating.Text) / 100.0;
-            parameter.MinProfitAmount = ConvertHelper.GetDouble(this.txtMinProfitAmount.Text);
+            parameter.MinProfitAmount = this.chkMinProfit.Checked ? ConvertHelper.GetDouble(this.txtMinProfitAmount.Text) : 0.0;
 
             this.FillListView(ProfitOrLoss.GetMultiProfitRates(parameter));
         }
 
         private void FillListView(List<ProfitRate> profitRates)
         {
+            this.listView.Items.Clear();
             foreach (var profitRate in profitRates)
             {
                 var viewData = new ProfitRateViewData(profitRate);

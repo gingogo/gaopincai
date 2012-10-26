@@ -27,11 +27,6 @@ namespace Lottery.Model.Analysis
         /// <summary>
         /// 获取或设置起始倍数
         /// </summary>
-        public int MultiNums { get; set; }
-
-        /// <summary>
-        /// 获取或设置方案期数
-        /// </summary>
         public int StartMultiNums { get; set; }
 
         /// <summary>

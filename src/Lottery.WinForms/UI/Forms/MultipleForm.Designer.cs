@@ -227,8 +227,6 @@
             // chkMinProfit
             // 
             this.chkMinProfit.AutoSize = true;
-            this.chkMinProfit.Checked = true;
-            this.chkMinProfit.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkMinProfit.Location = new System.Drawing.Point(21, 125);
             this.chkMinProfit.Name = "chkMinProfit";
             this.chkMinProfit.Size = new System.Drawing.Size(78, 16);

@@ -37,13 +37,19 @@ namespace Lottery.Model.Analysis
         public double CurrentProfit { get; set; }
 
         /// <summary>
-        /// 获取或设置盈利收益
+        /// 获取盈利收益
         /// </summary>
-        public double TotalProfit { get; set; }
+        public double TotalProfit
+        {
+            get { return this.CurrentProfit - this.TotalAmount; }
+        }
 
         /// <summary>
-        /// 获取或设置收益率
+        /// 获取收益率
         /// </summary>
-        public double ProfitRating { get; set; }
+        public double ProfitRating
+        {
+            get { return this.TotalProfit / this.TotalAmount; }
+        }
     }
 }

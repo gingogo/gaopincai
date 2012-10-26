@@ -84,21 +84,48 @@ namespace Lottery.Analysis.Formula
         public static List<ProfitRate> GetMultiProfitRates(MultiParameter parameter)
         {
             List<ProfitRate> profitRates = new List<ProfitRate>(parameter.PeroidNums);
-            ProfitRate profitRate = new ProfitRate();
-            profitRate.PeroidNum = 1;
-            profitRate.CurrentAmount = parameter.Nums * profitRate.MultiNums * 2;
-            profitRates.Add(profitRate);
-
-            for (int i = 2; i <= parameter.PeroidNums; i++)
+            for (int i = 1; i <= parameter.PeroidNums; i++)
             {
-                profitRate = new ProfitRate();
+                double lastTotalAmount = (i > 1) ? profitRates[i - 2].TotalAmount : 0.0;
+                int currentMultiNums = (i > 1) ? profitRates[i - 2].MultiNums : parameter.StartMultiNums;
+                double profitRating = GetProfitRating(parameter, i);
+
+                ProfitRate profitRate = new ProfitRate();
                 profitRate.PeroidNum = i;
+                profitRate.MultiNums = GetMultiNums(parameter, currentMultiNums, lastTotalAmount, profitRating);
                 profitRate.CurrentAmount = parameter.Nums * profitRate.MultiNums * 2;
-                profitRate.TotalAmount = profitRates[i - 2].TotalAmount + profitRate.CurrentAmount;
+                profitRate.TotalAmount = lastTotalAmount + profitRate.CurrentAmount;
+                profitRate.CurrentProfit = profitRate.MultiNums * parameter.Prize;
                 profitRates.Add(profitRate);
             }
 
             return profitRates;
+        }
+
+        private static double GetProfitRating(MultiParameter parameter, int peroidNum)
+        {
+            if (parameter.IsGlobal) return parameter.GlobalRating;
+            return peroidNum <= parameter.PrevPeroidNums ? parameter.PrevPeroidRating : parameter.RestPeroidRating;
+        }
+
+        private static int GetMultiNums(MultiParameter parameter, int currentMultiNums, double lastTotalAmount, double profitRating)
+        {
+            double totalAmount = lastTotalAmount + (parameter.Nums * currentMultiNums * 2);
+            double totalPrize = parameter.Prize * currentMultiNums;
+            double totalProfit = totalPrize - totalAmount;
+            double currentProfitRating = totalProfit / totalAmount;
+
+            while (currentProfitRating < profitRating)
+            {
+                if (currentMultiNums > parameter.MaxMultiNums) break;
+                currentMultiNums++;
+                totalAmount = lastTotalAmount + (parameter.Nums * currentMultiNums * 2);
+                totalPrize = parameter.Prize * currentMultiNums;
+                totalProfit = totalPrize - totalAmount;
+                currentProfitRating = totalProfit / totalAmount;
+            }
+
+            return currentMultiNums;
         }
     }
 }
