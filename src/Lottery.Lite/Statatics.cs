@@ -322,7 +322,6 @@ namespace Lottery.Lite
             return spans;
         }
         
-        
         public List<NumSpanData> GetNextPeriod(CaiConfigData CaiData){
         	//从缓存获取当前的指定时间的周期数据列表
         	List<NumSpanData> spans = BizBase.XMLDeserialize(CaiData,"所有周期");

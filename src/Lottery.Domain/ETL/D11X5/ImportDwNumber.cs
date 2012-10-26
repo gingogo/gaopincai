@@ -80,6 +80,7 @@ namespace Lottery.ETL.D11X5
 
         public static void InsertP(int categoryId, string speroid, string code, string sdate)
         {
+            string no = code.Replace(" ", ",");
             DateTime datetime = DateTime.Parse(sdate);
             int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
             int p = 2000000000 + int.Parse(speroid);
@@ -90,7 +91,7 @@ namespace Lottery.ETL.D11X5
 
             //select MAX(seq) seq from DwNumber where P < 2012073084;
             int seq = biz.DataAccessor.GetMaxValue(DwNumber.C_Seq, 10, "where P <" + p);
-            DwNumber number = biz.Create(p, n, code, dateint, sdate);
+            DwNumber number = biz.Create(p, n, no, dateint, sdate);
             number.Seq = seq + 1;
             biz.Add(number);
 

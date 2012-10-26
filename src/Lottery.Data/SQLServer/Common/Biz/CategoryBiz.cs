@@ -106,9 +106,10 @@ namespace Lottery.Data.SQLServer.Common
                     Category entity = new Category() { Id = category.Id, PeroidCount = peroidCount, DownPageCount = pageCount };
                     CategoryBiz.Instance.Modify(entity, entity.Id, Category.C_DownPageCount, Category.C_PeroidCount);
                     D11X5.DwNumberBiz biz = new D11X5.DwNumberBiz(category.DbName);
-                    int downPeroidCount = biz.Count;
+                    int maxSeq = biz.DataAccessor.GetMaxValue("Seq", 10, string.Empty);
+                    int downPeroids = biz.Count;
 
-                    dict.Add(category.Name, string.Format("{0},{1}", peroidCount, downPeroidCount));
+                    dict.Add(category.Name, string.Format("已出:{0}期,已下载：{1}期,最大Seq:{2}", peroidCount, downPeroids, maxSeq));
                 }
                 catch (Exception ex)
                 {
