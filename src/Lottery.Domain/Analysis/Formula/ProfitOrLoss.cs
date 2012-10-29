@@ -108,11 +108,15 @@ namespace Lottery.Analysis.Formula
         private static int GetMultiNums(MultiParameter parameter, int lastMultiNums, double lastTotalAmount, double profitRating)
         {
             int multiNums = lastMultiNums;
-            while ((((parameter.Prize * multiNums - (lastTotalAmount + parameter.Nums * multiNums * 2))) / (lastTotalAmount + parameter.Nums * multiNums * 2)) < profitRating ||
-                (parameter.Prize * multiNums - (lastTotalAmount + parameter.Nums * multiNums * 2)) < parameter.MinProfitAmount)
+            double totalAmount = lastTotalAmount + parameter.Nums * multiNums * 2;
+            double totalProfit = parameter.Prize * multiNums - totalAmount;
+
+            while (totalProfit / totalAmount < profitRating || totalProfit < parameter.MinProfitAmount)
             {
                 if (multiNums > parameter.MaxMultiNums) return -1;
                 multiNums++;
+                totalAmount = lastTotalAmount + parameter.Nums * multiNums * 2;
+                totalProfit = parameter.Prize * multiNums - totalAmount;
             }
 
             return multiNums;
