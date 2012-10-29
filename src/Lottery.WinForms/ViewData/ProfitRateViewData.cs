@@ -52,7 +52,7 @@ namespace Lottery.WinForms.ViewData
         /// </summary>
         public string TotalAmount
         {
-            get { return this._profitRate.TotalAmount.ToString("F2"); }
+            get { return this._profitRate.CurrentTotalAmount.ToString("F2"); }
         }
 
         /// <summary>

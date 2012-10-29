@@ -86,16 +86,13 @@ namespace Lottery.Analysis.Formula
             List<ProfitRate> profitRates = new List<ProfitRate>(parameter.PeroidNums);
             for (int i = 1; i <= parameter.PeroidNums; i++)
             {
-                double lastTotalAmount = (i > 1) ? profitRates[i - 2].TotalAmount : 0.0;
-                int currentMultiNums = (i > 1) ? profitRates[i - 2].MultiNums : parameter.StartMultiNums;
                 double profitRating = GetProfitRating(parameter, i);
+                double lastTotalAmount = (i == 1) ? 0 : profitRates[i - 2].CurrentTotalAmount;
+                int lastMultiNums = (i == 1) ? parameter.StartMultiNums : profitRates[i - 2].MultiNums;
+                int currentMultiNums = GetMultiNums(parameter, lastMultiNums, lastTotalAmount, profitRating);
+                if (currentMultiNums == -1) break;
 
-                ProfitRate profitRate = new ProfitRate();
-                profitRate.PeroidNum = i;
-                profitRate.MultiNums = GetMultiNums(parameter, currentMultiNums, lastTotalAmount, profitRating);
-                profitRate.CurrentAmount = parameter.Nums * profitRate.MultiNums * 2;
-                profitRate.TotalAmount = lastTotalAmount + profitRate.CurrentAmount;
-                profitRate.CurrentProfit = profitRate.MultiNums * parameter.Prize;
+                ProfitRate profitRate = new ProfitRate(i, parameter.Nums, currentMultiNums, parameter.Prize, lastTotalAmount);
                 profitRates.Add(profitRate);
             }
 
@@ -108,24 +105,17 @@ namespace Lottery.Analysis.Formula
             return peroidNum <= parameter.PrevPeroidNums ? parameter.PrevPeroidRating : parameter.RestPeroidRating;
         }
 
-        private static int GetMultiNums(MultiParameter parameter, int currentMultiNums, double lastTotalAmount, double profitRating)
+        private static int GetMultiNums(MultiParameter parameter, int lastMultiNums, double lastTotalAmount, double profitRating)
         {
-            double totalAmount = lastTotalAmount + (parameter.Nums * currentMultiNums * 2);
-            double totalPrize = parameter.Prize * currentMultiNums;
-            double totalProfit = totalPrize - totalAmount;
-            double currentProfitRating = totalProfit / totalAmount;
-
-            while (currentProfitRating < profitRating)
+            int multiNums = lastMultiNums;
+            while ((((parameter.Prize * multiNums - (lastTotalAmount + parameter.Nums * multiNums * 2))) / (lastTotalAmount + parameter.Nums * multiNums * 2)) < profitRating ||
+                (parameter.Prize * multiNums - (lastTotalAmount + parameter.Nums * multiNums * 2)) < parameter.MinProfitAmount)
             {
-                if (currentMultiNums > parameter.MaxMultiNums) break;
-                currentMultiNums++;
-                totalAmount = lastTotalAmount + (parameter.Nums * currentMultiNums * 2);
-                totalPrize = parameter.Prize * currentMultiNums;
-                totalProfit = totalPrize - totalAmount;
-                currentProfitRating = totalProfit / totalAmount;
+                if (multiNums > parameter.MaxMultiNums) return -1;
+                multiNums++;
             }
 
-            return currentMultiNums;
+            return multiNums;
         }
     }
 }

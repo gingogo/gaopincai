@@ -346,6 +346,7 @@
             this.chCurrentProfit,
             this.chTotalProfit,
             this.chProfitRating});
+            this.listView.FullRowSelect = true;
             this.listView.GridLines = true;
             this.listView.Location = new System.Drawing.Point(232, 8);
             this.listView.Name = "listView";

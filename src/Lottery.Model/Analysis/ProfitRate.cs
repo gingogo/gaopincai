@@ -12,6 +12,23 @@ namespace Lottery.Model.Analysis
         }
 
         /// <summary>
+        /// 构造函数。
+        /// </summary>
+        /// <param name="peroidNum">当前期数</param>
+        /// <param name="nums">当前投注数</param>
+        /// <param name="multiNums">投注倍数</param>
+        /// <param name="prize">单位奖金</param>
+        /// <param name="lastTotalAmount">当前累入投入金额</param>
+        public ProfitRate(int peroidNum,int nums,int multiNums,double prize,double lastTotalAmount)
+        {
+            this.PeroidNum = peroidNum;
+            this.MultiNums = multiNums;
+            this.CurrentAmount = nums * multiNums * 2;
+            this.CurrentProfit = prize * multiNums;
+            this.CurrentTotalAmount = lastTotalAmount + this.CurrentAmount;
+        }
+
+        /// <summary>
         /// 获取或设置投入期数
         /// </summary>
         public int PeroidNum { get; set; }
@@ -29,7 +46,7 @@ namespace Lottery.Model.Analysis
         /// <summary>
         /// 获取或设置累计投入
         /// </summary>
-        public double TotalAmount { get; set; }
+        public double CurrentTotalAmount { get; set; }
 
         /// <summary>
         /// 获取或设置本期收益
@@ -41,7 +58,7 @@ namespace Lottery.Model.Analysis
         /// </summary>
         public double TotalProfit
         {
-            get { return this.CurrentProfit - this.TotalAmount; }
+            get { return this.CurrentProfit - this.CurrentTotalAmount; }
         }
 
         /// <summary>
@@ -49,7 +66,7 @@ namespace Lottery.Model.Analysis
         /// </summary>
         public double ProfitRating
         {
-            get { return this.TotalProfit / this.TotalAmount; }
+            get { return this.TotalProfit / this.CurrentTotalAmount; }
         }
     }
 }
