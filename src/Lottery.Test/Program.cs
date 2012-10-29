@@ -28,6 +28,7 @@ namespace Lottery.Test
             //CacheTest();
             //DownloaderTest();
             //ServiceTest();
+            //InsertP();
             DisplayPeroidCount();
             Console.WriteLine("Finished");
             Console.Read();
@@ -105,11 +106,22 @@ namespace Lottery.Test
             //ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.D11X5.ImportDwNumber.UpdateP(167, "2012090644", "05,07,01,09,10");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12073084", "09,03,05,06,04", "2012-07-30 22:50:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12073085", "09,06,02,03,05", "2012-07-30 23:00:00");
             //ETL.SSC.ImportDwNumber.UpdateC45();
             //ETL.SSC.ImportDmDPC.UpdateNumberType();
             //ETL.D12X3.ImportDmDPC.Add("db");
+        }
+
+        static void InsertP()
+        {
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12031632", "02 01 09 03 04", "2012-03-16 14:10:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12031633", "11 01 04 03 06", "2012-03-16 14:20:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12031634", "05 10 03 07 04", "2012-03-16 14:30:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12031636", "02 04 01 08 07", "2012-03-16 14:50:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12031637", "09 07 04 01 03", "2012-03-16 15:00:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12031638", "03 02 11 05 04", "2012-03-16 15:10:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12040453", "08 01 06 02 10", "2012-04-04 17:40:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12102372", "06 05 02 03 10", "2012-10-23 20:50:00");
+            ETL.D11X5.ImportDwNumber.InsertP(167, "12102373", "09 04 06 11 07", "2012-10-23 21:00:00");
         }
 
         static void StatTest()
@@ -117,8 +129,8 @@ namespace Lottery.Test
             Statistics.IStatistics[] stats = new Statistics.IStatistics[] 
             {
                 new Statistics.D11X5.DmSpan(),
-                new Statistics.SSL.DmSpan(),
-                new Statistics.SSC.DmSpan(),
+                //new Statistics.SSL.DmSpan(),
+                //new Statistics.SSC.DmSpan(),
                 //new Statistics.D3.DmSpan(),
                 //new Statistics.PL35.DmSpan()
                 //new Statistics.D12X3.DmSpan()
