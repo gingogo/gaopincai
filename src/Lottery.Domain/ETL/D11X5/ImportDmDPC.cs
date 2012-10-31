@@ -57,6 +57,7 @@ namespace Lottery.ETL.D11X5
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
             foreach (var category in categories)
             {
+                if (category.DbName.Contains("GuangD")) continue;
                 //P(category.DbName, "Dx", 1, output);
                 //P(category.DbName, "P2", 2, output);
                 //P(category.DbName, "P3", 3, output);
@@ -66,14 +67,22 @@ namespace Lottery.ETL.D11X5
                 //C(category.DbName, "C3", 3, output);
                 //C(category.DbName, "C4", 4, output);
                 //C(category.DbName, "C5", 5, output);
+
                 //C(category.DbName, "C6", 6, output);
                 //C(category.DbName, "C7", 7, output);
                 //C(category.DbName, "C8", 8, output);
+
+                C5CX(category.DbName, "C2", 2, output);
+                C5CX(category.DbName, "C3", 3, output);
+                C5CX(category.DbName, "C4", 4, output);
+                C5CX(category.DbName, "C6", 6, output);
+                C5CX(category.DbName, "C7", 7, output);
+                C5CX(category.DbName, "C8", 8, output);
                 //break;
             }
         }
 
-        public static void P(string name,string type, int length,string output)
+        public static void P(string name, string type, int length, string output)
         {
             var p = new Permutations<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, length);
             if (output.Equals("txt"))
@@ -95,13 +104,46 @@ namespace Lottery.ETL.D11X5
             SaveToDB(name, type, c);
         }
 
+        public static void C5CX(string name, string type, int length, string output)
+        {
+            List<DmDPC> srcNumbers = null;
+            if (length > 5)
+            {
+                srcNumbers = NumberCache.Instance.GetNumberList(type);
+            }
+            else
+            {
+                srcNumbers = NumberCache.Instance.GetNumberList("C5");
+            }
+
+            DmC5CXBiz biz = new DmC5CXBiz(name);
+            List<DmC5CX> entities = new List<DmC5CX>(srcNumbers.Count * 56);
+            foreach (var srcNumber in srcNumbers)
+            {
+                string number = srcNumber.Number.Replace(' ', ',');
+                var cxNumbers = new Combinations<int>(number.ToList(), length > 5 ? 5 : length);
+                foreach (var cxNumber in cxNumbers)
+                {
+                    string cx = NumberCache.Instance.GetNumberId(length > 5 ? "C5" : type, cxNumber.Format("D2", ","));
+                    DmC5CX entity = new DmC5CX();
+                    entity.C5 = (length > 5) ? cx : srcNumber.Id;
+                    entity.CX = (length > 5) ? srcNumber.Id : cx;
+                    entity.C5Number = (length > 5) ? cx.ToString(2, " ") : srcNumber.Number;
+                    entity.CXNumber = (length > 5) ? srcNumber.Number : cx.ToString(2, " ");
+                    entity.NumberType = type;
+                    entities.Add(entity);
+                }
+            }
+            biz.DataAccessor.Insert(entities, SqlInsertMethod.SqlBulkCopy);
+        }
+
         private static void SaveToText(string name, string type, IEnumerable<IList<int>> lists)
         {
             string fileName = string.Format(@"d:\{0}_{1}.txt", name, type);
             StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8);
             foreach (var list in lists)
             {
-                var dto = GetDmFCAn(list);
+                var dto = GetDmFCAn(list, type);
                 writer.WriteLine(dto.ToString());
             }
             writer.Close();
@@ -113,12 +155,12 @@ namespace Lottery.ETL.D11X5
             List<DmDPC> entities = new List<DmDPC>(lists.Count());
             foreach (var list in lists)
             {
-                entities.Add(GetDmFCAn(list));
+                entities.Add(GetDmFCAn(list, type));
             }
             biz.DataAccessor.Insert(entities, SqlInsertMethod.SqlBulkCopy);
         }
 
-        private static DmDPC GetDmFCAn(IList<int> list)
+        private static DmDPC GetDmFCAn(IList<int> list, string type)
         {
             DmDPC dto = new DmDPC();
             dto.Id = list.Format();
@@ -146,6 +188,7 @@ namespace Lottery.ETL.D11X5
             dto.ZiHeBi = list.GetZiHeBi();
             dto.DanShuangBi = list.GetDanShuangBi();
             dto.Lu012Bi = list.GetLu012Bi();
+            dto.NumberType = type;
 
             return dto;
         }

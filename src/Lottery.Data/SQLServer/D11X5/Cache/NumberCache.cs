@@ -39,9 +39,16 @@ namespace Lottery.Data.SQLServer.D11X5
             return biz.GetAll("Id").Select(x => x.Id).ToList();
         }
 
+        public List<DmDPC> GetNumberList(string numberType)
+        {
+            string dmTableNameSuffix = numberType.GetDmTableSuffix();
+            DmDPCBiz biz = new DmDPCBiz(ConfigHelper.D11x5DmTableConnStringName, dmTableNameSuffix);
+            return biz.GetAll("Id", "Number");
+        }
+
         private void LoadData()
         {
-            string[] numberTypes = new string[] { "C2", "C3", "C4", "C5" };
+            string[] numberTypes = new string[] { "C2", "C3", "C4", "C5", "C6", "C7", "C8" };
             
             DmDPCBiz biz = new DmDPCBiz(ConfigHelper.D11x5DmTableConnStringName, string.Empty);
             foreach (var numberType in numberTypes)

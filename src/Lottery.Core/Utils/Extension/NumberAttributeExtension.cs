@@ -74,6 +74,18 @@ namespace Lottery.Utils
         public static string ToString(this object obj,int length, string separator)
         {
             string str = obj.ToString();
+            return ToString(str, length, separator);
+        }
+
+        /// <summary>
+        /// 把数字字符串按指定长度进行分隔。
+        /// </summary>
+        /// <param name="str">字符串对象</param>
+        /// <param name="length">分隔后每个组的长度</param>
+        /// <param name="separator">分隔字符</param>
+        /// <returns></returns>
+        public static string ToString(this string str, int length, string separator)
+        {
             if (length == 1)
                 return string.Join(separator, str.ToArray());
 

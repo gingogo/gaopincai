@@ -21,7 +21,7 @@ namespace Lottery.Test
             //StatTest();
             //OmissionValueTest();
             //DownServiceTest();
-            //ETLTest();
+            ETLTest();
             //TransactionTest();
             //FormulaTest();
             //Console.WriteLine((1%3).ToString());
@@ -29,7 +29,7 @@ namespace Lottery.Test
             //DownloaderTest();
             //ServiceTest();
             //InsertP();
-            DisplayPeroidCount();
+            //DisplayPeroidCount();
             Console.WriteLine("Finished");
             Console.Read();
         }
@@ -104,6 +104,7 @@ namespace Lottery.Test
             //ETL.Common.ImportDimension.Import();
             //ETL.Common.ImportNumberType.Import();
             //ETL.Common.ImportNumberTypeDim.Import();
+            ETL.D11X5.ImportDmDPC.Add("db");
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.D11X5.ImportDwNumber.UpdateP(167, "2012090644", "05,07,01,09,10");
             //ETL.SSC.ImportDwNumber.UpdateC45();
