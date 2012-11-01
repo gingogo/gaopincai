@@ -14,14 +14,14 @@ namespace Lottery.ETL.Common
     {
         public static void Import()
         {
-            DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
+            //DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
 
             Import11x5();
-            ImportSSC();
-            Import3D();
-            ImportPL35();
-            ImportSSL();
-            Import12X3();
+            //ImportSSC();
+            //Import3D();
+            //ImportPL35();
+            //ImportSSL();
+            //Import12X3();
         }
 
         public static void Import11x5()
@@ -33,6 +33,8 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
+                if (numberType.Code.StartsWith("A")) continue;
+
                 Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangx11x5", numberType.Code.GetDmTableSuffix());
        
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
