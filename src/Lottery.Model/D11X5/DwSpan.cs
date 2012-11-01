@@ -50,18 +50,6 @@ namespace Lottery.Model.D11X5
         /// </summary>
         public static readonly String C_C3Spans = "C3Spans";
         /// <summary>
-        /// 列名P4Spans  
-        /// </summary>
-        public static readonly String C_P4Spans = "P4Spans";
-        /// <summary>
-        /// 列名C4Spans  
-        /// </summary>
-        public static readonly String C_C4Spans = "C4Spans";
-        /// <summary>
-        /// 列名P5Spans  
-        /// </summary>
-        public static readonly String C_P5Spans = "P5Spans";
-        /// <summary>
         /// 列名C5Spans  
         /// </summary>
         public static readonly String C_C5Spans = "C5Spans";
@@ -89,12 +77,6 @@ namespace Lottery.Model.D11X5
         private Int32 _p3Spans;
 
         private Int32 _c3Spans;
-
-        private Int32 _p4Spans;
-
-        private Int32 _c4Spans;
-
-        private Int32 _p5Spans;
 
         private Int32 _c5Spans;
 
@@ -195,33 +177,6 @@ namespace Lottery.Model.D11X5
         /// <summary>
         /// 获取或设置
         /// </summary>
-        [Column(Name = "P4Spans")]
-        public virtual Int32 P4Spans
-        {
-            get { return this._p4Spans; }
-            set { this._p4Spans = value; }
-        }
-        /// <summary>
-        /// 获取或设置
-        /// </summary>
-        [Column(Name = "C4Spans")]
-        public virtual Int32 C4Spans
-        {
-            get { return this._c4Spans; }
-            set { this._c4Spans = value; }
-        }
-        /// <summary>
-        /// 获取或设置
-        /// </summary>
-        [Column(Name = "P5Spans")]
-        public virtual Int32 P5Spans
-        {
-            get { return this._p5Spans; }
-            set { this._p5Spans = value; }
-        }
-        /// <summary>
-        /// 获取或设置
-        /// </summary>
         [Column(Name = "C5Spans")]
         public virtual Int32 C5Spans
         {
@@ -233,10 +188,9 @@ namespace Lottery.Model.D11X5
 
         public override string ToString()
         {
-            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13}",
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                 this._p, this._d1Spans, this._d2Spans, this._d3Spans, this._d4Spans, this._d5Spans,
-                this._p2Spans, this._c2Spans, this._p3Spans, this._c3Spans, this._p4Spans, this._c4Spans,
-                this._p5Spans, this._c5Spans);
+                this._p2Spans, this._c2Spans, this._p3Spans, this._c3Spans, this._c5Spans);
         }
     }
 }

@@ -31,10 +31,6 @@ namespace Lottery.Model.D11X5
 
         private String _c3;
 
-        private String _p4;
-
-        private String _c4;
-
         private String _p5;
 
         private String _c5;
@@ -91,14 +87,6 @@ namespace Lottery.Model.D11X5
         /// 列名C3  
         /// </summary>
         public static readonly String C_C3 = "C3";
-        /// <summary>
-        /// 列名P4  
-        /// </summary>
-        public static readonly String C_P4 = "P4";
-        /// <summary>
-        /// 列名C4  
-        /// </summary>
-        public static readonly String C_C4 = "C4";
         /// <summary>
         /// 列名P5  
         /// </summary>
@@ -221,24 +209,6 @@ namespace Lottery.Model.D11X5
         /// <summary>
         /// 获取或设置
         /// </summary>
-        [Column(Name = "P4")]
-        public virtual String P4
-        {
-            get { return this._p4; }
-            set { this._p4 = value; }
-        }
-        /// <summary>
-        /// 获取或设置
-        /// </summary>
-        [Column(Name = "C4")]
-        public virtual String C4
-        {
-            get { return this._c4; }
-            set { this._c4 = value; }
-        }
-        /// <summary>
-        /// 获取或设置
-        /// </summary>
         [Column(Name = "P5")]
         public virtual String P5
         {
@@ -295,9 +265,9 @@ namespace Lottery.Model.D11X5
 
         public override string ToString()
         {
-            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17}",
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}",
                 this._p, this._d1, this._d2, this._d3, this._d4, this._d5, this._p2, this._c2, this._p3, this._c3,
-                this._p4, this._c4, this._p5, this._c5, this._n, this._seq, this._date, this._created);
+                this._p5, this._c5, this._n, this._seq, this._date, this._created);
         }
     }
 }

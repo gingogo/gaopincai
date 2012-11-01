@@ -61,12 +61,10 @@ namespace Lottery.Data.SQLServer.D11X5
             number.D4 = ConvertHelper.GetInt32(arr[3]);
             number.D5 = ConvertHelper.GetInt32(arr[4]);
             number.P5 = code.Replace(",", "");
-            number.P4 = number.P5.Substring(0, 8);
             number.P3 = number.P5.Substring(0, 6);
             number.P2 = number.P5.Substring(0, 4);
             number.C2 = NumberCache.Instance.GetNumberId("C2", string.Format("{0},{1}", arr[0], arr[1]));
             number.C3 = NumberCache.Instance.GetNumberId("C3", string.Format("{0},{1},{2}", arr[0], arr[1], arr[2]));
-            number.C4 = NumberCache.Instance.GetNumberId("C4", string.Format("{0},{1},{2},{3}", arr[0], arr[1], arr[2], arr[3]));
             number.C5 = NumberCache.Instance.GetNumberId("C5", code);
             return number;
         }

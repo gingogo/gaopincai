@@ -49,25 +49,6 @@ namespace Lottery.ETL.D11X5
             //writer.WriteLine(dto.ToString());
         }
 
-        public static void UpdateC4()
-        {
-            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
-            foreach (Category category in categories)
-            {
-                DwNumberBiz biz = new DwNumberBiz(category.DbName);
-                List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty,
-                    "Seq", Data.SortTypeEnum.ASC, null, "P", "P4");
-
-                foreach (var number in numbers)
-                {
-                    string colValue = NumberCache.Instance.GetNumberId("C4",number.P4.ToString(2));
-                    string sql = string.Format("update {0} set {1} = '{2}' where P = {3}",
-                        DwNumber.ENTITYNAME, "C4", colValue, number.P);
-                    Data.SqlHelper.ExecuteNonQuery(biz.DataAccessor.ConnectionString, System.Data.CommandType.Text, sql);
-                }
-            }
-        }
-
         public static void UpdateP(int categoryId, string p, string code)
         {
             Category category = CategoryBiz.Instance.GetById(categoryId);
