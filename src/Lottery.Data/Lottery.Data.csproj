@@ -64,7 +64,9 @@
     <Compile Include="SQLServer\Common\DimensionNumberTypeDAO.cs" />
     <Compile Include="SQLServer\Common\RuleTypeDAO.cs" />
     <Compile Include="SQLServer\D11X5\Biz\DmC5CXBiz.cs" />
+    <Compile Include="SQLServer\D11X5\Biz\DwC5CXSpanBiz.cs" />
     <Compile Include="SQLServer\D11X5\DmC5CXDAO.cs" />
+    <Compile Include="SQLServer\D11X5\DwC5CXSpanDAO.cs" />
     <Compile Include="SQLServer\D12X3\Biz\DmDPCBiz.cs" />
     <Compile Include="SQLServer\D12X3\Biz\DwNumberBiz.cs" />
     <Compile Include="SQLServer\D12X3\Biz\DwSpanBiz.cs" />

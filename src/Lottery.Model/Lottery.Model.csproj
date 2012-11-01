@@ -51,6 +51,7 @@
     <Compile Include="Common\RuleType.cs" />
     <Compile Include="Common\TypeDimensionNumberType.cs" />
     <Compile Include="D11X5\DmC5CX.cs" />
+    <Compile Include="D11X5\DwC5CXSpan.cs" />
     <Compile Include="D12X3\DmDPC.cs" />
     <Compile Include="D12X3\DwNumber.cs" />
     <Compile Include="D12X3\DwSpan.cs" />
