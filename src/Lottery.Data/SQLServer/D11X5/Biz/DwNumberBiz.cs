@@ -100,6 +100,11 @@ namespace Lottery.Data.SQLServer.D11X5
             spanDao.Insert(batchEntities);
         }
 
+        private void AddC5CXSpan(DwNumber number)
+        {
+
+        }
+
         private bool SaveToDB(DwNumber number)
         {
             try

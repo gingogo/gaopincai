@@ -25,6 +25,10 @@ namespace Lottery.Model.D11X5
         /// </summary>
         public static readonly String C_CX = "CX";
         /// <summary>
+        /// 列名Seq
+        /// </summary>
+        public static readonly String C_Seq = "Seq";
+        /// <summary>
         /// 列名PeroidSpans  
         /// </summary>
         public static readonly String C_PeroidSpans = "PeroidSpans";
@@ -39,6 +43,8 @@ namespace Lottery.Model.D11X5
         private String _c5;
 
         private String _cX;
+
+        private Int32 _seq;
 
         private Int32 _peroidSpans;
 
@@ -72,6 +78,15 @@ namespace Lottery.Model.D11X5
         {
             get { return this._cX; }
             set { this._cX = value; }
+        }
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "Seq")]
+        public virtual Int32 Seq
+        {
+            get { return this._seq; }
+            set { this._seq = value; }
         }
         /// <summary>
         /// 获取或设置

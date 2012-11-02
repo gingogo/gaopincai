@@ -645,6 +645,7 @@ CREATE TABLE [dbo].[DwC5C2Span] (
 [P] bigint NOT NULL ,
 [C5] char(10) NOT NULL ,
 [CX] char(4) NOT NULL ,
+[Seq] int NOT NULL,
 [PeroidSpans] int NOT NULL 
 )
 ALTER TABLE [dbo].[DwC5C2Span] ADD PRIMARY KEY ([CX], [C5], [P])
@@ -654,6 +655,7 @@ CREATE TABLE [dbo].[DwC5C3Span] (
 [P] bigint NOT NULL ,
 [C5] char(10) NOT NULL ,
 [CX] char(6) NOT NULL ,
+[Seq] int NOT NULL,
 [PeroidSpans] int NOT NULL 
 )
 ALTER TABLE [dbo].[DwC5C3Span] ADD PRIMARY KEY ([CX], [C5], [P])
@@ -663,6 +665,7 @@ CREATE TABLE [dbo].[DwC5C4Span] (
 [P] bigint NOT NULL ,
 [C5] char(10) NOT NULL ,
 [CX] char(8) NOT NULL ,
+[Seq] int NOT NULL,
 [PeroidSpans] int NOT NULL 
 )
 ALTER TABLE [dbo].[DwC5C4Span] ADD PRIMARY KEY ([CX], [C5], [P])
@@ -672,6 +675,7 @@ CREATE TABLE [dbo].[DwC5C6Span] (
 [P] bigint NOT NULL ,
 [C5] char(10) NOT NULL ,
 [CX] char(12) NOT NULL ,
+[Seq] int NOT NULL,
 [PeroidSpans] int NOT NULL 
 )
 ALTER TABLE [dbo].[DwC5C6Span] ADD PRIMARY KEY ([CX], [C5], [P])
@@ -682,6 +686,7 @@ CREATE TABLE [dbo].[DwC5C7Span] (
 [P] bigint NOT NULL ,
 [C5] char(10) NOT NULL ,
 [CX] char(14) NOT NULL ,
+[Seq] int NOT NULL,
 [PeroidSpans] int NOT NULL 
 )
 ALTER TABLE [dbo].[DwC5C7Span] ADD PRIMARY KEY ([CX], [C5], [P])
@@ -692,6 +697,7 @@ CREATE TABLE [dbo].[DwC5C8Span] (
 [P] bigint NOT NULL ,
 [C5] char(10) NOT NULL ,
 [CX] char(16) NOT NULL ,
+[Seq] int NOT NULL,
 [PeroidSpans] int NOT NULL 
 )
 ALTER TABLE [dbo].[DwC5C8Span] ADD PRIMARY KEY ([CX], [C5], [P])
