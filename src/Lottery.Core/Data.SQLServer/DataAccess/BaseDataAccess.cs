@@ -358,6 +358,7 @@ namespace Lottery.Data.SQLServer
             {
                 bulkCopy.DestinationTableName = this._tableName;
                 bulkCopy.BatchSize = dataTable.Rows.Count;
+                bulkCopy.BulkCopyTimeout = 3600;
                 this.SetColumnMappings(bulkCopy.ColumnMappings, metaDataTable, columnNames);
 
                 try
