@@ -14,7 +14,12 @@ namespace Lottery.Data.SQLServer.D11X5
     public partial class DwC5CXSpanBiz :
         BaseDataAccessBiz<DwC5CXSpanDAO, DwC5CXSpan>
     {
-        protected DwC5CXSpanBiz(string dbName, string tableName)
+        public DwC5CXSpanBiz(string dbName)
+            : this(dbName, string.Empty)
+        {
+        }
+
+        public DwC5CXSpanBiz(string dbName, string tableName)
             : base(new DwC5CXSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName)))
         {
         }

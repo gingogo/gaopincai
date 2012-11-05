@@ -24,7 +24,13 @@ namespace Lottery.Statistics.D11X5
             string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("11X5");
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
- 
+
+            //this.Stat(dbName, outputType, dmNames, numbers);
+            this.StatC5CX(numbers, dbName);
+        }
+
+        private void Stat(string dbName, OutputType outputType, string[] dmNames, List<DwNumber> numbers)
+        {
             foreach (string dmName in dmNames)
             {
                 string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("11X5", dmName);
@@ -47,17 +53,30 @@ namespace Lottery.Statistics.D11X5
             string[] dmNames = new string[] { "Peroid" };
             string[] numberTypes = new string[] { "A2", "A3", "A4", "A6", "A7", "A8" };
             DmC5CXBiz dmC5CXBiz = new DmC5CXBiz(dbName);
-            List<DmC5CX> allCxNumbers = dmC5CXBiz.GetAll(DmC5CX.C_C5, DmC5CX.C_CX);
+            List<DmC5CX> allCxNumbers = dmC5CXBiz.GetAll(DmC5CX.C_C5, DmC5CX.C_CX, DmC5CX.C_NumberType);
+            DwC5CXSpanBiz spanBiz = new DwC5CXSpanBiz(dbName);
 
-            foreach (DwNumber number in numbers)
+            foreach (var numberType in numberTypes)
             {
-                foreach (var numberType in numberTypes)
+                Dictionary<string, int> lastSpanDict = new Dictionary<string, int>(10000);
+                List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(numbers.Count * 20);
+                string newNumberType = numberType.Replace("A", "C");
+                string tableName = string.Format("{0}{1}", "C5", newNumberType);
+                var subCxNumbers = allCxNumbers.Where(x => x.NumberType.Equals(newNumberType));
+                spanBiz.DataAccessor.TableName = ConfigHelper.GetDwSpanTableName(tableName);
+
+                foreach (DwNumber number in numbers)
                 {
-                    string newNumberType = numberType.Replace("A", "C");
-                    string tableName = string.Format("{0}{1}", "C5", newNumberType);
-                    var cxNumbers = allCxNumbers.Where(x => x.C5.Equals(number.C5) && x.NumberType.Equals(newNumberType));
+                    var cxNumbers = subCxNumbers.Where(x => x.C5.Equals(number.C5)).ToList();
+                    c5cxSpans.AddRange(this.GetC5CXPeroidSpansList(lastSpanDict, cxNumbers, number));
                 }
+
+                spanBiz.DataAccessor.Insert(c5cxSpans, SqlInsertMethod.SqlBulkCopy);
+
+                Console.WriteLine("{0} {1} Finished", dbName, tableName);
             }
+
+            Console.WriteLine("{0} {1} Finished", dbName, "ALL C5CX Span");
         }
 
         private void Stat(List<DwNumber> numbers, string dbName, string dmName,string[] numberTypes, StreamWriter writer)
@@ -130,6 +149,33 @@ namespace Lottery.Statistics.D11X5
                 pSpanDict.Add(numberType, spans);
             }
             return pSpanDict;
+        }
+
+        private List<DwC5CXSpan> GetC5CXPeroidSpansList(Dictionary<string, int> lastSpanDict, List<DmC5CX> cxNumbers, DwNumber number)
+        {
+            List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(cxNumbers.Count);
+            foreach (var cxNumber in cxNumbers)
+            {
+                int spans = number.Seq - 1;
+                if (lastSpanDict.ContainsKey(cxNumber.CX))
+                {
+                    spans = number.Seq - lastSpanDict[cxNumber.CX];
+                    lastSpanDict[cxNumber.CX] = number.Seq;
+                }
+                else
+                {
+                    lastSpanDict.Add(cxNumber.CX, number.Seq);
+                }
+
+                DwC5CXSpan c5cxSpan = new DwC5CXSpan();
+                c5cxSpan.P = number.P;
+                c5cxSpan.Seq = number.Seq;
+                c5cxSpan.C5 = number.C5;
+                c5cxSpan.CX = cxNumber.CX;
+                c5cxSpan.PeroidSpans = spans;
+                c5cxSpans.Add(c5cxSpan);
+            }
+            return c5cxSpans;
         }
 
         private void SaveSpanToDB(string dbName, string tableName, DwSpan span)
