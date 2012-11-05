@@ -42,6 +42,24 @@ namespace Lottery.Statistics.D11X5
             Console.WriteLine("{0} {1} Finished", dbName, "ALL Span");
         }
 
+        private void StatC5CX(List<DwNumber> numbers, string dbName)
+        {
+            string[] dmNames = new string[] { "Peroid" };
+            string[] numberTypes = new string[] { "A2", "A3", "A4", "A6", "A7", "A8" };
+            DmC5CXBiz dmC5CXBiz = new DmC5CXBiz(dbName);
+            List<DmC5CX> allCxNumbers = dmC5CXBiz.GetAll(DmC5CX.C_C5, DmC5CX.C_CX);
+
+            foreach (DwNumber number in numbers)
+            {
+                foreach (var numberType in numberTypes)
+                {
+                    string newNumberType = numberType.Replace("A", "C");
+                    string tableName = string.Format("{0}{1}", "C5", newNumberType);
+                    var cxNumbers = allCxNumbers.Where(x => x.C5.Equals(number.C5) && x.NumberType.Equals(newNumberType));
+                }
+            }
+        }
+
         private void Stat(List<DwNumber> numbers, string dbName, string dmName,string[] numberTypes, StreamWriter writer)
         {
             Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict = new Dictionary<string, Dictionary<string, int>>(100000);

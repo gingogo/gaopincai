@@ -109,7 +109,7 @@ namespace Lottery.Data.SQLServer.Common
                     int maxSeq = biz.DataAccessor.GetMaxValue("Seq", 10, string.Empty);
                     int downPeroids = biz.Count;
 
-                    dict.Add(category.Name, string.Format("已出:{0}期,已下载：{1}期,最大Seq:{2}", peroidCount, downPeroids, maxSeq));
+                    dict.Add(category.Name, string.Format("{0}期,下载,{1}期,Max Seq,{2}", peroidCount, downPeroids, maxSeq));
                 }
                 catch (Exception ex)
                 {

@@ -57,7 +57,7 @@ namespace Lottery.ETL.D11X5
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("11X5");
             foreach (var category in categories)
             {
-                if (category.DbName.Contains("GuangD")) continue;
+                //if (category.DbName.Contains("GuangD")) continue;
                 //P(category.DbName, "Dx", 1, output);
                 //P(category.DbName, "P2", 2, output);
                 //P(category.DbName, "P3", 3, output);
