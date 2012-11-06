@@ -50,7 +50,7 @@ namespace Lottery.Statistics.D11X5
 
         private void StatC5CX(List<DwNumber> numbers, string dbName)
         {
-            string[] dmNames = new string[] { "Peroid" };
+            string[] dmNames = new string[] { "Peroid", "He" };
             string[] numberTypes = new string[] { "A2", "A3", "A4", "A6", "A7", "A8" };
             DmC5CXBiz dmC5CXBiz = new DmC5CXBiz(dbName);
             List<DmC5CX> allCxNumbers = dmC5CXBiz.GetAll(DmC5CX.C_C5, DmC5CX.C_CX, DmC5CX.C_NumberType);
@@ -58,7 +58,7 @@ namespace Lottery.Statistics.D11X5
 
             foreach (var numberType in numberTypes)
             {
-                Dictionary<string, int> lastSpanDict = new Dictionary<string, int>(10000);
+                Dictionary<string, Dictionary<string, int>> lastSpanDict = new Dictionary<string, Dictionary<string, int>>(16);
                 List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(numbers.Count * 20);
                 string newNumberType = numberType.Replace("A", "C");
                 string tableName = string.Format("{0}{1}", "C5", newNumberType);
@@ -68,9 +68,8 @@ namespace Lottery.Statistics.D11X5
                 foreach (DwNumber number in numbers)
                 {
                     var cxNumbers = subCxNumbers.Where(x => x.C5.Equals(number.C5)).ToList();
-                    c5cxSpans.AddRange(this.GetC5CXPeroidSpansList(lastSpanDict, cxNumbers, number));
+                    c5cxSpans.AddRange(this.GetC5CXSpanList(lastSpanDict, cxNumbers, number, dmNames));
                 }
-
                 spanBiz.DataAccessor.Insert(c5cxSpans, SqlInsertMethod.SqlBulkCopy);
 
                 Console.WriteLine("{0} {1} Finished", dbName, tableName);
@@ -151,31 +150,48 @@ namespace Lottery.Statistics.D11X5
             return pSpanDict;
         }
 
-        private List<DwC5CXSpan> GetC5CXPeroidSpansList(Dictionary<string, int> lastSpanDict, List<DmC5CX> cxNumbers, DwNumber number)
+        private List<DwC5CXSpan> GetC5CXSpanList(Dictionary<string,Dictionary<string, int>> lastSpanDict, List<DmC5CX> cxNumbers, DwNumber number,string[] dmNames)
         {
             List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(cxNumbers.Count);
             foreach (var cxNumber in cxNumbers)
             {
+                DwC5CXSpan c5cxSpan = this.GetC5CXSpan(lastSpanDict, number, dmNames, cxNumber);
+                c5cxSpans.Add(c5cxSpan);
+            }
+
+            return c5cxSpans;
+        }
+
+        private DwC5CXSpan GetC5CXSpan(Dictionary<string, Dictionary<string, int>> lastSpanDict, DwNumber number, string[] dmNames, DmC5CX cxNumber)
+        {
+            DwC5CXSpan c5cxSpan = new DwC5CXSpan();
+            c5cxSpan.P = number.P;
+            c5cxSpan.Seq = number.Seq;
+            c5cxSpan.C5 = number.C5;
+            c5cxSpan.CX = cxNumber.CX;
+
+            foreach (string dmName in dmNames)
+            {
+                if (!lastSpanDict.ContainsKey(dmName))
+                    lastSpanDict.Add(dmName, new Dictionary<string, int>(1000));
+
+                string propertyName = dmName + "Spans";
                 int spans = number.Seq - 1;
-                if (lastSpanDict.ContainsKey(cxNumber.CX))
+                string dmValue = cxNumber.CX.GetDmValue(2, dmName, 5);
+
+                if (lastSpanDict[dmName].ContainsKey(dmValue))
                 {
-                    spans = number.Seq - lastSpanDict[cxNumber.CX];
-                    lastSpanDict[cxNumber.CX] = number.Seq;
+                    spans = number.Seq - lastSpanDict[dmName][dmValue] - 1;
+                    lastSpanDict[dmName][dmValue] = number.Seq;
                 }
                 else
                 {
-                    lastSpanDict.Add(cxNumber.CX, number.Seq);
+                    lastSpanDict[dmName].Add(dmValue, number.Seq);
                 }
-
-                DwC5CXSpan c5cxSpan = new DwC5CXSpan();
-                c5cxSpan.P = number.P;
-                c5cxSpan.Seq = number.Seq;
-                c5cxSpan.C5 = number.C5;
-                c5cxSpan.CX = cxNumber.CX;
-                c5cxSpan.PeroidSpans = spans;
-                c5cxSpans.Add(c5cxSpan);
+                c5cxSpan[propertyName] = spans;
             }
-            return c5cxSpans;
+
+            return c5cxSpan;
         }
 
         private void SaveSpanToDB(string dbName, string tableName, DwSpan span)

@@ -32,6 +32,10 @@ namespace Lottery.Model.D11X5
         /// 列名PeroidSpans  
         /// </summary>
         public static readonly String C_PeroidSpans = "PeroidSpans";
+        /// <summary>
+        /// 列名HeSpans  
+        /// </summary>
+        public static readonly String C_HeSpans = "HeSpans";
 
         #endregion
 
@@ -47,6 +51,8 @@ namespace Lottery.Model.D11X5
         private Int32 _seq;
 
         private Int32 _peroidSpans;
+
+        private Int32 _heSpans;
 
         #endregion
 
@@ -97,7 +103,15 @@ namespace Lottery.Model.D11X5
             get { return this._peroidSpans; }
             set { this._peroidSpans = value; }
         }
-
+        /// <summary>
+        /// 获取或设置
+        /// </summary>
+        [Column(Name = "HeSpans")]
+        public virtual Int32 HeSpans
+        {
+            get { return this._heSpans; }
+            set { this._heSpans = value; }
+        }
         #endregion
     }
 }

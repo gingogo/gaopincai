@@ -391,6 +391,9 @@ namespace Lottery.Utils
         /// <returns></returns>
         public static string GetDmValue(this object obj, int length, string dmName, int daXiaoMiddle)
         {
+            if (dmName.Equals("Peroid")) 
+                return obj.ToString();
+
             return obj.ToString(length).GetDmValue(dmName, daXiaoMiddle);
         }
 
@@ -403,7 +406,7 @@ namespace Lottery.Utils
         /// <returns></returns>
         public static string GetDmValue(this string str, string dmName, int daXiaoMiddle)
         {
-            if (dmName.Equals("Peroid")) return string.Empty;
+            if (dmName.Equals("Peroid")) return str;
 
             List<int> digits = str.ToList();
             if (dmName.Equals("DaXiao")) return digits.GetDaXiao(daXiaoMiddle);

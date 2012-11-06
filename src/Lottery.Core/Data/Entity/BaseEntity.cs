@@ -17,7 +17,7 @@ namespace Lottery.Data
         #region Indexer Members
 
         /// <summary>
-        /// 获取指定属性值的索引器。
+        /// 获取或设置指定属性值的索引器。
         /// </summary>
         /// <param name="propertyName">属性名称,区分大小写</param>
         /// <returns>属性值</returns>
