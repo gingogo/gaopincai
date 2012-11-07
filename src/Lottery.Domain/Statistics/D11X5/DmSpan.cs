@@ -52,8 +52,6 @@ namespace Lottery.Statistics.D11X5
         {
             string[] dmNames = new string[] { "Peroid", "He" };
             string[] numberTypes = new string[] { "A2", "A3", "A4", "A6", "A7", "A8" };
-            DmC5CXBiz dmC5CXBiz = new DmC5CXBiz(dbName);
-            List<DmC5CX> allCxNumbers = dmC5CXBiz.GetAll(DmC5CX.C_C5, DmC5CX.C_CX, DmC5CX.C_NumberType);
             DwC5CXSpanBiz spanBiz = new DwC5CXSpanBiz(dbName);
 
             foreach (var numberType in numberTypes)
@@ -62,12 +60,11 @@ namespace Lottery.Statistics.D11X5
                 List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(numbers.Count * 20);
                 string newNumberType = numberType.Replace("A", "C");
                 string tableName = string.Format("{0}{1}", "C5", newNumberType);
-                var subCxNumbers = allCxNumbers.Where(x => x.NumberType.Equals(newNumberType));
                 spanBiz.DataAccessor.TableName = ConfigHelper.GetDwSpanTableName(tableName);
 
                 foreach (DwNumber number in numbers)
                 {
-                    var cxNumbers = subCxNumbers.Where(x => x.C5.Equals(number.C5)).ToList();
+                    var cxNumbers = NumberCache.Instance.GetC5CXNumbers(number.C5, newNumberType);
                     c5cxSpans.AddRange(this.GetC5CXSpanList(lastSpanDict, cxNumbers, number, dmNames));
                 }
                 spanBiz.DataAccessor.Insert(c5cxSpans, SqlInsertMethod.SqlBulkCopy);

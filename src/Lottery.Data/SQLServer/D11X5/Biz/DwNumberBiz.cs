@@ -81,7 +81,8 @@ namespace Lottery.Data.SQLServer.D11X5
             List<BatchEntity<DwSpan>> batchEntities = new List<BatchEntity<DwSpan>>(dmNames.Length);
             foreach (string dmName in dmNames)
             {
-                string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("11X5", dmName);
+                //非任选号码类型
+                string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("11X5", dmName).Where(x => !x[0].Equals('A')).ToArray();
                 Dictionary<string, int> spanDict = this.DataAccessor.SelectSpansByNumberTypes(number, dmName, numberTypes);
                 DwSpan dwSpan = new DwSpan() { P = number.P };
                 foreach (string key in spanDict.Keys)
@@ -102,7 +103,17 @@ namespace Lottery.Data.SQLServer.D11X5
 
         private void AddC5CXSpan(DwNumber number)
         {
+            string[] dmNames = new string[] { "Peroid", "He" };
+            string[] numberTypes = new string[] { "A2", "A3", "A4", "A6", "A7", "A8" };
 
+            foreach (var numberType in numberTypes)
+            {
+                Dictionary<string, Dictionary<string, int>> lastSpanDict = new Dictionary<string, Dictionary<string, int>>(16);
+                List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(20);
+                string newNumberType = numberType.Replace("A", "C");
+                string tableName = string.Format("{0}{1}", "C5", newNumberType);
+                var c5cxNumbers = NumberCache.Instance.GetC5CXNumbers(number.C5, newNumberType);
+            }
         }
 
         private bool SaveToDB(DwNumber number)

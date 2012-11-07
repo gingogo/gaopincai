@@ -14,10 +14,12 @@ namespace Lottery.Data.SQLServer.D11X5
         public static readonly NumberCache Instance = new NumberCache();
 
         private Dictionary<string, Dictionary<string, DmDPC>> caching = new Dictionary<string, Dictionary<string, DmDPC>>(1500);
+        private Dictionary<string, Dictionary<string, List<DmC5CX>>> c5cxCaching = new Dictionary<string, Dictionary<string, List<DmC5CX>>>(462);
   
         protected NumberCache()
         {
             this.LoadData();
+            this.LoadC5CXData();
         }
 
         public string GetNumberId(string numberType,string number)
@@ -46,16 +48,51 @@ namespace Lottery.Data.SQLServer.D11X5
             return biz.GetAll("Id", "Number");
         }
 
+        public List<DmC5CX> GetC5CXNumbers(string c5, string numberType)
+        {
+            return this.c5cxCaching[c5][numberType];
+        }
+
         private void LoadData()
         {
-            string[] numberTypes = new string[] { "C2", "C3", "C4", "C5", "C6", "C7", "C8" };
-            
+            this.caching.Clear();
+
+            string[] numberTypes = new string[] { "C2", "C3", "C4", "C5", "C6", "C7", "C8" };      
             DmDPCBiz biz = new DmDPCBiz(ConfigHelper.D11x5DmTableConnStringName, string.Empty);
             foreach (var numberType in numberTypes)
             {
                 biz.DataAccessor.TableName = ConfigHelper.GetDmTableName(numberType.GetDmTableSuffix());
                 List<DmDPC> list = biz.GetAll("Id", "Number");
                 this.FillToDictionary(numberType, list);
+            }
+        }
+
+        private void LoadC5CXData()
+        {
+            this.c5cxCaching.Clear();
+
+            DmC5CXBiz dmC5CXBiz = new DmC5CXBiz(ConfigHelper.D11x5DmTableConnStringName);
+            List<DmC5CX> c5cxNumbers = dmC5CXBiz.GetAll(DmC5CX.C_C5, DmC5CX.C_CX, DmC5CX.C_NumberType);
+            foreach (var c5cxNumber in c5cxNumbers)
+            {
+                if (!c5cxCaching.ContainsKey(c5cxNumber.C5))
+                {
+                    List<DmC5CX> subNumbers = new List<DmC5CX>(20);
+                    subNumbers.Add(c5cxNumber);
+                    Dictionary<string, List<DmC5CX>> numberTypeNumbers = new Dictionary<string, List<DmC5CX>>(6);
+                    numberTypeNumbers.Add(c5cxNumber.NumberType, subNumbers);
+                    c5cxCaching.Add(c5cxNumber.C5, numberTypeNumbers);
+                    continue;
+                }
+
+                if (!c5cxCaching[c5cxNumber.C5].ContainsKey(c5cxNumber.NumberType))
+                {
+                    List<DmC5CX> subNumbers = new List<DmC5CX>(20);
+                    subNumbers.Add(c5cxNumber);
+                    c5cxCaching[c5cxNumber.C5].Add(c5cxNumber.NumberType, subNumbers);
+                    continue;
+                }
+                c5cxCaching[c5cxNumber.C5][c5cxNumber.NumberType].Add(c5cxNumber);
             }
         }
 
