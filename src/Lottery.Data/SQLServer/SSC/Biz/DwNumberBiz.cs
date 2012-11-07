@@ -46,7 +46,7 @@ namespace Lottery.Data.SQLServer.SSC
             get { return this.DataAccessor.Count(); }
         }
 
-        private DwNumber Create(long p, int n, string code, int date, string datetime)
+        public DwNumber Create(long p, int n, string code, int date, string datetime)
         {
             string[] arr = code.Split(',');
             DwNumber number = new DwNumber();

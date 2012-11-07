@@ -118,9 +118,12 @@ namespace Lottery.ETL
             if (pset.Contains(p)) return;
             pset.Add(p);
 
-            string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
-                p, no, p2, p3, p4, p5, n, dateint, datetime);
-            writer.WriteLine(line);
+            Data.SQLServer.SSC.DwNumberBiz biz = new Data.SQLServer.SSC.DwNumberBiz(dbName);
+            biz.Add(biz.Create(p, n, no, dateint, sdate));
+
+            //string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
+            //    p, no, p2, p3, p4, p5, n, dateint, datetime);
+            //writer.WriteLine(line);
         }
 
         private static void Extract11X5(StreamWriter writer, string name, string sdate, string speroid, string code, string dbName)
