@@ -50,10 +50,10 @@ namespace Lottery.Test
 
         static void ExtractNumber()
         {
-            // DataDownload.DownPage(185);
+            //DataDownload.DownPage(147);
             //DataDownload.DownPage(167);
 
-            //ExtractData.Extract(185);
+            ExtractData.Extract(147);
             //ExtractData.Extract(167);
             
         }
@@ -102,8 +102,8 @@ namespace Lottery.Test
             //ETL.SSC.ImportDmFCAn.Add("db");
             //ETL.SSC.ImportDwNumber.Start();
             //ETL.Common.ImportDimension.Import();
-            ETL.Common.ImportNumberType.Import();
-            ETL.Common.ImportNumberTypeDim.Import();
+            //ETL.Common.ImportNumberType.Import();
+            //ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDmDPC.Add("db");
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.D11X5.ImportDwNumber.UpdateP(167, "2012090644", "05,07,01,09,10");

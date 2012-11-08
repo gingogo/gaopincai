@@ -12,7 +12,9 @@ namespace Lottery.Statistics.SSC
     {
         protected override List<Category> GetCatgories()
         {
-            return CategoryBiz.Instance.GetEnabledCategories("SSC");
+            Category category = CategoryBiz.Instance.GetById(147);
+            return new List<Category>() { category };
+            //return CategoryBiz.Instance.GetEnabledCategories("SSC");
         }
     }
 }
