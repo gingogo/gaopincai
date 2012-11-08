@@ -186,12 +186,12 @@ namespace Lottery.Data.SQLServer.D11X5
                     this.Add(number);
                     scope.Complete();
                 }
-                using (TransactionScope scope1 = 
-                    new TransactionScope(TransactionScopeOption.Required, option))
-                {
-                    this.AddC5CXSpan();
-                    scope1.Complete();
-                }
+                //using (TransactionScope scope1 = 
+                //    new TransactionScope(TransactionScopeOption.Required, option))
+                //{
+                //    this.AddC5CXSpan();
+                //    scope1.Complete();
+                //}
                 return true;
             }
             catch (Exception ex)
