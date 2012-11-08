@@ -33,7 +33,7 @@ namespace Lottery.Statistics.D11X5
         {
             foreach (string dmName in dmNames)
             {
-                string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("11X5", dmName);
+                string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("11X5", dmName).Where(x => !x[0].Equals('A')).ToArray();
                 if (outputType == OutputType.Database)
                     this.Stat(numbers, dbName, dmName, numberTypes, null);
                 else

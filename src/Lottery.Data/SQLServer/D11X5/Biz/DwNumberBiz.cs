@@ -101,19 +101,76 @@ namespace Lottery.Data.SQLServer.D11X5
             spanDao.Insert(batchEntities);
         }
 
-        private void AddC5CXSpan(DwNumber number)
+        private void AddC5CXSpan()
         {
             string[] dmNames = new string[] { "Peroid", "He" };
             string[] numberTypes = new string[] { "A2", "A3", "A4", "A6", "A7", "A8" };
+            DwC5CXSpanDAO dao = new DwC5CXSpanDAO(string.Empty, this.DataAccessor.ConnectionString);
 
             foreach (var numberType in numberTypes)
             {
-                Dictionary<string, Dictionary<string, int>> lastSpanDict = new Dictionary<string, Dictionary<string, int>>(16);
-                List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(20);
                 string newNumberType = numberType.Replace("A", "C");
                 string tableName = string.Format("{0}{1}", "C5", newNumberType);
-                var c5cxNumbers = NumberCache.Instance.GetC5CXNumbers(number.C5, newNumberType);
+                dao.TableName = ConfigHelper.GetDwSpanTableName(tableName);
+
+                long latestP = dao.SelectLatestPeroid(string.Empty);
+                List<DwNumber> numbers = this.DataAccessor.SelectWithCondition(string.Format("WHERE {0} > {1} ", DwNumber.C_P, latestP));
+
+                Dictionary<string, Dictionary<string, int>> lastSpanDict = new Dictionary<string, Dictionary<string, int>>(16);
+                List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(numbers.Count * 20);
+
+                foreach (DwNumber number in numbers)
+                {
+                    var cxNumbers = NumberCache.Instance.GetC5CXNumbers(number.C5, newNumberType);
+                    c5cxSpans.AddRange(this.GetC5CXSpanList(lastSpanDict, cxNumbers, number, dmNames));
+                }
+
+                dao.Insert(c5cxSpans, SqlInsertMethod.SqlBulkCopy);
             }
+        }
+
+        private List<DwC5CXSpan> GetC5CXSpanList(Dictionary<string, Dictionary<string, int>> lastSpanDict, List<DmC5CX> cxNumbers, DwNumber number, string[] dmNames)
+        {
+            List<DwC5CXSpan> c5cxSpans = new List<DwC5CXSpan>(cxNumbers.Count);
+            foreach (var cxNumber in cxNumbers)
+            {
+                DwC5CXSpan c5cxSpan = this.GetC5CXSpan(lastSpanDict, number, dmNames, cxNumber);
+                c5cxSpans.Add(c5cxSpan);
+            }
+
+            return c5cxSpans;
+        }
+
+        private DwC5CXSpan GetC5CXSpan(Dictionary<string, Dictionary<string, int>> lastSpanDict, DwNumber number, string[] dmNames, DmC5CX cxNumber)
+        {
+            DwC5CXSpan c5cxSpan = new DwC5CXSpan();
+            c5cxSpan.P = number.P;
+            c5cxSpan.Seq = number.Seq;
+            c5cxSpan.C5 = number.C5;
+            c5cxSpan.CX = cxNumber.CX;
+
+            foreach (string dmName in dmNames)
+            {
+                if (!lastSpanDict.ContainsKey(dmName))
+                    lastSpanDict.Add(dmName, new Dictionary<string, int>(1000));
+
+                string propertyName = dmName + "Spans";
+                int spans = number.Seq - 1;
+                string dmValue = cxNumber.CX.GetDmValue(2, dmName, 5);
+
+                if (lastSpanDict[dmName].ContainsKey(dmValue))
+                {
+                    spans = number.Seq - lastSpanDict[dmName][dmValue] - 1;
+                    lastSpanDict[dmName][dmValue] = number.Seq;
+                }
+                else
+                {
+                    lastSpanDict[dmName].Add(dmValue, number.Seq);
+                }
+                c5cxSpan[propertyName] = spans;
+            }
+
+            return c5cxSpan;
         }
 
         private bool SaveToDB(DwNumber number)
@@ -128,6 +185,12 @@ namespace Lottery.Data.SQLServer.D11X5
                     this.AddSpan(number);
                     this.Add(number);
                     scope.Complete();
+                }
+                using (TransactionScope scope1 = 
+                    new TransactionScope(TransactionScopeOption.Required, option))
+                {
+                    this.AddC5CXSpan();
+                    scope1.Complete();
                 }
                 return true;
             }

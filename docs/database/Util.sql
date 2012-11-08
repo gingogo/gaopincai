@@ -151,6 +151,13 @@ KuaDu = t2.KuaDu,
 AC = t2.AC
 from LotteryChongQSSC.dbo.DmP5 t2 where DmP5.Id = t2.Id;
 
+truncate table DwC5C2Span;
+truncate table DwC5C3Span;
+truncate table DwC5C4Span;
+truncate table DwC5C6Span;
+truncate table DwC5C7Span;
+truncate table DwC5C8Span;
+
 truncate table dbo.DwPeroidSpan;
 truncate table dbo.DwACSpan;
 truncate table dbo.DwDanShuangSpan ;

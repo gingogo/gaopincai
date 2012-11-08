@@ -60,6 +60,12 @@ namespace Lottery.Data.SQLServer.D11X5
 
         #region 特定数据访问方法
 
+        public long SelectLatestPeroid(string condition)
+        {
+            string sqlCmd = string.Format("SELECT Max(P) as P FROM {0} {1} ", this._tableName, condition);
+            return Convert.ToInt64(SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sqlCmd));
+        }
+
         #endregion
     }
 }
