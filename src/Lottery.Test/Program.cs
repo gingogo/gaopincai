@@ -18,7 +18,7 @@ namespace Lottery.Test
         static void Main(string[] args)
         {
             //ExtractNumber();
-            //StatTest();
+            StatTest();
             //OmissionValueTest();
             //DownServiceTest();
             //ETLTest();

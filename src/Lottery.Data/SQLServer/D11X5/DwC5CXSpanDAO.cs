@@ -73,8 +73,10 @@ namespace Lottery.Data.SQLServer.D11X5
         /// <param name="currentSeq">当前期数</param>
         /// <param name="tableName">DwC5C2|3|4|6|7|8Spans</param>
         /// <param name="dmNames">维度名称(区分大小写,取值为:Peroid,DaXiao,DanShuang,ZiHe,Lu012,He,HeWei,Ji,JiWei,KuaDu,AC)</param>
+        /// <param name="numberType">号码类型C2|C3|C4|C6|C7|C8</param>
         /// <returns></returns>
-        public Dictionary<string, Dictionary<string, int>> SelectLastSpans(List<DmC5CX> c5cxNumbers,int currentSeq, string tableName, string[] dmNames)
+        public Dictionary<string, Dictionary<string, int>> SelectLastSpans(List<DmC5CX> c5cxNumbers, 
+            int currentSeq, string tableName, string[] dmNames, string numberType)
         {
             if (c5cxNumbers == null || c5cxNumbers.Count == 0)
                 throw new ArgumentException("c5cxNumbers is null or count is zero", "c5cxNumbers");
@@ -84,11 +86,16 @@ namespace Lottery.Data.SQLServer.D11X5
             foreach (string dmName in dmNames)
             {
                 Dictionary<string, int> dmSpanDict = new Dictionary<string, int>(c5cxNumbers.Count);
-                string sqlCmd = this.GetBatchSpanQuerySql(c5cxNumbers, tableName, dmName);
+                HashSet<string> hashSet = new HashSet<string>();
+                string sqlCmd = this.GetBatchSpanQuerySql(c5cxNumbers, tableName, dmName, numberType);
                 List<NumberIdSeq> numberIdSeqs = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
                 foreach (var numberIdSeq in numberIdSeqs)
                 {
-                    int spans = dmSpanDict.ContainsKey(numberIdSeq.Id) ? -1 : (currentSeq - numberIdSeq.Seq - 1);
+                    string dmValue = numberIdSeq.Id.GetDmValue(2, dmName, 5);
+                    int spans =  currentSeq - numberIdSeq.Seq - 1;
+                    if (hashSet.Contains(dmValue)) spans = -1;
+                    else hashSet.Add(dmValue);
+
                     dmSpanDict.Add(numberIdSeq.Id, spans);
                 }
                 lastSpanDict.Add(dmName, dmSpanDict);
@@ -101,28 +108,28 @@ namespace Lottery.Data.SQLServer.D11X5
 
         #region 私有方法
 
-        private string GetBatchSpanQuerySql(List<DmC5CX> c5cxNumbers, string tableName,string dmName)
+        private string GetBatchSpanQuerySql(List<DmC5CX> c5cxNumbers, string tableName, string dmName, string numberType)
         {
             string sqlFormat = string.Empty;
             StringBuilder batchSqlBuilder = new StringBuilder();
 
             if (dmName.Equals("Peroid"))
             {
-                //select "CX" Id,Max(Seq) Seq from tableName where CX = 'xxxxx';
-                sqlFormat = "select '{0}' Id,Max({1}) {1} from {2} where CX = '{0}';";
+                //select "0102" Id,Max(Seq) Seq from tableName where CX = 'xxxxx';
+                sqlFormat = "select '{0}' Id,Max(Seq) Seq from {1} where CX = '{0}';";
                 foreach (var c5cxNumber in c5cxNumbers)
                 {
-                    batchSqlBuilder.AppendFormat(sqlFormat, c5cxNumber.CX, "Seq", tableName);
+                    batchSqlBuilder.AppendFormat(sqlFormat, c5cxNumber.CX, tableName);
                 }
                 return batchSqlBuilder.ToString();
             }
 
-            //select 'CX' Id,Max(t2.Seq) Seq from DmC5 t1,DwNumber t2 where t1.Id = t2.C5 and t1.He = 'x|x|x|x|x';
-            sqlFormat = "select '{0}' Id,Max(t2.{1}) {1} from Dm{5} t1,{2} t2 where t1.Id = t2.{0} and t1.{3} = '{4}';";
+            //select 'CX' Id,Max(t2.Seq) Seq from DmCX t1,DwC5CXSpan t2 where t1.Id = t2.CX and t1.He = '13';
+            sqlFormat = "select '{0}' Id,Max(t2.Seq) Seq from Dm{1} t1,{2} t2 where t1.Id = t2.CX and t1.{3} = '{4}';";
             foreach (var c5cxNumber in c5cxNumbers)
             {
-                //string dmValue = number[numberType].GetDmValue(2, dmName, 5);
-                //batchSqlBuilder.AppendFormat(sqlFormat, numberType, DwNumber.C_Seq, this._tableName, dmName, dmValue, numberType.GetDmTableSuffix());
+                string dmValue = c5cxNumber.CX.GetDmValue(2, dmName, 5);
+                batchSqlBuilder.AppendFormat(sqlFormat, c5cxNumber.CX, numberType, tableName, dmName, dmValue);
             }
             return batchSqlBuilder.ToString();
         }

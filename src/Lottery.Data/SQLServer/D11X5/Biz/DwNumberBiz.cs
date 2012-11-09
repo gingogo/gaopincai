@@ -101,23 +101,23 @@ namespace Lottery.Data.SQLServer.D11X5
             spanDao.Insert(batchEntities);
         }
 
-        private void AddC5CXSpan(DwNumber number)
+        public void AddC5CXSpan(DwNumber number)
         {
             string[] dmNames = new string[] { "Peroid", "He" };
             string[] numberTypes = new string[] { "A2", "A3", "A4", "A6", "A7", "A8" };
             List<BatchEntity<DwC5CXSpan>> batchEntities = new List<BatchEntity<DwC5CXSpan>>(70);
+            DwC5CXSpanDAO spanDao = new DwC5CXSpanDAO(string.Empty, this.DataAccessor.ConnectionString);
 
             foreach (var numberType in numberTypes)
             {
-                Dictionary<string, Dictionary<string, int>> lastSpanDict = new Dictionary<string, Dictionary<string, int>>(16); 
                 string newNumberType = numberType.Replace("A", "C");
-                string tableName = string.Format("{0}{1}", "C5", newNumberType);
+                string tableName = ConfigHelper.GetDwSpanTableName(string.Format("{0}{1}", "C5", newNumberType));
                 var c5cxNumbers = NumberCache.Instance.GetC5CXNumbers(number.C5, newNumberType);
+                var lastSpanDict = spanDao.SelectLastSpans(c5cxNumbers, number.Seq, tableName, dmNames, newNumberType);
                 var c5cxSpans = this.GetC5CXSpans(lastSpanDict, c5cxNumbers, number, tableName, dmNames);
                 batchEntities.AddRange(c5cxSpans);
             }
 
-            DwC5CXSpanDAO spanDao = new DwC5CXSpanDAO(string.Empty, this.DataAccessor.ConnectionString);
             spanDao.Insert(batchEntities);
         }
 
@@ -131,8 +131,7 @@ namespace Lottery.Data.SQLServer.D11X5
                 foreach (string dmName in dmNames)
                 {
                     string propertyName = dmName + "Spans";
-                    string dmValue = c5cxNumber.CX.GetDmValue(2, dmName, 5);
-                    c5cxSpan[propertyName] = lastSpanDict[dmName][dmValue];
+                    c5cxSpan[propertyName] = lastSpanDict[dmName][c5cxNumber.CX];
                 }
                 c5cxSpans.Add(new BatchEntity<DwC5CXSpan>(c5cxSpan, tableName));
             }
