@@ -16,12 +16,33 @@ namespace Lottery.ETL.Common
         {
             //DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
 
-            Import11x5();
+            Import11x5C5CX();
             //ImportSSC();
             //Import3D();
             //ImportPL35();
             //ImportSSL();
             //Import12X3();
+        }
+
+        public static void Import11x5C5CX()
+        {
+            var numberTypes = NumberTypeBiz.Instance.GetAll().Where(x => x.RuleType.Contains("11X5")).Where(y => y.Code.StartsWith("A"));
+            string[] dmType1 = new string[] { "He" };
+
+            foreach (var numberType in numberTypes)
+            {
+                Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangx11x5", numberType.Code.GetDmTableSuffix());
+                List<DimensionNumberType> ntds = ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(dmType1, numberType.Code.Replace("A", "C"));
+
+                foreach (var ntd in ntds)
+                {
+                    ntd.NumberType = numberType.Code;
+                    ntd.RuleType = numberType.RuleType;
+                    ntd.Amount = ntd.Nums * numberType.Amount;
+                    ntd.Probability = (ntd.Nums * 1.0) * numberType.Probability;
+                }
+                DimensionNumberTypeBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
+            }
         }
 
         public static void Import11x5()
@@ -36,7 +57,6 @@ namespace Lottery.ETL.Common
                 if (numberType.Code.StartsWith("A")) continue;
 
                 Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangx11x5", numberType.Code.GetDmTableSuffix());
-       
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)
                     ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(number1, numberType.Code);

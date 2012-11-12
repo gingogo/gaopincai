@@ -82,22 +82,11 @@ namespace Lottery.Data.SQLServer.D11X5
                 throw new ArgumentException("c5cxNumbers is null or count is zero", "c5cxNumbers");
 
             Dictionary<string, Dictionary<string, int>> lastSpanDict = new Dictionary<string, Dictionary<string, int>>(dmNames.Length);
-
             foreach (string dmName in dmNames)
             {
-                Dictionary<string, int> dmSpanDict = new Dictionary<string, int>(c5cxNumbers.Count);
-                HashSet<string> hashSet = new HashSet<string>();
                 string sqlCmd = this.GetBatchSpanQuerySql(c5cxNumbers, tableName, dmName, numberType);
                 List<NumberIdSeq> numberIdSeqs = this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberIdSeq);
-                foreach (var numberIdSeq in numberIdSeqs)
-                {
-                    string dmValue = numberIdSeq.Id.GetDmValue(2, dmName, 5);
-                    int spans =  currentSeq - numberIdSeq.Seq - 1;
-                    if (hashSet.Contains(dmValue)) spans = -1;
-                    else hashSet.Add(dmValue);
-
-                    dmSpanDict.Add(numberIdSeq.Id, spans);
-                }
+                var dmSpanDict = this.GetDmSpanDict(currentSeq, dmName,numberIdSeqs);
                 lastSpanDict.Add(dmName, dmSpanDict);
             }
 
@@ -141,6 +130,21 @@ namespace Lottery.Data.SQLServer.D11X5
                 throw new ArgumentNullException("dr", "未将对象引用到实例");
             }
             return EntityMapper.GetEntity<NumberIdSeq>(dr, new NumberIdSeq(), this._tableName);
+        }
+
+        private Dictionary<string, int> GetDmSpanDict(int currentSeq, string dmName, List<NumberIdSeq> numberIdSeqs)
+        {
+            Dictionary<string, int> dmSpanDict = new Dictionary<string, int>(20);
+            HashSet<string> hashSet = new HashSet<string>();
+            foreach (var numberIdSeq in numberIdSeqs)
+            {
+                string dmValue = numberIdSeq.Id.GetDmValue(2, dmName, 5);
+                int spans = currentSeq - numberIdSeq.Seq - 1;
+                if (hashSet.Contains(dmValue)) spans = -1;
+                else hashSet.Add(dmValue);
+                dmSpanDict.Add(numberIdSeq.Id, spans);
+            }
+            return dmSpanDict;
         }
 
         #endregion

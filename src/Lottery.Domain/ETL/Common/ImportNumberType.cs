@@ -15,7 +15,7 @@ namespace Lottery.ETL.Common
         {
             //NumberTypeBiz.Instance.DataAccessor.Truncate();
 
-            Import11x5();
+            //Import11x5();
             //ImportJiangXSSC();
             //ImportChongQSSC();
             //Import3D();
@@ -27,22 +27,22 @@ namespace Lottery.ETL.Common
         private static void Import11x5()
         {
             Dictionary<string, double> dict = new Dictionary<string, double>(11);
-            dict.Add("D1|前一|13", 1.0 / 11.0);
-            dict.Add("D2|二位|0", 1.0 / 11.0);
-            dict.Add("D3|三位|0", 1.0 / 11.0);
-            dict.Add("D4|四位|0", 1.0 / 11.0);
-            dict.Add("D5|五位|0", 1.0 / 11.0);
-            dict.Add("P2|前二直选|130", 1.0 / 110.0);
-            dict.Add("C2|前二组选|65", 1.0 / 55.0);
-            dict.Add("P3|前三直选|1170", 1.0 / 990.0);
-            dict.Add("C3|前三组选|195", 1.0 / 165.0);
-            dict.Add("C5|任五|540", 1.0 / 462.0);
-            //dict.Add("A2|任二|6", 1.0 / 5.5);
-            //dict.Add("A3|任三|19", 1.0 / 16.5);
-            //dict.Add("A4|任四|78", 1.0 / 66.0);
-            //dict.Add("A6|任六|90", 1.0 / 77.0);
-            //dict.Add("A7|任七|26", 1.0 / 22.0);
-            //dict.Add("A8|任八|9", 1.0 / 8.25);
+            //dict.Add("D1|前一|13", 1.0 / 11.0);
+            //dict.Add("D2|二位|0", 1.0 / 11.0);
+            //dict.Add("D3|三位|0", 1.0 / 11.0);
+            //dict.Add("D4|四位|0", 1.0 / 11.0);
+            //dict.Add("D5|五位|0", 1.0 / 11.0);
+            //dict.Add("P2|前二直选|130", 1.0 / 110.0);
+            //dict.Add("C2|前二组选|65", 1.0 / 55.0);
+            //dict.Add("P3|前三直选|1170", 1.0 / 990.0);
+            //dict.Add("C3|前三组选|195", 1.0 / 165.0);
+            //dict.Add("C5|任五|540", 1.0 / 462.0);
+            dict.Add("A2|任二|6", 1.0 / 5.5);
+            dict.Add("A3|任三|19", 1.0 / 16.5);
+            dict.Add("A4|任四|78", 1.0 / 66.0);
+            dict.Add("A6|任六|90", 1.0 / 77.0);
+            dict.Add("A7|任七|26", 1.0 / 22.0);
+            dict.Add("A8|任八|9", 1.0 / 8.25);
 
             foreach (var kp in dict)
             {
