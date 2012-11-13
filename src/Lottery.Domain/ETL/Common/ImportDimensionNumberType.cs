@@ -31,7 +31,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangx11x5", numberType.Code.GetDmTableSuffix());
+                Data.SQLServer.D11X5.DmC5CXBiz biz = new Data.SQLServer.D11X5.DmC5CXBiz("jiangx11x5");
                 List<DimensionNumberType> ntds = ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(dmType1, numberType.Code.Replace("A", "C"));
 
                 foreach (var ntd in ntds)

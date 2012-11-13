@@ -66,6 +66,50 @@ namespace Lottery.Data.SQLServer.D11X5
 
         #endregion
 
+         #region 特定数据访问方法
+
+        public List<DimensionNumberType> SelectNumberTypeDimGroupBy(string[] dimensions, string numberType)
+        {
+            string sqlCmd = this.GetBatchSql(dimensions, numberType);
+            return this.GetEntities(sqlCmd, null, CommandType.Text, this.DataReaderToNumberTypeDim,
+                DimensionNumberType.C_Dimension, DimensionNumberType.C_DimValue, DimensionNumberType.C_Nums);
+        }
+
+        #endregion
+
+        #region 私有方法
+
+        private string GetBatchSql(string[] dimensions, string numberType)
+        {
+            string sqlFormat = string.Empty;
+
+            StringBuilder batchSqlBuilder = new StringBuilder();
+            //select t.he,max(t.times) from(
+            //select t1.c5,t2.he,count(*) times from dmc5cx t1,dmc8 t2 where t1.numbertype = 'c8' and t1.cx = t2.id
+            //group by t1.c5,t2.he) t
+            //group by t.he;
+
+            sqlFormat = "select '{0}' Dimension,{0} DimValue,max(t.times) Nums from " +
+                "(select t1.c5,t2.{0},count(*) times from dmc5cx t1,dm{1} t2 where t1.numbertype = '{1}' and t1.cx = t2.id group by t1.c5,t2.he) t " +
+                "group by t.{0}";
+            foreach (string dimension in dimensions)
+            {
+                batchSqlBuilder.AppendFormat(sqlFormat, dimension, numberType);
+            }
+
+            return batchSqlBuilder.ToString();
+        }
+
+        private DimensionNumberType DataReaderToNumberTypeDim(SqlDataReader dr, MetaDataTable metaDataTable, params string[] columnNames)
+        {
+            if (dr == null)
+            {
+                throw new ArgumentNullException("dr", "未将对象引用到实例");
+            }
+            return EntityMapper.GetEntity<DimensionNumberType>(dr, new DimensionNumberType(), this._tableName);
+        }
+        #endregion
+
         #region 特定数据访问方法
 
         #endregion

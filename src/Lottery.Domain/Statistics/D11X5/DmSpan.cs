@@ -26,7 +26,7 @@ namespace Lottery.Statistics.D11X5
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
 
             //this.Stat(dbName, outputType, dmNames, numbers);
-            this.StatC5CX(numbers, dbName);
+            this.StatC5CX(numbers, dbName, 0);
         }
 
         private void Stat(string dbName, OutputType outputType, string[] dmNames, List<DwNumber> numbers)
@@ -48,7 +48,7 @@ namespace Lottery.Statistics.D11X5
             Console.WriteLine("{0} {1} Finished", dbName, "ALL Span");
         }
 
-        private void StatC5CX(List<DwNumber> numbers, string dbName)
+        public void StatC5CX(List<DwNumber> numbers, string dbName,long p)
         {
             string[] dmNames = new string[] { "Peroid", "He" };
             string[] numberTypes = new string[] { "A2", "A3", "A4", "A6", "A7", "A8" };
@@ -65,7 +65,9 @@ namespace Lottery.Statistics.D11X5
                 foreach (DwNumber number in numbers)
                 {
                     var cxNumbers = NumberCache.Instance.GetC5CXNumbers(number.C5, newNumberType);
-                    c5cxSpans.AddRange(this.GetC5CXSpanList(lastSpanDict, cxNumbers, number, dmNames));
+                    var c5cxSpanList = this.GetC5CXSpanList(lastSpanDict, cxNumbers, number, dmNames);
+                    if(number.P > p)
+                        c5cxSpans.AddRange(c5cxSpanList);
                 }
                 spanBiz.DataAccessor.Insert(c5cxSpans, SqlInsertMethod.SqlBulkCopy);
 

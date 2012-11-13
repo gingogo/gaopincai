@@ -21,7 +21,7 @@ namespace Lottery.Test
             //StatTest();
             //OmissionValueTest();
             //DownServiceTest();
-            ETLTest();
+            //ETLTest();
             //TransactionTest();
             //FormulaTest();
             //Console.WriteLine((1%3).ToString());
