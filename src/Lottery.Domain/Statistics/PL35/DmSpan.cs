@@ -21,7 +21,7 @@ namespace Lottery.Statistics.PL35
     {
         protected override void Stat(string dbName, OutputType outputType)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("PL35");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("PL35");
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
 

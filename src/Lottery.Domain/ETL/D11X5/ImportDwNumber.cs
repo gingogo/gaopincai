@@ -75,10 +75,10 @@ namespace Lottery.ETL.D11X5
             DwNumber number = biz.Create(p, n, no, dateint, sdate);
             number.Seq = seq + 1;
             //biz.AddC5CXSpan(number);
-            //biz.Add(number);
 
             //UPDATE DwNumber set Seq=seq+ 1 where P > 2012073084;
-            //biz.DataAccessor.UpdateSeq(1, p);
+            biz.Add(number);
+            biz.DataAccessor.UpdateSeq(1, p);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Lottery.Data.SQLServer.PL35
 
         private void AddSpan(DwNumber number)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("PL35");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("PL35");
             List<BatchEntity<DwSpan>> batchEntities = new List<BatchEntity<DwSpan>>(dmNames.Length);
             foreach (string dmName in dmNames)
             {

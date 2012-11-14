@@ -79,7 +79,7 @@ namespace Lottery.Data.SQLServer.SSC
 
         private void AddSpan(DwNumber number)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("SSC");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("SSC");
             List<BatchEntity<DwSpan>> batchEntities = new List<BatchEntity<DwSpan>>(dmNames.Length);
             foreach (string dmName in dmNames)
             {

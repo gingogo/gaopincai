@@ -15,13 +15,13 @@ namespace Lottery.ETL.Common
         public static void Import()
         {
             //DimensionNumberTypeBiz.Instance.DataAccessor.Truncate();
-
-            Import11x5C5CX();
             //ImportSSC();
             //Import3D();
             //ImportPL35();
             //ImportSSL();
             //Import12X3();
+            //Import11x5();
+            //Import11x5C5CX();
         }
 
         public static void Import11x5C5CX()

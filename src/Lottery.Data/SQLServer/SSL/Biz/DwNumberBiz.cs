@@ -74,7 +74,7 @@ namespace Lottery.Data.SQLServer.SSL
 
         private void AddSpan(DwNumber number)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("SSL");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("SSL");
             List<BatchEntity<DwSpan>> batchEntities = new List<BatchEntity<DwSpan>>(dmNames.Length);
             foreach (string dmName in dmNames)
             {

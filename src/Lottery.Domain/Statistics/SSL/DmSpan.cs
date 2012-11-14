@@ -21,7 +21,7 @@ namespace Lottery.Statistics.SSL
     {
         protected override void Stat(string dbName, OutputType outputType)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("SSL");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("SSL");
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
 

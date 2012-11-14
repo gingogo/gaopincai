@@ -77,7 +77,7 @@ namespace Lottery.Data.SQLServer.D11X5
 
         private void AddSpan(DwNumber number)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("11X5");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("11X5");
             List<BatchEntity<DwSpan>> batchEntities = new List<BatchEntity<DwSpan>>(dmNames.Length);
             foreach (string dmName in dmNames)
             {
@@ -149,7 +149,7 @@ namespace Lottery.Data.SQLServer.D11X5
                     new TransactionScope(TransactionScopeOption.Required, option))
                 {
                     this.AddSpan(number);
-                    this.AddC5CXSpan(number);
+                    //this.AddC5CXSpan(number);
                     this.Add(number);
                     scope.Complete();
                 }

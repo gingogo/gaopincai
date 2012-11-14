@@ -21,7 +21,7 @@ namespace Lottery.Statistics.D12X3
     {
         protected override void Stat(string dbName, OutputType outputType)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("12X3");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("12X3");
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
  

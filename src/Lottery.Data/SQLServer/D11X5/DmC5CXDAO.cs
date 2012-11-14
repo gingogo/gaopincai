@@ -84,12 +84,12 @@ namespace Lottery.Data.SQLServer.D11X5
             string sqlFormat = string.Empty;
 
             StringBuilder batchSqlBuilder = new StringBuilder();
-            //select t.he,max(t.times) from(
+            //select t.he,sum(t.times) from(
             //select t1.c5,t2.he,count(*) times from dmc5cx t1,dmc8 t2 where t1.numbertype = 'c8' and t1.cx = t2.id
             //group by t1.c5,t2.he) t
             //group by t.he;
 
-            sqlFormat = "select '{0}' Dimension,{0} DimValue,max(t.times) Nums from " +
+            sqlFormat = "select '{0}' Dimension,{0} DimValue,sum(t.times) Nums from " +
                 "(select t1.c5,t2.{0},count(*) times from dmc5cx t1,dm{1} t2 where t1.numbertype = '{1}' and t1.cx = t2.id group by t1.c5,t2.he) t " +
                 "group by t.{0}";
             foreach (string dimension in dimensions)

@@ -311,20 +311,6 @@ CREATE TABLE [dbo].[DwLu012BiSpan](
 
 GO
 ------------------------------Dimension tables---------------------------------------------------------
-CREATE TABLE [dbo].[DmDate](
-	[Date] [int] NOT NULL,
-	[Year] [int] NULL,
-	[Month] [int] NULL,
-	[Day] [int] NULL,
-	[Week] [int] NULL,
-	[Quantum] [int] NULL,
- CONSTRAINT [PK_DmDate] PRIMARY KEY CLUSTERED 
-(
-	[Date] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
 
 CREATE TABLE [dbo].[DmDX](
 	[Id] [char](1) NOT NULL,

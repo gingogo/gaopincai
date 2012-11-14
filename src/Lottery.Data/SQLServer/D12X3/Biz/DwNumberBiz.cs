@@ -79,7 +79,7 @@ namespace Lottery.Data.SQLServer.D12X3
 
         private void AddSpan(DwNumber number)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("12X3");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("12X3");
             List<BatchEntity<DwSpan>> batchEntities = new List<BatchEntity<DwSpan>>(dmNames.Length);
             foreach (string dmName in dmNames)
             {

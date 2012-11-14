@@ -21,7 +21,7 @@ namespace Lottery.Statistics.SSC
     {
         protected override void Stat(string dbName, OutputType outputType)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetDimensions("SSC");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("SSC");
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
 

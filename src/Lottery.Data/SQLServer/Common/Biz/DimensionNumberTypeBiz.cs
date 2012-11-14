@@ -59,15 +59,14 @@ namespace Lottery.Data.SQLServer.Common
             string[] dimensions = this.tdntCache[type]
                 .Where(x => x.Value.Contains(numType))
                 .Select(x => x.Key).ToArray();
-            List<Dimension> list = new List<Dimension>(dimensions.Length);
 
+            List<Dimension> list = new List<Dimension>(dimensions.Length);
             foreach (var dimension in dimensions)
             {
-                var dim = DimensionBiz.Instance.GetByCode(dimension);
-                list.Add(dim);
+                list.Add(DimensionBiz.Instance.GetByCode(dimension));
             }
 
-            return list.OrderBy(x => x.Seq).ToList();
+            return list.Where(x=>x.Status == 1).OrderBy(x => x.Seq).ToList();
         }
 
         /// <summary>
@@ -90,6 +89,21 @@ namespace Lottery.Data.SQLServer.Common
         /// </summary>
         /// <param name="type">彩种类型取值为：(11X5,SSC,3D,PL35等)</param>
         /// <returns>维度名称集合</returns>
+        public string[] GetEnabledDimensions(string type)
+        {
+            if (this.tdntCache.ContainsKey(type))
+            {
+                List<Dimension> list = new List<Dimension>(16);
+                foreach (var dimension in this.tdntCache[type].Keys)
+                {
+                    list.Add(DimensionBiz.Instance.GetByCode(dimension));
+                }
+                return list.Where(x => x.Status == 1).OrderBy(x => x.Seq).Select(x => x.Code).ToArray();
+            }
+
+            throw new ArgumentException("Not found this dimType");
+        }
+
         public string[] GetDimensions(string type)
         {
             if (this.tdntCache.ContainsKey(type))
