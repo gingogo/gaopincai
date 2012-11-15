@@ -25,8 +25,8 @@ namespace Lottery.Statistics.D11X5
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
 
-            this.Stat(dbName, outputType, dmNames, numbers);
-            //this.StatC5CX(numbers, dbName, 0);
+            //this.Stat(dbName, outputType, dmNames, numbers);
+            this.StatC5CX(numbers, dbName, 0);
         }
 
         private void Stat(string dbName, OutputType outputType, string[] dmNames, List<DwNumber> numbers)

@@ -21,7 +21,7 @@ namespace Lottery.ETL.Common
             //ImportSSL();
             //Import12X3();
             //Import11x5();
-            //Import11x5C5CX();
+            Import11x5C5CX();
         }
 
         public static void Import11x5C5CX()

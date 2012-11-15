@@ -18,11 +18,11 @@ namespace Lottery.Test
         static void Main(string[] args)
         {
             //ExtractNumber();
-            InsertP();
-            StatTest();
+            //InsertP();
+            //StatTest();
             //OmissionValueTest();
             //DownServiceTest();
-            //ETLTest();
+            ETLTest();
             //TransactionTest();
             //FormulaTest();
             //Console.WriteLine((1%3).ToString());
@@ -103,7 +103,7 @@ namespace Lottery.Test
             //ETL.SSC.ImportDwNumber.Start();
             //ETL.Common.ImportDimension.Import();
             //ETL.Common.ImportNumberType.Import();
-            //ETL.Common.ImportNumberTypeDim.Import();
+            ETL.Common.ImportNumberTypeDim.Import();
             //ETL.D11X5.ImportDmDPC.Add("db");
             //ETL.D11X5.ImportDwNumber.UpdateC4();
             //ETL.D11X5.ImportDwNumber.UpdateP(167, "2012090644", "05,07,01,09,10");
@@ -130,11 +130,11 @@ namespace Lottery.Test
             Statistics.IStatistics[] stats = new Statistics.IStatistics[] 
             {
                 new Statistics.D11X5.DmSpan(),
-                new Statistics.SSC.DmSpan(),
-                new Statistics.D3.DmSpan(),
-                new Statistics.PL35.DmSpan(),
-                new Statistics.SSL.DmSpan(),
-                new Statistics.D12X3.DmSpan()
+                //new Statistics.SSC.DmSpan(),
+                //new Statistics.D3.DmSpan(),
+                //new Statistics.PL35.DmSpan(),
+                //new Statistics.SSL.DmSpan(),
+                //new Statistics.D12X3.DmSpan()
             };
 
             foreach (var stat in stats)
