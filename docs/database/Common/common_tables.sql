@@ -75,7 +75,7 @@ CREATE TABLE [dbo].[NumberType](
 	[Code] [varchar](6) NOT NULL,
 	[Name] [nvarchar](20) NOT NULL,
 	[Length] [int] NOT NULL,
-	[Probability] [decimal](18, 18) NOT NULL,
+	[Probability] [decimal](20, 18) NOT NULL,
 	[Amount] [decimal](4, 2) NOT NULL,
 	[Prize] [decimal](10, 2) NOT NULL,
 	[Seq] [int] NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE [dbo].[DimensionNumberType](
 	[NumberType] [varchar](6) NOT NULL,
 	[Dimension] [varchar](20) NOT NULL,
 	[DimValue] [varchar](20) NOT NULL,
-	[Probability] [decimal](18, 18) NOT NULL,
+	[Probability] [decimal](20, 18) NOT NULL,
 	[Nums] [int] NOT NULL,
 	[Amount] [decimal](8, 2) NOT NULL,
  CONSTRAINT [PK_DimensionNumberType] PRIMARY KEY CLUSTERED 

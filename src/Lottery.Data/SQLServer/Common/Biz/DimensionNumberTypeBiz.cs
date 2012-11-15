@@ -128,7 +128,7 @@ namespace Lottery.Data.SQLServer.Common
                 {
                     if (this.tdntCache[entity.Type].ContainsKey(entity.Dimension))
                     {
-                        this.tdntCache[entity.Type][entity.Dimension].Add(entity.NumberType); 
+                        this.tdntCache[entity.Type][entity.Dimension].Add(entity.NumberType);
                         continue;
                     }
 
@@ -143,6 +143,15 @@ namespace Lottery.Data.SQLServer.Common
             foreach (var kp in this.tdntCache)
             {
                 HashSet<string> hashset = this.tdntCache[kp.Key]["DaXiao"];
+                if (kp.Key.ToLower().Equals("11x5"))
+                {
+                    hashset.Add("A2");
+                    hashset.Add("A3");
+                    hashset.Add("A4");
+                    hashset.Add("A6");
+                    hashset.Add("A7");
+                    hashset.Add("A8");
+                }
                 this.tdntCache[kp.Key].Add("Peroid", hashset);
             }
         }

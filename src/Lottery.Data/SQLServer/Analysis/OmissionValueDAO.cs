@@ -72,6 +72,9 @@ namespace Lottery.Data.SQLServer.Analysis
 
         private string GetPeroidDimSqlCommand(string ruleType, string numberType, string filter, string orderByColName, string sortType)
         {
+			if(numberType[0] == 'A')
+				return this.GetC5CXPeroidDimSqlCommand(ruleType, numberType, filter, orderByColName, sortType);
+				
             string spanColNamePrefix = numberType.GetSpanColumnPrefix();
             string dmTableNameSuffix = numberType.GetDmTableSuffix();
             string normNumberType = numberType.GetNormNumberType();
@@ -101,8 +104,54 @@ namespace Lottery.Data.SQLServer.Analysis
             return sqlBuilder.ToString();
         }
 
+        private string GetC5CXPeroidDimSqlCommand(string ruleType, string numberType, string filter, string orderByColName, string sortType)
+        {
+            string normNumberType = numberType.Replace("A", "C");
+
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.Append("SELECT tmp.ruletype,");
+            sqlBuilder.Append("tmp.numbertype,");
+            sqlBuilder.Append("tmp.dimension,");
+            sqlBuilder.Append("tmp.numberid,");
+            sqlBuilder.Append("tmp.peroidcount,");
+            sqlBuilder.Append("'1' AS Nums,");
+            sqlBuilder.Append("tmp.actualtimes,");
+            sqlBuilder.Append("tmp.currentspans,");
+            sqlBuilder.Append("tmp.maxspans,");
+            sqlBuilder.Append("t2.PeroidSpans AS LastSpans,");
+            sqlBuilder.Append("tmp.avgspans,");
+            sqlBuilder.Append("t3.probability,");
+            sqlBuilder.Append("t3.prize,");
+            sqlBuilder.Append("t3.amount ");
+            sqlBuilder.Append("FROM   (SELECT '11X5'    AS RuleType,");
+            sqlBuilder.AppendFormat("'{0}'      AS NumberType,", numberType);
+            sqlBuilder.Append("'Peroid'  AS Dimension, ");
+            sqlBuilder.Append("t1.CX     AS NumberId,");
+            sqlBuilder.Append("Max(t1.P)  AS P,");
+            sqlBuilder.Append("(SELECT Count(*) ");
+            sqlBuilder.AppendFormat(" FROM   DwC5{0}Span) AS PeroidCount,", normNumberType);
+            sqlBuilder.Append("Count(*) AS ActualTimes,");
+            sqlBuilder.AppendFormat("(SELECT MAX(Seq) FROM DwC5{0}Span) - Max(t1.seq) AS CurrentSpans,", normNumberType);
+            sqlBuilder.Append("Max(t1.PeroidSpans)  AS MaxSpans,");
+            sqlBuilder.Append("Avg(CONVERT(FLOAT, t1.PeroidSpans)) AS AvgSpans ");
+            sqlBuilder.AppendFormat("FROM   DwC5{0}Span t1 ", normNumberType);
+            sqlBuilder.Append("GROUP  BY t1.CX) as tmp, ");
+            sqlBuilder.AppendFormat("DwC5{0}Span t2, ", normNumberType);
+            sqlBuilder.Append("lottery.dbo.numbertype t3  ");
+            sqlBuilder.Append("WHERE  tmp.P = t2.P ");
+            sqlBuilder.Append("AND tmp.NumberId = t2.CX ");
+            sqlBuilder.Append("AND tmp.numbertype = t3.code  ");
+            sqlBuilder.AppendFormat("AND tmp.ruletype = t3.ruletype {0} ", filter);
+            sqlBuilder.AppendFormat("ORDER  BY tmp.{0} {1}", orderByColName, sortType);
+
+            return sqlBuilder.ToString();
+        }
+		
         private string GetOtherDimSqlCommand(string ruleType, string numberType, string dimension, string filter, string orderByColName, string sortType)
         {
+			if(numberType[0] == 'A')
+				return this.GetC5CXOtherDimSqlCommand(ruleType, numberType, dimension, filter, orderByColName, sortType);
+				
             string spanColNamePrefix = numberType.GetSpanColumnPrefix();
             string dmTableNameSuffix = numberType.GetDmTableSuffix();
             string normNumberType = numberType.GetNormNumberType();
@@ -139,7 +188,55 @@ namespace Lottery.Data.SQLServer.Analysis
             return sqlBuilder.ToString();
         }
 
+        private string GetC5CXOtherDimSqlCommand(string ruleType, string numberType, string dimension, string filter, string orderByColName, string sortType)
+        {
+            string normNumberType = numberType.Replace("A", "C");
 
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.Append("SELECT ");
+            sqlBuilder.Append("tmp.ruletype,");
+            sqlBuilder.Append("tmp.numbertype,");
+            sqlBuilder.Append("tmp.dimension,");
+            sqlBuilder.Append("tmp.numberid,");
+            sqlBuilder.Append("tmp.peroidcount,");
+            sqlBuilder.Append("t4.nums AS Nums,");
+            sqlBuilder.Append("tmp.actualtimes,");
+            sqlBuilder.Append("tmp.currentspans,");
+            sqlBuilder.Append("tmp.maxspans,");
+            sqlBuilder.Append("'0' AS LastSpans,");
+            sqlBuilder.Append("tmp.avgspans,");
+            sqlBuilder.Append("t4.probability,");
+            sqlBuilder.Append("t4.prize,");
+            sqlBuilder.Append("t4.amount ");
+            sqlBuilder.Append("FROM ");
+            sqlBuilder.Append("(SELECT ");
+            sqlBuilder.Append("'11X5' AS RuleType,");
+            sqlBuilder.AppendFormat("'{0}' AS NumberType,", numberType);
+            sqlBuilder.AppendFormat("'{0}' AS Dimension,", dimension);
+            sqlBuilder.AppendFormat("t2.{0} AS NumberId,", dimension);
+            sqlBuilder.AppendFormat("(SELECT COUNT (*) FROM DwC5{0}Span) AS PeroidCount,", normNumberType);
+            sqlBuilder.Append("COUNT (*) AS ActualTimes,");
+            sqlBuilder.AppendFormat("(SELECT MAX (Seq) FROM DwC5{0}Span) - MAX (t1.seq) AS CurrentSpans,", normNumberType);
+            sqlBuilder.AppendFormat("MAX (t1.{0}Spans) AS MaxSpans,", dimension);
+            sqlBuilder.AppendFormat("AVG (CONVERT(FLOAT, t1.{0}Spans)) AS AvgSpans ", dimension);
+            sqlBuilder.Append("FROM ");
+            sqlBuilder.AppendFormat("DwC5{0}Span t1,", normNumberType);
+            sqlBuilder.AppendFormat("Dm{0} t2 ", normNumberType);
+            sqlBuilder.Append("WHERE t1.CX = t2.Id ");
+            sqlBuilder.AppendFormat("GROUP BY t2.{0}) AS tmp,", dimension);
+            sqlBuilder.Append("lottery.dbo.numbertype t3,");
+            sqlBuilder.Append("lottery.dbo.DimensionNumberType t4  ");
+            sqlBuilder.Append("WHERE tmp.numbertype = t3.code  ");
+            sqlBuilder.Append("AND tmp.ruletype = t3.ruletype  ");
+            sqlBuilder.Append("AND t4.Dimension = tmp.Dimension  ");
+            sqlBuilder.Append("AND t4.DimValue = tmp.NumberId  ");
+            sqlBuilder.Append("AND t4.NumberType = t3.Code  ");
+            sqlBuilder.AppendFormat("AND t4.RuleType = t3.RuleType ", filter);
+            sqlBuilder.AppendFormat("ORDER BY tmp.{0} {1}", orderByColName, sortType);
+
+            return sqlBuilder.ToString();
+        }
+		
         #endregion
     }
 }

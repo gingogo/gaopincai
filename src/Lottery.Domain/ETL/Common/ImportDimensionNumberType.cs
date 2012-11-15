@@ -21,7 +21,7 @@ namespace Lottery.ETL.Common
             //ImportSSL();
             //Import12X3();
             //Import11x5();
-            Import11x5C5CX();
+            //Import11x5C5CX();
         }
 
         public static void Import11x5C5CX()
@@ -33,13 +33,15 @@ namespace Lottery.ETL.Common
             {
                 Data.SQLServer.D11X5.DmC5CXBiz biz = new Data.SQLServer.D11X5.DmC5CXBiz("jiangx11x5");
                 List<DimensionNumberType> ntds = ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(dmType1, numberType.Code.Replace("A", "C"));
+                int nums = ntds[0].Nums;
 
                 foreach (var ntd in ntds)
                 {
                     ntd.NumberType = numberType.Code;
                     ntd.RuleType = numberType.RuleType;
-                    ntd.Amount = ntd.Nums * numberType.Amount;
-                    ntd.Probability = (ntd.Nums * 1.0) * numberType.Probability;
+                    ntd.Amount = (ntd.Nums / nums) * numberType.Amount;
+                    ntd.Probability = (ntd.Nums * 1.0) / 462.00;
+                    ntd.Nums = ntd.Nums / nums;
                 }
                 DimensionNumberTypeBiz.Instance.DataAccessor.Insert(ntds, SqlInsertMethod.SqlBulkCopy);
             }
