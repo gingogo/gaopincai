@@ -206,7 +206,7 @@ namespace Lottery.Data.SQLServer.Analysis
             sqlBuilder.Append("'0' AS LastSpans,");
             sqlBuilder.Append("tmp.avgspans,");
             sqlBuilder.Append("t4.probability,");
-            sqlBuilder.Append("t4.prize,");
+            sqlBuilder.Append("t3.prize,");
             sqlBuilder.Append("t4.amount ");
             sqlBuilder.Append("FROM ");
             sqlBuilder.Append("(SELECT ");
