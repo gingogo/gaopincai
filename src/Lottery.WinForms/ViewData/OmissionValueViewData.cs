@@ -187,7 +187,16 @@ namespace Lottery.WinForms.ViewData
         /// </summary>
         public int TheoryTimes
         {
-            get { return this._peroidCount / this._cycle; }
+            get
+            {
+                if (this._numberType == "A2") this._cycle *= 10;
+                if (this._numberType == "A3") this._cycle *= 10;
+                if (this._numberType == "A4") this._cycle *= 5;
+                if (this._numberType == "A6") this._cycle *= 6;
+                if (this._numberType == "A7") this._cycle *= 15;
+                if (this._numberType == "A8") this._cycle *= 20;
+                return this._peroidCount / this._cycle;
+            }
         }
 
         /// <summary>

@@ -174,10 +174,10 @@ namespace Lottery.WinForms.Task
                 item.SubItems.Add(maxAvgDcDict[viewData.Nums].AvgDC.ToString(prec));
                 item.SubItems.Add(viewData.AvgDC.ToString(prec));
                 item.SubItems.Add(viewData.WatchColdN.ToString("F2"));
-                item.SubItems.Add(viewData.State.ToString("F2"));
-                item.SubItems.Add(viewData.OccurRating.ToString("F2"));
-                item.SubItems.Add(viewData.InvestmentValue.ToString("F2"));
-                item.SubItems.Add(viewData.ReturnRating.ToString("F2"));
+                //item.SubItems.Add(viewData.State.ToString("F2"));
+                //item.SubItems.Add(viewData.OccurRating.ToString("F2"));
+                //item.SubItems.Add(viewData.InvestmentValue.ToString("F2"));
+                //item.SubItems.Add(viewData.ReturnRating.ToString("F2"));
                 item.SubItems.Add(viewData.PeroidCount.ToString());
                 item.SubItems.Add(viewData.Cycle.ToString());
                 item.SubItems.Add(viewData.ActualTimes.ToString());

@@ -34,10 +34,10 @@ namespace Lottery.WinForms.Caching
             omissonValueColumnHeaders.Add("AvgMaxDC", new ColumnHeaderViewData("AvgMaxDC", "平均最大确定度", 100));
             omissonValueColumnHeaders.Add("AvgDC", new ColumnHeaderViewData("AvgDC", "平均确定度", 80));
             omissonValueColumnHeaders.Add("WatchColdN", new ColumnHeaderViewData("WatchColdN", "守冷期数", 60));
-            omissonValueColumnHeaders.Add("State", new ColumnHeaderViewData("State", "偏态值", 55));
-            omissonValueColumnHeaders.Add("OccurRating", new ColumnHeaderViewData("OccurRating", "欲出几率", 70));
-            omissonValueColumnHeaders.Add("InvestmentValue", new ColumnHeaderViewData("InvestmentValue", "投资价值", 70));
-            omissonValueColumnHeaders.Add("ReturnRating", new ColumnHeaderViewData("ReturnRating", "回补几率", 70));
+            //omissonValueColumnHeaders.Add("State", new ColumnHeaderViewData("State", "偏态值", 55));
+            //omissonValueColumnHeaders.Add("OccurRating", new ColumnHeaderViewData("OccurRating", "欲出几率", 70));
+            //omissonValueColumnHeaders.Add("InvestmentValue", new ColumnHeaderViewData("InvestmentValue", "投资价值", 70));
+            //omissonValueColumnHeaders.Add("ReturnRating", new ColumnHeaderViewData("ReturnRating", "回补几率", 70));
             omissonValueColumnHeaders.Add("PeroidCount", new ColumnHeaderViewData("PeroidCount", "总期数", 55, true));
             omissonValueColumnHeaders.Add("Cycle", new ColumnHeaderViewData("Cycle", "循环周期", 60));
             omissonValueColumnHeaders.Add("ActualTimes", new ColumnHeaderViewData("ActualTimes", "出现次数", 60, true));
