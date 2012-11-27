@@ -102,22 +102,11 @@ namespace Lottery.Statistics.SSL
             return pSpanDict;
         }
 
-        private void SaveSpanToDB(string dbName, string tableName, DwSpan span)
-        {
-            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
-            spanDao.Insert(span);
-        }
-
         private void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans, params string[] columnNames)
         {
             DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
             spanDao.Truncate();
             spanDao.Insert(spans, SqlInsertMethod.SqlBulkCopy, columnNames);
-        }
-
-        private void SaveSpanToText(DwSpan span, StreamWriter writer)
-        {
-            writer.WriteLine(span.ToString());
         }
 
         private DwSpan CreateSpan(DwNumber number, Dictionary<string, int> pSpanDict)

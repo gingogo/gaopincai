@@ -182,12 +182,6 @@ namespace Lottery.Statistics.D11X5
             return c5cxSpan;
         }
 
-        private void SaveSpanToDB(string dbName, string tableName, DwSpan span)
-        {
-            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
-            spanDao.Insert(span);
-        }
-
         private void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans, params string[] columnNames)
         {
             DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
