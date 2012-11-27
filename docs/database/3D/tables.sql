@@ -17,6 +17,9 @@ CREATE TABLE [dbo].[DwNumber](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE NONCLUSTERED INDEX IX_DwNumber_Seq ON DwNumber (Seq DESC);
+CREATE NONCLUSTERED INDEX IX_DwNumber_Date ON DwNumber (Date DESC);
+
 GO
 
 ----------------------span tables----------------------------------

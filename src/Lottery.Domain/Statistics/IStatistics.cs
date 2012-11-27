@@ -9,6 +9,6 @@ namespace Lottery.Statistics
     {
         void Stat();
 
-        void Stat(OutputType outputType, bool isAsync);
+        void Stat(bool isAsync);
     }
 }

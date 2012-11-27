@@ -19,7 +19,7 @@ namespace Lottery.Statistics.D11X5
     /// </summary>
     public class NPeroidNumberCount : Base11X5Statistics
     {
-        protected override void Stat(string dbName, OutputType outputType)
+        protected override void Stat(string dbName)
         {
             DwNumberBiz biz = new DwNumberBiz(dbName.ToString());
             List<DwNumber> allNumbers = biz.DataAccessor.SelectWithCondition(string.Empty, "P", SortTypeEnum.ASC, null);

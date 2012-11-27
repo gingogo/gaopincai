@@ -19,30 +19,22 @@ namespace Lottery.Statistics.D11X5
     /// </summary>
     public class DmSpan : Base11X5Statistics
     {
-        protected override void Stat(string dbName, OutputType outputType)
+        protected override void Stat(string dbName)
         {
             string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("11X5");
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
 
-            //this.Stat(dbName, outputType, dmNames, numbers);
-            this.StatC5CX(numbers, dbName);
+            this.Stat(dbName, dmNames, numbers);
+            //this.StatC5CX(numbers, dbName);
         }
 
-        private void Stat(string dbName, OutputType outputType, string[] dmNames, List<DwNumber> numbers)
+        private void Stat(string dbName, string[] dmNames, List<DwNumber> numbers)
         {
             foreach (string dmName in dmNames)
             {
                 string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("11X5", dmName).Where(x => !x[0].Equals('A')).ToArray();
-                if (outputType == OutputType.Database)
-                    this.Stat(numbers, dbName, dmName, numberTypes, null);
-                else
-                {
-                    string fileName = string.Format("{0}_{1}.txt", dbName, dmName);
-                    StreamWriter writer = new StreamWriter(this.GetOutputFileName(fileName), false, Encoding.UTF8);
-                    this.Stat(numbers, dbName, dmName, numberTypes, writer);
-                    writer.Close();
-                }
+                this.Stat(numbers, dbName, dmName, numberTypes, null);
             }
 
             Console.WriteLine("{0} {1} Finished", dbName, "ALL Span");
@@ -86,11 +78,7 @@ namespace Lottery.Statistics.D11X5
             foreach (DwNumber number in numbers)
             {
                 Dictionary<string, int> pSpanDict = GetSpanDict(numberTypeLastSpanDict, dmName, numberTypes, number);
-                DwSpan span = this.CreateSpan(number, pSpanDict);
-                if (writer != null)
-                    this.SaveSpanToText(span, writer);
-                else
-                    entities.Add(span);
+                entities.Add(this.CreateSpan(number, pSpanDict));
             }
 
             string[] colmnNames = numberTypes.Select(x => x + "Spans").Union(new string[] { "P" }).ToArray();
@@ -203,12 +191,8 @@ namespace Lottery.Statistics.D11X5
         private void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans, params string[] columnNames)
         {
             DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
+            spanDao.Truncate();
             spanDao.Insert(spans, SqlInsertMethod.SqlBulkCopy, columnNames);
-        }
-
-        private void SaveSpanToText(DwSpan span, StreamWriter writer)
-        {
-            writer.WriteLine(span.ToString());
         }
 
         private DwSpan CreateSpan(DwNumber number, Dictionary<string, int> pSpanDict)

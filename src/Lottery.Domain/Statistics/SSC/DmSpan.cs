@@ -19,7 +19,7 @@ namespace Lottery.Statistics.SSC
     /// </summary>
     public class DmSpan : BaseSSCStatistics
     {
-        protected override void Stat(string dbName, OutputType outputType)
+        protected override void Stat(string dbName)
         {
             string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("SSC");
             DwNumberBiz biz = new DwNumberBiz(dbName);
@@ -28,15 +28,7 @@ namespace Lottery.Statistics.SSC
             foreach (string dmName in dmNames)
             {
                 string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("SSC", dmName);
-                if (outputType == OutputType.Database)
-                    this.Stat(numbers, dbName, dmName, numberTypes, null);
-                else
-                {
-                    string fileName = string.Format("{0}_{1}.txt", dbName, dmName);
-                    StreamWriter writer = new StreamWriter(this.GetOutputFileName(fileName), false, Encoding.UTF8);
-                    this.Stat(numbers, dbName, dmName, numberTypes, writer);
-                    writer.Close();
-                }
+                this.Stat(numbers, dbName, dmName, numberTypes, null);
             }
 
             Console.WriteLine("{0} {1} Finished", dbName, "ALL Span");
@@ -50,11 +42,7 @@ namespace Lottery.Statistics.SSC
             foreach (DwNumber number in numbers)
             {
                 Dictionary<string, int> pSpanDict = GetSpanDict(numberTypeLastSpanDict, dmName, numberTypes, number);
-                DwSpan span = this.CreateSpan(number, pSpanDict);
-                if (writer != null)
-                    this.SaveSpanToText(span, writer);
-                else
-                    entities.Add(span);
+                entities.Add(this.CreateSpan(number, pSpanDict));
             }
 
             string[] colmnNames = numberTypes.Select(x => x + "Spans").Union(new string[] { "P" }).ToArray();
@@ -123,6 +111,7 @@ namespace Lottery.Statistics.SSC
         private void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans, params string[] columnNames)
         {
             DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
+            spanDao.Truncate();
             spanDao.Insert(spans, SqlInsertMethod.SqlBulkCopy, columnNames);
         }
 

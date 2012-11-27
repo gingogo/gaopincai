@@ -11,7 +11,8 @@ namespace Lottery.Statistics
 
     public abstract class BaseStatistics : IStatistics
     {
-        private delegate void AsyncStatDelegate(string dbName, OutputType outputType);
+        private delegate void AsyncStatDelegate(string dbName);
+
         private AsyncStatDelegate asyncStatDlgt;
 
         protected BaseStatistics()
@@ -21,48 +22,33 @@ namespace Lottery.Statistics
 
         public virtual void Stat()
         {
-            this.Stat(OutputType.Text, true);
+            this.Stat(true);
         }
 
-        public virtual void Stat(OutputType outputType, bool isAsync)
+        public virtual void Stat(bool isAsync)
         {
             List<Category> categories = this.GetCatgories();
             foreach (var category in categories)
             {
                 if (isAsync)
-                    this.AsyncStatAll(category, outputType);
+                    this.AsyncStatAll(category);
                 else
-                    this.SyncStatAll(category, outputType);
+                    this.SyncStatAll(category);
             }
         }
 
-        protected virtual void AsyncStatAll(Category category, OutputType outputType)
+        protected virtual void AsyncStatAll(Category category)
         {
-            this.asyncStatDlgt.BeginInvoke(category.DbName, outputType, null, null);
+            this.asyncStatDlgt.BeginInvoke(category.DbName, null, null);
         }
 
-        protected virtual void SyncStatAll(Category category, OutputType outputType)
+        protected virtual void SyncStatAll(Category category)
         {
-            this.Stat(category.DbName, outputType);
+            this.Stat(category.DbName);
         }
 
-        protected virtual string GetOutputFileName(string fileName)
-        {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "stat");
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            return string.Format("{0}\\{1}", path, fileName);
-        }
-
-        protected virtual void Stat(string dbName,OutputType outputType)
-        {
-        }
+        protected abstract void Stat(string dbName);
 
         protected abstract List<Category> GetCatgories();
-    }
-
-    public enum OutputType
-    {
-        Text,
-        Database
     }
 }
