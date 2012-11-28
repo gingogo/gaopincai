@@ -34,7 +34,7 @@ namespace Lottery.Statistics.D11X5
             foreach (string dmName in dmNames)
             {
                 string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("11X5", dmName).Where(x => !x[0].Equals('A')).ToArray();
-                this.Stat(numbers, dbName, dmName, numberTypes, null);
+                this.Stat(numbers, dbName, dmName, numberTypes);
             }
 
             Console.WriteLine("{0} {1} Finished", dbName, "ALL Span");
@@ -70,7 +70,7 @@ namespace Lottery.Statistics.D11X5
             Console.WriteLine("{0} {1} Finished", dbName, "ALL C5CX Span");
         }
 
-        private void Stat(List<DwNumber> numbers, string dbName, string dmName,string[] numberTypes, StreamWriter writer)
+        private void Stat(List<DwNumber> numbers, string dbName, string dmName,string[] numberTypes)
         {
             Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict = new Dictionary<string, Dictionary<string, int>>(100000);
             List<DwSpan> entities = new List<DwSpan>(numbers.Count);
