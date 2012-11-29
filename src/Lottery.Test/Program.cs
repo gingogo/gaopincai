@@ -19,9 +19,9 @@ namespace Lottery.Test
         {
             //ExtractNumber();
             //InsertP();
-            StatTest();
+            //StatTest();
             //OmissionValueTest();
-            //DownServiceTest();
+            DownServiceTest();
             //ETLTest();
             //TransactionTest();
             //FormulaTest();
