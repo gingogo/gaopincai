@@ -17,11 +17,11 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
+            DownServiceTest();
             //ExtractNumber();
             //InsertP();
-            //StatTest();
+            StatTest();
             //OmissionValueTest();
-            DownServiceTest();
             //ETLTest();
             //TransactionTest();
             //FormulaTest();
