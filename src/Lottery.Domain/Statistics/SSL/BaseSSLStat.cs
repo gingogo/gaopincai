@@ -8,7 +8,7 @@ namespace Lottery.Statistics.SSL
     using Model.Common;
     using Data.SQLServer.Common;
 
-    public abstract class BaseSSLStatistics : BaseStatistics
+    public abstract class BaseSSLStat : BaseStat
     {
         protected override List<Category> GetCatgories()
         {

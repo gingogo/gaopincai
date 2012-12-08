@@ -1,4 +1,10 @@
-update Category set Enabled = 1 where Id in(101,106,144,145,147,162,164,165,167,185);
+select count(*),MAX(Seq),MAX(p) from dwnumber;
+select count(distinct p),MAX(Seq),MAX(p) from DwC5C2Span;
+select count(distinct p),MAX(Seq),MAX(p) from DwC5C3Span;
+select count(distinct p),MAX(Seq),MAX(p) from DwC5C4Span;
+select count(distinct p),MAX(Seq),MAX(p) from DwC5C6Span;
+select count(distinct p),MAX(Seq),MAX(p) from DwC5C7Span;
+select count(distinct p),MAX(Seq),MAX(p) from DwC5C8Span;
 
 DBCC SHRINKFILE (LotteryChongQSSC_Log, 1);
 DBCC SHRINKFILE (LotteryJiangXSSC_Log, 1);

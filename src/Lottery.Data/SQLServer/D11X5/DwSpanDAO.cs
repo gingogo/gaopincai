@@ -58,6 +58,12 @@ namespace Lottery.Data.SQLServer.D11X5
 
         #region 特定数据访问方法
 
+        public long SelectLatestPeroid(string condition)
+        {
+            string sqlCmd = string.Format("SELECT IsNULL(Max(P),0) as P FROM {0} {1} ", this._tableName, condition);
+            return Convert.ToInt64(SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sqlCmd));
+        }
+        
         public DataSet SelectTopNSpan(string num,int N,string p)
         {
             //判断num是前几，暂时是前2，tom改成自动的吧

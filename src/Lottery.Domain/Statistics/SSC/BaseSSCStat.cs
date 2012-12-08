@@ -8,7 +8,7 @@ namespace Lottery.Statistics.SSC
     using Model.Common;
     using Data.SQLServer.Common;
 
-    public abstract class BaseSSCStatistics : BaseStatistics
+    public abstract class BaseSSCStat : BaseStat
     {
         protected override List<Category> GetCatgories()
         {

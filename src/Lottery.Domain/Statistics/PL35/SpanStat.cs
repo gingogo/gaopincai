@@ -15,11 +15,11 @@ namespace Lottery.Statistics.PL35
     using Utils;
 
     /// <summary>
-    /// 统计所有维度的遗漏数。
+    /// 体彩排列3与5彩种遗漏值统计。
     /// </summary>
-    public class DmSpan : BasePL35Statistics
+    public class SpanStat : BasePL35Stat
     {
-        protected override void Stat(string dbName)
+        protected override void Stat(string dbName,bool isReset)
         {
             string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("PL35");
             DwNumberBiz biz = new DwNumberBiz(dbName);
@@ -28,25 +28,29 @@ namespace Lottery.Statistics.PL35
             foreach (string dmName in dmNames)
             {
                 string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("PL35", dmName);
-                this.Stat(numbers, dbName, dmName, numberTypes, null);
+                this.Stat(numbers, dbName, dmName, numberTypes, isReset);
             }
 
             Console.WriteLine("{0} {1} Finished", dbName, "ALL Span");
         }
 
-        private void Stat(List<DwNumber> numbers, string dbName, string dmName, string[] numberTypes, StreamWriter writer)
+        private void Stat(List<DwNumber> numbers, string dbName, string dmName, string[] numberTypes,bool isReset)
         {
             Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict = new Dictionary<string, Dictionary<string, int>>(100000);
             List<DwSpan> entities = new List<DwSpan>(numbers.Count);
 
-            foreach (DwNumber number in numbers)
-            {
-                Dictionary<string, int> pSpanDict = GetSpanDict(numberTypeLastSpanDict, dmName, numberTypes, number);
-                entities.Add(this.CreateSpan(number, pSpanDict));
-            }
+            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), ConfigHelper.GetConnString(dbName));
+			if(isReset) spanDao.Truncate();
+			long lastP = spanDao.SelectLatestPeroid(string.Empty);
+			
+			foreach (DwNumber number in numbers)
+			{
+				Dictionary<string, int> pSpanDict = GetSpanDict(numberTypeLastSpanDict, dmName, numberTypes, number);
+				if (number.P > lastP) entities.Add(this.CreateSpan(number, pSpanDict));
+			}
 
-            string[] colmnNames = numberTypes.Select(x => x + "Spans").Union(new string[] { "P" }).ToArray();
-            this.SaveSpanToDB(dbName, dmName, entities, colmnNames);
+			string[] columnNames = numberTypes.Select(x => x + "Spans").Union(new string[] { "P" }).ToArray();
+			spanDao.Insert(entities, SqlInsertMethod.SqlBulkCopy, columnNames);
 
             Console.WriteLine("{0} {1} Finished", dbName, dmName);
         }
@@ -100,13 +104,6 @@ namespace Lottery.Statistics.PL35
                 pSpanDict.Add(numberType, spans);
             }
             return pSpanDict;
-        }
-
-        private void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans, params string[] columnNames)
-        {
-            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
-            spanDao.Truncate();
-            spanDao.Insert(spans, SqlInsertMethod.SqlBulkCopy, columnNames);
         }
 
         private DwSpan CreateSpan(DwNumber number, Dictionary<string, int> pSpanDict)

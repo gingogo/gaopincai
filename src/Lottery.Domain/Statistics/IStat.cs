@@ -5,10 +5,12 @@ using System.Text;
 
 namespace Lottery.Statistics
 {
-    public interface IStatistics
+    public interface IStat
     {
-        void Stat();
+    	void Stat();
+    	
+        void Stat(bool isReset);
 
-        void Stat(bool isAsync);
+        void Stat(bool isAsync,bool isReset);
     }
 }

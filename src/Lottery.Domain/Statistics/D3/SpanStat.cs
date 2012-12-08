@@ -4,49 +4,53 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Lottery.Statistics.D12X3
+namespace Lottery.Statistics.D3
 {
     using Configuration;
     using Data;
     using Data.SQLServer;
     using Data.SQLServer.Common;
-    using Data.SQLServer.D12X3;
-    using Model.D12X3;
+    using Data.SQLServer.D3;
+    using Model.D3;
     using Utils;
 
     /// <summary>
-    /// 统计所有维度的遗漏数。
+    /// 福彩3D彩种遗漏值统计。
     /// </summary>
-    public class DmSpan : Base12X3Statistics
+    public class SpanStat : BaseD3Stat
     {
-        protected override void Stat(string dbName)
+        protected override void Stat(string dbName,bool isReset)
         {
-            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("12X3");
+            string[] dmNames = DimensionNumberTypeBiz.Instance.GetEnabledDimensions("3D");
             DwNumberBiz biz = new DwNumberBiz(dbName);
             List<DwNumber> numbers = biz.DataAccessor.SelectWithCondition(string.Empty, "Seq", SortTypeEnum.ASC, null);
- 
+
             foreach (string dmName in dmNames)
             {
-                string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("12X3", dmName);
-                this.Stat(numbers, dbName, dmName, numberTypes, null);
+                string[] numberTypes = DimensionNumberTypeBiz.Instance.GetNumberTypes("3D", dmName);
+                this.Stat(numbers, dbName, dmName, numberTypes, isReset);
             }
 
             Console.WriteLine("{0} {1} Finished", dbName, "ALL Span");
         }
 
-        private void Stat(List<DwNumber> numbers, string dbName, string dmName,string[] numberTypes, StreamWriter writer)
+        private void Stat(List<DwNumber> numbers, string dbName, string dmName, string[] numberTypes,bool isReset)
         {
             Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict = new Dictionary<string, Dictionary<string, int>>(100000);
             List<DwSpan> entities = new List<DwSpan>(numbers.Count);
 
-            foreach (DwNumber number in numbers)
-            {
-                Dictionary<string, int> pSpanDict = GetSpanDict(numberTypeLastSpanDict, dmName, numberTypes, number);
-                entities.Add(this.CreateSpan(number, pSpanDict));
-            }
+            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), ConfigHelper.GetConnString(dbName));
+			if(isReset) spanDao.Truncate();
+			long lastP = spanDao.SelectLatestPeroid(string.Empty);
+			
+			foreach (DwNumber number in numbers)
+			{
+				Dictionary<string, int> pSpanDict = GetSpanDict(numberTypeLastSpanDict, dmName, numberTypes, number);
+				if (number.P > lastP) entities.Add(this.CreateSpan(number, pSpanDict));
+			}
 
-            string[] colmnNames = numberTypes.Select(x => x + "Spans").Union(new string[] { "P" }).ToArray();
-            this.SaveSpanToDB(dbName, dmName, entities, colmnNames);
+			string[] columnNames = numberTypes.Select(x => x + "Spans").Union(new string[] { "P" }).ToArray();
+			spanDao.Insert(entities, SqlInsertMethod.SqlBulkCopy, columnNames);
 
             Console.WriteLine("{0} {1} Finished", dbName, dmName);
         }
@@ -63,7 +67,7 @@ namespace Lottery.Statistics.D12X3
                     numberTypeLastSpanDict.Add(numberType, new Dictionary<string, int>(1000));
 
                 int spans = number.Seq - 1;
-                string dmValue = number[numberType].GetDmValue(2, dmName, 6);
+                string dmValue = number[numberType].GetDmValue(1, dmName, 4);
                 if (numberTypeLastSpanDict[numberType].ContainsKey(dmValue))
                 {
                     spans = number.Seq - numberTypeLastSpanDict[numberType][dmValue] - 1;
@@ -100,13 +104,6 @@ namespace Lottery.Statistics.D12X3
                 pSpanDict.Add(numberType, spans);
             }
             return pSpanDict;
-        }
-
-        private void SaveSpanToDB(string dbName, string tableName, List<DwSpan> spans, params string[] columnNames)
-        {
-            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(tableName), ConfigHelper.GetConnString(dbName));
-            spanDao.Truncate();
-            spanDao.Insert(spans, SqlInsertMethod.SqlBulkCopy, columnNames);
         }
 
         private DwSpan CreateSpan(DwNumber number, Dictionary<string, int> pSpanDict)

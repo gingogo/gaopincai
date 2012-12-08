@@ -62,28 +62,21 @@
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\ServiceManager.cs" />
-    <Compile Include="Statistics\BaseStatistics.cs" />
-    <Compile Include="Statistics\D12X3\Base12X3Statistics.cs" />
-    <Compile Include="Statistics\D12X3\DmSpan.cs" />
-    <Compile Include="Statistics\SSL\BaseSSLStatistics.cs" />
-    <Compile Include="Statistics\SSL\DmSpan.cs" />
-    <Compile Include="Statistics\D11X5\Base11X5Statistics.cs" />
-    <Compile Include="Statistics\D11X5\DmSpan.cs" />
-    <Compile Include="Statistics\D11X5\DayNumber.cs" />
-    <Compile Include="Statistics\D11X5\NextNumber.cs" />
-    <Compile Include="Statistics\D11X5\NPeroidNumberCount.cs" />
-    <Compile Include="Statistics\D11X5\PeroidSpanLimit.cs" />
-    <Compile Include="Statistics\D3\BaseD3Statistics.cs" />
-    <Compile Include="Statistics\D3\DmSpan.cs" />
-    <Compile Include="Statistics\IStatistics.cs" />
-    <Compile Include="Statistics\PL35\BasePL35Statistics.cs" />
-    <Compile Include="Statistics\PL35\DmSpan.cs" />
-    <Compile Include="Statistics\SSC\BaseSSCStatistics.cs" />
-    <Compile Include="Statistics\SSC\DmSpan.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Analysis\D11X5\" />
-    <Folder Include="Analysis\SSC\" />
+    <Compile Include="Statistics\BaseStat.cs" />
+    <Compile Include="Statistics\D11X5\C5CXSpanStat.cs" />
+    <Compile Include="Statistics\D12X3\Base12X3Stat.cs" />
+    <Compile Include="Statistics\D12X3\SpanStat.cs" />
+    <Compile Include="Statistics\SSL\BaseSSLStat.cs" />
+    <Compile Include="Statistics\SSL\SpanStat.cs" />
+    <Compile Include="Statistics\D11X5\Base11X5Stat.cs" />
+    <Compile Include="Statistics\D11X5\SpanStat.cs" />
+    <Compile Include="Statistics\D3\BaseD3Stat.cs" />
+    <Compile Include="Statistics\D3\SpanStat.cs" />
+    <Compile Include="Statistics\IStat.cs" />
+    <Compile Include="Statistics\PL35\BasePL35Stat.cs" />
+    <Compile Include="Statistics\PL35\SpanStat.cs" />
+    <Compile Include="Statistics\SSC\BaseSSCStat.cs" />
+    <Compile Include="Statistics\SSC\SpanStat.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lottery.Core\Lottery.Core.csproj">

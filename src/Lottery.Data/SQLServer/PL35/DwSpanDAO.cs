@@ -58,6 +58,12 @@ namespace Lottery.Data.SQLServer.PL35
 
         #region 特定数据访问方法
 
+        public long SelectLatestPeroid(string condition)
+        {
+            string sqlCmd = string.Format("SELECT IsNULL(Max(P),0) as P FROM {0} {1} ", this._tableName, condition);
+            return Convert.ToInt64(SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sqlCmd));
+        }
+        
         public long SelectMaxPeroid()
         {
             string sql = string.Format("select max(p) p from {0}", this._tableName);
