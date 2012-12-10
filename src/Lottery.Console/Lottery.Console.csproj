@@ -46,7 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\BadCommand.cs" />
     <Compile Include="Command\CheckCommand.cs" />
+    <Compile Include="Command\CommandParser.cs" />
     <Compile Include="Command\DownCommand.cs" />
     <Compile Include="Command\ExtractCommand.cs" />
     <Compile Include="Command\ICommand.cs" />

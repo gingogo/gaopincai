@@ -20,7 +20,7 @@ namespace Lottery.Console.Command
 				var dict = CategoryBiz.Instance.GetEnabledCategoriesPeroidCount();
 				foreach (var kp in dict)
 				{
-					Console.WriteLine("{0}:{1}", kp.Key, kp.Value);
+					System.Console.WriteLine("{0}:{1}", kp.Key, kp.Value);
 				}
 			} catch (Exception ex) 
 			{

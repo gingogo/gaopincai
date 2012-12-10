@@ -2,6 +2,8 @@
 
 namespace Lottery.Console.Command
 {
+	using ETL;
+	
 	/// <summary>
 	/// 批量数据下载与提取命令。
 	/// </summary>

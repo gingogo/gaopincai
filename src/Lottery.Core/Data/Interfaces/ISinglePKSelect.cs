@@ -6,7 +6,7 @@ namespace Lottery.Data
     /// ISinglePKSelect提供对数据库中单主键表一些基本查询操作的接口。
     /// </summary>
     /// <typeparam name="T">通用类型</typeparam>
-    public interface ISinglePKSelect<T>
+    public interface ISinglePKSelect<T>:IBaseSelect<T>
     {
         /// <summary>
         /// 查询数据库,判断指定标识的记录是否存在。
@@ -77,17 +77,7 @@ namespace Lottery.Data
         /// 获取数据库中表的最大ID值(没有记录的时候返回0)。
         /// </summary>
         /// <returns>最大ID值</returns>
-        int GetMaxID();
+        int SelectMaxId();
 
-        /// <summary>
-        /// 获取数据库中该对象指定属性的最大值(没有记录的时候返回0)。
-        /// </summary>
-        /// <param name="fieldName">表中的字段(列)名称,字段的值必需是整型数据</param>
-        /// <param name="fromBase">从(2,8,10,16)进制的整型转换成10进制</param>
-        /// <param name="condition">要求带SQL语句Where关键字的条件,如果条件字符串中含有SQL参数标记(@),且必须写成如下格式:(@p0,@p1...)
-        /// <example>e.g.:[UserName]=@p0 AND [Password] = @p1</example></param>
-        /// <param name="parameterValues">SQL参数对应值的集合,如果条件字符串中含有参数标记,则必须设置该数组的值</param>
-        /// <returns>指定属性的最大值</returns>
-        int GetMaxValue(string fieldName, int fromBase, string condition, params object[] parameterValues);
     }
 }

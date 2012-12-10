@@ -8,9 +8,9 @@ namespace Lottery.Console
 	{
 		public static void Main(string[] args)
 		{
-			System.Console.WriteLine("Hello World!");
-			System.Console.Write("Press any key to continue . . . ");
-			System.Console.ReadKey(true);
+			
+			System.Console.WriteLine("Successfully");
+			System.Console.Read();
 		}
 	}
 }

@@ -17,10 +17,10 @@ namespace Lottery.Test
     {
         static void Main(string[] args)
         {
-            DownServiceTest();
+            //DownServiceTest();
             //ExtractNumber();
             //InsertP();
-            StatTest();
+            //StatTest();
             //OmissionValueTest();
             //ETLTest();
             //TransactionTest();
@@ -112,15 +112,15 @@ namespace Lottery.Test
 
         static void InsertP()
         {
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12031632", "02 01 09 03 04", "2012-03-16 14:10:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12031633", "11 01 04 03 06", "2012-03-16 14:20:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12031634", "05 10 03 07 04", "2012-03-16 14:30:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12031636", "02 04 01 08 07", "2012-03-16 14:50:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12031637", "09 07 04 01 03", "2012-03-16 15:00:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12031638", "03 02 11 05 04", "2012-03-16 15:10:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12040453", "08 01 06 02 10", "2012-04-04 17:40:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12102372", "06 05 02 03 10", "2012-10-23 20:50:00");
-            ETL.D11X5.ImportDwNumber.InsertP(167, "12102373", "09 04 06 11 07", "2012-10-23 21:00:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12031632", "02 01 09 03 04", "2012-03-16 14:10:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12031633", "11 01 04 03 06", "2012-03-16 14:20:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12031634", "05 10 03 07 04", "2012-03-16 14:30:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12031636", "02 04 01 08 07", "2012-03-16 14:50:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12031637", "09 07 04 01 03", "2012-03-16 15:00:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12031638", "03 02 11 05 04", "2012-03-16 15:10:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12040453", "08 01 06 02 10", "2012-04-04 17:40:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12102372", "06 05 02 03 10", "2012-10-23 20:50:00");
+            ETL.D11X5.ImportDwNumber.Insert(167, "12102373", "09 04 06 11 07", "2012-10-23 21:00:00");
         }
 
         static void StatTest()

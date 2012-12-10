@@ -15,39 +15,6 @@ namespace Lottery.ETL.SSC
 
     public class ImportDwNumber
     {
-        public static void Start()
-        {
-            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Extract");
-
-            foreach (Category category in categories)
-            {
-                string dataFileName = string.Format(@"{0}\{1}.txt", path, category.Name);
-                if (!File.Exists(dataFileName)) continue;
-                StreamReader reader = new StreamReader(dataFileName, Encoding.UTF8);
-                int index = 1;
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-                    if (string.IsNullOrEmpty(line) ||
-                        line.Trim().Length == 0) continue;
-                    ImportSSC(line, category.Name,index);
-                    index ++;
-                }
-                reader.Close();
-            }
-            Console.WriteLine("Finished!");
-        }
-
-        private static void ImportSSC(string line, string name,int index)
-        {
-            DwNumberBiz biz = null;
-            if (name.Equals("江西时时彩")) biz = new DwNumberBiz("JiangXSSC");
-            if (name.Equals("重庆时时彩")) biz = new DwNumberBiz("ChongQSSC");
-
-            //biz.Add(dto);
-        }
-
         public static void UpdateC45()
         {
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories("SSC");
