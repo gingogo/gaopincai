@@ -17,8 +17,14 @@ namespace Lottery.Console.Command
             {
                 Services.DownloadService s = new Services.DownloadService();
                 s.StartSync(DateTime.Now);
-                Statistics.IStat stat = new Statistics.D11X5.C5CXSpanStat();
-                stat.Stat();
+
+                if (args != null &&
+                    args.Length > 0 &&
+                    args[0].Trim().ToLower().Equals("c5cx"))
+                {
+                    Statistics.IStat stat = new Statistics.D11X5.C5CXSpanStat();
+                    stat.Stat();
+                }
             }
             catch (Exception ex)
             {
