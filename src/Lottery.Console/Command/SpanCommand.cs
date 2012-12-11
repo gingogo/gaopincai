@@ -14,7 +14,6 @@ namespace Lottery.Console.Command
 		
 		public void Execute(params string[] args)
 		{
-			
 			List<Statistics.IStat> stats = new List<Statistics.IStat>(args.Length);
 			foreach(var arg in args)
 			{
