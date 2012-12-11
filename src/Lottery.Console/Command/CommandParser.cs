@@ -10,7 +10,7 @@ namespace Lottery.Console.Command
 		public static void Parse(string cmdName,params string[] args)
 		{
 			if(string.IsNullOrEmpty(cmdName) ||
-			   cmdName.Trim().Length == 0) throw new ArgumentNullException("cmdName");
+               cmdName.Trim().Length == 0) System.Console.WriteLine("Not found this Command!");
 			
 			ICommand command = Creator(cmdName);
 			command.Execute(args);

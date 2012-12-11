@@ -127,7 +127,7 @@ namespace Lottery.Test
         {
             Statistics.IStat[] stats = new Statistics.IStat[] 
             {
-                new Statistics.D11X5.DmSpan(),
+                //new Statistics.D11X5.DmSpan(),
                 //new Statistics.SSC.DmSpan(),
                 //new Statistics.D3.DmSpan(),
                 //new Statistics.PL35.DmSpan(),

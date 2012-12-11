@@ -2,18 +2,18 @@
 
 namespace Lottery.Console.Command
 {
-	/// <summary>
-	/// 数据下载命令。
-	/// </summary>
-	public class DownCommand : ICommand
-	{
-		public DownCommand()
-		{
-		}
-		
-		public void Execute(params string[] args)
-		{
-			try
+    /// <summary>
+    /// 数据下载命令。
+    /// </summary>
+    public class DownCommand : ICommand
+    {
+        public DownCommand()
+        {
+        }
+
+        public void Execute(params string[] args)
+        {
+            try
             {
                 Services.DownloadService s = new Services.DownloadService();
                 s.StartSync(DateTime.Now);
@@ -22,8 +22,9 @@ namespace Lottery.Console.Command
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine("Command Error!");
                 Logging.Logger.Instance.Write(ex.ToString());
             }
-		}
-	}
+        }
+    }
 }

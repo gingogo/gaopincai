@@ -41,6 +41,7 @@ namespace Lottery.Console.Command
 			}
 			catch (Exception ex)
 			{
+                System.Console.WriteLine("Command Error!");
 				Logging.Logger.Instance.Write(ex.ToString());
 			}
 		}
