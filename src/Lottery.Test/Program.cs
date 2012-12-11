@@ -153,14 +153,5 @@ namespace Lottery.Test
         {
             TransactionScopeTest.Test();
         }
-
-        static void DisplayPeroidCount()
-        {
-           var dict= CategoryBiz.Instance.GetEnabledCategoriesPeroidCount();
-           foreach (var kp in dict)
-           {
-               Console.WriteLine("{0}:{1}", kp.Key, kp.Value);
-           }
-        }
     }
 }
