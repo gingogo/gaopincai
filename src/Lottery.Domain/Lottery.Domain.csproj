@@ -44,6 +44,15 @@
     <Compile Include="Analysis\Formula\Deviation.cs" />
     <Compile Include="Analysis\Formula\FFG.cs" />
     <Compile Include="Analysis\Formula\ProfitOrLoss.cs" />
+    <Compile Include="Command\BadCommand.cs" />
+    <Compile Include="Command\BaseCommand.cs" />
+    <Compile Include="Command\CheckCommand.cs" />
+    <Compile Include="Command\CommandParser.cs" />
+    <Compile Include="Command\DownCommand.cs" />
+    <Compile Include="Command\ExtractCommand.cs" />
+    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Command\InitCommand.cs" />
+    <Compile Include="Command\SpanCommand.cs" />
     <Compile Include="ETL\Common\ImportDimensionNumberType.cs" />
     <Compile Include="ETL\Common\ImportDimension.cs" />
     <Compile Include="ETL\Common\ImportNumberType.cs" />

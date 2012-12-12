@@ -46,23 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\BadCommand.cs" />
-    <Compile Include="Command\CheckCommand.cs" />
-    <Compile Include="Command\CommandParser.cs" />
-    <Compile Include="Command\DownCommand.cs" />
-    <Compile Include="Command\ExtractCommand.cs" />
-    <Compile Include="Command\ICommand.cs" />
-    <Compile Include="Command\InitCommand.cs" />
-    <Compile Include="Command\SpanCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Command" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Lottery.Core\Lottery.Core.csproj">
       <Project>{F33FE560-9BA7-4384-814B-95716079E620}</Project>
