@@ -16,7 +16,7 @@ namespace Lottery.Command
         protected override void ExecuteCommand(Action<string> output, params string[] args)
         {
             if (args == null || args.Length == 0)
-                output("args parameters is null");
+                output("Please input arguments.");
 
             foreach (var arg in args)
             {

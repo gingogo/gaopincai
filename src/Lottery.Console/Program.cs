@@ -10,7 +10,7 @@ namespace Lottery.Console
 		{
             if (args == null || args.Length == 0)
             {
-                System.Console.WriteLine("Please input your command name");
+                System.Console.WriteLine("Please input your command name.");
                 return;
             }
 
