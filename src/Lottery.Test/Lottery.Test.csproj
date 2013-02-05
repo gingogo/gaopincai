@@ -67,7 +67,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstraper.cs" />
+    <Compile Include="ETL\ImportNumberTypeDimTest.cs" />
+    <Compile Include="ETL\ImportNumberTypeTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionScopeTest.cs" />

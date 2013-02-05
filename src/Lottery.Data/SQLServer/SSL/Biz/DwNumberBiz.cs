@@ -105,7 +105,7 @@ namespace Lottery.Data.SQLServer.SSL
                 option.IsolationLevel = IsolationLevel.ReadUncommitted;
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
                 {
-                    this.AddSpan(number);
+                    //this.AddSpan(number);
                     this.Add(number);
                     scope.Complete();
                 }
