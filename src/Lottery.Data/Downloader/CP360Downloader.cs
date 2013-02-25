@@ -44,7 +44,6 @@ namespace Lottery.Data.Downloader
                 }
 
                 long lastP = biz.GetLatestPeroid();
-                //HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
                 for (int i = matchs.Count - 1; i >= 0; i--)
                 {
                     Match match = matchs[i];
@@ -61,7 +60,6 @@ namespace Lottery.Data.Downloader
 
                     //把期号统一成{yyyynnn}
                     if (p < 2000000) p += 2000000;
-                    //if (pSet.Contains(p)) continue;
                     if (p <= lastP) continue;
 
                     int n = int.Parse(peroid.Substring(peroid.Length - 3));
@@ -105,7 +103,6 @@ namespace Lottery.Data.Downloader
                 }
 
                 long lastP = biz.GetLatestPeroid();
-                //HashSet<long> pSet = biz.GetPeroidsByDate(currentDate);
                 for (int i = matchs.Count - 1; i >= 0; i--)
                 {
                     Match match = matchs[i];
@@ -122,7 +119,6 @@ namespace Lottery.Data.Downloader
 
                     //把期号统一成{yyyynnn}
                     if (p < 2000000) p += 2000000;
-                    //if (pSet.Contains(p)) continue;
                     if (p <= lastP) continue;
 
                     int n = int.Parse(peroid.Substring(peroid.Length - 3));
