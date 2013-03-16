@@ -6,7 +6,7 @@ using System.Text;
 namespace Lottery.Statistics.SSL
 {
     using Model.Common;
-    using Data.SQLServer.Common;
+    using Data.Biz.Common;
 
     public abstract class BaseSSLStat : BaseStat
     {

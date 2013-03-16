@@ -6,8 +6,8 @@ namespace Lottery.Services
 {
     using Components;
     using Configuration;
-    using Data.SQLServer.Common;
-    using Data.SQLServer.D11X5;
+    using Data.Biz.Common;
+    using Data.Biz.D11X5;
     using Data.Downloader;
     using Data.Parameter;
     using Logging;

@@ -8,9 +8,10 @@ namespace Lottery.Statistics.PL35
 {
     using Configuration;
     using Data;
-    using Data.SQLServer;
-    using Data.SQLServer.Common;
-    using Data.SQLServer.PL35;
+    using Data.Biz;
+    using Data.PL35;
+    using Data.Biz.Common;
+    using Data.Biz.PL35;
     using Model.PL35;
     using Utils;
 
@@ -39,7 +40,7 @@ namespace Lottery.Statistics.PL35
             Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict = new Dictionary<string, Dictionary<string, int>>(100000);
             List<DwSpan> entities = new List<DwSpan>(numbers.Count);
 
-            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), ConfigHelper.GetConnString(dbName));
+            IDwSpanDAO spanDao = DAOFactory.Create<IDwSpanDAO>(dbName, ConfigHelper.GetDwSpanTableName(dmName));
 			if(isReset) spanDao.Truncate();
 			long lastP = spanDao.SelectLatestPeroid(string.Empty);
 			

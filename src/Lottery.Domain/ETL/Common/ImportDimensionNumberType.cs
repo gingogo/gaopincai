@@ -6,8 +6,8 @@ using System.Text;
 namespace Lottery.ETL.Common
 {
     using Model.Common;
-    using Data.SQLServer;
-    using Data.SQLServer.Common;
+    using Data;
+    using Data.Biz.Common;
     using Utils;
 
     public class ImportNumberTypeDim
@@ -31,7 +31,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.D11X5.DmC5CXBiz biz = new Data.SQLServer.D11X5.DmC5CXBiz("jiangx11x5");
+                Data.Biz.D11X5.DmC5CXBiz biz = new Data.Biz.D11X5.DmC5CXBiz("jiangx11x5");
                 List<DimensionNumberType> ntds = ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(dmType1, numberType.Code.Replace("A", "C"));
                 int nums = ntds[0].Nums;
 
@@ -58,7 +58,7 @@ namespace Lottery.ETL.Common
             {
                 if (numberType.Code.StartsWith("A")) continue;
 
-                Data.SQLServer.D11X5.DmDPCBiz biz = new Data.SQLServer.D11X5.DmDPCBiz("jiangx11x5", numberType.Code.GetDmTableSuffix());
+                Data.Biz.D11X5.DmDPCBiz biz = new Data.Biz.D11X5.DmDPCBiz("jiangx11x5", numberType.Code.GetDmTableSuffix());
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)
                     ntds = biz.DataAccessor.SelectNumberTypeDimGroupBy(number1, numberType.Code);
@@ -87,7 +87,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.SSC.DmDPCBiz biz = new Data.SQLServer.SSC.DmDPCBiz("jiangxssc", numberType.Code.GetDmTableSuffix());
+                Data.Biz.SSC.DmDPCBiz biz = new Data.Biz.SSC.DmDPCBiz("jiangxssc", numberType.Code.GetDmTableSuffix());
 
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)
@@ -117,7 +117,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.D3.DmDPCBiz biz = new Data.SQLServer.D3.DmDPCBiz("fc3d", numberType.Code.GetDmTableSuffix());
+                Data.Biz.D3.DmDPCBiz biz = new Data.Biz.D3.DmDPCBiz("fc3d", numberType.Code.GetDmTableSuffix());
    
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)
@@ -147,7 +147,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.PL35.DmDPCBiz biz = new Data.SQLServer.PL35.DmDPCBiz("tcpl35", numberType.Code.GetDmTableSuffix());
+                Data.Biz.PL35.DmDPCBiz biz = new Data.Biz.PL35.DmDPCBiz("tcpl35", numberType.Code.GetDmTableSuffix());
 
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)
@@ -177,7 +177,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.SSL.DmDPCBiz biz = new Data.SQLServer.SSL.DmDPCBiz("shanghssl", numberType.Code.GetDmTableSuffix());
+                Data.Biz.SSL.DmDPCBiz biz = new Data.Biz.SSL.DmDPCBiz("shanghssl", numberType.Code.GetDmTableSuffix());
 
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)
@@ -207,7 +207,7 @@ namespace Lottery.ETL.Common
 
             foreach (var numberType in numberTypes)
             {
-                Data.SQLServer.D12X3.DmDPCBiz biz = new Data.SQLServer.D12X3.DmDPCBiz("hun12x3", numberType.Code.GetDmTableSuffix());
+                Data.Biz.D12X3.DmDPCBiz biz = new Data.Biz.D12X3.DmDPCBiz("hun12x3", numberType.Code.GetDmTableSuffix());
 
                 List<DimensionNumberType> ntds = new List<DimensionNumberType>();
                 if (numberType.Length == 1)

@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 namespace Lottery.Command
 {
     using Configuration;
-    using Data.SQLServer.Common;
-    using Data.SQLServer.D11X5;
+    using Data.Biz.Common;
+    using Data.Biz.D11X5;
     using Model.Common;
     using Utils;
     using Logging;

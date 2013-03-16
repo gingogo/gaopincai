@@ -6,7 +6,7 @@ using System.Text;
 namespace Lottery.Statistics.D3
 {
     using Model.Common;
-    using Data.SQLServer.Common;
+    using Data.Biz.Common;
 
     public abstract class BaseD3Stat : BaseStat
     {

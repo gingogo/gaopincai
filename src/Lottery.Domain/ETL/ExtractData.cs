@@ -8,7 +8,7 @@ using System.IO;
 namespace Lottery.ETL
 {
 	using Model.Common;
-	using Data.SQLServer.Common;
+	using Data.Biz.Common;
 	using Logging;
 
 	public class ExtractData
@@ -112,7 +112,7 @@ namespace Lottery.ETL
 			if (pset.Contains(p)) return;
 			pset.Add(p);
 
-			Data.SQLServer.SSC.DwNumberBiz biz = new Data.SQLServer.SSC.DwNumberBiz(dbName);
+			Data.Biz.SSC.DwNumberBiz biz = new Data.Biz.SSC.DwNumberBiz(dbName);
 			biz.Add(biz.Create(p, n, no, dateint, sdate));
 		}
 
@@ -127,7 +127,7 @@ namespace Lottery.ETL
 			if (pset.Contains(p)) return;
 			pset.Add(p);
 
-			Data.SQLServer.D11X5.DwNumberBiz biz = new Data.SQLServer.D11X5.DwNumberBiz(dbName);
+			Data.Biz.D11X5.DwNumberBiz biz = new Data.Biz.D11X5.DwNumberBiz(dbName);
 			biz.Add(biz.Create(p, n, no, dateint, sdate));
 
 			//if (name.Equals("山东十一运夺金") &&
@@ -154,7 +154,7 @@ namespace Lottery.ETL
 			if (pset.Contains(p)) return;
 			pset.Add(p);
 
-			Data.SQLServer.D3.DwNumberBiz biz = new Data.SQLServer.D3.DwNumberBiz(dbName);
+			Data.Biz.D3.DwNumberBiz biz = new Data.Biz.D3.DwNumberBiz(dbName);
 			biz.Add(biz.Create(p, n, no, dateint, sdate));
 		}
 
@@ -170,7 +170,7 @@ namespace Lottery.ETL
 			if (pset.Contains(p)) return;
 			pset.Add(p);
 
-			Data.SQLServer.PL35.DwNumberBiz biz = new Data.SQLServer.PL35.DwNumberBiz(dbName);
+			Data.Biz.PL35.DwNumberBiz biz = new Data.Biz.PL35.DwNumberBiz(dbName);
 			biz.Add(biz.Create(p, n, no, dateint, sdate));
 		}
 
@@ -186,7 +186,7 @@ namespace Lottery.ETL
 			if (pset.Contains(p)) return;
 			pset.Add(p);
 
-			Data.SQLServer.SSL.DwNumberBiz biz = new Data.SQLServer.SSL.DwNumberBiz(dbName);
+			Data.Biz.SSL.DwNumberBiz biz = new Data.Biz.SSL.DwNumberBiz(dbName);
 			biz.Add(biz.Create(p, n, no, dateint, sdate));
 		}
 
@@ -211,7 +211,7 @@ namespace Lottery.ETL
 			if (pset.Contains(p)) return;
 			pset.Add(p);
 
-			Data.SQLServer.D12X3.DwNumberBiz biz = new Data.SQLServer.D12X3.DwNumberBiz(dbName);
+			Data.Biz.D12X3.DwNumberBiz biz = new Data.Biz.D12X3.DwNumberBiz(dbName);
 			biz.Add(biz.Create(p, n, no, dateint, sdate));
 		}
 	}

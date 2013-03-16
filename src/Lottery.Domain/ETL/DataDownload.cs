@@ -9,7 +9,7 @@ using System.IO;
 namespace Lottery.ETL
 {
     using Logging;
-    using Data.SQLServer.Common;
+    using Data.Biz.Common;
     using Model.Common;
 
     public class DataDownload

@@ -10,7 +10,7 @@ namespace Lottery.WinForms
     using Caching;
     using Components;
     using Configuration;
-    using Data.SQLServer.Common;
+    using Data.Biz.Common;
     using Helpers;
     using Model.Common;
     using Task;

@@ -23,7 +23,7 @@ namespace Lottery.Data.Downloader
 
         protected override bool Down11X5(DownParameter param)
         {
-            SQLServer.D11X5.DwNumberBiz biz = new SQLServer.D11X5.DwNumberBiz(param.Category.DbName);
+            Biz.D11X5.DwNumberBiz biz = new Biz.D11X5.DwNumberBiz(param.Category.DbName);
             DateTime lastDate = biz.GetLatestDate();
 
             int endIndex = this.GetEndIndex(param, lastDate);
@@ -49,7 +49,7 @@ namespace Lottery.Data.Downloader
 
         protected override bool DownSSC(DownParameter param)
         {
-            SQLServer.SSC.DwNumberBiz biz = new SQLServer.SSC.DwNumberBiz(param.Category.DbName);
+            Biz.SSC.DwNumberBiz biz = new Biz.SSC.DwNumberBiz(param.Category.DbName);
             DateTime lastDate = biz.GetLatestDate();
 
             int endIndex = this.GetEndIndex(param, lastDate);
@@ -76,7 +76,7 @@ namespace Lottery.Data.Downloader
 
         protected override bool Down3D(DownParameter param)
         {
-            SQLServer.D3.DwNumberBiz biz = new SQLServer.D3.DwNumberBiz(param.Category.DbName);
+            Biz.D3.DwNumberBiz biz = new Biz.D3.DwNumberBiz(param.Category.DbName);
             DateTime lastDate = biz.GetLatestDate();
 
             int endIndex = this.GetEndIndex(param, lastDate);
@@ -103,7 +103,7 @@ namespace Lottery.Data.Downloader
 
         protected override bool DownPL35(DownParameter param)
         {
-            SQLServer.PL35.DwNumberBiz biz = new SQLServer.PL35.DwNumberBiz(param.Category.DbName);
+            Biz.PL35.DwNumberBiz biz = new Biz.PL35.DwNumberBiz(param.Category.DbName);
             DateTime lastDate = biz.GetLatestDate();
 
             int endIndex = this.GetEndIndex(param, lastDate);
@@ -130,7 +130,7 @@ namespace Lottery.Data.Downloader
 
         protected override bool DownSSL(DownParameter param)
         {
-            SQLServer.SSL.DwNumberBiz biz = new SQLServer.SSL.DwNumberBiz(param.Category.DbName);
+            Biz.SSL.DwNumberBiz biz = new Biz.SSL.DwNumberBiz(param.Category.DbName);
             DateTime lastDate = biz.GetLatestDate();
 
             int endIndex = this.GetEndIndex(param, lastDate);
@@ -157,7 +157,7 @@ namespace Lottery.Data.Downloader
 
         protected override bool Down12X3(DownParameter param)
         {
-            SQLServer.D12X3.DwNumberBiz biz = new SQLServer.D12X3.DwNumberBiz(param.Category.DbName);
+            Biz.D12X3.DwNumberBiz biz = new Biz.D12X3.DwNumberBiz(param.Category.DbName);
             DateTime lastDate = biz.GetLatestDate();
 
             int endIndex = this.GetEndIndex(param, lastDate);

@@ -8,9 +8,10 @@ namespace Lottery.Statistics.SSL
 {
     using Configuration;
     using Data;
-    using Data.SQLServer;
-    using Data.SQLServer.Common;
-    using Data.SQLServer.SSL;
+    using Data.Biz;
+    using Data.SSL;
+    using Data.Biz.Common;
+    using Data.Biz.SSL;
     using Model.SSL;
     using Utils;
 
@@ -39,7 +40,7 @@ namespace Lottery.Statistics.SSL
             Dictionary<string, Dictionary<string, int>> numberTypeLastSpanDict = new Dictionary<string, Dictionary<string, int>>(100000);
             List<DwSpan> entities = new List<DwSpan>(numbers.Count);
 
-            DwSpanDAO spanDao = new DwSpanDAO(ConfigHelper.GetDwSpanTableName(dmName), ConfigHelper.GetConnString(dbName));
+            IDwSpanDAO spanDao = DAOFactory.Create<IDwSpanDAO>(dbName, ConfigHelper.GetDwSpanTableName(dmName));
 			if(isReset) spanDao.Truncate();
 			long lastP = spanDao.SelectLatestPeroid(string.Empty);
 			

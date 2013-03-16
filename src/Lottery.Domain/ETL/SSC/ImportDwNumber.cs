@@ -9,8 +9,8 @@ namespace Lottery.ETL.SSC
 {
     using Model.Common;
     using Model.SSC;
-    using Lottery.Data.SQLServer.Common;
-    using Lottery.Data.SQLServer.SSC;
+    using Lottery.Data.Biz.Common;
+    using Lottery.Data.Biz.SSC;
     using Utils;
 
     public class ImportDwNumber

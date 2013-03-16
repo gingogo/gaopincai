@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\Libs\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -55,9 +58,21 @@
     <Compile Include="Components\WorkerCompletedEventArgs.cs" />
     <Compile Include="Components\WorkerCompletedEventHandler.cs" />
     <Compile Include="Configuration\ConfigHelper.cs" />
+    <Compile Include="Configuration\ConfigManager.cs" />
+    <Compile Include="Configuration\DataBaseElement.cs" />
+    <Compile Include="Configuration\DatabaseElementCollection.cs" />
+    <Compile Include="Configuration\DataSourceElement.cs" />
+    <Compile Include="Configuration\DataSourceElementCollection.cs" />
+    <Compile Include="Configuration\DataSourceSection.cs" />
+    <Compile Include="Data.MySQL\Criterion\IsNotNullOperand.cs" />
+    <Compile Include="Data.MySQL\Criterion\IsNullOperand.cs" />
+    <Compile Include="Data.MySQL\DataAccess\BaseDataAccess.cs" />
+    <Compile Include="Data.MySQL\DataAccess\BaseSelect.cs" />
+    <Compile Include="Data.MySQL\DataAccess\SinglePKDataAccess.cs" />
+    <Compile Include="Data.MySQL\DataAccess\SqlExpression.cs" />
+    <Compile Include="Data.MySQL\DataAccess\ViewDataAccess.cs" />
     <Compile Include="Data.SQLServer\DataAccess\BaseDataAccess.cs" />
     <Compile Include="Data.SQLServer\DataAccess\BaseSelect.cs" />
-    <Compile Include="Data.SQLServer\DataAccess\SqlInsertMethod.cs" />
     <Compile Include="Data.SQLServer\DataAccess\SinglePKDataAccess.cs" />
     <Compile Include="Data.SQLServer\DataAccess\SqlExpression.cs" />
     <Compile Include="Data.SQLServer\DataAccess\ViewDataAccess.cs" />

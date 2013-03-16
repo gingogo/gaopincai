@@ -8,9 +8,9 @@ namespace Lottery.ETL.SSC
 {
 	using Model.Common;
 	using Model.SSC;
-	using Data.SQLServer;
-	using Data.SQLServer.SSC;
-	using Data.SQLServer.Common;
+    using Data;
+	using Data.Biz.SSC;
+	using Data.Biz.Common;
 	using Utils;
 
 	/// <summary>

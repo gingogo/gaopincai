@@ -8,9 +8,9 @@ namespace Lottery.ETL.D11X5
 {
 	using Model.Common;
 	using Model.D11X5;
-	using Data.SQLServer;
-	using Data.SQLServer.D11X5;
-	using Data.SQLServer.Common;
+    using Data;
+	using Data.Biz.D11X5;
+	using Data.Biz.Common;
 	using Utils;
 
 	/// <summary>

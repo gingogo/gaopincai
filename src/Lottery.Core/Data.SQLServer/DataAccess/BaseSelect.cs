@@ -593,8 +593,7 @@ namespace Lottery.Data.SQLServer
                 }
                 catch (SqlException ex)
                 {
-                    string message = string.Format("[SQL]:{0},[Exception]:{1}", sqlCmd, ex.ToString());
-                    System.Diagnostics.EventLog.WriteEntry("LightFramework.Data.SQLServer", message);
+                    throw new ApplicationException(string.Format("[SQL]:{0},[Exception]:{1}", sqlCmd, ex.ToString()));
                 }
             }
 
@@ -736,7 +735,7 @@ namespace Lottery.Data.SQLServer
                     catch (SqlException ex)
                     {
                         sqlTransaction.Rollback("startPoint");
-                        System.Diagnostics.EventLog.WriteEntry("LightFramework.Data.SQLServer", ex.ToString());
+                        throw ex;
                     }
                 }
             }

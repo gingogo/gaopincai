@@ -10,8 +10,8 @@ namespace Lottery.ETL.D11X5
 	using Model.Common;
 	using Model.D11X5;
 	using Data;
-	using Lottery.Data.SQLServer.Common;
-	using Lottery.Data.SQLServer.D11X5;
+	using Lottery.Data.Biz.Common;
+	using Lottery.Data.Biz.D11X5;
 	using Utils;
 
 	public class ImportDwNumber

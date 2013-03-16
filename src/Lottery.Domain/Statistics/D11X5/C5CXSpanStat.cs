@@ -5,9 +5,9 @@ namespace Lottery.Statistics.D11X5
 {
 	using Configuration;
 	using Data;
-	using Data.SQLServer;
-	using Data.SQLServer.Common;
-	using Data.SQLServer.D11X5;
+	
+	using Data.Biz.Common;
+	using Data.Biz.D11X5;
 	using Model.D11X5;
 	using Utils;
 	

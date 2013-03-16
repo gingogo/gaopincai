@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Lottery.Statistics
 {
-	using Data.SQLServer.Common;
+	using Data.Biz.Common;
 	using Model.Common;
 
 	public abstract class BaseStat : IStat

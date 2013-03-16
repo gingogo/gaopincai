@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Lottery.Services
 {
-    using Data.SQLServer.Common;
+    using Data.Biz.Common;
     using Logging;
     using Model.Common;
     using Utils;

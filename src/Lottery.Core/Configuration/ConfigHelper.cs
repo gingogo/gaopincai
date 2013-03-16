@@ -59,11 +59,6 @@ namespace Lottery.Configuration
             return string.Format("Dm{0}", tableName);
         }
 
-        public static string GetStCycleTableName(string tableName)
-        {
-            return string.Format("St{0}Cycle", tableName);
-        }
-
         public static string GetDwSpanTableName(string tableName)
         {
             return string.Format("Dw{0}Span", tableName);

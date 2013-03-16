@@ -6,7 +6,7 @@ using System.Text;
 namespace Lottery.Statistics.PL35
 {
     using Model.Common;
-    using Data.SQLServer.Common;
+    using Data.Biz.Common;
 
     public abstract class BasePL35Stat : BaseStat
     {

@@ -17,7 +17,7 @@ namespace Lottery.Data.Downloader
     {
         protected override bool Down3D(DownParameter param)
         {
-            SQLServer.D3.DwNumberBiz biz = new SQLServer.D3.DwNumberBiz(param.Category.DbName);
+            Biz.D3.DwNumberBiz biz = new Biz.D3.DwNumberBiz(param.Category.DbName);
             DateTime startDate = biz.GetLatestDate();
 
             for (DateTime date = startDate; date <= DateTime.Now; date = date.AddDays(1))
@@ -28,7 +28,7 @@ namespace Lottery.Data.Downloader
             return true;
         }
 
-        private bool Down3D(DownParameter param, SQLServer.D3.DwNumberBiz biz, DateTime currentDate)
+        private bool Down3D(DownParameter param, Biz.D3.DwNumberBiz biz, DateTime currentDate)
         {
             string url = param.Category.DownUrl;
 
@@ -76,7 +76,7 @@ namespace Lottery.Data.Downloader
 
         protected override bool DownPL35(DownParameter param)
         {
-            SQLServer.PL35.DwNumberBiz biz = new SQLServer.PL35.DwNumberBiz(param.Category.DbName);
+            Biz.PL35.DwNumberBiz biz = new Biz.PL35.DwNumberBiz(param.Category.DbName);
             DateTime startDate = biz.GetLatestDate();
 
             for (DateTime date = startDate; date <= DateTime.Now; date = date.AddDays(1))
@@ -87,7 +87,7 @@ namespace Lottery.Data.Downloader
             return true;
         }
 
-        private bool DownPL35(DownParameter param, SQLServer.PL35.DwNumberBiz biz, DateTime currentDate)
+        private bool DownPL35(DownParameter param, Biz.PL35.DwNumberBiz biz, DateTime currentDate)
         {
             string url = param.Category.DownUrl;
 

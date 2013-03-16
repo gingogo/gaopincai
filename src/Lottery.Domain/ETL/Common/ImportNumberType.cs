@@ -6,7 +6,7 @@ using System.Text;
 namespace Lottery.ETL.Common
 {
     using Model.Common;
-    using Data.SQLServer.Common;
+    using Data.Biz.Common;
     using Utils;
 
     public class ImportNumberType

@@ -17,7 +17,7 @@ namespace Lottery.Data.Downloader
     {
         protected override bool Down11X5(DownParameter param)
         {
-            SQLServer.D11X5.DwNumberBiz biz = new SQLServer.D11X5.DwNumberBiz(param.Category.DbName);
+            Biz.D11X5.DwNumberBiz biz = new Biz.D11X5.DwNumberBiz(param.Category.DbName);
             DateTime startDate = biz.GetLatestDate();
 
             for (DateTime date = startDate; date <= DateTime.Now; date = date.AddDays(1))
@@ -28,7 +28,7 @@ namespace Lottery.Data.Downloader
             return true;
         }
 
-        private bool Down11X5(DownParameter param, SQLServer.D11X5.DwNumberBiz biz, DateTime currentDate)
+        private bool Down11X5(DownParameter param, Biz.D11X5.DwNumberBiz biz, DateTime currentDate)
         {
             int intDate = int.Parse(currentDate.ToString("yyyyMMdd"));
             string url = string.Format(param.Category.DownUrl, intDate, "&");
@@ -76,7 +76,7 @@ namespace Lottery.Data.Downloader
 
         protected override bool DownSSC(DownParameter param)
         {
-            SQLServer.SSC.DwNumberBiz biz = new SQLServer.SSC.DwNumberBiz(param.Category.DbName);
+            Biz.SSC.DwNumberBiz biz = new Biz.SSC.DwNumberBiz(param.Category.DbName);
             DateTime startDate = biz.GetLatestDate();
 
             for (DateTime date = startDate; date <= DateTime.Now; date = date.AddDays(1))
@@ -87,7 +87,7 @@ namespace Lottery.Data.Downloader
             return true;
         }
 
-        private bool DownSSC(DownParameter param, SQLServer.SSC.DwNumberBiz biz, DateTime currentDate)
+        private bool DownSSC(DownParameter param, Biz.SSC.DwNumberBiz biz, DateTime currentDate)
         {
             int intDate = int.Parse(currentDate.ToString("yyyyMMdd"));
             string url = string.Format(param.Category.DownUrl, "&", intDate);

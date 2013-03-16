@@ -6,16 +6,17 @@ using System.Text;
 namespace Lottery.Analysis.Common
 {
     using Configuration;
-    using Data.SQLServer.Analysis;
+    using Data.Biz;
+    using Data.Analysis;
     using Model.Analysis;
 
     public class OmissionValueLys
     {
-        private OmissionValueDAO _dao;
+        private IOmissionValueDAO _dao;
 
         public OmissionValueLys(string dbName)
         {
-            this._dao = new OmissionValueDAO(ConfigHelper.GetConnString(dbName));
+            this._dao = DAOFactory.Create<IOmissionValueDAO>(dbName);
         }
 
         public List<OmissionValue> GetOmissionValues(string ruleType, string numberType, string dimension, string filter,
