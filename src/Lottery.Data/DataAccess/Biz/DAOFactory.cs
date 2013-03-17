@@ -29,15 +29,20 @@ namespace Lottery.Data.Biz
 
         public static T CreateInstance<T>(string dbName, string typeName, string tableName)
         {
+            return CreateInstance<T>(dbName, null, typeName, tableName);
+        }
+
+        public static T CreateInstance<T>(string dbName,string subNamespace, string typeName, string tableName)
+        {
             dbName = dbName.Trim().ToLower();
             string dataSourceName = ConfigHelper.GetAppSettings("dataSource");
             DataSourceElement config = ConfigManager.DataSourceSection.DataSources[dataSourceName];
-            var dbNamespace = config.Databases[dbName].Namespace;
+            subNamespace = subNamespace ?? config.Databases[dbName].Namespace;
             var connectionString = config.Databases[dbName].ConnectionString;
-            var fullTypeName = string.Format("{0}.{1}.{2},{3}", config.Namespace, dbNamespace, typeName, config.Assembly);
+            var fullTypeName = string.Format("{0}.{1}.{2},{3}", config.Namespace, subNamespace, typeName, config.Assembly);
 
-            object[] args = string.IsNullOrEmpty(tableName) ? 
-                new object[] { connectionString } : 
+            object[] args = string.IsNullOrEmpty(tableName) ?
+                new object[] { connectionString } :
                 new object[] { tableName, connectionString };
             return (T)Activator.CreateInstance(Type.GetType(fullTypeName), args);
         }

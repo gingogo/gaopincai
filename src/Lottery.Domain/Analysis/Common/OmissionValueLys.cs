@@ -16,7 +16,7 @@ namespace Lottery.Analysis.Common
 
         public OmissionValueLys(string dbName)
         {
-            this._dao = DAOFactory.Create<IOmissionValueDAO>(dbName);
+            this._dao = DAOFactory.CreateInstance<IOmissionValueDAO>(dbName, "Analysis", "OmissionValueDAO", string.Empty);
         }
 
         public List<OmissionValue> GetOmissionValues(string ruleType, string numberType, string dimension, string filter,
