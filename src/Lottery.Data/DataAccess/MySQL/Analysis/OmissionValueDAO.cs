@@ -95,10 +95,10 @@ namespace Lottery.Data.MySQL.Analysis
             sqlBuilder.Append("COUNT(*) as ActualTimes,");
             sqlBuilder.Append("(SELECT COUNT(*) FROM DwNumber)-MAX(t1.Seq) as CurrentSpans,");
             sqlBuilder.AppendFormat("MAX(t2.{0}Spans) as MaxSpans,", spanColNamePrefix);
-            sqlBuilder.AppendFormat("AVG(Convert(float,t2.{0}Spans)) as AvgSpans ", spanColNamePrefix);
+            sqlBuilder.AppendFormat("AVG(t2.{0}Spans) as AvgSpans ", spanColNamePrefix);
             sqlBuilder.AppendFormat("FROM DwNumber t1,DwPeroidSpan t2,Dm{0} t3 ", dmTableNameSuffix);
             sqlBuilder.AppendFormat("WHERE t1.P = t2.P and t1.{0} = t3.Id and t3.NumberType = '{1}' ", spanColNamePrefix, normNumberType);
-            sqlBuilder.AppendFormat("GROUP BY t1.{0}) as tmp,DwPeroidSpan t2,{1}.dbo.NumberType t3 ", spanColNamePrefix, ConfigHelper.CommonDBName);
+            sqlBuilder.AppendFormat("GROUP BY t1.{0}) as tmp,DwPeroidSpan t2,{1}.NumberType t3 ", spanColNamePrefix, ConfigHelper.CommonDBName);
             sqlBuilder.AppendFormat("WHERE tmp.P = t2.P and tmp.NumberType = t3.Code and tmp.RuleType = t3.RuleType {0} ", filter);
             sqlBuilder.AppendFormat("ORDER BY tmp.{0} {1}", orderByColName, sortType);
 
@@ -134,11 +134,11 @@ namespace Lottery.Data.MySQL.Analysis
             sqlBuilder.Append("Count(*) AS ActualTimes,");
             sqlBuilder.AppendFormat("(SELECT MAX(Seq) FROM DwC5{0}Span) - Max(t1.seq) AS CurrentSpans,", normNumberType);
             sqlBuilder.Append("Max(t1.PeroidSpans)  AS MaxSpans,");
-            sqlBuilder.Append("Avg(CONVERT(FLOAT, t1.PeroidSpans)) AS AvgSpans ");
+            sqlBuilder.Append("Avg(t1.PeroidSpans) AS AvgSpans ");
             sqlBuilder.AppendFormat("FROM   DwC5{0}Span t1 ", normNumberType);
             sqlBuilder.Append("GROUP  BY t1.CX) as tmp, ");
             sqlBuilder.AppendFormat("DwC5{0}Span t2, ", normNumberType);
-            sqlBuilder.Append("lottery.dbo.numbertype t3  ");
+            sqlBuilder.Append("lottery.numbertype t3  ");
             sqlBuilder.Append("WHERE  tmp.P = t2.P ");
             sqlBuilder.Append("AND tmp.NumberId = t2.CX ");
             sqlBuilder.Append("AND tmp.numbertype = t3.code  ");

@@ -275,7 +275,7 @@ namespace Lottery.WinForms
             numberTypeComboBox.Items.Clear();
             numberTypeComboBox.DisplayMember = NumberType.C_Name;
 
-            List<NumberType> numberTypes = NumberTypeBiz.Instance.GetList(ruleType);
+            var numberTypes = NumberTypeBiz.Instance.GetList(ruleType).Where(x => x.Status == 1);
             foreach (var numberType in numberTypes)
             {
                 numberTypeComboBox.Items.Add(numberType);
