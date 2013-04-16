@@ -24,7 +24,3 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
-others/
-Data.MySQL/
-Data.OleDb/
-Data.Oracle/
