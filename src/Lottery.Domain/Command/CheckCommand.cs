@@ -32,6 +32,7 @@ namespace Lottery.Command
             Dictionary<string, string> dict = new Dictionary<string, string>(categories.Count);
             string dataSourceName = ConfigHelper.GetAppSettings("dataSource");
             DataSourceElement config = ConfigManager.DataSourceSection.DataSources[dataSourceName];
+            DwNumberBiz biz = new DwNumberBiz("shand11x5");
 
             foreach (var category in categories)
             {
@@ -42,7 +43,6 @@ namespace Lottery.Command
                 int pageCount = ConvertHelper.GetInt32(Regex.Match(htmlText, "分页\\:1/(\\d+)页", RegexOptions.Singleline | RegexOptions.IgnoreCase).Groups[1].Value);
                 Category entity = new Category() { Id = category.Id, PeroidCount = peroidCount, DownPageCount = pageCount };
                 CategoryBiz.Instance.Modify(entity, entity.Id, Category.C_DownPageCount, Category.C_PeroidCount);
-                DwNumberBiz biz = new DwNumberBiz("shand11x5");
                 biz.DataAccessor.ConnectionString = config.Databases[category.DbName.Trim().ToLower()].ConnectionString;
                 int maxSeq = biz.DataAccessor.SelectMaxWithCondition("Seq", 10, string.Empty);
                 int downPeroids = biz.Count;
