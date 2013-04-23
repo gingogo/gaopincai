@@ -30,6 +30,8 @@ namespace Lottery.Command
 
             List<Category> categories = CategoryBiz.Instance.GetEnabledCategories(false);
             Dictionary<string, string> dict = new Dictionary<string, string>(categories.Count);
+            string dataSourceName = ConfigHelper.GetAppSettings("dataSource");
+            DataSourceElement config = ConfigManager.DataSourceSection.DataSources[dataSourceName];
 
             foreach (var category in categories)
             {
@@ -40,7 +42,8 @@ namespace Lottery.Command
                 int pageCount = ConvertHelper.GetInt32(Regex.Match(htmlText, "分页\\:1/(\\d+)页", RegexOptions.Singleline | RegexOptions.IgnoreCase).Groups[1].Value);
                 Category entity = new Category() { Id = category.Id, PeroidCount = peroidCount, DownPageCount = pageCount };
                 CategoryBiz.Instance.Modify(entity, entity.Id, Category.C_DownPageCount, Category.C_PeroidCount);
-                DwNumberBiz biz = new DwNumberBiz(category.DbName);
+                DwNumberBiz biz = new DwNumberBiz("shand11x5");
+                biz.DataAccessor.ConnectionString = config.Databases[category.DbName.Trim().ToLower()].ConnectionString;
                 int maxSeq = biz.DataAccessor.SelectMaxWithCondition("Seq", 10, string.Empty);
                 int downPeroids = biz.Count;
 
@@ -49,14 +52,15 @@ namespace Lottery.Command
                 output(propmt);
 
                 if (category.Type.Equals("11X5"))
-                    this.CheckC5CX(output, category);
+                    this.CheckC5CX(output, category, biz.DataAccessor.ConnectionString);
             }
         }
 
-        private void CheckC5CX(Action<string> output, Category category)
+        private void CheckC5CX(Action<string> output, Category category,string connectionString)
         {
             string[] c5cxs = new string[] { "C5C2", "C5C3", "C5C4", "C5C6", "C5C7", "C5C8" };
             DwC5CXSpanBiz c5cxbiz = new DwC5CXSpanBiz(category.DbName);
+            c5cxbiz.DataAccessor.ConnectionString = connectionString;
             foreach (string c5cx in c5cxs)
             {
                 c5cxbiz.DataAccessor.TableName = ConfigHelper.GetDwSpanTableName(c5cx);
