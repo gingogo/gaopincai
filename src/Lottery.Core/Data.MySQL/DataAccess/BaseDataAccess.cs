@@ -307,8 +307,12 @@ namespace Lottery.Data.MySQL
         /// <returns>影响的行数</returns>
         public virtual int Insert(List<T> entities, SqlInsertMethod method, params string[] columnNames)
         {
-            //new MySqlBulkLoader(new MySqlConnection(this._connectionString)).
-            throw new NotImplementedException();
+            foreach (T entity in entities)
+            {
+                this.Insert(entity, columnNames);
+            }
+
+            return entities.Count;
         }
 
         /// <summary>
