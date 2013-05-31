@@ -1,10 +1,10 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//
-//namespace Lottery.Test
-//{
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Lottery.Test
+{
 //    using Model.Common;
 //    using Data.SQLServer.D11X5;
 //    using Data.SQLServer.Common;
@@ -13,26 +13,16 @@
 //    using Analysis.Formula;
 //    using Data.Downloader;
 //
-//    class Program
-//    {
-//        static void Main(string[] args)
-//        {
-//            //DownServiceTest();
-//            //ExtractNumber();
-//            //InsertP();
-//            //StatTest();
-//            //OmissionValueTest();
-//            //ETLTest();
-//            //TransactionTest();
-//            //FormulaTest();
-//            //Console.WriteLine((1%3).ToString());
-//            //CacheTest();
-//            //DownloaderTest();
-//            //ServiceTest();
-//            //DisplayPeroidCount();
-//            Console.WriteLine("执行成功!");
-//            Console.Read();
-//        }
+    using Statistics.D11X5;
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            C1Stat stat = new C1Stat();
+            stat.C1StatMain("shand11x5");
+            Console.WriteLine("执行成功!");
+            Console.Read();
+        }
 //
 //        static void OmissionValueTest()
 //        {
@@ -153,5 +143,5 @@
 //        {
 //            TransactionScopeTest.Test();
 //        }
-//    }
-//}
+    }
+}

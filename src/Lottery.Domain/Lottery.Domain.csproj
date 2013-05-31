@@ -73,6 +73,7 @@
     <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\ServiceManager.cs" />
     <Compile Include="Statistics\BaseStat.cs" />
+    <Compile Include="Statistics\D11X5\C1Stat.cs" />
     <Compile Include="Statistics\D11X5\C5CXSpanStat.cs" />
     <Compile Include="Statistics\D12X3\Base12X3Stat.cs" />
     <Compile Include="Statistics\D12X3\SpanStat.cs" />
