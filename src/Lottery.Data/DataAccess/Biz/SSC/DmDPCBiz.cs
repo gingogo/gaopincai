@@ -16,7 +16,7 @@ namespace Lottery.Data.Biz.SSC
         SinglePKDataAccessBiz<IDmDPCDAO, DmDPC>
     {
         public DmDPCBiz(string dbName, string tableName)
-            : base(DAOFactory.Create<IDmDPCDAO>(dbName, ConfigHelper.GetDwSpanTableName(tableName)))
+            : base(DAOFactory.Create<IDmDPCDAO>(dbName, ConfigHelper.GetDmTableName(tableName)))
         {
         }
 

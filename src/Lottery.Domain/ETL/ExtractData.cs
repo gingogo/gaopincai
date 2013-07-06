@@ -41,7 +41,7 @@ namespace Lottery.ETL
 			pset.Clear();
 			pdic.Clear();
 			
-			string downPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Down", category.Name);
+			string downPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "KaiJiang", category.Name);
 
 			for (int i = category.DownPageCount; i >= 1; i--)
 			{

@@ -25,6 +25,7 @@ namespace Lottery.Command
 			if(cmdName.Equals("extract")) return new ExtractCommand();
 			if(cmdName.Equals("init")) return new InitCommand();
 			if(cmdName.Equals("span")) return new SpanCommand();
+			if(cmdName.Equals("respan")) return new ReSpanCommand();
 			
 			return new BadCommand();
 		}

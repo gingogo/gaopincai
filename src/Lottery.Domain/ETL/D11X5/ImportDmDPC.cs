@@ -26,8 +26,8 @@ namespace Lottery.ETL.D11X5
 				P(category.DbName, "DX", 1, output);
 				P(category.DbName, "P2", 2, output);
 				P(category.DbName, "P3", 3, output);
-				P(category.DbName, "P4", 4, output);
-				P(category.DbName, "P5", 5, output);
+				//P(category.DbName, "P4", 4, output);
+				//P(category.DbName, "P5", 5, output);
 				C(category.DbName, "C2", 2, output);
 				C(category.DbName, "C3", 3, output);
 				C(category.DbName, "C4", 4, output);

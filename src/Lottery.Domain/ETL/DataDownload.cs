@@ -14,30 +14,63 @@ namespace Lottery.ETL
 
     public class DataDownload
     {
-        public static void DownAllPage()
+        public static void DownKaiJiangData()
         {
-            List<Category> categories = CategoryBiz.Instance.GetCategories();
+            List<Category> categories = CategoryBiz.Instance.GetEnabledCategories();
             foreach (var category in categories)
             {
                 if (category.ParentId == 0) continue;
-                DownPage(category);
+                if(category.DownUrl.Contains("www.pinble.com"))
+                	DownPinbleKaiJiangData(category);
+                else if(category.DownUrl.Contains("www.lecai.com"))
+                	DownLeCaiKaiJiangData(category);
             }
         }
 
-        public static void DownPage(int categoryId)
+        public static void DownKaiJiangData(int categoryId)
         {
-            var categories = CategoryBiz.Instance.GetCategories().Where(x => x.Id == categoryId);
+            var categories = CategoryBiz.Instance.GetEnabledCategories().Where(x => x.Id == categoryId);
             foreach (var category in categories)
             {
                 if (category.ParentId == 0) continue;
-                DownPage(category);
+                if(category.DownUrl.Contains("www.pinble.com"))
+                	DownPinbleKaiJiangData(category);
+                else if(category.DownUrl.Contains("www.lecai.com"))
+                	DownLeCaiKaiJiangData(category);
             }
         }
 
-        private static void DownPage(Category category)
+        private static void DownLeCaiKaiJiangData(Category category)
         {
-            string dataUrl = "http://www.pinble.com/Template/WebService1.asmx/Present3DList?pageindex={0}&lottory={1}&pl3={2}&name={3}&isgp={4}";
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Down", category.Name);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "KaiJiang", category.Name);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            WebClient wc = new WebClient();
+            wc.Encoding = Encoding.UTF8;
+
+            DateTime startDate = new DateTime(2008,1,1);
+            for (DateTime currDate = startDate; currDate <= DateTime.Now; currDate = currDate.AddDays(1))
+            {
+            	string url = string.Format(category.DownUrl, currDate.ToString("yyyy-MM-dd"));
+                string fileName = string.Format("{0}\\{1}.html", path, currDate.ToString("yyyy-MM-dd"));
+                try
+                {
+                    //string htmlText = wc.DownloadString(url);
+                    wc.DownloadFile(url, fileName);
+                }
+                catch
+                {
+                    Logger.Instance.Write(url);
+                }
+            }
+
+            Console.WriteLine("{0}:DownPage Finished!", category.Name);
+        }
+        
+        private static void DownPinbleKaiJiangData(Category category)
+        {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "KaiJiang", category.Name);
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -46,7 +79,7 @@ namespace Lottery.ETL
 
             for (int i = 1; i <= category.DownPageCount; i++)
             {
-                string url = string.Format(dataUrl, i, category.Code, "", category.Name, category.IsGP);
+                string url = string.Format(category.DownUrl, i, category.Code, "", category.Name, category.IsGP);
                 string fileName = string.Format("{0}\\{1}.html", path, i);
                 try
                 {
@@ -62,7 +95,7 @@ namespace Lottery.ETL
             Console.WriteLine("{0}:DownPage Finished!", category.Name);
         }
 
-        public static void DownCategory()
+        public static void DownPinbleCategory()
         {
             string categoryUrl = "http://www.pinble.com/Lottery.htm";
             string url1 = "http://www.pinble.com/Template/WebService1.asmx/lotteryNameData?lotteryName={0}";

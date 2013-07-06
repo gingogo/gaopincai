@@ -53,6 +53,7 @@
     <Compile Include="Command\ExtractCommand.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Command\InitCommand.cs" />
+    <Compile Include="Command\ReSpanCommand.cs" />
     <Compile Include="Command\SpanCommand.cs" />
     <Compile Include="ETL\Common\ImportDimensionNumberType.cs" />
     <Compile Include="ETL\Common\ImportDimension.cs" />

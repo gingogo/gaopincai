@@ -20,7 +20,7 @@ namespace Lottery.Command
 
             foreach (var arg in args)
             {
-                DataDownload.DownPage(int.Parse(arg));
+                DataDownload.DownKaiJiangData(int.Parse(arg));
                 ExtractData.Extract(int.Parse(arg));
             }
         }
