@@ -105,14 +105,16 @@ namespace Lottery.Data.Biz.SSL
         {
             try
             {
-                TransactionOptions option = new TransactionOptions();
-                option.IsolationLevel = IsolationLevel.ReadUncommitted;
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
-                {
-                    //this.AddSpan(number);
-                    this.Add(number);
-                    scope.Complete();
-                }
+            	this.Add(number);
+//            	
+//                TransactionOptions option = new TransactionOptions();
+//                option.IsolationLevel = IsolationLevel.ReadUncommitted;
+//                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, option))
+//                {
+//                    //this.AddSpan(number);
+//                    this.Add(number);
+//                    scope.Complete();
+//                }
                 return true;
             }
             catch (Exception ex)

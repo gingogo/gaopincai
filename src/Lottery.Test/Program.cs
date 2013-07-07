@@ -20,8 +20,8 @@ namespace Lottery.Test
 		{
 			//            C1Stat stat = new C1Stat();
 			//            stat.C1StatMain("shand11x5");
-			Lottery.ETL.DataDownload.DownKaiJiangData();
-			
+			//Lottery.ETL.DataDownload.DownKaiJiangData();
+			Lottery.ETL.ExtractData.ExtractAll();
 			Console.WriteLine("执行成功!");
 			Console.Read();
 		}

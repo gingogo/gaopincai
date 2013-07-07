@@ -147,16 +147,18 @@ namespace Lottery.Data.Biz.D11X5
         {
             try
             {
-                TransactionOptions option = new TransactionOptions();
-                option.IsolationLevel = IsolationLevel.ReadUncommitted;
-                using (TransactionScope scope = 
-                    new TransactionScope(TransactionScopeOption.Required, option))
-                {
-                    //this.AddSpan(number);
-                    //this.AddC5CXSpan(number);
-                    this.Add(number);
-                    scope.Complete();
-                }
+            	this.Add(number);
+            	
+//                TransactionOptions option = new TransactionOptions();
+//                option.IsolationLevel = IsolationLevel.ReadUncommitted;
+//                using (TransactionScope scope = 
+//                    new TransactionScope(TransactionScopeOption.Required, option))
+//                {
+//                    //this.AddSpan(number);
+//                    //this.AddC5CXSpan(number);
+//                    this.Add(number);
+//                    scope.Complete();
+//                }
                 return true;
             }
             catch (Exception ex)

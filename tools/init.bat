@@ -1,1 +1,1 @@
-Lottery.Console.exe init ssc 3d pl35
+Lottery.Console.exe init ssc

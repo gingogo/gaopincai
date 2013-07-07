@@ -183,7 +183,7 @@ namespace Lottery.ETL.SSC
 			dto.ZiHeBi = list.GetZiHeBi();
 			dto.DanShuangBi = list.GetDanShuangBi();
 			dto.Lu012Bi = list.GetLu012Bi();
-			dto.NumberType = type;
+			dto.NumberType = type.Contains("C") ? dto.Id.GetNumberType() : type;
 			
 			return dto;
 		}

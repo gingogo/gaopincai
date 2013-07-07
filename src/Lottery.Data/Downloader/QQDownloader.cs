@@ -57,7 +57,7 @@ namespace Lottery.Data.Downloader
 
                     if (string.IsNullOrEmpty(code) || code.Trim().Length == 0) continue;
 
-                    int p = int.Parse(peroid);
+                    long p = int.Parse(peroid);
                     //把期号统一成{yyyymmddnn}
                     if (p < 2000000000) p += 2000000000;
                     if (p <= lastP) continue;

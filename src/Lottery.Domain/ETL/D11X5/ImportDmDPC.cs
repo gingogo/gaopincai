@@ -98,7 +98,7 @@ namespace Lottery.ETL.D11X5
 				}
 			}
 			
-			biz.DataAccessor.Truncate();
+			//biz.DataAccessor.Truncate();
 			biz.DataAccessor.Insert(entities, SqlInsertMethod.SqlBulkCopy);
 		}
 
