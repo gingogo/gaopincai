@@ -4,6 +4,7 @@
 3.mysql5.05
 
 二、创建11选5彩种数据库（目前只研究江西，广东，山东，重庆四地的11选5）
+注：所有的数据库应该是InnoDB格式，字符集为:utf8
 1.先把docs/database/mysql/InitDB.rar解压
 2.创建lottery数据库，然后导入docs/database/mysql/InitDB/lottery.sql
   该数据库表中保存相关配置数据，如彩种类型启用，分析维护启用。
