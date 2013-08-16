@@ -176,6 +176,8 @@ namespace Lottery.Data.Downloader
 				{
 					url = string.Format(param.Category.DownUrl, currDate.ToString("yyyy-MM-dd"));
 					this._webClient.Encoding = System.Text.Encoding.UTF8;
+                    string userAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)";
+                    this._webClient.Headers.Add("User-Agent", userAgent);
 					string pageText = this._webClient.DownloadString(url);
 					var pageNumbers = this.ExtractNumbers(pageText,param.Category.DbName);
 					if (pageNumbers.Count == 0)

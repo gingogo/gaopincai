@@ -7,7 +7,7 @@
 注：所有的数据库应该是InnoDB格式，字符集为:utf8
 1.先把docs/database/mysql/InitDB.rar解压
 2.创建lottery数据库，然后导入docs/database/mysql/InitDB/lottery.sql
-  该数据库表中保存相关配置数据，如彩种类型启用，分析维护启用。
+  该数据库表中保存相关配置数据，如彩种类型启用，分析维度启用。
 3.创建lotterychongq115,lotteryguangd115,lotteryjiangx115,lotteryshand115
   然后从docs/database/mysql/InitDB导入对应的sql语句。目前数据只更新到20130707号
 4.运行tools/respans.bat初始化所有数据遗漏情况
