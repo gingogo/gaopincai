@@ -19,7 +19,9 @@ namespace Lottery.Console
             Array.Copy(args, 1, cmdArgs, 0, args.Length - 1);
             CommandParser.Parse(System.Console.WriteLine, cmdName, cmdArgs);
 
-			System.Console.WriteLine("All Command Finished!");
+            ConsoleKeyInfo keyInfo = System.Console.ReadKey();
+            if(keyInfo.KeyChar == 'q')
+                System.Console.WriteLine("All Command Finished!");
 		}
 	}
 }
