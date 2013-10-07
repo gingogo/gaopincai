@@ -14,7 +14,7 @@ namespace Lottery.Command
         protected override void ExecuteCommand(Action<string> output, params string[] args)
         {
             Services.DownloadService s = new Services.DownloadService();
-            s.StartSync(DateTime.Now);
+            s.StartAsync(DateTime.Now);
 
             if (args != null &&
                 args.Length > 0 &&
