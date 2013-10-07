@@ -30,7 +30,9 @@ namespace Lottery.Services
 
         public void asyncEventWorker_DoWork(object sender, DoWorkEventArgs args)
         {
-            this.StartDown(args.Argument as EventParameter);
+            var eArg = args.Argument as EventParameter;
+            this.StartDown(eArg);
+            Console.WriteLine(string.Format("{0}:Finished", eArg.Category.DbName));
         }
 
         private void asyncEventWorker_Completed(object sender, WorkerCompletedEventArgs args)
