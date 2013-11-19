@@ -307,12 +307,20 @@ namespace Lottery.Data.MySQL
         /// <returns>影响的行数</returns>
         public virtual int Insert(List<T> entities, SqlInsertMethod method, params string[] columnNames)
         {
-            foreach (T entity in entities)
+            if (entities == null || 
+                entities.Count == 0)
             {
-                this.Insert(entity, columnNames);
+                return 0;
             }
 
-            return entities.Count;
+            List<String> sqlCmds = new List<string>(entities.Count);
+            foreach (T entity in entities)
+            {
+                sqlCmds.Add(this.GenerateInsertSql(this.GetDataFieldMapTable(entity, columnNames), this._tableName));
+            }
+            this.ExecuteByTransaction(sqlCmds, IsolationLevel.ReadUncommitted);
+
+            return 1;
         }
 
         /// <summary>

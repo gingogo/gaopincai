@@ -741,6 +741,35 @@ namespace Lottery.Data.SQLServer
             }
         }
 
+        /// <summary>
+        /// 把当前Sql语句以事务方式执行。
+        /// </summary>
+        /// <param name="sqlExpressions">Sql语句集合</param>
+        /// <param name="isolationLevel">事务隔离级别</param>
+        protected virtual void ExecuteByTransaction(List<String> SqlCmds, IsolationLevel isolationLevel)
+        {
+            if (SqlCmds == null ||
+                SqlCmds.Count == 0) throw new ArgumentNullException("SqlCmds");
+
+            using (SqlConnection sqlConnection = new SqlConnection(this._connectionString))
+            {
+                sqlConnection.Open();
+                using (SqlTransaction sqlTransaction = sqlConnection.BeginTransaction(isolationLevel))
+                {
+                    try
+                    {
+                        SqlCmds.ForEach(sqlCmd =>
+                            SqlHelper.ExecuteNonQuery(sqlConnection, sqlCmd));
+                        sqlTransaction.Commit();
+                    }
+                    catch (SqlException ex)
+                    {
+                        sqlTransaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+        }
         #endregion
     }
 }

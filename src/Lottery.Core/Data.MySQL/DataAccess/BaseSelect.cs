@@ -734,6 +734,37 @@ namespace Lottery.Data.MySQL
                     }
                     catch (MySqlException ex)
                     {
+                        mySqlTransaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 把当前Sql语句以事务方式执行。
+        /// </summary>
+        /// <param name="sqlExpressions">Sql语句集合</param>
+        /// <param name="isolationLevel">事务隔离级别</param>
+        protected virtual void ExecuteByTransaction(List<String> SqlCmds, IsolationLevel isolationLevel)
+        {
+            if (SqlCmds == null ||
+                SqlCmds.Count == 0) throw new ArgumentNullException("SqlCmds");
+
+            using (MySqlConnection mySqlConnection = new MySqlConnection(this._connectionString))
+            {
+                mySqlConnection.Open();
+                using (MySqlTransaction mySqlTransaction = mySqlConnection.BeginTransaction(isolationLevel))
+                {
+                    try
+                    {
+                        SqlCmds.ForEach(sqlCmd =>
+                            MySqlHelper.ExecuteNonQuery(mySqlConnection, sqlCmd));
+                        mySqlTransaction.Commit();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        mySqlTransaction.Rollback();
                         throw ex;
                     }
                 }
