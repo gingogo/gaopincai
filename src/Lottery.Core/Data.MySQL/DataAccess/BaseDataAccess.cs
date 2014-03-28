@@ -295,7 +295,7 @@ namespace Lottery.Data.MySQL
                 batchSqlText.AppendFormat("{0};", this.GenerateInsertSql(dataFieldMapTable, batchEntity.DestTableName));
             }
 
-            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, batchSqlText.ToString());
+            return MySqlHelper.ExecuteNonQuery(this._connectionString, batchSqlText.ToString());
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Lottery.Data.MySQL
         /// <returns>影响的行数</returns>
         public virtual int Insert(List<T> entities, SqlInsertMethod method, params string[] columnNames)
         {
-            if (entities == null || 
+            if (entities == null ||
                 entities.Count == 0)
             {
                 return 0;
@@ -339,7 +339,7 @@ namespace Lottery.Data.MySQL
             string sqlCmd = string.Format("insert into {0} {1} select {2} from {3}",
                 this._tableName, insertColumns, columns, fromTableName);
 
-            return SqlHelper.ExecuteNonQuery(this._connectionString, CommandType.Text, sqlCmd);
+            return MySqlHelper.ExecuteNonQuery(this._connectionString, sqlCmd);
         }
 
         #endregion

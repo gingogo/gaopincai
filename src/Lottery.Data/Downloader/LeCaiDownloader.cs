@@ -183,7 +183,7 @@ namespace Lottery.Data.Downloader
 					if (pageNumbers.Count == 0)
 					{
 						Logger.Instance.Write(string.Format("name:{0},url:{1},msg:{2}", param.Category.Name, url, "count=0"));
-						break;
+						//break;
 					}
 					numbers.AddRange(pageNumbers);
 				}
