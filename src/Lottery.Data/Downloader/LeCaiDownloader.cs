@@ -26,7 +26,7 @@ namespace Lottery.Data.Downloader
 			long lastP = biz.GetLatestPeroid();
 			foreach (var numberInfo in numbers)
 			{
-				string code = numberInfo.Number.Replace(" ", ",");
+				string code = numberInfo.Number;
 				DateTime datetime = DateTime.Parse(numberInfo.DateTime);
 				int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
 				long p = int.Parse(numberInfo.Peroid);
@@ -212,8 +212,8 @@ namespace Lottery.Data.Downloader
 				                             RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
 				string code = Regex.Match(m.Value, "<td class=\"td3\">(.*?)</td>",
 				                          RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value;
-				code = Regex.Replace(Regex.Replace(code,"</span>"," ",RegexOptions.IgnoreCase | RegexOptions.Singleline)
-				                     ,"<.*?>|[\\t\\n\\r]","",RegexOptions.IgnoreCase | RegexOptions.Singleline).Trim();
+				code = Regex.Replace(Regex.Replace(code,"</span>",",",RegexOptions.IgnoreCase | RegexOptions.Singleline)
+				                     ,"<.*?>|[\\t\\n\\r\\s]","",RegexOptions.IgnoreCase | RegexOptions.Singleline).Trim().TrimEnd(',');
 				
 				if (code.Trim().Length == 0) continue;
 
