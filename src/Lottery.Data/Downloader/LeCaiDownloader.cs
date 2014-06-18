@@ -197,35 +197,34 @@ namespace Lottery.Data.Downloader
 			return numbers;
 		}
 
-		private List<NumberInfo> ExtractNumbers(string pageText,string dbName)
-		{
-			List<NumberInfo> numbers = new List<NumberInfo>(120);
-			string pattern = "<table id=\"draw_list\">.*?</table>";
-			string drawListText = Regex.Match(pageText,pattern,RegexOptions.Singleline | RegexOptions.IgnoreCase).Value;
-			MatchCollection matches = Regex.Matches(drawListText, "<tr class=\"bgcolor[0-9]\">.*?</tr>", RegexOptions.Singleline | RegexOptions.IgnoreCase);
-			for (int i = 0; i <matches.Count; i++)
-			{
-				Match m = matches[i];
-				string sdate = Regex.Match(m.Value, "<td class=\"td1\">(.*?)</td>",
-				                           RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
-				string speroid = Regex.Match(m.Value, "<td class=\"td2\">.*?(\\d+).*?</td>",
-				                             RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
-				string code = Regex.Match(m.Value, "<td class=\"td3\">(.*?)</td>",
-				                          RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value;
-				code = Regex.Replace(Regex.Replace(code,"</span>",",",RegexOptions.IgnoreCase | RegexOptions.Singleline)
-				                     ,"<.*?>|[\\t\\n\\r\\s]","",RegexOptions.IgnoreCase | RegexOptions.Singleline).Trim().TrimEnd(',');
-				
-				if (code.Trim().Length == 0) continue;
+        private List<NumberInfo> ExtractNumbers(string pageText, string dbName)
+        {
+            List<NumberInfo> numbers = new List<NumberInfo>(120);
+            string pattern = "<table id=\"draw_list\">.*?</table>";
+            string drawListText = Regex.Match(pageText, pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase).Value;
+            MatchCollection matches = Regex.Matches(drawListText, "<tr class=\"bgcolor[0-9]\">.*?</tr>", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            for (int i = matches.Count - 1; i >= 0; i--)
+            {
+                Match m = matches[i];
+                string sdate = Regex.Match(m.Value, "<td class=\"td1\">(.*?)</td>",
+                                           RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
+                string speroid = Regex.Match(m.Value, "<td class=\"td2\">.*?(\\d+).*?</td>",
+                                             RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value.Trim();
+                string code = Regex.Match(m.Value, "<td class=\"td3\">(.*?)</td>",
+                                          RegexOptions.IgnoreCase | RegexOptions.Singleline).Groups[1].Value;
+                code = Regex.Replace(Regex.Replace(code, "</span>", ",", RegexOptions.IgnoreCase | RegexOptions.Singleline)
+                                     , "<.*?>|[\\t\\n\\r\\s]", "", RegexOptions.IgnoreCase | RegexOptions.Singleline).Trim().TrimEnd(',');
 
-				if(dbName.ToLower().Contains("chongqssc"))
-					sdate = DateTime.Parse(sdate).AddMinutes((i+1)*10).ToString();
-				else
-					sdate = DateTime.Parse(sdate).AddHours(9).AddMinutes((i+1)*10).ToString();
-				numbers.Add(new NumberInfo(code, speroid, sdate));
-			}
+                if (code.Trim().Length == 0) continue;
+                if (dbName.ToLower().Contains("chongqssc"))
+                    sdate = DateTime.Parse(sdate).AddMinutes((matches.Count - i) * 10).ToString();
+                else
+                    sdate = DateTime.Parse(sdate).AddHours(9).AddMinutes((matches.Count - i) * 10).ToString();
+                numbers.Add(new NumberInfo(code, speroid, sdate));
+            }
 
-			return numbers;
-		}
+            return numbers;
+        }
 	}
 }
 
