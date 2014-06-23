@@ -53,13 +53,13 @@ namespace Lottery.Data.MySQL.SSC
 
         public int SelectLatestDate(string condition)
         {
-            string sqlCmd = string.Format("SELECT Max(date) as date FROM {0} {1} ", this._tableName, condition);
+            string sqlCmd = string.Format("SELECT ifnull(Max(date),0) as date FROM {0} {1} ", this._tableName, condition);
             return Convert.ToInt32(MySqlHelper.ExecuteScalar(this.ConnectionString,  sqlCmd));
         }
 
         public long SelectLatestPeroid(string condition)
         {
-            string sqlCmd = string.Format("SELECT Max(P) as P FROM {0} {1} ", this._tableName, condition);
+            string sqlCmd = string.Format("SELECT ifnull(Max(P),0) as P FROM {0} {1} ", this._tableName, condition);
             return Convert.ToInt64(MySqlHelper.ExecuteScalar(this.ConnectionString,  sqlCmd));
         }
 

@@ -25,7 +25,7 @@ namespace Lottery.Data.Biz.SSC
         public DateTime GetLatestDate()
         {
             int num = DataAccessor.SelectLatestDate(string.Empty);
-            if (num == 0) return DateTime.Now.AddDays(-3);
+            if (num == 0) return new DateTime(2007,3,1);
             return DateTime.ParseExact(num.ToString(), "yyyyMMdd", null);
         }
 
