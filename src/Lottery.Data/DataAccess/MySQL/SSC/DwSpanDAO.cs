@@ -60,20 +60,20 @@ namespace Lottery.Data.MySQL.SSC
 
         public long SelectLatestPeroid(string condition)
         {
-            string sqlCmd = string.Format("SELECT IsNULL(Max(P),0) as P FROM {0} {1} ", this._tableName, condition);
+            string sqlCmd = string.Format("SELECT ifnull(Max(P),0) as P FROM {0} {1} ", this._tableName, condition);
             return Convert.ToInt64(MySqlHelper.ExecuteScalar(this.ConnectionString,  sqlCmd));
         }
         
         public long SelectMaxPeroid()
         {
-            string sql = string.Format("select max(p) p from {0}", this._tableName);
+            string sql = string.Format("select ifnull(max(p),0) p from {0}", this._tableName);
             var list = this.GetEntities(sql, "P");
             return (list == null || list.Count == 0) ? -1 : list[0].P;
         }
 
         public int SelectMaxSpan(string num)
         {
-            string sql = string.Format("select max(Spans) Spans from {0} where NumberId = {1}", this._tableName, num);
+            string sql = string.Format("select ifnull(max(Spans),0) Spans from {0} where NumberId = {1}", this._tableName, num);
             return (int)MySqlHelper.ExecuteScalar(this.ConnectionString,  sql);
         }
 

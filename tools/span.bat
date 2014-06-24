@@ -1,1 +1,1 @@
-Lottery.Console.exe span 11x5
+Lottery.Console.exe span 11x5 ssc c5cx

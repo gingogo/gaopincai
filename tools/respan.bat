@@ -1,1 +1,1 @@
-Lottery.Console.exe respan 11x5 
+Lottery.Console.exe respan ssc
