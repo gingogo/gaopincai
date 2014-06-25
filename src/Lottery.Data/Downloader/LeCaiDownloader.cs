@@ -51,8 +51,7 @@ namespace Lottery.Data.Downloader
 			long lastP = biz.GetLatestPeroid();
 			foreach (var numberInfo in numbers)
 			{
-				char[] digits = numberInfo.Number.ToArray();
-				string code = string.Join(",", digits);
+				string code = numberInfo.Number;
 				DateTime datetime = DateTime.Parse(numberInfo.DateTime);
 				int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
 				long p = long.Parse(numberInfo.Peroid);
@@ -77,8 +76,7 @@ namespace Lottery.Data.Downloader
 			long lastP = biz.GetLatestPeroid();
 			foreach (var numberInfo in numbers)
 			{
-				char[] digits = numberInfo.Number.ToArray();
-				string code = string.Join(",", digits);
+				string code = numberInfo.Number;
 				DateTime datetime = DateTime.Parse(numberInfo.DateTime);
 				int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
 				long p = int.Parse(numberInfo.Peroid);
@@ -102,8 +100,7 @@ namespace Lottery.Data.Downloader
 			long lastP = biz.GetLatestPeroid();
 			foreach (var numberInfo in numbers)
 			{
-				char[] digits = numberInfo.Number.ToArray();
-				string code = string.Join(",", digits);
+				string code = numberInfo.Number;
 				DateTime datetime = DateTime.Parse(numberInfo.DateTime);
 				int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
 				long p = int.Parse(numberInfo.Peroid);
@@ -127,8 +124,7 @@ namespace Lottery.Data.Downloader
 			long lastP = biz.GetLatestPeroid();
 			foreach (var numberInfo in numbers)
 			{
-				char[] digits = numberInfo.Number.ToArray();
-				string code = string.Join(",", digits);
+				string code = numberInfo.Number;
 				DateTime datetime = DateTime.Parse(numberInfo.DateTime);
 				int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
 				long p = int.Parse(numberInfo.Peroid);
@@ -152,7 +148,7 @@ namespace Lottery.Data.Downloader
 			long lastP = biz.GetLatestPeroid();
 			foreach (var numberInfo in numbers)
 			{
-				string code = numberInfo.Number.Replace(" ", ",");
+				string code = numberInfo.Number;
 				DateTime datetime = DateTime.Parse(numberInfo.DateTime);
 				int dateint = int.Parse(datetime.ToString("yyyyMMdd"));
 				int p = 2000000000 + int.Parse(numberInfo.Peroid);
