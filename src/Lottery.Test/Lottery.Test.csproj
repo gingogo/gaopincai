@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="C1StatTest.cs" />
+    <Compile Include="D11X5\AvgSpan.cs" />
     <Compile Include="ETL\ImportNumberTypeDimTest.cs" />
     <Compile Include="ETL\ImportNumberTypeTest.cs" />
     <Compile Include="Program.cs" />

@@ -18,10 +18,11 @@ namespace Lottery.Test
 	{
 		static void Main(string[] args)
 		{
+            D11X5.AvgSpan.ComputeAvg();
 			//            C1Stat stat = new C1Stat();
 			//            stat.C1StatMain("shand11x5");
 			//Lottery.ETL.DataDownload.DownKaiJiangData();
-			Lottery.ETL.ExtractData.ExtractAll();
+			//Lottery.ETL.ExtractData.ExtractAll();
 			Console.WriteLine("执行成功!");
 			Console.Read();
 		}
